@@ -1,0 +1,628 @@
+{% if shop.metafields.shop.free_ship_rule != blank %}
+    {% assign shipping_price = shop.metafields.shop.free_ship_rule | times: 1.00 %}
+{% else %}
+    {% assign shipping_price = 1.00 %}
+{% endif %}
+{% assign shipping_free = false %}
+{% assign member_total_price = 0 %}
+{{ 'find-representative-modal.scss.css' | asset_url | stylesheet_tag }}
+
+<div class="checkout__sidebar">
+    <div class="summary__order">
+        {% if template != 'cart' %}
+            <div class="table-shopping">
+                <div class="table-shopping__heading" data-showOrderSummary="{{ 'order_form.cart.show_order_summary_html' | t }}" data-hideOrderSummary="{{ 'order_form.cart.hide_order_summary_html' | t }}">
+                    <div class="shopping__heading-main">
+                        <div class="shopping__heading-label">
+                            <svg id="Group_1598" data-name="Group 1598" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+                                <circle id="Ellipse_19" data-name="Ellipse 19" cx="15" cy="15" r="15" fill="#999" opacity="0.15"/>
+                                <g id="Group_761" data-name="Group 761" transform="translate(6.068 6.935)">
+                                    <g id="Group_189" data-name="Group 189" transform="translate(1.38 7.26)">
+                                        <path id="Path_95" data-name="Path 95" d="M1700.287-209.632h-7.921a3.346,3.346,0,0,1-3.328-3.356v-6.036a.682.682,0,0,1,.679-.685.682.682,0,0,1,.679.685v6.036a1.981,1.981,0,0,0,1.97,1.987h7.921a1.981,1.981,0,0,0,1.97-1.987v-6.036a.682.682,0,0,1,.679-.685.682.682,0,0,1,.679.685v6.036A3.346,3.346,0,0,1,1700.287-209.632Z" transform="translate(-1689.038 219.708)" fill="#333"/>
+                                    </g>
+                                    <g id="Group_190" data-name="Group 190" transform="translate(0 5.378)">
+                                        <path id="Path_96" data-name="Path 96" d="M1687.175-240.422h-16a.65.65,0,0,1-.67-.628.65.65,0,0,1,.67-.628h16a.65.65,0,0,1,.67.628A.65.65,0,0,1,1687.175-240.422Z" transform="translate(-1670.509 241.677)" fill="#333"/>
+                                    </g>
+                                    <g id="Group_191" data-name="Group 191" transform="translate(3.208)">
+                                        <path id="Path_97" data-name="Path 97" d="M1717.108-301.127h-1.191a4.274,4.274,0,0,0-4.27-4.27,4.274,4.274,0,0,0-4.269,4.27h-1.191a5.467,5.467,0,0,1,5.461-5.461A5.467,5.467,0,0,1,1717.108-301.127Z" transform="translate(-1706.187 306.588)" fill="#333"/>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="textOrderSummary"> {{ 'order_form.cart.show_order_summary_html' | t }}</span>
+                        </div>
+                        <div class="shopping__heading-totalprice">
+                            {% if customer %}
+                                <div class="cv__qv">
+                                    <span class="label-title">{{ 'order_form.general.cv_qv' | t }}</span>
+                                    <span class="value-cv" data-scope="total_cv-qv"></span>
+                                </div>
+                                <div class="shopping__heading--total">
+                                    <span data-scope="total"></span>
+                                </div>
+                            {% else %}
+                                <div class="shopping__heading--total mt-12">
+                                    <span data-scope="total"></span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="icon-chevron-down">
+                        <svg  xmlns="http://www.w3.org/2000/svg" width="17" height="10.977" viewBox="0 0 16.972 10.977">
+                            <path id="path_up" data-name="Path up" d="M.419.067a.257.257,0,0,0-.347,0,.244.244,0,0,0,0,.346L6.558,6.9.072,13.385a.244.244,0,0,0,0,.347.258.258,0,0,0,.347,0L7.251,6.9Z" transform="translate(1.587 9.372) rotate(-90)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+                            <path id="path_down" data-name="Path down" d="M.419.067a.257.257,0,0,0-.347,0,.244.244,0,0,0,0,.346L6.558,6.9.072,13.385a.244.244,0,0,0,0,.347.258.258,0,0,0,.347,0L7.251,6.9Z" transform="translate(15.385 1.605) rotate(90)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="table-shopping__body">
+                    <div class="checkout__sidebar-count">
+                        {% if shop.locale == 'en' and cart.item_count > 1%}
+                        {% assign unitCount = 's' %}
+                        {% else %}
+                        {% assign unitCount = '' %}
+                        {% endif %}
+                        <h4><span>{{ 'general.checkout_sidebar.order_summary' | t }}</span> (<span class="total-items-count">{{ cart.item_count }}</span> {{ 'general.checkout_sidebar.item_label' | t }}{{ unitCount }})</h4>
+                    </div>
+                    <!-- Products list itmem -->
+                    <div class="product__items">
+                        {%- assign items_autoship = '' -%}
+                        {%- for item in cart.items -%}
+                        {%- assign product = item.product -%}
+                        {% assign variant = item.variant %}
+                        {%- assign product_tags = item.product.tags | downcase -%}
+                        {% comment %} Check tag Freeship {% endcomment %}
+                        {%- if variant.metafields.ulife.freeship == 1 or variant.metafields.ulife.freeship == '1' -%}
+                            {%- assign shipping_free = true -%}
+                        {%- endif -%}
+                        {%- capture product_item -%}
+                        <div class="product__item cart__item" data-cart-item-index="{{ forloop.index }}" data-showcanvas="false" data-variant_id="{{ item.variant_id }}">
+                            <div class="product__item--image">
+                                <div class="tags__view-list">
+                                    <div class="product__tags">
+                                        {% include 'product-tag-label-liquid', current_variant: item.variant %}
+                                    </div>
+                                </div>
+                                {% if item.image %}
+                                    <img src="{{ item | img_url: 'x190' }}" alt="{{ item.image.alt | escape }}"
+                                        data-cart-item-image/>
+                                {% else %}
+                                    <img src="{{ 'default_product.png' | asset_img_url: 'x190' }}" alt="{{item.title}}">
+                                {% endif %}
+                            </div>
+                            <div class="product__item--info">
+                                <div class="top">
+                                    <a href="{{ item.url }}"><h4 class="product__item--name">{{ item.product.title }}</h4></a>
+                                    {%- assign product_tags = product.tags | downcase -%}
+                                    {% if item.variant.title != blank and item.variant.title != 'Default Title' %}
+                                    <div class="variant__info">
+                                        <span>{{ item.variant.title }}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="bottom">
+                                    <div class="product__item--variant">
+                                        <div class="cart-qty__box">
+                                            <p>{{ 'general.checkout_sidebar.item_quantity' | t }}<span class="page-checkout">{{ item.quantity }}</span></p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {% if customer %}
+                                        <div class="cv__qv text-right">
+                                            {%- assign variant_cv = variant.metafields.ulife.cv_value -%}
+                                            {%- assign variant_qv = variant.metafields.ulife.qv_value -%}
+                                            {% if variant_cv != blank %}
+                                                {%- assign total_variant_cv = variant_cv | times: item.quantity -%}
+                                                {% assign total_cv = total_cv | plus: total_variant_cv %}
+                                            {% endif %}
+                                            {% if variant_qv != blank %}
+                                                {%- assign total_variant_qv = variant_qv | times: item.quantity -%}
+                                                {% assign total_qv = total_qv | plus: total_variant_qv %}
+                                            {% endif %}
+                                            {% if variant_cv != blank %}
+                                                <div class="cvqv__title">{{ 'cart.minicart.cv' | t }}<span> | </span>{{ 'cart.minicart.qv' | t }}</div>
+                                                <div class="cvqv__number">{{ total_variant_cv }} <span> | </span> {{ total_variant_qv }}</div>
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        {% if customer %}
+                                            {% assign member_price = variant.metafields.ulife.member_price %}
+                                            {% assign member_total_price_variant = member_price | times: item.quantity %}
+                                            {% assign member_total_price = member_total_price | plus: member_total_price_variant %}
+                                            <p class="product__item--price" data-sku="{{ item.sku }}"></p>
+                                        {% else %}
+                                            {% assign member_total_price_variant = item.price | times: item.quantity %}
+                                            <p class="product__item--price" data-sku="{{ item.sku }}"></p>
+                                        {% endif %}
+                                    </div>
+                                    {% if product_tags contains "autoship" %}
+                                        {% unless customer %}
+                                            <div class="vip__error-message">
+                                                {{ 'order_form.products.promocode_require' | t }}
+                                            </div>
+                                        {% endunless %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {%- endcapture -%}
+                        {%- if product_tags contains 'autoship' -%}
+                            {%- assign items_autoship = items_autoship | append: product_item -%}
+                        {%- else -%}
+                            {{ product_item }}
+                        {%- endif -%}
+                        {%- endfor -%}
+                        {{ items_autoship }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <form id="sidebar-form" method="GET">
+            <div class="autoship__promo-coupon">
+                <div class="autoship__promo-heading" hidden>
+                    {%- comment -%}
+                    <div class="autoship__due--date step-contact" hidden>
+                        {{ 'general.checkout_sidebar.autoship_heading' | t }}
+                    </div>
+                    {%- endcomment -%}
+                </div>
+
+                <!-- Autoship Due date -->
+                <div class="autoship__due--date step-contact validate-container" hidden>
+                    <div class="label">
+                        <span>{{ 'general.checkout_sidebar.autoship_due_date' | t }}</span>
+                        <div class="smart_tooltip">
+                            {% include 'icon-info' %}
+                            <span class="tooltiptext">{{ 'general.checkout_tooltip.auto_ship' | t }}</span>
+                        </div>
+                    </div>
+                    <div class="select__box">
+                        <select class="select__field no-validate" id="auto__ship-date" name="due_date" data-scope="due_date">
+                            <option value=""></option>
+                            <option value="5">{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:5 }}</option>
+                            <option value="10">{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:10 }}</option>
+                            <option value="20">{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:20 }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="autoship__due--date none-step-contact" hidden>
+                    <div>
+                        <span class="label">{{ 'general.checkout_sidebar.autoship_due_date' | t }}</span>
+                        <span>{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t }}</span>
+                    </div>
+                </div>
+                <!-- Check member + link shop representative -->
+                <div class="check__member--representative step-contact" hidden>
+                    <div class="representative_tooltip-wrap">
+                        <a class="shop__with--representative smart_modal_open"
+                        data-target="#find-a-representative-modal" href="#" data-sidebar_find_representative>{{ 'general.checkout_sidebar.representative' | t }}</a>
+                        <div id="find_rep_tooltip" class="smart_tooltip">
+                            {% include 'icon-info' %}
+                            <span class="tooltiptext">{{ 'general.checkout_tooltip.representative' | t }}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- coupon code -->
+                <div class="promo__coupon--code step-contact validate-container">
+                    <div class="promo_code">
+                        <label class="form-label d-block d-sm-none">{{ 'order.detail.promo_code' | t }}</label>
+                        <input class="input__text" type="text"
+                               placeholder="{{ 'order.detail.promo_code' | t }}" name="promo_code" data-scope="promo_code">
+                            <span class="error-message" data-container="promo_code_message"></span>
+                            <ul class="promo__applied" data-scope="promo_applied"></ul>
+                    </div>
+                    <div class="coupon_code">
+                        <label class="form-label d-block d-sm-none">{{ 'order.detail.coupon_code' | t }}</label>
+                        <input class="input__text" type="text"
+                               placeholder="{{ 'order.detail.coupon_code' | t }}" name="coupon_code" data-scope="coupon_code">
+                        <span class="error-message" data-container="coupon_code_message"></span>
+                    </div>
+                    <ul class="code__applied" data-scope="coupon_applied"></ul>
+                    <button class="btn btn__apply-code" data-action="submit-coupon" type="button">{{ 'general.checkout_sidebar.apply_code_button' | t }}</button>
+                    <div style="clear: both;"></div>
+                </div>
+                <div class="promo__coupon--code none-step-contact" hidden>
+                    <div class="promo">
+                        <span>{{ 'checkout.promo_code' | t }}</span>
+                        <span class="promo_code-text"></span>
+                    </div>
+                    <div class="coupon">
+                        <span>{{ 'checkout.coupon_code' | t }}</span>
+                        <span class="coupon_code-text"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="summer__total summer__total--loading">
+            <div class="loading-wrap">
+                <div class="loader"></div>
+                <span class="calculating_price">{{ 'general.checkout_sidebar.calculating_price' | t }}</span>
+            </div>
+            <!-- Summary lines -->
+            <div class="lines__total">
+                <ul>
+                    <li class="subtotal">
+                        <label>{{ 'general.checkout_sidebar.subtotal_label' | t }}</label>
+                        <span data-scope="subtotal"></span>
+                    </li>
+                    <li class="discount">
+                        <label class="text--red">{{ 'general.checkout_sidebar.discount_label' | t }}</label>
+                        <span data-scope="discount"></span>
+                    </li>
+                    <li class="shipping">
+                        <label>{{ 'general.checkout_sidebar.shipping_label' | t }}</label>
+                        <span data-scope="shipping"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="estimated__total">
+                {% if customer %}
+                    <div class="total__cv-qv">
+                        <label for="#">{{ 'general.checkout_sidebar.cvqv_label' | t }}</label>
+                        <span data-scope="total_cv-qv"></span>
+                    </div>
+                {% endif %}
+                <div class="total__estimated">
+                    <label>{{ 'general.checkout_sidebar.estimated_total_label' | t }}</label>
+                    <span data-scope="total"></span>
+                </div>
+            </div>
+            <!-- Progress bar shipping -->
+            <div class="progress__bar--shipping">
+                <div for="#" class="shipping-bar-label"></div>
+                <div class="progress__bar">
+                    <div class="track"></div>
+                    <div class="scrollbar scrollbar-complete "></div>
+                </div>
+            </div>
+        </div>
+        <!-- Action -->
+        {% unless page.template_suffix == 'checkout' %}
+            <div class="text-center process__to-checkout">
+                <a href="{{ pages['checkout'].url }}" class="btn btn--secondary btn--large minicart__button-checkout"
+                   >{{ 'order_form.cart.process_to_checkout' | t }}</a>
+                <a class="text-underline minicart__button-continue-shopping" href="{{ routes.root_url }}">{{ 'cart.general.continue_shopping' | t }}</a>
+            </div>
+        {% endunless %}
+    </div>
+</div>
+
+
+<div class="findarep__modal smart_modal modal-content__scoll" id="find-a-representative-modal">
+    <div class="modal-center">
+        <div class="modal-content modal-content__padding">
+            <span class="close drawer__close" data-sidebar_close_findarep_modal title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="content__scroll">
+                <div class="page__findarep">
+                    <div class="page__findarep--header">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <h1 class="page__title">{{ 'find_representative.modal-title' | t }}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page__findarep--content">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12">
+                                    <h3 class="content-title">{{ 'find_representative.seach-form-title' | t }}</h3>
+                                    <div class="smosc__tab">
+                                        <div class="smosc__tab-headers">
+                                            <ul>
+                                                <li><a class="smosc__tab-header active" href="#" data-id="tab1">{{ 'find_representative.tab-header-title-1' | t }}</a></li>
+                                                <li><a class="smosc__tab-header" href="#" data-id="tab2">{{ 'find_representative.tab-header-title-2' | t }}</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="smosc__tab-contents">
+                                            <div  class="smosc__tab-content active" id="tab1" data-id="tab1">
+                                                <form class="findarep__by--adress" action="#" data-scope="form:find-rep-by-address" method="GET">
+                                                    <div class="form-group">
+                                                        <div class="post_code_container"></div>
+                                                        <div class="state_container"></div>
+                                                        <div class="city_container"></div>
+                                                    </div>
+                                                    <div class="smart__accordion">
+                                                        <div class="smart__accordion-card">
+                                                            <div class="smart__accordion-header">
+                                                                <a href="#">{{ 'find_representative.advance-search' | t }}</a>
+                                                            </div>
+                                                            <div class="smart__accordion-collapse">
+                                                                <div class="form-group">
+                                                                    <label for="#">{{ 'find_representative.address-label' | t }}</label>
+                                                                    <input class="street_address" name="street_address" placeholder="" type="text"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-actions button-group">
+                                                        <span class="btn_cancel link-readmore text-underline display-dk" data-close_modal>{{ 'find_representative.cancel-button' | t }}</span>
+                                                        <button class="btn search-representative-btn" type="submit"><div class="loader"></div>{{ 'find_representative.search-button' | t }}</button>
+                                                        <span class="btn btn-cancel display-mb" data-close_modal>{{ 'find_representative.cancel-button' | t }}</span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div  class="smosc__tab-content" id="tab2" data-id="tab2">
+                                                <form class="findarep__by--name" action="#" data-scope="form:find-rep-by-name" method="GET">
+                                                    <div class="form-group">
+                                                        <div class="field__group">
+                                                            <label for="#">{{ 'find_representative.first-name-label' | t }}</label>
+                                                            <input name="first_name" class="first_name" placeholder="" type="text" required/>
+                                                        </div>
+                                                        <div class="field__group">
+                                                            <label for="#">{{ 'find_representative.last-name-label' | t }}</label>
+                                                            <input name="last_name" class="last_name" placeholder="" type="text" required/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-actions button-group">
+                                                        <span class="btn_cancel link-readmore text-underline display-dk" data-close_modal>{{ 'find_representative.cancel-button' | t }}</span>
+                                                        <button class="btn search-representative-btn" type="submit"><div class="loader"></div>{{ 'find_representative.search-button' | t }}</button>
+                                                        <span class="btn btn-cancel display-mb" data-close_modal>{{ 'find_representative.cancel-button' | t }}</span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="back__to-search link-readmore text-underline display-mb" data-back_to_search>&#60; {{ 'find_representative.back_to_search' | t }}</div>
+                                    <div class="page_findarep-results" data-container="results"></div>
+                                    <div class="back__to-search link-readmore text-underline display-mb" data-back_to_search>&#60; {{ 'find_representative.back_to_search' | t }}</div>
+                                    <div class="back__to-search link-readmore text-underline display-dk" data-back_to_search>
+                                        {{ 'find_representative.back_to_search' | t }} <svg xmlns="http://www.w3.org/2000/svg" width="9.193" height="5.516" viewBox="0 0 9.193 5.516">
+                                        <g data-name="Group 724" transform="translate(0.532 4.978) rotate(-90)">
+                                            <path data-name="Path 76" d="M.247.039a.152.152,0,0,0-.2,0,.144.144,0,0,0,0,.2l3.82,3.82L.042,7.883a.143.143,0,0,0,0,.2.15.15,0,0,0,.2,0L4.271,4.064Z" transform="translate(0 0)" fill="none" stroke="#333" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+                                        </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/html" id="template-no-record">
+                    <div class="no__results">
+                        <h5>We're sorry, no matches were found for your search criteria.</h5>
+                        <p>Please check your spelling and try again.  If you would like us to recommend a Representative in your area, please provide your Address, State, and Zip Code.</p>
+                    </div>
+                </script>
+
+                <script type="text/html" id="template-results">
+                    <div class="has__results">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p class="result__count">Found <%= _.size(records) %> match</p>
+                            </div>
+                            <div class="col-md-6 display-dk">
+                                <div class="text-right link-readmore text-underline display-dk" data-back_to_search>&#60; {{ 'find_representative.back_to_search' | t }}</div>
+                            </div>
+                        </div>
+                        <div class="findarep__results-list">
+                            <div class="findarep__results-header">
+                                <div class="item__title">presentative</div>
+                                <div class="item__title">about me</div>
+
+                                <div class="item__title"></div>
+                            </div>
+                            <div class="findarep__results-item">
+                                <% _.forEach(records.sort((a,b) => (a.recommend > b.recommend) ? -1 : ((b.recommend > a.recommend) ? 1 : 0)), function(record) { %>
+                                <div class="item__content">
+                                    <div class="findarep__results-info">
+                                        <div class="findarep__results-avatar">
+                                            <% if (record.avatar && record.avatar.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) != null) { %>
+                                                <img src="<%= record.avatar %>" data-line-id="<%= record.line_user_id %>" alt=""/>
+                                            <% } else { %>
+                                                <img src="{{ 'avatar.png' | asset_img_url: '300x' }}" data-line-id="<%= record.line_user_id %>" alt=""/>
+                                            <% } %>
+                                        </div>
+                                        <div class="findarep__results-name">
+                                            <% if (record.recommend == 1) { %>
+                                            <div class="results__recommend">Recommend</div>
+                                            <% } %>
+                                            <div class="result__name">
+                                                <% if (record.nickname) { %>
+                                                <%= record.nickname %>
+                                                <% } else { %>
+                                                <%= record.name %>
+                                                <% } %>
+                                            </div>
+                                            <% if (record.line_user_id) { %>
+                                            <div class="result__lineid"><a href="javascript:void(0)">@<%= record.line_user_id %></a></div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                    <div class="findarep__results-about"><%= record.info %></div>
+                                    <div class="findarep__results-action">
+                                        <a href="#" class="btn" data-action="choose-representative" data-value="<%= record.ax_code %>">Choose me</a>
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay" data-sidebar_close_findarep_modal></div>
+</div>
+
+
+<script type="text/template" id="template-coupon-code">
+    <li data-code="<%= code %>">
+        <span class="code__name"><span style="line-height: 1;">{% render 'icon', name: 'tags' %}</span>
+        {% if shop.locale =='th' %}
+            {{ 'general.checkout_sidebar.applied_label' | t }} <%= code %>.
+        {% else %}
+            <%= code %> {{ 'general.checkout_sidebar.applied_label' | t }}.
+        {% endif %}
+        </span>
+        <span class="remove__coupon drawer__close drawer__close-small" data-code="<%= code %>"></span>
+    </li>
+</script>
+
+<script type="text/template" id="template-promo-code">
+    <li data-code="<%= code %>">
+        <span class="code__name"><span style="line-height: 1;">{% render 'icon', name: 'tags' %}</span>
+        {% if shop.locale =='th' %}
+            {{ 'general.checkout_sidebar.applied_label' | t }} <%= code %>.
+        {% else %}
+            <%= code %> {{ 'general.checkout_sidebar.applied_label' | t }}.
+        {% endif %}
+        </span>
+        <span class="remove__promo drawer__close drawer__close-small" data-code="<%= code %>"></span>
+    </li>
+</script>
+<script src="/apps/eai/js/find-representative.js"></script>
+<script src="{{ 'location-form.js' | asset_url }}"></script>
+<script>
+    $(document).ready(function () {
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            state: {
+                parentClass: "find_rep_by_name_container",
+                data:{{ shop.metafields.location.states }},
+                class: "find_rep_by_name",
+                name: "find_rep_by_name"
+            }
+        });
+
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            postalCode: {
+                parentClass: "post_code_container",
+                data: {{ shop.metafields.location.postal_codes }}
+            },
+            state: {
+                parentClass: "state_container",
+                data:{{ shop.metafields.location.states }}
+            },
+            city: {
+                parentClass: "city_container",
+                data: {{ shop.metafields.location.cities }}
+            }
+        });
+
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            postalCode: {
+                parentClass: "shipping_post_code_container",
+                data: {{ shop.metafields.location.postal_codes }},
+                class: "input__text zip",
+                name: "zipcode",
+                id: "shipping_zip",
+            },
+            state: {
+                parentClass: "shipping_state_container",
+                data:{{ shop.metafields.location.states }},
+                class: "select__field states",
+                id: "shipping_states",
+            },
+            city: {
+                parentClass: "shipping_city_container",
+                data: {{ shop.metafields.location.cities }},
+                class: "select__field cities",
+                id: "shipping_cities",
+                required: true,
+            }
+        });
+
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            postalCode: {
+                parentClass: "billing_post_code_container",
+                data: {{ shop.metafields.location.postal_codes }},
+                class: "input__text zip",
+                name: "zipcode",
+                id: "billing_zip",
+            },
+            state: {
+                parentClass: "billing_state_container",
+                data:{{ shop.metafields.location.states }},
+                class: "select__field states",
+                name: "state",
+                id: "billing_states",
+            },
+            city: {
+                parentClass: "billing_city_container",
+                data: {{ shop.metafields.location.cities }},
+                class: "select__field cities",
+                name: "city",
+                id: "billing_cities",
+            }
+        });
+
+        // Validate form find by name
+        $('form.findarep__by--name').validate({
+           rules: {
+               first_name: 'required',
+               last_name: 'required'
+           },
+           messages: {
+               first_name: 'Please enter first name',
+               last_name: 'Please enter last name'
+           }
+        });
+
+        $.validator.addMethod('validPostalCode', function (value, element, arg){
+            if (!value) {
+                return true;
+            }
+            return {{ shop.metafields.location.postal_codes }}.some(item => item.relative_code === value);
+        }, "{{ 'validator.zipcode.invalid' | t }}");
+
+        // Vaildate form find by address
+        $('form.findarep__by--adress').validate({
+            rules: {
+                zipCode: {
+                    validPostalCode: function () {
+                        return $('[name="zipCode"]').val();
+                    }
+                },
+            },
+            messages: {
+                zipCode: {
+                    required: 'Please enter zipcode'
+                },
+                state: {
+                    required: 'Please select a province'
+                },
+                city: {
+                    required: 'Pleae select a district'
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+        });
+        $(document).on("change", ".select2-hidden-accessible:not(.no-validate)", function() {
+            $(this).valid();
+        });
+
+        $(document).on('click', '.smart__accordion-header', function(e) {
+            let textContent = $('.smart__accordion-header a');
+            if (textContent.text() == "{{ 'find_representative.hide-advance-search-label' | t }}") {
+                textContent.text("{{ 'find_representative.advance-search-label' | t }}");
+            } else {
+                textContent.text("{{ 'find_representative.hide-advance-search-label' | t }}");
+            }
+        });
+
+        $(document).on('click', '[data-sidebar_find_representative]', function(e) {
+            $('body').addClass('show-popup__representative');
+        });
+
+        $(document).on('click', '[data-sidebar_close_findarep_modal]', function(e) {
+            $('body').removeClass('show-popup__representative');
+        });
+
+    });
+</script>
+<script>
+    window.checkoutConfig = window.checkoutConfig || {};
+    window.checkoutConfig.freeship_amount = {{ shipping_price | json }};
+    window.checkoutConfig.is_freeship = {{ shipping_free | json }};
+</script>
+<!--<script src="/apps/eai/js/checkout-sidebar.js"></script>-->

@@ -1,0 +1,181 @@
+<div class="container page__enrollment">
+  <ul class="smart-progress__step">
+    <li class="progress__step-item active">
+      <div class="progress__step-content">Personal information</div>
+    </li>
+    <li class="progress__step-item current">
+      <div class="progress__step-content">Address and Bank information</div>
+    </li>
+    <li class="progress__step-item">
+      <div class="progress__step-content">Select products</div>
+    </li>
+  </ul>
+  <div class="page__enrollment-content col-md-10 pd-0">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+    <form id="enrollment__form" action="{{ pages['enrollment-step-3'].url }}">
+      <div class="form-vertical border-form">
+        <div class="form__header-box">step 2/3 Enter Address & Bank Infomation</div>
+        <div class="form__content">
+          <h4 class="form-title">BILLING Address</h4>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentAddress">Address*</label>
+              <input type="text" class="form-control" id="enrollmentAddress" name="enrollmentAddress"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentZipcode">Zipcode*</label>
+              <input type="number" class="form-control" id="enrollmentZipcode" name="enrollmentZipcode"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+          </div>
+          <div class="row">            
+            <div class="form-group col-md-6">
+              <label for="enrollmentProvice">Provice*</label>
+              <div class="select2_wrap">
+                <select id="enrollmentProvice" class="form-control select2_single required" name="enrollmentProvice"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                  <option value="">Choose...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentDistrict">District*</label>
+              <div class="select2_wrap">
+                <select id="enrollmentDistrict" class="form-control select2_single required" name="enrollmentDistrict"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                  <option value="">Choose...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentPhone">Mobile Phone number*</label>
+              <input type="text" class="form-control" id="enrollmentPhone" name="enrollmentPhone"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentCountry">Country*</label>
+              <div class="select2_wrap">
+                <select id="enrollmentCountry" class="form-control select2_single required" data-search="true" name="enrollmentCountry"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                  <option value="">Choose...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="enrollmentShipping" checked>
+                <label class="form-check-label" for="enrollmentShipping">Shipping address is the same as Billing  address</label>
+              </div>
+            </div>
+          </div>
+          <div class="enrollment__shipping-address-form hide">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="enrollmentAddress2">Address*</label>
+                <input type="text" class="form-control" id="enrollmentAddress2" name="enrollmentAddress2"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="enrollmentZipcode2">Zipcode*</label>
+                <input type="text" class="form-control" id="enrollmentZipcode2" name="enrollmentZipcode2"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+              </div>
+            </div>          
+            <div class="row">            
+              <div class="form-group col-md-6">
+                <label for="enrollmentProvice2">Provice*</label>
+                <div class="select2_wrap">
+                  <select id="enrollmentProvice2" class="form-control select2_single required" name="enrollmentProvice2"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                    <option value="">Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="enrollmentDistrict2">District*</label>
+                <div class="select2_wrap">
+                  <select id="enrollmentDistrict2" class="form-control select2_single required" name="enrollmentDistrict2"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                    <option value="">Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="enrollmentPhone">Mobile Phone number*</label>
+                <input type="text" class="form-control" id="enrollmentPhone" name="enrollmentPhone"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="enrollmentCountry">Country*</label>
+                <div class="select2_wrap">
+                  <select id="enrollmentCountry" class="form-control select2_single required" data-search="true"name="enrollmentCountry"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                    <option value="">Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hr-full"></div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentNationalID">National ID*</label>
+              <input type="text" class="form-control" id="enrollmentNationalID" name="enrollmentNationalID"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}"
+                data-msg-nationalID="{{ 'enrollment.validate.nationalid' | t }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentBankName">Bank NAME*</label>
+              <input type="text" class="form-control" id="enrollmentBankName" name="enrollmentBankName"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentBankACcount">Bank ACcount number*</label>
+              <input type="text" class="form-control" id="enrollmentBankACcount" name="enrollmentBankACcount"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentConfirmBankACcount">Confirm Bank Account Number*</label>
+              <input type="text" class="form-control" id="enrollmentConfirmBankACcount" name="enrollmentConfirmBankACcount"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="group-button d-flex justify-content-end align-items-center">
+        <a class="form__back-link" href="{{ pages['enrollment-step-1'].url }}">&#60; Back</a>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </div>
+      
+    </form>
+  <div>
+</div>

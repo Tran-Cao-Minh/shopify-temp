@@ -1,0 +1,38 @@
+{% if section.blocks.size > 0 %}
+  {% for block in section.blocks limit: section.blocks.size %}
+    <div class="smart__timeline-content">
+      <div class="step">{{ 'general.pages.how_to_shop_online_step' | t }}<span>{{ forloop.index }}</span></div>
+      {% if block.settings.title != blank or block.settings.text != blank %}
+        <div class="content">
+          {% if block.settings.title != blank %}<h3>{{ block.settings.title }}</h3>{% endif %}
+          {% if block.settings.text != blank %}<p>{{ block.settings.text }}</p>{% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endif %}
+{% schema %}
+{
+  "name": "How to shop online",
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+

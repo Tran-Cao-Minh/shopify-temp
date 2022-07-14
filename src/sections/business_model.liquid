@@ -1,0 +1,135 @@
+<div class="businessModel--banner" style="background-image:url({{ section.settings.image | img_url: 'master' }});background-repeat: no-repeat;">
+  <img class="businessModel--bannerslider" src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title }}" />
+  <div class="container">
+    <div class="businessModel--banner__content">
+      {% if section.settings.title != blank %}
+        <h2 class="h1 heading">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.desc != blank %}
+        <div class="businessModel--banner-desc">
+          {{ section.settings.desc }}
+
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<div class="businessModel--about">
+  <div class="container">
+    {% if section.settings.titleSlider != blank %}
+      <h2 class="h1 heading">{{ section.settings.titleSlider }}</h2>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="swiper-container businessModel--slide" data-size="{{ section.blocks.size }}">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks limit: section.blocks.size %}
+            <div class="swiper-slide">
+              <div class="businessModel--slide__item">
+                <div class="businessModel--slide__content">
+                  {% if block.settings.title != blank %}
+                    <div class="h1 title">{{ block.settings.title }}</div>
+                  {% endif %}
+                  <div class="businessModel--slide__content__desc rte">
+                    {{ block.settings.desc }}
+                  </div>
+                </div>
+                <div class="business--slide__media">
+                  <img class="slide__media--small-img" src="{{ block.settings.smallImage | img_url: '475x675' }}" alt="{{ block.settings.title }}"/>
+                  <img class="slide__media--large-img" src="{% if block.settings.largeImage != blank %}
+                      {{ block.settings.largeImage | img_url: '475x675' }}
+                    {% else %}
+                      {{ block.settings.smallImage | img_url: '475x675' }}
+                    {% endif %}" alt="{{ block.settings.title }}"/>
+                  <p class="business--slide__short-desc h1">
+                    {{ block.settings.short_desc }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button">
+          <div class="swiper-button-next" title="{{ 'general.slide.next' | t }}"></div>
+          <div class="swiper-button-prev" title="{{ 'general.slide.previous' | t }}"></div>
+        </div>
+
+      </div>
+
+    {% endif %}
+  </div>
+
+
+
+</div>
+
+{% schema %}
+{
+  "name": "Business Model",
+  "class": "ss-businessModel-slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description"
+    },
+    {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Select image"
+    },
+    {
+    "type": "header",
+    "content": "Slider Carousel"
+    },
+    {
+    "type": "text",
+    "id": "titleSlider",
+    "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "short_desc",
+          "label": "Short description"
+        },
+        {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "smallImage",
+          "label": "Select small image"
+        },
+        {
+          "type": "image_picker",
+          "id": "largeImage",
+          "label": "Select large image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

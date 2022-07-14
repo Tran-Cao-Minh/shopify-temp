@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="banner-bottom">
+        {% if section.settings.title %}
+            <h3 class="primary_color">{{ section.settings.title }}</h3>
+        {% endif %}
+        {% if section.settings.text %}
+            <div class="desc">{{ section.settings.text }}</div>  
+        {% endif %}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Banner bottom",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    }
+  ]
+}
+{% endschema %}

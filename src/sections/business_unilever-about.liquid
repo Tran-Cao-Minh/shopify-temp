@@ -1,0 +1,43 @@
+<div class="unilever__about-top">
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <h2 class="h1 text-center title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.desc != blank %}
+      <div class="unilever__about-desc text-center">{{ section.settings.desc }}
+        {% if section.settings.button_url %}
+          <a href="{{ section.settings.button_url }}" class="unilever__about-more">{{ section.settings.button_text }}</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>  
+</div>
+
+{% schema %}
+{
+  "name": "Unilever about",
+  "class": "ss-unilever__about home-unilever__about",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button title"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    }
+  ]
+}
+{% endschema %}

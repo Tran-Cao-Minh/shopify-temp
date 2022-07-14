@@ -1,0 +1,26 @@
+{%- assign limit = collections.all.all_products_count -%}
+{% assign class_grid = 'swiper-slide' %}
+<div class="container" data-swiper_wrapper>
+    <div id="recently-viewed-products" class="row">
+      <div class="col-12">
+        <div class="section-header">
+          <h3 class="h3 font_weight_600">{{ 'products.recently_viewed.title' | t }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-container product_lists grid--view-items product__card-slide"
+      data-nav="false" data-page="true" data-auto_height="true"
+      data-mb="2.2" data-dk="4"
+      data-center="false" data-slide_viewed>
+      <div id="listsRecentlyViewed" class="swiper-wrapper"></div>
+      <div class="swiper-pagination"></div>
+    </div>      
+    <!-- Add Arrows -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+    <script type="text/html" id="recentlyViewedProducts">
+      {% include 'product-card-template' %}
+   </script>
+</div>

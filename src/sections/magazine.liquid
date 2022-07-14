@@ -1,0 +1,182 @@
+<style type="text/css">
+  .page-container {
+    transform: none;
+  }
+</style>
+
+<div class="uni__magazine--page">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="page__header">
+          {% if section.settings.title != blank %}
+            <h2 class="title">{{ section.settings.title }}</h2>
+          {% endif %}
+          {% if section.settings.description != blank %}
+            <p class="desc">{{ section.settings.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="page__content">
+      {% for block in section.blocks %}
+        <div class="item">
+
+           {% if block.settings.image != blank %}
+              <div class="image__backend">
+                <div class="toolbar__lists">
+                  {% if block.settings.link_open != blank %}
+                  <a class="toolbar__lists--link" target="_blank" href="{{ block.settings.link_open }}" data-src="{{ block.settings.link_open }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="19.517" viewBox="0 0 25 19.517">
+                      <defs>
+                        <clipPath class="clip-path_open_magazine">
+                          <rect data-name="Rectangle 472" width="25" height="19.517" fill="#fff"/>
+                        </clipPath>
+                      </defs>
+                      <g data-name="Group 1136" transform="translate(0 0)">
+                        <g data-name="Group 1029" transform="translate(0 -0.001)" clip-path="url(.clip-path_open_magazine)">
+                          <path data-name="Path 229" d="M15.941,18.249l-.3-.27c-.031-.028-3.256-2.817-9.782-2.726l-.464.007V.009L5.843,0c5.826-.085,9.124,1.987,10.1,2.715.976-.727,4.271-2.8,10.1-2.715l.451.007v15.25l-.464-.007c-6.522-.093-9.75,2.7-9.782,2.726ZM6.306,14.337c5.536.03,8.686,2.009,9.635,2.717.95-.707,4.1-2.687,9.636-2.717V.915c-6.224.035-9.3,2.7-9.332,2.728l-.3.27-.3-.271C15.607,3.616,12.529.95,6.306.915Z" transform="translate(-3.399 0)" fill="#fff"/>
+                          <rect data-name="Rectangle 471" width="0.914" height="14.336" transform="translate(12.086 3.302)" fill="#fff"/>
+                          <path data-name="Path 230" d="M23.954,6.107V21.18h-11.4l-.06.05-.059-.05H1.178V6.107H0V22.251H25V6.107Z" transform="translate(0.001 -3.85)" fill="#fff"/>
+                          <path data-name="Path 231" d="M33.145,47.865a1.12,1.12,0,1,1-1.12-1.12,1.12,1.12,0,0,1,1.12,1.12" transform="translate(-19.483 -29.468)" fill="#fff"/>
+                        </g>
+                      </g>
+                    </svg>
+                    <span>{{- 'general.magazine.open' | t -}}</span>
+                  </a>
+                  {% endif %}
+
+                  {% if block.settings.link_download != blank %}
+                  <a class="toolbar__lists--link btn--download" target="_blank" href="{{ block.settings.link_download }}" data-src="{{ block.settings.link_download }}">
+                    <svg data-name="Group 1135" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="21.191" viewBox="0 0 20 21.191">
+                      <defs>
+                        <clipPath class="clip-path_down-arrow">
+                          <rect data-name="Rectangle 470" width="20" height="21.191" fill="#fff"/>
+                        </clipPath>
+                      </defs>
+                      <g data-name="Group 1027" clip-path="url(.clip-path_down-arrow)">
+                        <path data-name="Path 226" d="M18.642,225.8H1.358A1.347,1.347,0,0,1,0,224.468v-4.317a.63.63,0,0,1,1.259,0v4.317a.091.091,0,0,0,.1.074H18.642a.091.091,0,0,0,.1-.074v-4.317a.63.63,0,0,1,1.259,0v4.317a1.347,1.347,0,0,1-1.358,1.333" transform="translate(0 -204.61)" fill="#fff"/>
+                        <path data-name="Path 227" d="M136.5,15.907a.781.781,0,0,1-.781-.781V.781a.781.781,0,1,1,1.562,0V15.126a.781.781,0,0,1-.781.781" transform="translate(-126.502)" fill="#fff"/>
+                        <path data-name="Path 228" d="M44.761,143.835a.781.781,0,0,1-.552-.229l-6.686-6.686a.781.781,0,1,1,1.1-1.1l6.133,6.133,6.133-6.133a.781.781,0,0,1,1.1,1.1l-6.686,6.686a.781.781,0,0,1-.552.229" transform="translate(-34.762 -126.377)" fill="#fff"/>
+                      </g>
+                    </svg>
+                    <span>{{- 'general.magazine.download' | t -}}</span>
+                  </a>
+                  {% endif %}
+
+                </div>
+                
+              </div>
+              <img src="{{ block.settings.image | img_url: '350x460' }}" alt=""/>
+
+            {% else %}
+              <img alt="" src="https://via.placeholder.com/270x402">
+            {% endif %}
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name":{
+    "en":"Magazine",
+    "th":"นิตยสาร"
+  },
+  "settings":[
+    {
+      "type":"text",
+      "id":"title",
+      "label":{
+        "en":"Heading",
+        "th":"ส่วนหัว"
+      },
+      "default":{
+        "en":"Magazine Online",
+        "th":"นิตยสารออนไลน์"
+      }
+    },
+    {
+      "type":"textarea",
+      "id":"description",
+      "label":{
+        "en":"Description",
+        "th":"ลักษณะ"
+      },
+      "default":{
+        "en":"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain",
+        "th":"ไม่มีใครที่รักความเจ็บปวดของตัวเองผู้ตามหามันและต้องการที่จะมีมันเพียงเพราะมันเป็นความเจ็บปวด"
+      }
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all"
+    }
+  ],
+  "blocks":[
+    {
+      "type":"magazine",
+      "name":{
+        "en":"Magazine",
+        "th":"นิตยสาร"
+      },
+      "settings":[
+        {
+        "type": "text",
+        "id": "title",
+        "label": "Article title",
+        "default": "Article title"
+        },
+        {
+          "type":"image_picker",
+          "id":"image",
+          "label":{
+            "en":"Thumbnail",
+            "th":"รูปขนาดย่อ"
+          },
+          "info": "Standard Image Sizes (307x415)"
+        },
+        {
+          "type":"text",
+          "id":"link_open",
+          "label":{
+            "en":"Article Link - Open",
+            "th":"รายละเอียดลิงค์บทความ"
+          }
+        },
+        {
+          "type":"text",
+          "id":"link_download",
+          "label":{
+            "en":"Article Link - Download",
+            "th":"รายละเอียดลิงค์บทความ"
+          }
+        }
+      ]
+    }
+  ],
+  "presets":[
+    {
+      "name":{
+        "en":"Magazine",
+        "th":"นิตยสาร"
+      },
+      "category":{
+        "en":"Pages",
+        "th":"หน้า"
+      }
+    }
+  ]
+}
+{% endschema %}

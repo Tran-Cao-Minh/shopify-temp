@@ -1,0 +1,85 @@
+<div class="autoship__joining">
+    <div class="container" data-swiper_wrapper>
+        {% if section.settings.title != blank %}
+            <div class="text-center">
+                <h2 class="h1">{{ section.settings.title }}</h2>
+            </div>
+        {% endif %}
+        {% if section.blocks.size > 0 %}
+            <div class="swiper-container"
+                data-nav="false" data-page="true" data-auto_height="true"
+                data-mb="1" data-dk="4"
+                data-center="false"
+                data-slide_autoship_joining>
+                <div class="swiper-wrapper">
+                    {% for block in section.blocks limit: section.blocks.size %}
+                        <div class="swiper-slide">
+                            <div class="autoship__joining-item">
+                                {% if block.settings.icon != blank %}
+                                    <div class="media">{{ block.settings.icon }}</div>
+                                {% endif %}
+                                {% if block.settings.title != blank %}
+                                    <h3 class="autoship__joining-title">{{ block.settings.title }}</h3>
+                                {% endif %}
+                                {% if block.settings.text != blank %}
+                                    <div class="autoship__joining-desc">{{ block.settings.text }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        {% endif %}
+        <div class="note-joining-container">
+          {{ section.settings.note_joining }}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        smartosc.ssSlider('[data-slide_autoship_joining]');
+    });
+</script>
+{% schema %}
+{
+  "name": "Joining autoship",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Benefit of joining VIP Subscription"
+    },
+    {
+      "type": "textarea",
+      "id": "note_joining",
+      "label": "Note Joining",
+      "default": "<p><span class='note-title'>Note: </span><span class='note-content'>If you cannot register online, <a href='#''>click here</a> to download Autoship application form to register offline.</span></p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

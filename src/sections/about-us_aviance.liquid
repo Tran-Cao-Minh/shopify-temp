@@ -1,0 +1,145 @@
+<section class="section section__product--aviance">
+{% if section.settings.brand_logo != blank %}
+<div class="product__logo">
+    <div class="container">
+        <img alt="logo" src="{{section.settings.brand_logo | img_url: 'master'}}"/>
+    </div>
+</div>
+{% endif %}
+    <div class="container">
+        <div class="row product__description">
+            <div class="col col-12 col-md-6">
+                <div class="product__content">
+                    {% if section.settings.brand_title != blank %}
+                        <h1>{{section.settings.brand_title}}</h1>
+                    {% endif %}
+                    {% if section.settings.brand_subtitle != blank %}
+                        <div class="subtitle">{{section.settings.brand_subtitle}}</div>
+                    {% endif %}
+                    {% if section.settings.brand_desc_1 != blank %}
+                        {{section.settings.brand_desc_1}}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col col-12 col-md-6">
+                {% if section.settings.brand_desc_2 != blank %}
+                    <div class="product__content">
+                        {{section.settings.brand_desc_2}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% if section.blocks.size > 0 %}
+            <div class="row product__feature">
+                {% for block in section.blocks %}
+                <div class="col col-12 col-md-4">
+                    <div class="feature__icon">
+                        <div class="image">
+                            <img
+                                alt="{{block.settings.feature_title}}"
+                                src="{{block.settings.image|  img_url: 'master'}}"
+                            />
+                        </div>
+                        <h1 class="product__feature--name">{{block.settings.feature_title}}</h1>
+                    </div>
+                    {{block.settings.feature_desc}}
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        {% if section.settings.brand_note != blank %}
+            <div class="product__note display-dk">
+                {{section.settings.brand_note}}
+            </div>
+        {% endif %}
+        {% if section.settings.brand_action_label != blank %}
+            <div class="product__view">
+                <a class="link-readmore text-underline" href="{{section.settings.brand_handle}}" target="_blank"
+                >{{section.settings.brand_action_label}}</a
+                >
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+
+{% schema %}
+{
+    "name": "Aviance",
+    "class": "ss-aviance",
+    "settings": [
+        {
+            "type": "text",
+            "id": "brand_action_label",
+            "label": "Brand link button label",
+            "default": "View Aviance products"
+        },
+        {
+            "type": "text",
+            "id": "brand_title",
+            "label": "Brand title",
+            "default": "Aviance"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_subtitle",
+            "label": "Brand subtitle",
+            "default": "<p>Health and wellness product</p>"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_desc_1",
+            "label": "Brand description 1",
+            "default": "<p>aviance accesses the power of women’s beauty through a deep understanding of science. </p>"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_desc_2",
+            "label": "Brand description 2",
+            "default": "<p>aviance is also a premium beauty brand. It is our achievement from Unilever’s global innovation and development center.</p>"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_note",
+            "label": "Brand remark",
+            "default": "<p>Remarks: Cosmetics cannot change the body structure.</p>"
+        },
+        {
+            "type": "url",
+            "id": "brand_handle",
+            "label": "Brand URL"
+        },
+        {
+            "type": "image_picker",
+            "id": "brand_logo",
+            "label": "Brand logo"
+        }
+
+    ],
+    "blocks": [
+        {
+            "type": "quote",
+            "name": "Feature",
+            "settings": [
+            {
+                "type": "text",
+                "id": "feature_title",
+                "label": "Feature",
+                "default": "Title"
+            },
+            {
+                "type": "richtext",
+                "id": "feature_desc",
+                "label": "Description",
+                "default": "<p>Description</p>"
+            },
+            {
+                "id": "image",
+                "type": "image_picker",
+                "label": "Brand image"
+            }
+            ]
+        }
+    ]
+}
+{% endschema %}

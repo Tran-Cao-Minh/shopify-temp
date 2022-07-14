@@ -1,0 +1,3 @@
+{% if product.metafields.countdown.end_date != blank %}
+    <div class="product__countdown" data-countdown="{{ product.metafields.countdown.end_date }}"></div>
+{% endif %}

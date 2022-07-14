@@ -1,0 +1,130 @@
+<div class="businessInfo--top">
+  <div class="container">
+    <div class="row no-gutters">
+      <div class="col-sm-12 col-lg-4">
+        <div class="businessInfo--top__content">
+          {% if section.settings.title != blank %}
+            <h2 class="h1 heading">{{ section.settings.title }}</h2>
+          {% endif %}
+          {% if section.settings.desc != blank %}
+            <div class="unilever__about-desc">{{ section.settings.desc }}
+              {% if section.settings.button_url %}
+                <a href="{{ section.settings.button_url }}" class="unilever__about-more">{{ section.settings.button_text }}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-8">
+        <div class="media"><img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title | escape }}" /></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="businessInfo--about">
+  {% if section.blocks.size > 0 %}
+  <div class="businessInfo--about__list container">
+    <div class="row">
+      {% for block in section.blocks limit: section.blocks.size %}
+        <div class="col-sm-12 col-lg-3 col-item">
+          <div class="businessInfo--about__item">
+
+            <div class="card-body">
+              {% if block.settings.title != blank %}
+                <div class="h1 title">{{ block.settings.title }}</div>
+              {% endif %}
+              <p class="businessInfo--about__item__desc">
+                {{ block.settings.desc }}
+              </p>
+              {% if block.settings.button_url %}
+                <a href="{{ block.settings.button_url }}" class="btn btn-lg btn-block btn--download" target="_blank">
+                  {{ block.settings.button_text }}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="19.163" viewBox="0 0 21 19.163">
+                    <g data-name="Group 2232" transform="translate(-1357.498 -401.1)">
+                      <g data-name="Group 1684" transform="translate(1373.982 407.364) rotate(90)">
+                        <path data-name="Path 76" d="M.359.058a.22.22,0,0,0-.3,0,.209.209,0,0,0,0,.3L5.624,5.917.062,11.478a.21.21,0,0,0,0,.3.219.219,0,0,0,.3,0L6.218,5.917Z" transform="translate(0 0)" fill="none" stroke="#6445ee" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+                      </g>
+                      <path data-name="Path 232" d="M-648.425-9232.419V-9244.4" transform="translate(2016.49 9646)" fill="none" stroke="#6445ee" stroke-linecap="round" stroke-width="1"/>
+                      <path data-name="Path 233" d="M-661-9237.512v6.956h20v-6.956" transform="translate(2019 9650.318)" fill="none" stroke="#6445ee" stroke-linecap="round" stroke-width="1"/>
+                    </g>
+                  </svg>
+
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+<style>
+  .business_download .main-content{
+    background-image:  url("{{ section.settings.image | img_url: 'master' }}") ;
+  }
+</style>
+{% schema %}
+{
+  "name": "Business Info",
+  "class": "ss-unilever__meeting",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "desc",
+      "label": "Description"
+    },
+    {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Select image"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button title"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Description"
+        },
+        {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button title"
+        },
+        {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button link"
+        }
+
+
+      ]
+    }
+  ]
+}
+{% endschema %}

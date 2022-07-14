@@ -1,0 +1,202 @@
+{% comment %}
+    Renders a product card using "Grid" style
+    Accepts:
+    - max_height: {Number} Maximum height of the product's image (required)
+    - product: {Object} Product Liquid object (required)
+    - show_vendor: {Boolean} Show the product's vendor depending on the section setting (optional)
+
+    Usage:
+    {% include 'product-card-grid', max_height: max_height, product: product, show_vendor: section.settings.show_vendor %}
+{% endcomment %}
+{% assign product_tags = product.tags | downcase %}
+{% unless section_id %}
+  {% assign section_id = section.id %}
+{% endunless %}
+<div class="grid-view-item{% unless product.available %} grid-view-item--sold-out{% endunless %} product-card product-item" data-section_id="{{ section_id }}-{{ product.id }}">
+  {% capture img_id %}ProductCardImage-{{ section_id }}-{{ product.id }}{% endcapture %}
+  {% capture wrapper_id %}ProductCardImageWrapper-{{ section_id }}-{{ product.id }}{% endcapture %}
+  {%- assign preview_image = product.featured_media.preview_image -%}
+  {%- assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+  {% comment %} Tags {% endcomment %}
+  <div class="product__tags">
+    {% include 'product-tag-label-liquid' %}
+  </div>
+  <div class="product-card__image-with-placeholder-wrapper" data-image-with-placeholder-wrapper>
+    <div id="{{ wrapper_id }}" class="grid-view-item__image-wrapper product-card__image-wrapper js">
+      <a href="{{ product.url | within: collection }}">
+        {% if product.featured_image %}
+          <img id="{{ img_id }}" class="grid-view-item__image img-primary lazyload"
+            alt="{{ preview_image.alt }}" data-src="{{ product.featured_image | img_url: '400x' }}" data-image>
+        {% else %}
+          <img id="{{ img_id }}" class="grid-view-item__image img-primary lazyload"
+            alt="{{ preview_image.alt }}" data-src="{{ 'default_product.png' | asset_img_url: '400x' }}" data-image>
+        {% endif %}
+      </a>
+      <div class="quickview">
+        <a href="javascript:void(0)" class="quickview_button btn btn--small"
+          data-quickview-id="{{ product.id }}" data-product_handle="{{ product.handle }}"
+          data-variant-inventory="[{%- for v in product.variants -%}
+          {'id':{{v.id}},'inventory_quantity':{{v.inventory_quantity}},'management':'{{v.inventory_management}}'}{% if forloop.last == false %},{% endif %}{%- endfor -%}]">
+        {{ 'collections.quickview.title' | t }}</a>
+      </div>
+    </div>
+    <div class="placeholder-background placeholder-background--animation" data-image-placeholder></div>
+
+    <!-- Add to cart action -->
+    <div class="action">
+      <a href="javascript:void(0)"
+        data-product_tags="{{ product.tags | join: ',' | downcase }}"
+        title="{{ 'general.tooltip.add_to_bag' | t }}"
+        class="product-form__cart{% unless product.available %} disable{% endunless %}">{% include 'icon-cart' %}
+      </a>
+    </div>
+  </div>
+
+  {% comment %}
+  {%- if section.settings.enable_color_swatch -%}
+    {%- assign layout_color_swatch = section.settings.layout_color_swatch -%}
+    {% include 'products-card-color', product: product, layout_color_swatch: layout_color_swatch %}
+  {%- endif -%}
+  {% endcomment %}
+
+  <noscript>
+    {% capture image_size %}
+      {{ max_height }}x{{ max_height }}
+    {% endcapture %}
+    <img class="grid-view-item__image" src="{{ preview_image | img_url: image_size, scale: 2 }}" alt="{{ preview_image.alt }}" style="max-width: {{ max_height | times: preview_image.aspect_ratio }}px;">
+  </noscript>
+
+  <div class="h4 grid-view-item__title product-card__title">
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+  </div>
+
+  {% if count_variant > 1 %}
+    <div class="product-form__selector hidden">
+      <select name="id" id="product-selectors-{{ section_id }}-{{ product.id }}" class="product-form__variants">
+        {% for variant in product.variants %}
+          {%- assign sku = variant.sku | downcase -%}
+          {%- if product_tags contains sku -%}
+            {%- if customer -%}
+              {%- assign variant_tag = tag_customer | append: '_' | append: variant.sku -%}
+              {%- if product.tags contains variant_tag -%}
+                <option value="{{ variant.id }}"
+                  data-quantity="{{ variant.inventory_quantity }}"
+                  data-manager="{{ variant.inventory_management }}"
+                  data-continue="{{ variant.inventory_policy }}">{{ variant.title }}</option>
+              {%- endif -%}
+            {%- endif -%}
+          {%- else -%}
+            <option value="{{ variant.id }}"
+              data-quantity="{{ variant.inventory_quantity }}"
+              data-manager="{{ variant.inventory_management }}"
+              data-continue="{{ variant.inventory_policy }}">{{ variant.title }}</option>
+          {%- endif -%}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="product-card__options product-form__swatch">
+      {% assign option_index = 0 %}
+      {% for option in product.options %}
+        {% assign option_index = forloop.index0 %}
+        <div class="product-card__variants swatch clearfix" data-option-index="{{ option_index }}">
+          <div class="product-card__option header">{{ option }}:</div>
+          {% assign values = '' %}
+          {% for variant in product.variants %}
+            {%- assign sku = variant.sku | downcase -%}
+            {%- if product_tags contains sku -%}
+              {%- if customer -%}
+                {%- assign variant_tag = tag_customer | append: '_' | append: variant.sku -%}
+                {%- if product.tags contains variant_tag -%}
+                  {% assign value = variant.options[option_index] %}
+                  {% unless values contains value %}
+                    {% assign values = values | join: ',' %}
+                    {% assign values = values | append: ',' | append: value %}
+                    {% assign values = values | split: ',' %}
+                    <div data-value="{{ value }}"
+                      class="product-card__variant swatch-element {{ value }}
+                        {% if is_color %} color{% endif %}
+                        {% if variant.available %}available{% else %}soldout{% endif %}">
+                      <input id="swatch-{{ option_index }}-{{ section_id }}-{{ variant.id }}" type="radio" name="option-{{ option_index }}-{{ section_id }}-{{ product.id }}" value="{{ value }}">
+                      <label for="swatch-{{ option_index }}-{{ section_id }}-{{ variant.id }}">{{ value }}
+                        <img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" />
+                      </label>
+                    </div>
+                  {% endunless %}
+                {%- endif -%}
+              {%- endif -%}
+            {%- else -%}
+              {% assign value = variant.options[option_index] %}
+              {% unless values contains value %}
+                {% assign values = values | join: ',' %}
+                {% assign values = values | append: ',' | append: value %}
+                {% assign values = values | split: ',' %}
+                <div data-value="{{ value }}"
+                  class="product-card__variant swatch-element {{ value }}
+                    {% if is_color %} color{% endif %}
+                    {% if variant.available %}available{% else %}soldout{% endif %}">
+                  <input id="swatch-{{ option_index }}-{{ section_id }}-{{ variant.id }}" type="radio" name="option-{{ option_index }}-{{ section_id }}-{{ product.id }}" value="{{ value }}">
+                  <label for="swatch-{{ option_index }}-{{ section_id }}-{{ variant.id }}">{{ value }}
+                    <img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" />
+                  </label>
+                </div>
+              {% endunless %}
+            {%- endif -%}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    {% if current_variant.title != blank and current_variant.title != 'Default Title' %}
+      <div class="product-card__variant-title">{{ current_variant.title }}</div>
+    {% endif %}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" />
+  {% endif %}
+
+  <div class="grid-view-vote">
+    {% if show_vendor and product %}
+      <div class="vendor">
+        {{ product.vendor }}
+      </div>
+    {% endif %}
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  </div>
+  {%- assign price                = current_variant.price -%}
+  {%- assign compare_member_price = current_variant.metafields.ulife.compare_member_price -%}
+  {%- assign member_price         = current_variant.metafields.ulife.member_price -%}
+  <div class="product-card__price-wrap">
+    {% unless product_tags contains "autoship" %}
+      <div class="product-card__price product-card__price-member
+        {% unless member_price != blank %} hide{% endunless %}
+        {% if compare_member_price > member_price %} price--on-sale{% endif %}">
+        <span class="price_note display-dk">{{ 'products.product.member_price' | t }}</span>
+        <span class="price_note display-mb">{{ 'products.product.member_price_mobile' | t }}</span>
+        <span class="price price__sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+        <span class="price price__regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+      </div>
+      <div class="product-card__price product-card__price-retail
+        {% if compare_at_price > price %} price--on-sale{% endif %}">
+        <span class="price_note display-dk">{{ 'products.product.retail_price' | t }}</span>
+        <span class="price_note display-mb">{{ 'products.product.retail_price_mobile' | t }}</span>
+        <span class="price price__sale">{{ compare_at_price | money | remove: '.00' }}</span>
+        <span class="price price__regular">{{ price | money | remove: '.00' }}</span>
+      </div>
+    {% else %}
+      <div class="product-card__price product-card__price-member
+        {% if compare_member_price > member_price %} price--on-sale{% endif %}">
+        <span class="price_note display-dk">{{ 'products.product.member_price' | t }}</span>
+        <span class="price_note display-mb">{{ 'products.product.member_price_mobile' | t }}</span>
+        <span class="price price__sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+        <span class="price price__regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+      </div>
+    {% endunless %}
+  </div>
+
+  <div class="prd__error-message"></div>
+  {% comment %} {% assign json_test = product_json | replace: '},]' , '}]' %}
+  <div id="ProductCardJson-{{ section_id }}-{{ product.id }}" class="product-card__json sadasd" data-json='{{ json_test | escape }}'></div> {% endcomment %}
+  <div id="ProductCardJson-{{ section_id }}-{{ product.id }}" class="product-card__json" data-json='{{ product_json | escape }}'></div>
+  <script>
+    product__json = JSON.stringify({{ product_json }});
+    document.getElementById("ProductCardJson-{{ section_id }}-{{ product.id }}").setAttribute("data-json", product__json);
+  </script>
+</div>

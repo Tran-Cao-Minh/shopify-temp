@@ -1,0 +1,11 @@
+{% comment %} {% if customer %}
+{% section 'toolbox' %}
+{% endif %}
+{%- unless customer -%}
+<script>
+  window.location.href = '/404'
+</script>
+{%- endunless -%} {% endcomment %}
+
+{% section 'toolbox' %}
+{% include 'sharing-popup', share_permalink: page.url %}

@@ -1,0 +1,11 @@
+{% assign tag_customer = '' %}
+{% if customer %}
+    {% for tag in customer.tags %}
+    {% assign tag_downcase = tag | downcase %}
+        {% if tag_downcase contains 'bp_rank' %}
+           {% assign tag_customer = tag %}
+           {% assign customer_title = tag | remove: 'BP_Rank:' %}
+           {% break %}
+        {% endif %}
+    {% endfor %}
+{% endif %}

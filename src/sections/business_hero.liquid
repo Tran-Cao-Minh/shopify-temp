@@ -1,0 +1,200 @@
+<div 
+  class="home-member__privileges__background"
+  style="background-image:url('{{ section.settings.image | img_url: '' }}')"
+>
+  <div class="container">
+    <div class="unilever__about_wrapper">
+      <div class="container unilever__about">  
+        {% if section.blocks.size > 0 %}
+        <div class="unilever__about-list">
+          <div class="row">
+            {% for block in section.blocks limit: section.blocks.size %}
+              {%- assign img_width =  block.settings.image_width -%}
+              {% if img_width == 'custom' %}
+                {%- assign img_width =  block.settings.img_custom | append: 'x' -%}
+              {% endif %}
+              {% if img_width == '' %}
+                {%- assign img_width =  'medium' -%}
+              {% endif %}
+              <div class="col-12 col-md-3 col-item">
+                <div class="item">
+                  {% if block.settings.ulr != blank and block.settings.image != blank %}
+                    {% if block.settings.image != blank %}
+                    <div class="media">
+                        <a href="{{ block.settings.ulr }}">
+                        <img src="{{ block.settings.image | img_url: img_width }}" alt="{{ block.settings.title }}" />
+                        </a>
+                    </div>
+                    {% endif %}
+                  {% elsif block.settings.image != blank %}
+                    <div class="media"><img src="{{ block.settings.image | img_url: img_width }}" alt="{{ block.settings.title }}" /></div>
+                  {% endif %}
+    
+                  <div class="content">
+                    {% if block.settings.ulr != blank and block.settings.title != blank %}
+                      <a href="{{ block.settings.ulr }}"><div class="title"><h4>{{ block.settings.title }}</h4></div></a>
+                    {% elsif block.settings.title != blank %}
+                      <h4 class="h4 title primary_color">{{ block.settings.title }}</h4>
+                    {% endif %}
+                    {% if block.settings.desc != blank %}
+                      <div class="desc">{{ block.settings.desc }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>  
+        {% endif %}
+      </div>
+    </div>
+    <div class="row row__privileges">
+      <div class="col-sm-6 item-content">
+        {% if section.settings.title != blank %}
+          <h2 class="title secondary_color">{{ section.settings.title }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank or section.settings.button_label != blank %}
+          <div class="content-bg">
+            {% if section.settings.text != blank %}
+              <div class="rte-setting">
+                {{ section.settings.text }}
+              </div>
+            {% endif %}
+            {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+              <a href="{{ section.settings.button_link }}" class="btn hero__btn fix-width">{{ section.settings.button_label }}</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      {% if section.settings.image != blank %}
+        <div class="col-sm-6 item-media">
+          <div class="box-shadow-img"></div>
+          {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          <img id="{{ img_id }}"
+              class="lazyload"
+              src="{{ section.settings.image | img_url: '300x300' }}"
+              data-src="{{ img_url }}"
+              data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+              data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+              data-sizes="auto"
+              alt="{{ section.settings.image.alt | escape }}">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Member privileges",
+  "class": "home-member__privileges",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": {
+        "en": "Image",
+        "th": "รูปภาพ"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "en": "Heading",
+        "th": "ส่วนหัว"
+      },
+      "default": {
+        "en": "Image with text overlay",
+        "th": "การวางซ้อนรูปภาพพร้อมข้อความ"
+      }
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": {
+        "en": "Text",
+        "th": "ข้อความ"
+      },
+      "default": {
+        "en": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
+        "th": "<p>ใช้ข้อความซ้อนทับเพื่อให้ลูกค้าของคุณทราบถึงรายละเอียดเกี่ยวกับแบรนด์ เลือกรูปภาพและข้อความที่มีความเกี่ยวข้องกับสไตล์กับเรื่องราวของคุณ</p>"
+      }
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": {
+        "en": "Button label",
+        "th": "ป้ายกำกับปุ่ม"
+      }
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": {
+        "en": "Button link",
+        "th": "ลิงก์ของปุ่ม"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "ulr",
+          "label": "Url"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select image"
+        },
+        {
+          "type": "select",
+          "id": "image_width",
+          "label": "Image width",
+          "default": "medium",
+          "options": [
+            {
+              "value": "small",
+              "label": "Small"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "master",
+              "label": "Master"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "img_custom",
+          "label": "Custom width",
+          "default": "120"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

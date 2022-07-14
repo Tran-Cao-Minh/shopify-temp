@@ -1,0 +1,84 @@
+{% assign tag_customer = '' %}
+{% if customer %}
+   {% for tag in customer.tags %}
+      {% assign tag_downcase = tag | downcase %}
+      {% if tag_downcase contains 'bp_rank' %}
+         {% assign tag_customer = tag %}
+         {% break %}
+      {% endif %}
+   {% endfor %}
+{% endif %}
+<div class="container">
+    {% if section.settings.title != blank %}
+        <header class="section-header collection_header">
+            <h1>{{ section.settings.title }}</h1>
+        </header>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+            {% if block.settings.collection != blank %}
+                {%- assign collection = collections[block.settings.collection] -%}
+                {%- assign section_id = 'collection_index_' | append: forloop.index -%}
+                <div class="collection_item" data-block_id="{{ section_id }}">
+                    <div class="collection__item-header">
+                        <h3 class="title">{{ collection.title }}</h3>
+                        <a class="link-readmore text-underline" href="{{ collection.url }}">{{ "collections.general.see_more_product" | t }}</a>
+                    </div>
+                    {% if collection.all_products_count > 0 %}
+                        <div data-swiper_wrapper>
+                            <div class="swiper-container product_lists grid--view-items product__card-slide"
+                                data-nav="false" data-page="true" data-auto_height="true"
+                                data-mb="2" data-dk="4"
+                                data-allow_touch_move="true"
+                                data-center="false"
+                                data-slide_{{ section_id }}>
+                                <div class="swiper-wrapper">
+                                    {% assign count_product = 0 %}
+                                    {%- for product in collection.products -%}
+                                        {%- assign product_status = false -%}
+                                        {%- assign product_tags = product.tags | downcase -%}
+                                        {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+                                        {%- if product_status -%}
+                                        {%- assign count_product = count_product | plus: 1 -%}
+                                        <div class="swiper-slide">
+                                            {% include 'product-card-grid', max_height: 250, product: product, section_id: section_id %}
+                                        </div>
+                                        {%- endif -%}
+                                        {%- if count_product == 4 -%}
+                                            {%- break -%}
+                                        {%- endif -%}
+                                    {%- endfor -%}
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="collection__no-matches hide">{{ 'collections.general.no_matches' | t }}</div>
+                    {% else %}
+                        <div class="collection__no-matches hide">{{ 'collections.general.no_matches' | t }}</div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<script type="text/javascript">
+    function smartoscCollectionPage() {
+        $('.collection_item').each(function( index ) {
+            if ($(this).find('.product-item').length == 0) {
+                $(this).find('.collection__no-matches').removeClass('hide');
+                $(this).find('.link-readmore').addClass('hide');
+            }else {
+                // Render slide
+                let idBlock = $(this).data('block_id'),
+                elSlideshow = `[data-slide_${ idBlock }]`;
+                smartosc.ssSlider(elSlideshow);
+            }
+        });
+    }
+    $(function () {
+        smartoscCollectionPage();
+    });
+    $(document).on('shopify:section:load', function (e) {
+        smartoscCollectionPage();
+    });
+</script>

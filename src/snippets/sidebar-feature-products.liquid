@@ -1,0 +1,17 @@
+{%- assign limit = section.settings.sb_feature_prd_lm -%}
+{%- assign title_block = section.settings.sb_feature_prd_title -%}
+{% if section.settings.enable_sb_feature_prd != blank %}
+    {% if title_block != blank %}
+        <h4 class="sidebar_title">{{ title_block }}</h4>
+    {% endif %}
+    <div class="swiper-container sidebar_product_slide">
+        <div class="swiper-wrapper">
+            {% for product in collections[section.settings.sb_feature_prd_cl].products limit: limit %}
+                <div class="swiper-slide">{% include 'product-card-grid' %}</div>
+            {% endfor %}
+        </div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+{% endif %}

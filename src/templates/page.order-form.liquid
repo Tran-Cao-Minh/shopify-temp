@@ -1,0 +1,395 @@
+<style>
+  @media (min-width: 768px) {
+    html:not(.disable-overflow), html:not(.disable-overflow) body {
+      overflow-x: inherit;
+    }
+  }
+</style>
+{% include 'assign-locale-prefix' %}
+{%- capture orderFormSelect -%}
+{% section 'order-form-select' %}
+{%- endcapture -%}
+<div id="orderFormSelect" style="display: none">
+{{ orderFormSelect }}
+</div>
+<div class="uni__order--form" data-page_border>
+  <div class="order__form--header">
+    <div class="container">
+      <div class="section-header content__header">
+        <h2 class="page__heading text-center">{{ 'order_form.general.heading' | t }}</h2>
+        <p class="sub__heading">{{ 'order_form.general.sub_heading' | t }}</p>
+        <p class="heading__desc">{{ 'order_form.general.description_html' | t }}</p>
+      </div>
+      <div class="seach__filter--box">
+        <div class="seach__box">
+          <input class="input__text order_form-input-search" id="order_form-input-search" data-action="search" placeholder="{{ 'order_form.general.search' | t }}" type="text">
+          <span class="search__icon" title="{{ 'general.tooltip.search' | t }}">{% render 'icon-search' %}</span>
+          <span class="search__result"></span>
+        </div>
+        <div class="filter__box select2_sm_wrap position_bottom">
+          <select class="select2_single select__field order_form-select-cat" id="order_form-select-cat" data-action="change-category" name="category_filter" data-parent="true" data-parent_el=".order__form--header .select2_sm_wrap">
+            {{ orderFormSelect }}
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order__form--content">
+    <div class="container">
+      <div class="row">
+        <div class="order__lists left__section col-xl-8">
+          <div class="seach__filter--box ">
+            <div class="seach__box">
+              <input class="input__text order_form-input-search" id="order_form-input-search-mobile" data-action="search" placeholder="{{ 'order_form.general.search' | t }}" type="text">
+              <span class="search__icon">{% render 'icon-search' %}</span>
+              <span class="search__result"></span>
+            </div>
+
+            <div class="filter__box">
+              <select class="select2_single select__field order_form-select-cat" id="order_form-select-cat-mobile" data-action="change-category" name="category_filter">
+                {{ orderFormSelect }}
+              </select>
+            </div>
+          </div>
+          <div class="left__section--header">
+            {% if customer %}
+                <div class="list__header">
+                  <span class="title">{{ 'order_form.products.name' | t }}</span>
+                  <span class="promo__price">{{ 'order_form.products.promo_price_html' | t }}</span>
+                  <span class="price">{{ 'order_form.products.price_html' | t }}</span>
+                  <span class="cv__qv">{{ 'order_form.general.cv_qv' | t }}</span>
+                  <span class="quantity">{{ 'order_form.products.quantity' | t }}</span>
+                  <span class="wishlist">
+                    {{ 'order_form.products.wishlist_html' | t }}
+                    <div class="label wishlist__label">
+                        <div class="smart_tooltip">
+                            {% include 'icon-info' %}
+                            <span class="tooltiptext">{{ 'order_form.products.wishlist_tooltip' | t }}</span>
+                        </div>
+                    </div>
+                  </span>
+                  <span class="add-to-cart">{{ 'order_form.products.add_to_cart' | t }}</span>
+                </div>
+            {% else %}
+              <div class="list__header none__member">
+                  <span class="title">{{ 'order_form.products.name' | t }}</span>
+                  <span class="promo__price">{{ 'order_form.products.promo_price_html' | t }}</span>
+                  <span class="price">{{ 'order_form.products.price_html' | t }}</span>
+                  <span class="quantity">
+                    {{ 'order_form.products.quantity' | t }}
+                  </span>
+                  <span class="add-to-cart">{{ 'order_form.products.add_to_cart' | t }}</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="left__section--content">
+            <div class="list__content"></div>
+          </div>
+          <div id="product__list-loading">
+            <div class="loader" style="margin: 100px auto;"></div>
+          </div>
+          <div class="no__product--found" style="display: none; text-align: center">
+            <div class="not-found__icon">{% include 'icon-paper-search' %}</div>
+            <h3 class="not-found__title"></h3>
+            <p class="not-found__desc"></p>
+          </div>
+        </div>
+        <div class="cart__list right__section cart__mobile__summary col-xl-4 open">
+
+            <div class="right__section--header">
+              <span class="shopping__bag--header">{% render 'icon-cart' %}{{ 'order_form.cart.bag_header' | t }}</span>
+            </div>
+
+            <div class="order__form--summary">
+                {% section 'order-form-sidebar' %}
+            </div>
+            <div class="cart__loading" style="display: none"  data-container="loader">
+              <div class="loader" style="margin: 0 auto;"></div>
+            </div>
+            <div class="overlay__cart"  data-container="loader"></div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="pagination-wrap">
+        <div class="pagination_show-more">
+          <label class="display-dk">{{ 'general.pagination.item_per_page' | t }}</label>
+          <label class="display-mb">{{ 'general.pagination.show' | t }}</label>
+          <div class="select2_wrap">
+              <select id="select_show_more" class="select2_single" data-class="select_show_more">
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+              </select>
+          </div>
+        </div>
+        <div class="pagination_result-wrap smart_pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'customer-title' %}
+
+<script>
+
+  {% if cart.item_count > 0 %}
+    $('.page-container').addClass('hide---toolbar');
+
+  {% endif %}
+
+    let locale = "{{ shop.locale }}",
+        productsList = {% include 'all-products' %},
+        orderFormLocale = {
+          search_result: {{ 'order_form.general.search_result_html' | t: search:'[search]' | json }},
+          not_found: {{ 'order_form.general.not_found' | t | json }},
+          empty_bag: {{ 'order_form.general.empty_bag' | t | json }},
+          login_required: {{ 'order_form.general.login_required' | t | json }},
+          confirm_login: {{ 'order_form.general.confirm_login' | t | json }},
+          not_found_desc: {{ 'order_form.general.not_found_desc' | t | json }}
+        };
+    $('.order__form--header').find('.select2-selection__rendered').addClass('primary_color')
+    console.log($('.select2-selection__rendered'));
+</script>
+<script src="{{ 'order-form.js' | asset_url }}"></script>
+
+{% assign section_id = 'order-form' %}
+<script type="text/html" id="product-template">
+    <% current_variant = product.variants[0]; %>
+    <div class="list__item <% if (!product.available) { %> disabled <% } %>">
+      <div class="item product-card {% unless customer %} none__member {% endunless %}item__<%- product.id %> product-item"
+      data-section_id="{{ section_id }}-<%- product.id %>"
+      >
+        <div class="product__title">
+          <div class="prd__image">
+              <div class="tags__view-list">
+                {% include 'product-tag-label' %}
+              </div>
+
+            <a href="{{ shop_url }}/products/<%- product.handle %>">
+              <% if (product.featured_image) { %>
+                <img class="grid-view-item__image" src="<%- product.featured_image %>" alt="<%= product.title %>"/>
+              <% } else { %>
+                <img class="grid-view-item__image" src="{{ 'default_product.png' | asset_img_url: '150x' }}" alt="<%= product.title %>"/>
+              <% } %>
+            </a>
+
+          </div>
+          <div class="prd__info">
+            <h3><a href="{{ shop_url }}/products/<%- product.handle %>"><%= product.title %></a></h3>
+            <% if (product.variants.length > 1) { %>
+            <div class="product-form__selector hidden">
+              <select name="id" id="product-selectors-{{ section_id }}-<%- product.id %>" class="product-form__variants">
+                 <% _.forEach(product.variants, function(value) { %>
+                   <option value="<%- value.id %>"
+                     data-quantity="<%- value.inventory_quantity %>"
+                     data-manager="<%- value.inventory_management %>"
+                     data-continue="<%- value.inventory_policy %>"><%- value.title %></option>
+                 <% }); %>
+               </select>
+            </div>
+            <div class="product-card__options product-form__swatch">
+              <% _.forEach(product.options, function(option, key_option) { %>
+                <div class="product-card__variants swatch clearfix" data-option-index="<%- key_option %>">
+                  <div class="product-card__option header"><%- option %>:</div>
+                  <%
+                    var values = [];
+                    _.forEach(product.variants, function(variant) {
+                      var value = variant.options[key_option];
+                      if (values.indexOf(value) < 0) {
+                        values.push(value); %>
+                        <div data-value="<%- value %>"
+                          class="product-card__variant swatch-element <%- value %>
+                            <% if (variant.available) { %> available<% }else{ %> soldout<%} %>">
+                          <input id="swatch-<%- key_option %>-{{ section_id }}-<%- variant.id %>"
+                            type="radio" name="option-<%- key_option %>-{{ section_id }}-<%- product.id %>" value="<%- value %>">
+                          <label for="swatch-<%- key_option %>-{{ section_id }}-<%- variant.id %>"><%- value %><img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" /></label>
+                        </div>
+                  <%
+                     }
+                    }); %>
+                </div>
+              <% }); %>
+            </div>
+            <% } else { %>
+              <% if (product.variants[0].title != 'Default Title') { %>
+                <label class="product-card__variant-title"><%- product.variants[0].title %></label>
+              <% } %>
+                <input type="hidden" name="id" value="<%- product.variants[0].id %>" />
+            <% } %>
+          </div>
+        </div>
+        <div class="member_price d-flex_mobile flex_between">
+          <span class="label_on_mobile">{{ 'order_form.products.promo_price' | t }}</span>
+          <div class="product-card__price-member
+          <% if (product.variants[0].price_member_sale) { %> price--on-sale <% } %>
+          <% if (!product.variants[0].member_price) { %> hide <% } %>
+          ">
+            <span class="price price__sale">
+            <%= theme.Currency.formatMoney(product.variants[0].compare_member_price, theme.moneyFormat) %>
+            </span>
+            <span class="price price__regular">
+              <%= theme.Currency.formatMoney(product.variants[0].member_price, theme.moneyFormat) %>
+            </span>
+          </div>
+        </div>
+        <div class="normal_price d-flex_mobile flex_between">
+          <span class="label_on_mobile">{{ 'order_form.products.price' | t }}</span>
+          <div class="product-card__price-retail <% if (product.variants[0].price_sale) { %>price--on-sale<% } %>">
+            <span class="price price__sale">
+            <%= theme.Currency.formatMoney(product.variants[0].compare_at_price, theme.moneyFormat) %>
+            </span>
+            <span class="price price__regular">
+              <%= theme.Currency.formatMoney(product.variants[0].price, theme.moneyFormat) %>
+            </span>
+        </div>
+        </div>
+        {% if customer %}
+          <div class="product__cv--qv d-flex_mobile">
+            <span class="label_on_mobile">{{ 'order_form.general.cv_qv' | t }}</span>
+            <div class="product__cv--qv_number">
+              <span class="product__cv"><%- product.variants[0].cv %></span>
+              |
+              <span class="product__qv"><%- product.variants[0].qv %></span>
+            </div>
+          </div>
+        {% endif %}
+        <div class="quantity">
+          <div class="qty__box">
+            <button class="decrease-qty disabled">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="38" viewBox="0 0 19 38">
+                <text id="_-" data-name="-" transform="translate(6 27)" fill="#333" font-size="25" font-family="Kanit-SemiBold, Kanit"><tspan x="-5.113" y="0">-</tspan></text>
+              </svg>
+            </button>
+            <input class="input__text input__qty"
+            data-variant_id="<%- product.variants[0].id %>"
+            min="1" name="quantity"
+            type="number"
+            value="1"
+            id="order_quantity"
+            onkeypress="javascript: if (event.keyCode != 8 && event.keyCode != 0 && (event.keyCode < 48 || event.keyCode > 57)) return false;"
+            data-inventory_quantity="<%- product.variants[0].inventory_quantity %>"
+            data-inventory_policy="<%- product.variants[0].inventory_policy %>"
+            data-inventory_management="<%- product.variants[0].inventory_management %>"
+            >
+            <button class="increase-qty
+            <% if (product.variants[0].inventory_quantity <= 1 && product.variants[0].inventory_policy == 'deny' && product.variants[0].inventory_management) { %>
+            disabled
+            <% } %>"
+            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="38" viewBox="0 0 13 38">
+              <text id="_" data-name="+" transform="translate(0 27)" fill="#333" font-size="25" font-family="Kanit-SemiBold, Kanit"><tspan x="0" y="0">+</tspan></text>
+            </svg>
+            </button>
+          </div>
+          <div class="stocks <% if (!product.variants[0].inventory_management) { %> hide <% } %>">
+            <span class="label_on_mobile">{{ 'order_form.products.quantity' | t }}</span>
+            <span class="<% if (product.autoship) { %> hide <% } %>">
+              {{ 'order_form.products.in_stock' | t }}:
+              <span class="in__stock"><%- product.variants[0].inventory_quantity %></span>
+            </span>
+          </div>
+
+        </div>
+        {% if customer %}
+        <div class="product-single__wishlist-favorite d-flex wishlist">
+          <div class="product-single__wishlist" data-scope="wishlist" data-id="<%- product.id %>" data-title="<%- product.title %>" title="{{ 'order_form.products.add_to_wishlist' | t }}">
+            <span class="loader"></span>
+            <div class="content content_add" data-action="add">
+              <span class="icon-wishlist">{% include 'icon-add-to-wishlist' %}</span>
+              <span class="label_on_mobile">{{ 'order_form.products.add_to_wishlist' | t }}</span>
+            </div>
+            <div class="content content_remove"data-action="remove" >
+              <span class="icon-wishlist">{% include 'icon', name: 'unwishlist' %}</span>
+              <span class="label_on_mobile">{{ 'order_form.products.added_to_wishlist' | t }}</span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <% if (product.available) { %>
+        <div class="action" style="cursor:pointer" title="{{ 'order_form.products.add_to_cart_text' | t }}">
+          <a class="add-cart__item add-cart__item-desktop" data-variant_id="<%- product.variants[0].id %>"
+             data-product_tags="{{ product.tags | join: ',' | downcase }}">
+            {% include 'icon-cart' %}
+          </a>
+
+          <a class="add-cart__item add-cart__item-mobile btn btn-primary" data-variant_id="<%- product.variants[0].id %>"
+            data-product_tags="{{ product.tags | join: ',' | downcase }}">{{ 'order_form.products.add_to_cart_text' | t }}</a>
+        </div>
+        <% } %>
+        <div class="error-message-wrap">
+          <div class="vip__error-message">
+            <% if (product.available && product.autoship) { %>
+              {% unless customer %}
+                {{ 'order_form.products.promocode_require' | t }}
+              {% endunless %}
+            <% } %>
+          </div>
+          <div class="prd__error-message"></div>
+        </div>
+        <div class="product-card__json" data-json="<%- JSON.stringify(product) %>"></div>
+      </div>
+      <div style="clear: both;"></div>
+	</div>
+</script>
+<script src="{{ 'stickysidebar-resizesensor.js' | asset_url }}"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/sticky-sidebar/3.3.1/sticky-sidebar.min.js'></script>
+<script>
+  // Remove very first #orderFormSelect
+  $(document).ready(function() {
+  var orderFormSelect = document.getElementById('orderFormSelect');
+  orderFormSelect.parentNode.removeChild(orderFormSelect);
+  })
+
+  stickySidebarDesktop();
+  //expanderBlockshopping();
+  /*$(window).resize(function () {
+    stickySidebarDesktop();
+  });*/
+
+  function stickySidebarDesktop(){
+    if ($(window).innerWidth() > 1300) {
+      //sticky float Sidebar
+      const stickySidebar = new StickySidebar('.right__section', {
+        topSpacing: 90,
+        bottomSpacing: 0,
+        containerSelector: '.order__form--content'
+      });
+    }
+    /*if( window.innerWidth < 768 ){
+      //const stickySidebar = new StickySidebar('.right__section');
+      //stickySidebar.destroy();
+    }*/
+  }
+
+  function  expanderBlockshopping(){
+    // Resonsive footer-info-heading
+    $(".table-shopping__heading").click(function (e) {
+      e.preventDefault();
+      const showOrderSummary = $(this).data('showordersummary');
+      const hideOrderSummary = $(this).data('hideordersummary');
+      var collapse_content_selector = $(this).next(".order__form--block ");
+      var expander = $(this).parent();
+      const textOrderSummary = $(this).find('.textOrderSummary');
+
+      if (!$(collapse_content_selector).hasClass("open")) {
+        expander.addClass("open") ;
+      }
+      else expander.removeClass("open");
+
+      if (!$(collapse_content_selector).hasClass("open")) {
+        $(collapse_content_selector).addClass("open").slideDown("normal");
+        $(textOrderSummary).html(hideOrderSummary);
+      }
+      else {
+        $(collapse_content_selector).removeClass("open").slideUp("normal");
+        $(textOrderSummary).html(showOrderSummary);
+      }
+
+    })
+
+  }
+</script>
+{% include 'sharing-popup', share_permalink: page.url %}

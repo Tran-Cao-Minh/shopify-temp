@@ -1,0 +1,21 @@
+<style>
+    .breadcrumb__wrap {
+        display: none;
+    }
+</style>
+{% assign contact_info = shop.metafields.data.contact_info %}
+{% if contact_info.contact_phone != blank %}
+    {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+{% endif %}
+<div class="page_error-login">
+    <div class="container">
+        <div class="media">
+            <img src="https://cdn.shopify.com/s/files/1/0344/4139/6364/files/error-500-eai.jpg?v=1642751325" alt="" />
+        </div>
+        <h1 class="title">{{ 'general.login_error.oops_an_unexpected_error_occurred_while_logging_in' | t }}</h1>
+        <p class="desc">{{ 'general.login_error.please_contact_call_center' | t }} <a href="tel:{{ phone_number }}">{{ contact_info.contact_phone }}</a> {{ 'general.login_error.or_line' | t }} <a href="https://lin.ee/hovUB8v">{{ contact_info.contact_line_id }}</a> {{ 'general.login_error.for_more_detail' | t }}</p>
+        <div class="error-action">
+            <a href="{{ routes.root_url }}" class="btn">{{ 'general.login_error.back_to_home' | t }}</a>
+        </div>
+    </div>
+</div>

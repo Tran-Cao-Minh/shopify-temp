@@ -1,0 +1,194 @@
+{% if customer %}
+    {% include 'assign-locale-prefix' %}
+    <div class="page_account-edit" data-page_border>
+        {% assign customer_info = customer.metafields.data.personal %}
+        <div class="container">
+            <div class="section-header text-center">
+                <h1>{{ page.title }}</h1>
+            </div>
+
+            <div id="accountEditTemplate" class="myaccount__account-edit">
+                <form action="#" method="post" class="form-vertical"
+                    data-action="edit-personal-info">
+
+                    <input type="hidden" name="customer[id]" value="">
+                    <input type="hidden" name="customer[hash]" value="">
+                    
+                    <div class="avatar-wrap">
+                        <div class="account_edit-avatar">
+                            {% if customer_info.avatar_url != blank %}
+                                <img id="image_avatar" class="avatar" src="{{ customer_info.avatar_url }}" alt="" />
+                            {% else %}
+                                <img id="image_avatar" class="avatar" src="{{ 'avatar_personal.png' | asset_img_url: '300x' }}" alt="" />
+                            {% endif %}
+                            <div class="icon__custom-file">
+                                <label for="avatar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+                                        <g data-name="Group 1142" transform="translate(-761 -430)">
+                                            <g data-name="Ellipse 33" transform="translate(761 430)" fill="#ccc" stroke="#fff" stroke-width="1">
+                                            <circle cx="25" cy="25" r="25" stroke="none"/>
+                                            <circle cx="25" cy="25" r="24.5" fill="none"/>
+                                            </g>
+                                            <path data-name="Path 259" d="M83.486,77.649H86.66l.519-1.486A2.685,2.685,0,0,1,88,74.934a2.136,2.136,0,0,1,1.377-.474H99.492a2.135,2.135,0,0,1,1.377.474,2.687,2.687,0,0,1,.824,1.229l.519,1.486h3.173a2.475,2.475,0,0,1,1.753.73l0,0a2.475,2.475,0,0,1,.73,1.753V92.949a2.492,2.492,0,0,1-2.486,2.486h-21.9a2.478,2.478,0,0,1-1.753-.73l0,0A2.476,2.476,0,0,1,81,92.949V80.135a2.476,2.476,0,0,1,.73-1.753l0,0h0a2.479,2.479,0,0,1,1.756-.73Zm3.735,1.588H83.486a.9.9,0,0,0-.634.264l0,0a.9.9,0,0,0-.263.635V92.949a.9.9,0,0,0,.9.9h21.9a.9.9,0,0,0,.9-.9V80.135a.9.9,0,0,0-.9-.9H101.65v0a.791.791,0,0,1-.747-.531l-.705-2.019a1.143,1.143,0,0,0-.322-.516.6.6,0,0,0-.385-.12H89.379a.594.594,0,0,0-.385.12,1.141,1.141,0,0,0-.322.516l-.684,1.958a.794.794,0,0,1-.768.595Zm7.215-1.182a7.594,7.594,0,1,1-5.369,2.224,7.57,7.57,0,0,1,5.369-2.224ZM98.682,81.4a6,6,0,1,0,1.759,4.246A5.987,5.987,0,0,0,98.682,81.4Zm-7.742,4.246a.794.794,0,0,1-1.588,0,5.065,5.065,0,0,1,1.489-3.591l0,0a5.065,5.065,0,0,1,3.591-1.489.794.794,0,1,1,0,1.588,3.491,3.491,0,0,0-3.5,3.5Z" transform="translate(692 370.54)" fill="#333"/>
+                                        </g>
+                                    </svg>
+                                </label>
+                            </div>
+                            <input class="input_avatar" type="file" name="avatar"
+                                id="avatar" onchange="fileSelected(this)"
+                                accept="image/png, image/jpeg, image/jpg, image/gif">
+                        </div>
+                        <div class="avatar-bottom">
+                            <label class="error hide">{{ 'customer.edit_account.invalid_file_html' | t }}</label>
+                            <div class="avatar__file-info">{{ 'customer.edit_account.avatar_file_info_html' | t }}</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nick-name">{{ 'customer.edit_account.nick_name' | t }}</label>
+                                <input class="form-control" id="nick-name" type="text" name="nick_name"
+                                    value="{{ customer_info.nick_name }}" />
+                                <p class="account__form-note form-note">{{ 'customer.edit_account.nick_name_note_html' | t }}</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="line-user-id">{{ 'customer.edit_account.line_id' | t }}</label>
+                                <input class="form-control" id="line-user-id" type="text" name="line_user_id"
+                                    value="{{ customer_info.line_user_id }}" />
+                            </div>
+
+                             <div class="form-group">
+                                <label for="facebook">{{ 'customer.edit_account.facebook' | t }}</label>
+                                <input class="form-control" id="facebook" type="text" name="facebook"
+                                    value="{{ customer_info.facebook }}" />
+                            </div> 
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="introduction">{{ 'customer.edit_account.introduce_yourself' | t }}</label>
+                                <textarea name="introduction" id="introduction" rows="5" cols="50">{{ customer_info.introduction }}</textarea>
+                            </div>
+                            
+                           {%- if shop.metafields.ulife.countries != blank -%}
+                                {%- assign list_countries = shop.metafields.ulife.countries | split: "," -%}
+                                <div class="form-group">
+                                    <label for="language">{{ 'customer.edit_account.what_languages_do_you_speak' | t }}</label>
+                                    <div class="select2_wrap">
+                                    <select class="select2_multi"
+                                        name="language[]" id="language" multiple="multiple"
+                                        data-error=".language-error" data-placeholder="{{ 'customer.edit_account.select_language' | t }}">
+                                        {%- for item in list_countries -%}
+                                            <option value="{{ item }}"{% if customer_info.language contains item %} selected="selected"{% endif %}>{{ item }}</option>
+                                        {%- endfor -%}
+                                    </select>
+                                </div>
+                                <div class="language-error"></div>
+                                <p class="account__form-note form-note">{{ 'customer.edit_account.you_can_select_more_than_1_option' | t }}</p>
+                                </div>
+                            {%- endif -%} 
+                            {% comment %} <div class="form-group">
+                                <label for="language">{{ 'customer.edit_account.what_languages_do_you_speak' | t }}</label>
+                                <div class="select2_wrap">
+                                    <select class="select2_multi"
+                                        name="language[]" id="language" multiple="multiple"
+                                        data-error=".language-error" data-placeholder="{{ 'customer.edit_account.select_language' | t }}">
+                                        <option value="English"{% if customer_info.language contains "English" %} selected="selected"{% endif %}>English</option>
+                                        <option value="Thai"{% if customer_info.language contains "Thai" %} selected="Thai"{% endif %}>Thai</option>
+                                    </select>
+                                </div>
+                                <div class="language-error"></div>
+                                <p class="account__form-note">{{ 'customer.edit_account.you_can_select_more_than_1_option' | t }}</p>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+
+                    <div class="error-message text-center" data-render="error-message" style="display: none"></div>
+
+                    <div class="form-actions group-buttons d-flex justify-content-end form__actions-sticky">
+                        <button type="submit" class="btn primary-btn" id="btn-submit">{{ 'customer.edit_account.save' | t }}<div class="loader"></div></button>
+                        <a href="{{ pages['my-profile'].url }}" class="btn btn-cancel">{{ 'customer.edit_account.cancel' | t }}</a>
+                    </div>
+                    
+                </form> 
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+
+        let customerInfor = {{ customer_info | strip_html | json }};
+
+        function fileSelected(input) {
+
+            $('.avatar-wrap .error').addClass('hide');
+            $('.avatar__file-info').removeClass('hide');
+
+            let allowedExtension = ['jpeg', 'jpg', 'png', 'gif'],
+                fileInfo = input.files[0],
+                fileSize = fileInfo.size;
+            
+            if (fileInfo) {
+
+                let fileType = fileInfo.type.replace("image/", "");
+
+                if (allowedExtension.includes(fileType) && fileSize < 5242881) {
+                    let urlFile = window.URL.createObjectURL(fileInfo);
+                    document.getElementById('image_avatar').src = urlFile;
+                }else {
+                    $('.avatar-wrap .error').removeClass('hide');
+                    $('.avatar__file-info').addClass('hide');
+                }
+
+            }            
+        }
+
+        function validateFormEditPersion () {
+            let formInfo = $('form[data-action="edit-personal-info"]'),
+                elButton = $('#btn-submit');
+            formInfo.submit(function (e) {
+                e.preventDefault();
+                elButton.addClass('show-loading');
+                $('input[name="customer[id]"]').val(window.eai_customer.id);
+                $('input[name="customer[hash]"]').val(window.eai_customer.hash);
+                $.ajax({
+                    url: '{{ shop_url }}{{ shop.metafields.route.customer_edit_personal_info }}',
+                    type: "POST",
+                    accept: "application/json",
+                    dataType: "json",
+                    data: new FormData(formInfo[0]),
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (!response.error) {
+                            // TODO: Message success
+                            location.href = "{{ pages['my-profile'].url }}";
+                        } else {
+                            $('[data-render="error-message"]').text(response.message).show();
+                            elButton.removeClass('show-loading');
+                        }
+                    },
+                    error: function (xhr, text) {
+                        console.log(xhr);
+                        $('[data-render="error-message"]').text($.parseJSON(xhr.responseText).message).show();
+                        elButton.removeClass('show-loading');
+                    }
+                });
+            });
+        }
+
+        $(function () {
+            // Update select2 multi
+            let placeholderSelect2 = $('.select2_wrap .select2_multi').data('placeholder');
+            $('.select2_wrap .select2_multi').select2({
+                placeholder: "Select a state"
+            });
+
+            validateFormEditPersion();
+            
+        });
+
+    </script>
+{% endif %}

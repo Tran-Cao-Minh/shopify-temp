@@ -1,0 +1,75 @@
+{% if section.blocks.size > 0 %}
+    <div class="slideshow__wrap" data-section-id="{{ section.id }}" data-swiper_wrapper>
+        <div class="swiper-container" data-slideshow_id="{{ block.id }}"
+            data-nav="true" data-page="true" data-auto_height="true"
+            data-mb="1" data-dk="1" data-center="false" 
+            data-auto-play="true" data-loop="{% if section.blocks.size > 1 %}true{% else %}false{% endif %}"
+            data-allow_touch_move="{% if section.blocks.size > 1 %}true{% else %}false{% endif %}"
+            data-section_slideshow_{{ block.id }}>
+            <div class="swiper-wrapper">
+            {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                    {%- when 'image' -%}
+                        {%- assign img_dk = block.settings.image_dk -%}
+                        {%- assign img_mb = block.settings.image_mb -%}
+                        {%- assign slide_url = block.settings.url -%}
+                        {%- if img_dk != blank and img_mb != blank -%}
+                            {%- assign img_url_dk = img_dk | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                            {%- assign img_url_mb = img_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                            <div class="swiper-slide">
+                                <div class="media">
+                                    {% if slide_url != '' %}
+                                        <a href="{{ slide_url }}" class="full-width-link"></a>
+                                    {% endif %}
+                                    <div class="slide__wraper type-image">
+                                        <img class="image__lazyload lazyload lazypreload image__dk"
+                                            src="{{ img_dk | img_url: '300x300' }}"
+                                            data-src="{{ img_url_dk }}"
+                                            data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                                            data-aspectratio="{{ img_dk.aspect_ratio }}"
+                                            data-sizes="auto"
+                                            alt="{{ img_dk.alt | escape }}" />
+                                        <img class="image__lazyload lazyload lazypreload image__mb"
+                                            src="{{ img_mb | img_url: '300x300' }}"
+                                            data-src="{{ img_url_mb }}"
+                                            data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                                            data-aspectratio="{{ img_mb.aspect_ratio }}"
+                                            data-sizes="auto"
+                                            alt="{{ img_mb.alt | escape }}" />
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    {%- when 'video' -%}
+                        {%- assign video_url = block.settings.video_url -%}
+                        {%- if video_url != blank -%}
+                            <div class="swiper-slide">
+                                <div class="media">
+                                    <div class="responsive-video">
+                                        <video class="tag__video" loop playsinline muted="" data-slideshow_video>
+                                            <source src="{{ block.settings.video_url }}#t=0.001" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    {%- when 'custom' -%}
+                        {%- if block.settings.content != blank -%}
+                            <div class="swiper-slide">
+                                <div class="slide__wraper">
+                                    {{ block.settings.content }}
+                                </div>                               
+                            </div>
+                        {%- endif -%}
+                {%- endcase -%}
+            {%- endfor -%}
+            </div>
+            {%- if section.blocks.size > 1 -%}
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            {%- endif -%}
+        </div>
+    </div>
+{% endif %}

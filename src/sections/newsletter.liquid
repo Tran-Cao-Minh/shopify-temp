@@ -1,0 +1,93 @@
+<div class="newsletter-section{% if section.settings.show_background %} index-section--newsletter-background{% endif %}">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        {% if section.settings.section_title != blank %}
+          <h2 class="h2 subheadings mr-0">{{ section.settings.section_title | escape }}</h2>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        {%- assign formId = 'join_our_' | append: section.id -%}
+        <form action="#" class="newsletter form-single-field" method="GET">
+          <div class="input-group">
+            <input type="email"
+              name="email"
+              class="input-group__field newsletter_form_email"
+              value="{{ customer.email }}"
+              placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+              aria-label="{{ 'general.newsletter_form.email_placeholder' | t }}"
+              aria-required="true"
+              autocapitalize="off" />
+            <span class="input-group__btn">
+              <button type="submit" class="btn_icon" name="commit" id="Subscribe">
+                {% include 'icon-arrow-right' %}
+              </button>
+            </span>
+          </div>
+          <p class="form-message form-message--success hide">
+            {{ 'general.newsletter_form.confirmation' | t }}
+          </p>
+          <p class="form-message form-message--error hide">
+            {{ 'general.accessibility.error' | t }}
+          </p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Newsletter",
+    "th": "จดหมายข่าว"
+  },
+  "class": "index-section--flush",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": {
+        "en": "Heading",
+        "th": "ส่วนหัว"
+      },
+      "default": {
+        "en": "Subscribe to our newsletter",
+        "th": "สมัครรับจดหมายข่าวของเรา"
+      }
+    },
+    {
+      "id": "show_background",
+      "type": "checkbox",
+      "label": {
+        "en": "Show background",
+        "th": "แสดงพื้นหลัง"
+      },
+      "default": true
+    },
+    {
+      "type": "paragraph",
+      "content": {
+        "en": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)",
+        "th": "ระบบจะสร้างบัญชีผู้ใช้ใน Shopify ให้แก่ลูกค้ารายที่ลงทะเบียนแล้ว [ดูลูกค้า](/admin/customers?query=&accepts_marketing=1)"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Newsletter",
+        "th": "จดหมายข่าว"
+      },
+      "category": {
+        "en": "Promotional",
+        "th": "ส่งเสริมการขาย"
+      }
+    }
+  ]
+}
+{% endschema %}

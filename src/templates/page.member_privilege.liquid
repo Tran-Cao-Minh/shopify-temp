@@ -1,0 +1,11 @@
+{{ 'pages-support.scss.css' | asset_url | stylesheet_tag }}
+<div class="section-content d-none">
+    <div class="container">
+        {{ page.content }}
+    </div>
+</div>
+{% section 'member-privilege' %}
+{% section 'member-privilege2' %}
+{% section 'member-privilege3' %}
+{% section 'member-privilege4' %}
+{% include 'sharing-popup', share_permalink: page.url %}

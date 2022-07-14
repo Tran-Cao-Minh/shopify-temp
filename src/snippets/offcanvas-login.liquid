@@ -1,0 +1,53 @@
+{% include 'assign-locale-prefix' %}
+<div class="offcanvas--right offcanvas--right__login">
+    <div class="offcanvas-content offcanvas-login">
+        <span class="close drawer__close" title="{{ 'general.tooltip.close' | t }}"></span>
+        <div class="offcanvas-header d-flex justify-content-between">
+            <h2 class="offcanvas__header-title">{{ 'layout.canvas.login' | t }}</h2>
+        </div>
+        <div class="offcanvas-cart__content">
+            <div class="offcanvas-login__form">
+                <form id="offcanvas-login__form" class="form-vertical"
+                    name="login" method="GET" action="{{ shop.metafields.route.sso_login }}">
+                    {% comment %} <span id="login-error" style="display: none"></span> {% endcomment %}
+                    {% comment %}<input type="hidden" name="token"/>{% endcomment %}
+                    {% assign redirect_url = shop.secure_url | append: request.path %}
+                    <input type="hidden" name="shop_redirect" value="{{ redirect_url }}" />
+                    <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+                    {% comment %}<div class="form-group">
+                        <label for="email">{{ 'layout.canvas.member_national_id' | t }}</label>
+                        <input id="email" type="text" class="form-control" name="email" value=""
+                            data-msg-required="{{ 'general.validate.required' | t }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">{{ 'layout.canvas.password' | t }}</label>
+                        <div class="form-group-icon">
+                            <input id="password" type="password" class="form-control" name="password"
+                                autocomplete="current-password"
+                                data-msg-required="{{ 'general.validate.required' | t }}" required />
+                            {% include 'icon-eye' %}
+                            <label class="incorrect_email_password">{{ 'general.validate.incorrect_email_password' | t }}</label>
+                            <div class="forgot_password">
+                                <a class="link-readmore text-underline"
+                                    href="{{ shop_url }}{{ shop.metafields.route.set_password }}">{{ 'layout.canvas.forgot_password' | t }}</a>
+                            </div>
+                        </div>
+                    </div>{% endcomment %}
+                    <div class="form-actions text-center justify-content-center">
+                        <button id="btn-login" type="submit" class="btn fix-width btn-primary" data-role="btn-login">{{ 'layout.canvas.sign_in' | t }}<span class="loader"></span></button>
+                        <div class="desc-top">
+                            <span>{{ 'layout.canvas.desc_top' | t }}</span>
+                            <a class="text-underline" href="{{ shop_url }}{{ shop.metafields.route.set_password }}">{{ 'layout.canvas.here' | t }}</a>
+                        </div>
+
+                        <div class="desc-bottom">
+                            <span>{{ 'layout.canvas.desc_bottom' | t }}</span>
+                            <a class="text-underline" href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}">{{ 'layout.canvas.here' | t }}</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+</div>

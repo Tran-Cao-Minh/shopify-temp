@@ -1,0 +1,237 @@
+[
+    {
+      "name": "theme_info",
+      "theme_name": "Debut",
+      "theme_author": "Shopify",
+      "theme_version": "16.3.1",
+      "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/using-themes\/themes-by-shopify\/debut",
+      "theme_support_url": "https:\/\/support.shopify.com\/"
+    },
+    {
+      "name": {
+        "en": "Colors",
+        "th": "สี"
+      },
+      "settings": [
+        {
+          "type": "header",
+          "content": {
+            "en": "Buttons",
+            "th": "ปุ่ม"
+          }
+        },
+        {
+          "type": "color",
+          "id": "color_button",
+          "label": {
+            "en": "Primary buttons",
+            "th": "ปุ่มหลัก"
+          },
+          "default": "#557B97"
+        },
+        {
+          "type": "color",
+          "id": "color_button_text",
+          "label": {
+            "en": "Primary labels",
+            "th": "ป้ายกำกับหลัก"
+          },
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "color_button_hover",
+          "label": "Primary buttons hover",
+          "default": "#04105F"
+        },
+        {
+          "type": "color",
+          "id": "color_button_secondary",
+          "label": {
+            "en": "Secondary color",
+            "th": "ป้ายกำกับรองและขอบ"
+          },
+          "default": "#3d4246"
+        },
+        {
+          "type": "color",
+          "id": "color_button_secondary_text",
+          "label": "Secondary labels",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "color_button_secondary_hover",
+          "label": "Secondary buttons hover",
+          "default": "#0B8173"
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Delivery Messages"
+        },
+        {
+          "type": "richtext",
+          "id": "product_delivery_messages_free",
+          "label": "Delivery messages free"
+        },
+        {
+          "type": "richtext",
+          "id": "product_delivery_messages_not_free",
+          "label": "Delivery messages not free"
+        },
+        {
+          "type": "richtext",
+          "id": "product_delivery_messages_autoship",
+          "label": "Delivery messages auto ship"
+        },
+        {
+          "type": "header",
+          "content": "Promotion Messages"
+        },
+        {
+          "type": "text",
+          "id": "product_promotion_period",
+          "label": "Promotion period"
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Social media",
+        "th": "โซเชียลมีเดีย"
+      },
+      "settings": [
+        {
+          "type": "header",
+          "content": {
+            "en": "Social sharing image",
+            "th": "รูปภาพสำหรับแชร์ลงโซเชียล"
+          }
+        },
+        {
+          "type": "image_picker",
+          "id": "share_image",
+          "label": {
+            "en": "Image",
+            "th": "รูปภาพ"
+          },
+          "info": {
+            "en": "Shown when sharing a link on social media. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) about image thumbnails.",
+            "th": "แสดงเมื่อแชร์ลิงก์บนโซเชียลมีเดีย [ดูข้อมูลเพิ่มเติม](https:\/\/help.shopify.com\/manual\/using-themes\/troubleshooting\/showing-social-media-thumbnail-images\/) เกี่ยวกับรูปภาพขนาดย่อ"
+          }
+        },
+        {
+          "type": "header",
+          "content": {
+            "en": "Social sharing options",
+            "th": "ตัวเลือกการแชร์ไปยังโซเชียลมีเดีย"
+          }
+        },
+        {
+          "type": "checkbox",
+          "id": "share_facebook",
+          "label": {
+            "en": "Share on Facebook",
+            "th": "แชร์บน Facebook"
+          },
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "share_line",
+          "label": {
+            "en": "Share on Line",
+            "th": "แชร์บน Line"
+          },
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "share_twitter",
+          "label": {
+            "en": "Tweet on Twitter",
+            "th": "ทวีตบน Twitter"
+          },
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": {
+            "en": "Social accounts",
+            "th": "บัญชีโซเชียลมีเดีย"
+          }
+        },
+        {
+          "type": "text",
+          "id": "social_twitter_link",
+          "label": "Twitter",
+          "info": "https:\/\/twitter.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_facebook_link",
+          "label": "Facebook",
+          "info": "https:\/\/facebook.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_instagram_link",
+          "label": "Instagram",
+          "info": "http:\/\/instagram.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_youtube_link",
+          "label": "Youtube",
+          "info": "https:\/\/www.youtube.com\/shopify"
+        },
+        {
+          "type": "text",
+          "id": "social_line_link",
+          "label": "Line",
+          "info": "https:\/\/lin.ee\/hovUB8v"
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Favicon",
+        "th": "Favicon"
+      },
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "favicon",
+          "label": {
+            "en": "Favicon image",
+            "th": "รูปภาพ Favicon"
+          },
+          "info": {
+            "en": "Will be scaled down to 32 x 32px",
+            "th": "จะถูกลดขนาดลงเป็น 32 x 32 พิกเซล"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Promo Popup",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_promo_popup",
+          "label": "Enable promo popup",
+          "default": true
+        },
+        {
+          "type": "html",
+          "id": "promo_popup",
+          "label": "HTML content"
+        }
+      ]
+    }
+]

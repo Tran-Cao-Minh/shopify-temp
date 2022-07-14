@@ -1,0 +1,56 @@
+{%- assign total_level = 1 -%}
+{%- assign count_1 = true -%}
+{%- assign count_2 = true -%}
+{%- capture menu_nav -%}
+  {% for link in menu_list.links %}
+    {% assign childLink = link.handle %}
+    {% if link.links != blank %}
+      <li class="dropdown sm-submenu megamenu">
+          <a href="{{ link.url }}">{{ link.title }}
+            <span class="arrow__icon">{% render 'icon-arrow-right' %}</span>
+          </a>
+          <div class="dropdown-menu">
+            <ul class="sm-megamenu-submenu">
+              {% for child_link in link.links %}
+                {%- if count_1 -%}
+                  {%- assign total_level = total_level | plus: 1 -%}
+                  {%- assign count_1 = false -%}
+                {%- endif -%}
+                {% if child_link.links != blank %}
+                  <li>
+                    {% for grandchild_link in child_link.links %}
+                    {% assign items = forloop.length %}
+                    {% endfor %}
+                    <a href="{{ child_link.url }}" class="sm-title-submenu">
+                      <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                      <span class="arrow__icon">{% render 'icon-arrow-right' %}</span>
+                    </a>
+                    <div>
+                      <ul>
+                        {% for grandchild_link in child_link.links %}
+                          {%- if count_2 -%}
+                            {%- assign total_level = total_level | plus: 1 -%}
+                            {%- assign count_2 = false -%}
+                          {%- endif -%}
+                          <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </li>
+                {% else %}
+                  <li>
+                    <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+      </li>
+    {% else %}
+      <li class="dropdown sm-submenu">
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+{%- endcapture -%}
+<ul class="sm__megamenu-lists menu__level-{{ total_level }}">{{ menu_nav }}</ul>

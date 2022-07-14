@@ -1,0 +1,92 @@
+<style>
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type4 .sm__banner-content {
+    background: {{ block.settings.bg_3 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type4 a {
+    color: {{ block.settings.button_color_3 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type4 a svg path {
+    stroke: {{ block.settings.button_color_3 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type4 a:hover {
+    color: {{ block.settings.button_hover_color_3 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type4 a:hover svg path {
+    stroke: {{ block.settings.button_hover_color_3 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type3 .sm__banner-content a {
+    color: {{ block.settings.button_color_2 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type3 .sm__banner-content a svg path {
+    stroke: {{ block.settings.button_color_2 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type3 .sm__banner-content a:hover {
+    color: {{ block.settings.button_hover_color_2 }};
+  }
+  .sm__megamenu-banner-{{ block.id }}.megamenu__banner-type3 .sm__banner-content a:hover svg path {
+    stroke: {{ block.settings.button_hover_color_2 }};
+  }
+</style>
+
+{% assign menu = block.settings.menu %}
+<div class="megamenu__type2-left">
+  <ul class="sm__megamenu-lists sm__megamenu-type2">
+    {% for link in linklists[menu].links %}
+        <li class="">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+    {% endfor %}
+  </ul>
+</div>
+<div class="megamenu__type2-right">
+  <div class="sm__megamenu-banner-wrapper">
+    <div class="row">
+      {% if block.settings.show_bn_1 %}
+        <div class="col-md-4 order-{{ block.settings.bn_1_order }}">
+          <div class="sm__megamenu-banner megamenu__banner-type2">
+            <h3 class="sm__banner-title"><a href="{{ block.settings.button_link_1| default: "#" }}">{{ block.settings.title_1 }}</a></h3>
+            <p class="sm__banner-text">{{ block.settings.desc_1 }}</p>
+            {% if block.settings.button_text_1 != blank %}
+              <a class="d-block btn btn-primary" href="{{ block.settings.button_link_1 | default: "#" }}">{{ block.settings.button_text_1 }}</a>
+            {% endif %}
+          </div>
+        </div>  
+      {% endif %}
+      {% if block.settings.show_bn_2 %}
+        <div class="col-md-4 order-{{ block.settings.bn_2_order }}">
+          <div class="sm__megamenu-banner megamenu__banner-type3 sm__megamenu-banner-{{ block.id }}">
+            <div class="media">
+              <img class="lazyload" data-src="{{ block.settings.banner_image_2 | img_url: 'master' }}" alt="">
+            </div>            
+            <div class="sm__banner-content">
+              <p class="sm__banner-text">{{ block.settings.banner_desc_2 }}</p>
+              {% if block.settings.button_text_2 != blank %}
+                <a class="sm__content-button" href="{{ block.settings.button_link_2 }}">{{ block.settings.button_text_2 }} {% render 'icon-arrow-right' %}</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% if block.settings.show_bn_3 %}
+        <div class="col-md-4 order-{{ block.settings.bn_3_order }}">
+          <div class="sm__megamenu-banner megamenu__banner-type4 sm__megamenu-banner-{{ block.id }}">
+            <div class="media"><img class="lazyload" data-src="{{ block.settings.banner_image_3 | img_url: 'master' }}" alt="" /></div>
+            <div class="sm__banner-content">
+              <h3>{{ block.settings.title_3 }}</h3>
+              {% if block.settings.button_icon_3 != blank or block.settings.button_text_3 != blank %}
+                {% if block.settings.button_type_3 == 'type1' %}
+                  <a class="sm__banner-button type1" href="{{ block.settings.link_3 }}">
+                    <span class="sm__banner-icon">{{ block.settings.button_icon_3 }}</span>
+                    <span>{{ block.settings.button_text_3 }}</span>
+                  </a>
+                {% else %}
+                  <a class="sm__banner-button type2" href="{{ block.settings.link_3 }}">{{ block.settings.button_text_3 }} {% render 'icon-arrow-right' %}</a>
+                {% endif %}
+              {% endif %}              
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

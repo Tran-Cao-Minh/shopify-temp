@@ -1,0 +1,21 @@
+<div class="bad_connection">
+    <div class="container">
+        <div class="media-top">
+            <img src="{{ 'bad_connection.jpg' | asset_url }}" alt="" />
+        </div>
+        <div class="text-center">
+            <h1 class="primary_color">{{ 'general.bad_connection.title' | t }}</h1>
+            <h3 class="sub-title">{{ 'general.bad_connection.subtext' | t }}</h3>
+            <div class="rte">
+                <p>{{ 'general.bad_connection.rte_desc_1' | t }} <a href="tel:+(66)2-554-2455" class="link-readmore text-underline">+(66)2-554-2455</a> {{ 'general.bad_connection.rte_desc_2' | t }} <a class="link-readmore text-underline" href="https://lin.ee/hovUB8v">@unileverlife</a> {{ 'general.bad_connection.rte_desc_3' | t }}</p>
+            </div>
+            <div class="group-buttons d-flex justify-content-center">
+                <a type="button" class="btn btn-line" href="#" data-action="line-login">
+                    {% include 'icon-line' %}<span>{{ 'general.bad_connection.verify_line' | t }}</span>
+                </a>
+                <a href="{{ routes.root_url }}" class="btn">{{ 'general.bad_connection.back_home' | t }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/apps/eai/js/line-bad-connection.js"></script>

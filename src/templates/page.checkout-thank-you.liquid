@@ -1,0 +1,89 @@
+<div class="uni__checkout" data-page_border>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="uni__checkout--left">
+          <div class="form">
+            <div class="step__sections">
+              <div class="section">
+                <div class="logo">
+                  <h1>Unilever Life</h1>
+                </div>
+                <div class="thankyou__header">
+                  <span class="icon__confirm">
+                    {% render 'icon-thank-you' %}
+                  </span>
+                  <div class="order__id">
+                    <span>Order #10001</span>
+                    <span>Thank You Mai!</span>
+                  </div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="content__box">
+                  <span class="confirm__message">Your order is confirmed</span>
+                </div>
+              </div>
+              <div class="section thankyou__content">
+                <div class="content__box">
+                  <div class="content__header">
+                    <h3>Custommer information</h3>
+                  </div>
+                  <div class="content__overview">
+                    <div class="item__overview">
+                      <p>Contact information</p>
+                      <span>Jane Doe</span>
+                    </div>
+                    <div class="item__overview">
+                      <p>Payment method</p>
+                      <span>cash on delivery (C0D)</span>
+                    </div>
+                    <div class="item__overview">
+                      <p>Shipping address</p>
+                      <span>No 1, Road 2, Sample text</span>
+                    </div>
+                    <div class="item__overview">
+                      <p>Billing address</p>
+                      <span>No 1, Road 2, Sample text</span>
+                    </div>
+                    <div class="item__overview">
+                      <p>Shipping method</p>
+                      <span>Standard Shipping</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="more__info--link">
+                <p>Shop & Share information “to earn 5% from all purchases" by
+                  <a href="#">become our member.</a>
+                </p>
+              </div>
+            </div>
+            <div class="step__footer d-flex justify-content-between">
+              <div class="need__help">
+                <ul>
+                  <li>Need help?
+                    <a href="#">Contact Us</a>
+                  </li>
+                  <li>Phone number:
+                    <a href="#">123-456-789</a>
+                  </li>
+                  <li>Line Chat:
+                    <a href="#">123-456-789</a>
+                  </li>
+                </ul>
+              </div>
+              <button class="btn">Continue Shopping</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="uni__checkout--right">
+          {% section 'checkout-sidebar' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/apps/eai/js/checkout.js"></script>

@@ -1,0 +1,78 @@
+{% assign class_grid = 'swiper-slide' %}
+{% assign tag_customer = '' %}
+{% if customer %}
+   {% for tag in customer.tags %}
+      {% assign tag_downcase = tag | downcase %}
+      {% if tag_downcase contains 'bp_rank' %}
+         {% assign tag_customer = tag %}
+         {% break %}
+      {% endif %}
+   {% endfor %}
+{% endif %}
+
+{% assign list_prd_related = product.metafields.ulife.related_product | strip_newlines %}
+{% assign list_prd_arr = list_prd_related | split: "," %}
+{% assign count_product = 0 %}
+<script>
+   let list_related_products = [
+      {%- for hd_prd in list_prd_arr limit: list_prd_arr.size -%}
+         {%- assign product_status = false -%}
+         {%- assign product = all_products[hd_prd] -%}
+         {%- assign product_tags = product.tags | downcase -%}
+         {%- capture product_json_detail -%}{%- include 'product-json' -%}{%- endcapture -%}
+         {%- if product_status -%}
+            {%- assign count_product = count_product | plus: 1 -%}
+            {{ product_json_detail }},
+         {%- endif -%}
+         {%- if count_product == 8 -%}
+            {%- break -%}
+         {%- endif -%}
+      {%- endfor -%}
+   ];
+</script>
+
+{%- if section.settings.show_product_related -%}
+  <div class="product-recommendations__inner grid--view-items product__lists-related hide">
+    <div class="container" data-swiper_wrapper>
+      {%- if section.settings.heading != blank -%}
+        <div class="section-header">
+            <h3 class="h3 font_weight_600">{{ section.settings.heading | escape }}</h3>
+        </div>
+      {%- endif -%}
+      <div class="swiper-container product_lists product__card-slide"
+         data-nav="false" data-page="true" data-auto_height="true"
+         data-mb="2.2" data-dk="4"
+         data-center="false" data-slide_related>
+         <div id="listsRelatedProduct" class="swiper-wrapper"></div>
+         <div class="swiper-pagination"></div>
+      </div>
+      <!-- Add Arrows -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <script type="text/html" id="relatedProductTemplate">
+         {% include 'product-card-template' %}
+      </script>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related products",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_related",
+      "label": "Show products related",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Title",
+      "default": "Related products"
+    }
+  ]
+}
+{% endschema %}

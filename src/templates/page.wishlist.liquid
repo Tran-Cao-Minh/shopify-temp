@@ -1,0 +1,72 @@
+{% assign class_grid = 'col-lg-3 col-6' %}
+<div class="page_wishlist">
+  <div class="container">
+    {% unless customer %}
+      <h3 class="text-center">{{ "general.pages.logged_in_to_perform_this_feature" | t }}</h3>
+    {% endunless %}
+
+    {% if customer %}
+    <div class="section-header">
+      <h1>{{ page.title }}</h1>
+      <div class="nav">
+        <a href="{{ pages['my-wishlist'].url }}" class="active link-readmore text-underline">{{ "general.pages.view_wishlist" | t }}</a>
+        <a href="{{ pages['my-favorite'].url }}" class="link-readmore text-underline">{{ "general.pages.view_favorite" | t }}</a>
+      </div>
+    </div>
+
+    <div data-scope="page_wishlist">
+      <div class="loader" style="margin: 100px auto;" data-container="loader"></div>
+      <div class="text-center page__no-item hide" data-container="empty">
+        <div class="media media__no-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="144.086" height="122.474" viewBox="0 0 144.086 122.474">
+            <g data-name="Group 2372" transform="translate(-472.311 61.703)">
+              <path data-name="Path 392" d="M509.864-41.256v-.921A18.027,18.027,0,0,0,491.837-60.2h0a18.026,18.026,0,0,0-18.026,18.026v.921Z" transform="translate(0 0)" fill="#f4f4ff" stroke="#6371d8" stroke-miterlimit="10" stroke-width="3"/>
+              <path data-name="Path 393" d="M562.323,64.5v2.763A18.026,18.026,0,0,1,544.3,85.29h67.28A18.027,18.027,0,0,0,629.6,67.263V64.5Z" transform="translate(-14.707 -26.019)" fill="none" stroke="#6371d8" stroke-miterlimit="10" stroke-width="3"/>
+              <path data-name="Path 394" d="M552.814,41.245V38.481h43.248V-42.177A18.026,18.026,0,0,0,578.037-60.2H498.723v.082a18.026,18.026,0,0,1,16.338,17.945V41.245a18.026,18.026,0,0,0,18.026,18.026h1.7A18.026,18.026,0,0,0,552.814,41.245Z" transform="translate(-5.198 0)" fill="none" stroke="#6371d8" stroke-miterlimit="10" stroke-width="3"/>
+              <path data-name="Path 395" d="M585.913,1.413a11.011,11.011,0,0,0-21.044-4.54,11.01,11.01,0,0,0-20.417,8.194A11.007,11.007,0,0,0,546.5,8.588a11.006,11.006,0,0,0,1.23,1.222l16.8,16.684a.532.532,0,0,0,.751,0l17.42-17.308v0a11.044,11.044,0,0,0,2.569-4.037A10.978,10.978,0,0,0,585.913,1.413Z" transform="translate(-14.609 -27.115)" fill="#f4f4ff" stroke="#6371d8" stroke-linejoin="round" stroke-width="3"/>
+              <g data-name="Group 2373" transform="translate(144.811 -690.203)">
+                <line data-name="Line 327" x2="50" transform="translate(380.5 702.5)" fill="none" stroke="#6371d8" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                <line data-name="Line 328" x2="50" transform="translate(380.5 711.5)" fill="none" stroke="#6371d8" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                <line data-name="Line 329" x2="25" transform="translate(380.5 720.5)" fill="none" stroke="#6371d8" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="content">
+          <h3 class="title text__no-item">{{ "general.pages.your_wishlist_is_empty" | t }}</h3>
+          {%- assign desc_no_product = 'general.pages.wishlist_favorite_view_all_prodcuts_html' | t -%}
+          {%- assign desc_no_product = desc_no_product | replace: '${collection_url}', routes.collections_url -%}
+          <div class="desc">{{ desc_no_product }}</div>
+        </div>
+      </div>
+      <div class="product_lists">
+        <div class="row grid--view-items" data-container="list"></div>
+        <div class="pagination-wrap hide">
+          <div class="pagination_show-more">
+            <label>{{ 'general.pagination.show' | t }}</label>
+            <div class="select2_wrap select2_border_bottom">
+              <select id="select_show_more" name="limit" class="select2_single" data-class="select_show_more">
+                <option value="12" selected="selected">12</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+              </select>
+            </div>
+            <span class="per_page">{{ 'general.pagination.items_per_page' | t }}</span>
+          </div>
+          <div class="pagination pagination-container smart_pagination" data-container="paginate"></div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script type="text/html" id="product-card-template">
+  {% include 'product-card-template', show_wishlist: true %}
+</script>
+
+{% include 'customer-title' %}
+<script>
+  let collection_products = {% include 'all-products' %};
+  window.remove_when_buy = true;
+</script>

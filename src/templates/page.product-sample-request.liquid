@@ -1,0 +1,924 @@
+{% assign contact_info = shop.metafields.data.contact_info %}
+
+{% include 'assign-locale-prefix' %}
+<div class="request__sample">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-9" style="margin: 0 auto;">
+                <div class="request__sample-content">
+                    <h2 class="heading">{{ 'request_sample.general.page_title' | t }}</h2>
+                    <div class="smosc__tab smosc__tab-effect">
+                        <div class="smosc__tab-headers">
+                            <ul>
+                                <li><a class="smosc__tab-header active" href="#" data-id="tab1">{{ 'request_sample.product.tab_header' | t }}</a></li>
+                                <li><a class="smosc__tab-header" href="#" data-id="tab2">{{ 'request_sample.coupon.tab_header' | t }}</a></li>
+                            </ul>
+                        </div>
+                        <div class="smosc__tab-contents">
+                            <div  class="smosc__tab-content active" id="tab1" data-id="tab1">
+                                <div class="product__request-modal smart_modal">
+                                    <div class="modal-content">
+                                        <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close' | t }}"></span>
+                                        <div class="content">
+                                            <h3 class="title"></h3>
+                                            <p class="desc">{{ 'request_sample.product.modal_thank_you_description' | t }}</p>
+                                            <a href="{{ routes.root_url }}" class="btn btn-primary">{{ 'request_sample.product.modal_thank_you_button_text' | t }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="modal__overlay overlay"></div>
+                                </div>
+                                <!-- Request Sample Product-->
+                                <div class="sample_request-product">
+                                    <div class="loadings"><div class="loader"></div></div>
+                                    {% render 'request-product-coupon-empty', request_type: 'product' %}
+                                </div>
+                            </div>
+                            <div  class="smosc__tab-content" id="tab2" data-id="tab2">
+                                <div class="coupon__request-modal smart_modal">
+                                    <div class="modal-content">
+                                        <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close' | t }}"></span>
+                                        <div class="content">
+                                            <div class="coupon__icon">{% render 'icon-thank-you-coupon' %}</div>
+                                            <h3 class="title">{{ 'request_sample.coupon.modal_thank_you_title' | t }}</h3>
+                                            <p class="email"></p>
+                                            <p class="desc">{{ 'request_sample.coupon.modal_thank_you_description_html' | t }}</p>
+                                            {% unless customer %}
+                                            <a href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}" class="btn btn-primary">{{ 'request_sample.coupon.modal_thank_you_button_text' | t }}</a>
+                                            {% endunless %}
+                                        </div>
+                                    </div>
+                                    <div class="modal__overlay overlay"></div>
+                                </div>
+                                <!-- Request Coupon-->
+                                <div class="sample_request-coupon">
+                                    <div class="loadings"><div class="loader"></div></div>
+                                    {% render 'request-product-coupon-empty', request_type: '' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'sharing-popup', share_permalink: page.url %}
+<script src="{{ 'location-form.js' | asset_url }}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+    const urlParams = new URLSearchParams(window.location.search);
+    const stateMenuKey = "[stateMenuKey]";
+    let sampleProductConfigs,
+        sampleCouponConfigs,
+        urlActionRequestProduct,
+        urlActionRequestCoupon,
+        sampleCouponForm = $('form#request-sample-coupon'),
+        sampleProductContainer = $('.sample_request-product'),
+        sampleCouponContainer = $('.sample_request-coupon'),
+        loadingDom = $('.loadings'),
+        productTab = $('[data-id="tab1"]'),
+        couponTab = $('[data-id="tab2"]'),
+        couponTabHeader = $('.smosc__tab-header[data-id="tab2"]'),
+        productTabHeader = $('.smosc__tab-header[data-id="tab1"]');
+
+    window.state = [
+        {% for state in shop.metafields.states.location %}
+        {{ state }}
+        {% endfor %}
+    ];
+
+    window.list_sample_product_th = {{ shop.metafields.sample_product.th_sample_product }};
+    window.list_sample_product_en = {{ shop.metafields.sample_product.en_sample_product }};
+    window.list_sample_coupon_th = {{ shop.metafields.sample_coupon.th_sample_coupon }};
+    window.list_sample_coupon_en = {{ shop.metafields.sample_coupon.en_sample_coupon }};
+
+    sampleProductConfigs = {{ shop.metafields.sample_product.config }};
+    sampleCouponConfigs = {{ shop.metafields.sample_coupon.config }};
+    urlActionRequestProduct = '{{ shop_url }}{{ shop.metafields.route.request_sample_product }}';
+    urlActionRequestCoupon = '{{ shop_url }}{{ shop.metafields.route.request_sample_coupon }}';
+
+    let sponsor = null;
+    if (getCookie('promo_code') && getCookie('promo_code_source') === 'share_link') {
+        sponsor = getCookie('promo_code');
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function compareTimes(start, now, end) {
+        return (now >= start && now <= end);
+    }
+
+    function printExpDate(item){
+        const dateEnd = new Date(item.end);
+        const year = dateEnd.getFullYear();
+        const month = dateEnd.getMonth() + 1;
+        const date = dateEnd.getDate();
+        return `<p class="product__exp-date"> {{ 'request_sample.general.expired_date' | t }}: ${date}/${month}/${year}<p>`;
+    }
+
+    function renderSampleProduct(items) {
+        let template = '',
+            requested_products;
+
+        const formString = `
+            <div class="form__header">
+                <h3>{{ 'request_sample.product.tab_content_title' | t }}</h3>
+                <p>{{ 'request_sample.product.tab_content_description' | t }}</p>
+            </div>
+            <form action="${urlActionRequestProduct}" id="request-sample-product" method="post">
+            <div class="grid__view grid__two-column" data-render="sample-products"></div>
+            <div class="product__list-error"></div>
+            <div class="forms">
+            <input type="hidden" class="sub__key" name="sub"/>
+            <input type="hidden" class="sub__hash" name="sub_hash"/>
+            <input type="hidden" class="sponsor" name="sponsor" value="${sponsor}" />
+
+            <div class="grid__view grid__two-column">
+                <div class="fields">
+                    <label class="label" for="firstName">{{ 'request_sample.form.fisrt_name_label' | t }}</label>
+                    <input class="input__text" type="text" name="first_name" id="firstName"/>
+                </div>
+                <div class="fields">
+                    <label class="label" for="lastName">{{ 'request_sample.form.last_name_label' | t }}</label>
+                    <input class="input__text" type="text" name="last_name" id="lastName"/>
+                </div>
+            </div>
+
+            <div class="grid__view grid__two-column">
+                <div class="fields">
+                    <label class="label" for="email">{{ 'request_sample.form.email_label' | t }}</label>
+                    <input class="input__text" type="text" name="email" id="email"/>
+                </div>
+                <div class="fields">
+                    <label class="label" for="phone">{{ 'request_sample.form.mobile_phone_label' | t }}</label>
+                    <input class="input__text" type="text" name="phone" id="phone"/>
+                </div>
+            </div>
+
+            <div class="grid__view">
+                <div class="fields">
+                    <label class="label" for="address">{{ 'request_sample.form.address_label' | t }}</label>
+                    <input class="input__text" type="text" name="address" id="address"/>
+                </div>
+            </div>
+
+            <div class="grid__view grid__two-column">
+                <div class="fields">
+                    <div class="post_code_container"></div>
+                </div>
+                <div class="fields">
+                    <div class="state_container"></div>
+                </div>
+            </div>
+            <div class="grid__view grid__two-column">
+                <div class="fields">
+                    <div class="city_container"></div>
+                </div>
+                <div class="fields">
+                    <label class="label" for="#">{{ 'request_sample.form.country_label' | t }}</label>
+                    <input class="input__text" type="text" value="Thailand" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="term__condition">
+            <div>
+            <div class="item form-check">
+                <input class="form-check-input termCondition" id="agree1" type="checkbox" name="ckIagree" style="display: block"/>
+                {% assign term_condition_11 = 'request_sample.form.term_condition_11_html' | t %}
+                {% assign term_condition_12 = 'request_sample.form.term_condition_12_html' | t %}
+                {% assign term_condition_13 = 'request_sample.form.term_condition_13_html' | t %}
+                {% assign term_condition_14 = 'request_sample.form.term_condition_14_html' | t %}
+                {% assign term_condition_15 = 'request_sample.form.term_condition_15_html' | t %}
+                {% assign term_condition_string1 = term_condition_11 | append: term_condition_11 | append: term_condition_12 | append: term_condition_13 | append: term_condition_14 | append: term_condition_15 %}
+                {% if contact_info != blank %}
+                    {% if contact_info.contact_phone != blank %}
+                        {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{phone}", contact_info.contact_phone %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{phone_number}", phone_number %}
+                    {% else %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{phone}", "" %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{phone_number}", "" %}
+                    {% endif %}
+                {% endif %}
+                {% if contact_info.contact_email != blank %}
+                    {% assign term_condition_string1 = term_condition_string1 | replace: "{email}", contact_info.contact_email %}
+                {% else %}
+                    {% assign term_condition_string1 = term_condition_string1 | replace: "{email}", "" %}
+                {% endif %}
+                <label for="agree1" class="form-check-label">{{ term_condition_string1 }}</label>
+            </div>
+            <div class="item form-check">
+                <input class="form-check-input termCondition" id="agree2" type="checkbox" name="ckKeepsme" style="display: block"/>
+                <label for="agree2" class="form-check-label">
+                    {{ 'request_sample.form.term_condition_21_html' | t }}
+                    {{ 'request_sample.form.term_condition_22_html' | t }}
+                    {{ 'request_sample.form.term_condition_23_html' | t }}
+                </label>
+            </div>
+        </div>
+        <div class="mobile-fixed-bottom text-right button__submit">
+            <button type="submit" data-action="request-sample-product" class="btn btn-primary">
+                <div class="loader loader--button hide"></div>
+                <span>{{ 'request_sample.form.button_submit_product' | t }}</span>
+            </button>
+        </div></form>`;
+
+        $.ajax({
+            url: "{{ shop.metafields.route.get_disabled_sample_product }}",
+            type: 'get',
+            dataType: 'json',
+            data: {line_id: urlParams.get('sub')},
+            success: function (response) {
+                let i;
+                loadingDom.addClass('hide');
+                if (response['available'] === false) {
+                    let html = '';
+                    for(i = 0; i < items.length; i++) {
+                        if (!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) {
+                            continue;
+                        }
+                        html += `<div class="form-group disabled">
+                            <div class="form-check">
+                                <label for="items_${items[i].id}" class="product-item form-check-label">
+                                    ${items[i].image ? `<img src="${items[i].image}" />` : `<img src="https://dummyimage.com/80x80/ddd/222" />`}
+                                    <div class="product__info">
+                                        <span class="product__title">${items[i].title}</span>
+                                        <a href="${items[i].product_url}">{{ 'request_sample.product.review_product' | t }}</a>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>`;
+                    }
+                    template += `<div class="not__avaiable-product">
+                        <div class="header text-center">
+                            <div class="header__icon">
+                                {% render 'icon-thank-you-request' %}
+                            </div>
+                            <div class="header__content">
+                                <h3>{{ 'request_sample.product.requested_all_thank_you_title' | t }}</h3>
+                                <p>{{ 'request_sample.product.requested_all_thank_you_description' | t }}</p>
+                            </div>
+                        </div>
+                        <div class="grid__view grid__two-column">${html}</div>
+                        <div class="subscribe__form">
+                            <div class="content__header">
+                                <h3>{{ 'request_sample.product.subscribe_form_title' | t }}</h3>
+                                <p>{{ 'request_sample.product.subscribe_form_description' | t }}</p>
+                            </div>
+                            <form action="#" class="newsletter__sample-request">
+                                <div>
+                                    <input type="email"
+                                        name="email"
+                                        class="newsletter_form_email"
+                                        value="{{ customer.email }}"
+                                        placeholder="{{ 'request_sample.general.email_placeholder' | t }}"
+                                        aria-label="{{ 'request_sample.general.email_placeholderr' | t }}"
+                                        aria-required="true"
+                                        autocorrect="off"
+                                        autocapitalize="off" />
+                                    <span class="action">
+                                        <button type="submit" class="btn btn-primary" name="commit" id="Subscribe">{{ 'request_sample.product.subscribe_form_button' | t }}</button>
+                                    </span>
+                                </div>
+                                <p class="form-message form-message--success hide">
+                                    {{ 'general.newsletter_form.confirmation' | t }}
+                                </p>
+                                <p class="form-message form-message--error hide">
+                                    {{ 'general.accessibility.error' | t }}
+                                </p>
+                            </form>
+                        </div>
+                    </div>`;
+                    sampleProductContainer.append(template);
+                } else {
+                    requested_products = response['requested_campaigns'];
+
+                    let disabled = '';
+                    if (sampleProductConfigs.hasOwnProperty('multi_select') && sampleProductConfigs['multi_select'] == 1) {
+                        for (i = 0; i < items.length; i++) {
+                            if ((!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) && items[i].quantity <= 0) {
+                                continue;
+                            }
+                            if (requested_products.includes(items[i].campaign_name)) {
+                                disabled = 'disabled';
+                            } else {
+                                disabled = '';
+                            }
+                            template += `<div class="form-group ${disabled}">
+                                <div class="form-check">
+                                    ${!disabled ? `<input style="display: block; height: 0;" id="items_${items[i].id}" class="form-check-input product__item type--radio" type="checkbox" name="product_ids[]" value="${items[i].id}">` : ''}
+                                    <label for="items_${items[i].id}" class="product-item form-check-label radio ${disabled}">
+                                        ${items[i].image ? `<img src="${items[i].image}" />` : `<img src="https://dummyimage.com/80x80/ddd/222" />`}
+                                        <div class="product__info">
+                                            <span class="product__title">${items[i].title}</span>
+                                            <span class="product__desc">${items[i].description}</span>
+                                            ${disabled ? `<span class="requested desktop">{{ 'request_sample.product.requested_product' | t }}</span>` : ''}
+                                        </div>
+                                    </label>
+                                </div>
+                                ${disabled ? `<span class="requested mobile">{{ 'request_sample.product.requested_product' | t }}</span>` : ''}
+                            </div>`;
+                        }
+                    } else {
+                        for (i = 0; i < items.length; i++) {
+                            if ((!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) && items[i].quantity <= 0) {
+                                continue;
+                            }
+                            if (requested_products.includes(items[i].campaign_name)) {
+                                disabled = 'disabled';
+                            } else {
+                                disabled = '';
+                            }
+                            template += `<div class="form-group ${disabled}">
+                                <div class="form-check">
+                                    ${!disabled ? `<input style="display: block; height: 0;" id="product_${items[i].id}" type="radio" class="product__item form-check-input" name="product_ids" value="${items[i].id}">` : ''}
+                                    <label for="product_${items[i].id}" class="product-item form-check-label ${disabled}">
+                                        ${items[i].image ? `<img src="${items[i].image}" />` : `<img src="https://dummyimage.com/80x80/ddd/222" />`}
+                                        <div class="product__info">
+                                            <span class="product__title">${items[i].title}</span>
+                                            <span class="product__desc">${items[i].description}</span>
+                                            ${disabled ? `<span class="requested desktop">{{ 'request_sample.product.requested_product' | t }}</span>` : ''}
+                                        </div>
+                                    </label>
+                                </div>
+                                ${disabled ? `<span class="requested mobile">{{ 'request_sample.product.requested_product' | t }}</span>` : ''}
+                            </div>`;
+                        }
+                    }
+
+                    // Append form field
+                    sampleProductContainer.html(formString);
+
+                    $
+
+                    // Append list product
+                    $("div[data-render='sample-products']").append(template);
+
+                    $('form#request-sample-product').find('input[name="sub"]').val(urlParams.get('sub'));
+                    $('form#request-sample-product').find('input[name="sub_hash"]').val(urlParams.get('sub_hash'));
+
+                    // Init province + district
+                    let storage_postal_code = {{ shop.metafields.location.postal_codes }};
+
+                    $(this).locationForm({
+                        locale: "{{ shop.locale }}",
+                        postalCode: {
+                            parentClass: "post_code_container",
+                            data: {{ shop.metafields.location.postal_codes }},
+                            id: "post_code",
+                            name: 'post_code',
+                        },
+                        state: {
+                            parentClass: "state_container",
+                            data:{{ shop.metafields.location.states }},
+                            name: "state_id",
+                            id: "state",
+                        },
+                        city: {
+                            parentClass: "city_container",
+                            data: {{ shop.metafields.location.cities }},
+                            name: "city_id",
+                            id: "city",
+                            required: true,
+                        }
+                    });
+
+                    // validate form
+                    $('form#request-sample-product').validate({
+                        normalizer: function(value) {
+                            return $.trim(value);
+                        },
+                        rules: {
+                            first_name: {
+                              required: true,
+                              maxlength: 50
+                            },
+                            last_name: {
+                              required: true,
+                              maxlength: 20,
+                            },
+                            post_code: {
+                                required: true,
+                                validPostalCode: function () {
+                                    return $('[name="post_code"]').val();
+                                },
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            address: {
+                                required: true,
+                                maxlength: 255
+                            },
+                            phone: {
+                                required: true,
+                                number: true,
+                                minlength: 10,
+                                maxlength: 10
+                            },
+                            'ckIagree': {
+                                required: true,
+                                minlength: 1
+                            },
+                            'ckKeepsme': {
+                                required: true,
+                                minlength: 1
+                            },
+                            'product_ids[]': {
+                                required: true,
+                                minlength: 1
+                            },
+                            product_ids: 'required'
+                        },
+                        messages: {
+                            first_name: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              maxlength: "{{ 'request_sample.validate.fisrt_name_max_length' | t }}"
+                            },
+                            last_name: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              maxlength: "{{ 'request_sample.validate.last_name_max_length' | t }}"
+                            },
+                            email: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              email: "{{ 'request_sample.validate.email' | t }}"
+                            },
+                            address: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              maxlength: "{{ 'request_sample.validate.address_max_length' | t }}"
+                            },
+                            phone: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              number: "{{ 'request_sample.validate.phone' | t }}",
+                              minlength: "{{ 'request_sample.validate.phone_min_length' | t }}",
+                              maxlength: "{{ 'request_sample.validate.phone_max_length' | t }}"
+                            },
+                            state_id: {
+                                required: "{{ 'request_sample.validate.field_required' | t }}"
+                            },
+                            city_id: {
+                                required: "{{ 'request_sample.validate.field_required' | t }}"
+                            },
+                            post_code: {
+                                required: "{{ 'request_sample.validate.field_required' | t }}"
+                            },
+                            'ckIagree': "{{ 'request_sample.validate.agree_term' | t }}",
+                            'ckKeepsme': "{{ 'request_sample.validate.age_term' | t }}",
+                            'product_ids[]': "{{ 'request_sample.validate.product' | t }}",
+                            product_ids: "{{ 'request_sample.validate.product' | t }}"
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                                error.insertAfter(element.next('.select2-container'));
+                            } else if (element.hasClass('termCondition') && element.next('.form-check-label').length) {
+                                error.insertAfter(element.next('.form-check-label'));
+                            } else if (element.hasClass('product__item')) {
+                                $('.product__list-error').append(error);
+                            } else {
+                                error.insertAfter(element);
+                            }
+                        },
+                        highlight: function (element, errorClass, validClass) {
+                            $(element).addClass(errorClass).removeClass(validClass);
+                            $(element).closest('.grid__view').addClass(errorClass);
+                            $(element).closest('.item').addClass(errorClass);
+                        },
+                        unhighlight: function (element, errorClass, validClass) {
+                            $(element).removeClass(errorClass).addClass(validClass);
+                            $(element).closest('.grid__view').removeClass(errorClass);
+                            $(element).closest('.item').removeClass(errorClass);
+                        },
+                        submitHandler: function () {
+                            $.ajax({
+                                url: $('form#request-sample-product').attr('action'),
+                                type: 'post',
+                                dataType: 'json',
+                                data: $('form#request-sample-product').serialize(),
+                                beforeSend: function () {
+                                    $('[data-action="request-sample-product"] .loader').removeClass('hide');
+                                    $('[data-action="request-sample-product"]').addClass('show-loading');
+                                    $('[data-action="request-sample-product"] span').hide();
+                                },
+                                success: function () {
+                                    // TODO: show popup thank you @dungpv
+                                    $('[data-action="request-sample-product"] .loader').addClass('hide');
+                                    $('[data-action="request-sample-product"]').removeClass('show-loading');
+                                    $('[data-action="request-sample-product"] span').show();
+                                    let firstName = $('form#request-sample-product [name="first_name"]').val();
+                                    $('.product__request-modal h3.title').text(`{{ 'request_sample.product.modal_thank_you_title' | t }}`);
+                                    $('.product__request-modal').show();
+                                    $('html,body').animate({scrollTop: 0}, 1000);
+                                    loadingDom.removeClass('hide');
+                                    $('.sample_request-product').empty();
+                                    renderSampleProduct(items);
+                                    window.EAI.TrackAdobeEvents.formSubmitEvents('Request Sample Product');
+                                }
+                            })
+                        }
+                    });
+
+                    $.validator.addMethod('validPostalCode', function (value, element, arg){
+                        return storage_postal_code.some(item => item.relative_code === value);
+                    }, theme.strings.validPostalCode);
+
+                    $(document).on("change", ".select2-hidden-accessible", function() {
+                        $(this).valid();
+                    });
+                }
+            }
+        });
+        return template;
+    }
+
+    function renderSampleCoupon(items) {
+        let template = '',
+            requested_coupons;
+
+        const formString = `
+            <div class="form__header">
+                <h3>{{ 'request_sample.coupon.tab_content_title' | t }}</h3>
+                <p>{{ 'request_sample.coupon.tab_content_description_html' | t }}</p>
+            </div>
+            <form action="${urlActionRequestCoupon}" id="request-sample-coupon"
+            method="post">
+            <div class="grid__view grid__two-column" data-render="sample-coupons"></div>
+            <div class="coupon__list-error"></div>
+            <div class="forms">
+                <input type="hidden" name="sub"/>
+                <input type="hidden" name="sub_hash"/>
+                <input type="hidden" class="sponsor" name="sponsor" value="${sponsor}" />
+
+                <div class="grid__view grid__two-column">
+                    <div class="fields">
+                        <label for="sc-firstname">{{ 'request_sample.form.fisrt_name_label' | t }}</label>
+                        <input type="text" name="first_name" id="sc-firstname"/>
+                    </div>
+                    <div class="fields">
+                        <label for="sc-lastname">{{ 'request_sample.form.last_name_label' | t }}</label>
+                        <input type="text" name="last_name" id="sc-lastname"/>
+                    </div>
+                </div>
+
+                <div class="grid__view grid__two-column">
+                    <div class="fields">
+                        <label for="sc-email">{{ 'request_sample.form.email_label' | t }}</label>
+                        <input type="text" name="email" id="sc-email"/>
+                    </div>
+                    <div class="fields">
+                        <label for="sc-phone">{{ 'request_sample.form.mobile_phone_label' | t }}</label>
+                        <input type="text" name="phone" id="sc-phone"/>
+                    </div>
+                </div>
+            </div>
+            <div class="term__condition">
+                <div class="item form-check">
+                    <input class="form-check-input termCondition" id="agree3" type="checkbox" name="ckIagree" style="display: block"/>
+                    {% assign term_condition_11 = 'request_sample.form.term_condition_11_html' | t %}
+                    {% assign term_condition_12 = 'request_sample.form.term_condition_12_html' | t %}
+                    {% assign term_condition_13 = 'request_sample.form.term_condition_13_html' | t %}
+                    {% assign term_condition_14 = 'request_sample.form.term_condition_14_html' | t %}
+                    {% assign term_condition_15 = 'request_sample.form.term_condition_15_html' | t %}
+                    {% assign term_condition_string1 = term_condition_11 | append: term_condition_11 | append: term_condition_12 | append: term_condition_13 | append: term_condition_14 | append: term_condition_15 %}
+                    {% if contact_info != blank %}
+                        {% if contact_info.contact_phone != blank %}
+                            {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                            {% assign term_condition_string1 = term_condition_string1 | replace: "{phone}", contact_info.contact_phone %}
+                            {% assign term_condition_string1 = term_condition_string1 | replace: "{phone_number}", phone_number %}
+                        {% else %}
+                            {% assign term_condition_string1 = term_condition_string1 | replace: "{phone}", "" %}
+                            {% assign term_condition_string1 = term_condition_string1 | replace: "{phone_number}", "" %}
+                        {% endif %}
+                    {% endif %}
+                    {% if contact_info.contact_email != blank %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{email}", contact_info.contact_email %}
+                    {% else %}
+                        {% assign term_condition_string1 = term_condition_string1 | replace: "{email}", "" %}
+                    {% endif %}
+                    <label for="agree3" class="form-check-label">{{ term_condition_string1 }}</label>
+                </div>
+                <div class="item form-check">
+                    <input class="form-check-input termCondition" id="agree4" type="checkbox" name="ckKeepsme" style="display: block"/>
+                    <label for="agree4" class="form-check-label">
+                        {{ 'request_sample.form.term_condition_21_html' | t }}
+                        {{ 'request_sample.form.term_condition_22_html' | t }}
+                        {{ 'request_sample.form.term_condition_23_html' | t }}
+                    </label>
+                </div>
+            </div>
+            <div class="text-right button__submit">
+                <button type="submit" data-action="request-sample-coupon" class="btn btn-primary">
+                    <div class="loader loader--button hide"></div>
+                    <span>{{ 'request_sample.form.button_submit_coupon' | t }}</span>
+                </button>
+            </div>
+        </form>`;
+
+        $.ajax({
+            url: "{{ shop.metafields.route.get_disabled_sample_coupon }}",
+            type: 'get',
+            dataType: 'json',
+            data: {line_id: urlParams.get('sub')},
+            success: function (response) {
+                let i;
+                loadingDom.addClass('hide');
+                if (response['available'] === false) {
+                    let html = '';
+                    for(i = 0; i < items.length; i++) {
+                        if (!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) {
+                            continue;
+                        }
+                        html += `<div class="form-group disabled">
+                            <div class="form-check">
+                                <label for="items_${items[i].id}" class="coupon-item form-check-label">
+                                    <span class="product__title">${items[i].title}</span>
+                                    <span class="product__desc">${items[i].description}</span>
+                                    ${printExpDate(items[i])}
+                                    <span class="requested" >{{ 'request_sample.coupon.requested_coupon' | t }}</span>
+                                </label>
+                            </div>
+                        </div>`;
+                    }
+                    template += `<div class="not__avaiable-product">
+                        <div class="header text-center">
+                            <div class="header__icon">
+                                {% render 'icon-thank-you-request' %}
+                            </div>
+                            <div class="header__content">
+                                <h3>{{ 'request_sample.coupon.requested_all_thank_you_title' | t }}</h3>
+                                <p>{{ 'request_sample.coupon.requested_all_thank_you_description' | t }}</p>
+                            </div>
+                        </div>
+                        <div class="grid__view grid__two-column">${html}</div>
+                        <div class="footer">
+                            <div class="footer__left">
+                                {{ 'request_sample.coupon.footer_thank_you_text_html' | t }}
+                            </div>
+                            {% unless customer %}
+                            <div class="button__actions">
+                                <a href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}" class="btn btn-primary">{{ 'request_sample.coupon.footer_thank_you_button' | t }}</a>
+                            </div>
+                            {% endunless %}
+                        </div>
+                    </div>`;
+                    sampleCouponContainer.append(template);
+                } else {
+                    requested_coupons = response['requested_campaigns'];
+
+                    let disabled = '';
+                    if (sampleCouponConfigs.hasOwnProperty('multi_select') && sampleCouponConfigs['multi_select'] == 1) {
+                        for (i = 0; i < items.length; i++) {
+                            if (!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) {
+                                continue;
+                            }
+                            if (requested_coupons.includes(items[i].campaign_name)) {
+                                disabled = 'disabled';
+                            } else {
+                                disabled = '';
+                            }
+                            template += `<div class="form-group ${disabled}">
+                                <div class="form-check">
+                                    ${!disabled ? `<input style="display: block; height: 0;" id="coupon_${items[i].id}" class="form-check-input coupon__item" type="checkbox" name="coupon_ids[]" value="${items[i].id}">` : ''}
+                                    <label for="coupon_${items[i].id}" class="coupon-item form-check-label ${disabled}">
+                                        <span class="product__title">${items[i].title}</span>
+                                        <span class="product__desc">${items[i].description}</span>
+                                        ${printExpDate(items[i])}
+                                        ${disabled ? `<span class="requested">{{ 'request_sample.coupon.requested_coupon' | t }}</span>` : ''}
+                                    </label>
+                                </div>
+                            </div>`;
+                        }
+                    } else {
+                        for (i = 0; i < items.length; i++) {
+                            if (!compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) {
+                                continue;
+                            }
+                            if (requested_coupons.includes(items[i].campaign_name)) {
+                                disabled = 'disabled';
+                            } else {
+                                disabled = '';
+                            }
+                            template += `<div class="form-group ${disabled}">
+                                <div class="form-check">
+                                    ${!disabled ? `<input style="display: block; height: 0;" id="coupon_${items[i].id}" type="radio" class="coupon__item form-check-input" name="coupon_ids" value="${items[i].id}">` : ''}
+                                    <label for="coupon_${items[i].id}" class="coupon-item form-check-label ${disabled}">
+                                        <span class="product__title">${items[i].title}</span>
+                                        <span class="product__desc">${items[i].description}</span>
+                                        ${disabled ? `<span class="requested">{{ 'request_sample.coupon.requested_coupon' | t }}</span>` : ""}
+                                    </label>
+                                </div>
+                            </div>`;
+                        }
+                    }
+
+                    // Append form fields
+                    sampleCouponContainer.append(formString);
+
+                    $('form#request-sample-coupon').find('input[name="sub"]').val(urlParams.get('sub'));
+                    $('form#request-sample-coupon').find('input[name="sub_hash"]').val(urlParams.get('sub_hash'));
+
+                    // Append list product
+                    $("div[data-render='sample-coupons']").append(template);
+
+                    // validate form
+                    $('form#request-sample-coupon').validate({
+                        normalizer: function(value) {
+                            return $.trim(value);
+                        },
+                        rules: {
+                            first_name: {
+                              required: true,
+                              maxlength: 50
+                            },
+                            last_name: {
+                              required: true,
+                              maxlength: 20
+                            },
+                            email: {
+                                required: true,
+                                email: true
+                            },
+                            phone: {
+                                required: true,
+                                number: true,
+                                minlength: 10,
+                                maxlength: 10
+                            },
+                            'ckIagree': {
+                                required: true,
+                                minlength: 1
+                            },
+                            'ckKeepsme': {
+                                required: true,
+                                minlength: 1
+                            },
+                            'coupon_ids[]': {
+                                required: true,
+                                minlength: 1
+                            },
+                            coupon_ids: 'required'
+                        },
+                        messages: {
+                            first_name: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              maxlength: "{{ 'request_sample.validate.fisrt_name_max_length' | t }}"
+                            },
+                            last_name: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              maxlength: "{{ 'request_sample.validate.last_name_max_length' | t }}"
+                            },
+                            email: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              email: "{{ 'request_sample.validate.email' | t }}"
+                            },
+                            phone: {
+                              required: "{{ 'request_sample.validate.field_required' | t }}",
+                              number: "{{ 'request_sample.validate.phone' | t }}",
+                              minlength: "{{ 'request_sample.validate.phone_min_length' | t }}",
+                              maxlength: "{{ 'request_sample.validate.phone_max_length' | t }}"
+                            },
+                            'ckIagree': "{{ 'request_sample.validate.agree_term' | t }}",
+                            'ckKeepsme': "{{ 'request_sample.validate.agree_term' | t }}",
+                            'coupon_ids[]': "{{ 'request_sample.validate.coupon' | t }}",
+                            coupon_ids: "{{ 'request_sample.validate.coupon' | t }}"
+                        },
+                        errorPlacement: function (error, element) {
+                            if (element.hasClass('termCondition') && element.next('.form-check-label').length) {
+                                error.insertAfter(element.next('.form-check-label'));
+                            } else if(element.hasClass('coupon__item')) {
+                                $('.coupon__list-error').append(error);
+                            } else{
+                                error.insertAfter(element);
+                            }
+                        },
+                        highlight: function (element, errorClass, validClass) {
+                            $(element).addClass(errorClass).removeClass(validClass);
+                            $(element).closest('.grid__view').addClass(errorClass);
+                            $(element).closest('.item').addClass(errorClass);
+                        },
+                        unhighlight: function (element, errorClass, validClass) {
+                            $(element).removeClass(errorClass).addClass(validClass);
+                            $(element).closest('.grid__view').removeClass(errorClass);
+                            $(element).closest('.item').removeClass(errorClass);
+                        },
+                        submitHandler: function() {
+                            $.ajax({
+                                url: $('form#request-sample-coupon').attr('action'),
+                                type: 'post',
+                                dataType: 'json',
+                                data: $('form#request-sample-coupon').serialize(),
+                                beforeSend: function() {
+                                  $('[data-action="request-sample-coupon"] .loader').removeClass('hide');
+                                  $('[data-action="request-sample-coupon"]').addClass('show-loading');
+                                  $('[data-action="request-sample-coupon"] span').hide();
+                                },
+                                success: function (response) {
+                                    $('[data-action="request-sample-coupon"] .loader').addClass('hide');
+                                    $('[data-action="request-sample-coupon"]').removeClass('show-loading');
+                                    $('[data-action="request-sample-coupon"] span').show();
+                                    let email = $('form#request-sample-coupon [name="email"]').val();
+                                    $('.coupon__request-modal p.email').text(email);
+                                    $('.coupon__request-modal').show();
+                                    $('html,body').animate({ scrollTop: 0 }, 1000);
+                                    loadingDom.removeClass('hide');
+                                    $('.sample_request-coupon').empty();
+                                    renderSampleCoupon(items);
+                                    window.EAI.TrackAdobeEvents.formSubmitEvents('Request Sample Coupon');
+                                }
+                            })
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function checkRenderProduct(items) {
+        if (items === undefined || items.length == 0) {
+            productTab.removeClass('active');
+            couponTab.addClass('active').show();
+            sampleProductContainer.find('.loadings').hide();
+            sampleProductContainer.find('.request-empty').removeClass('hide');
+            return;
+        }
+
+        for (i = 0; i < items.length; i++) {
+            if (compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end)) && items[i].quantity > 0) {
+                productTab.addClass('active').show();
+                couponTab.removeClass('active');
+                renderSampleProduct(items);
+                return;
+            }
+        }
+    }
+
+    function checkRenderCoupon(items) {
+        if (items === undefined || items.length == 0) {
+            couponTab.removeClass('active');
+            productTab.addClass('active').show();
+            sampleCouponContainer.find('.loadings').hide();
+            sampleCouponContainer.find('.request-empty').removeClass('hide');
+            return;
+        }
+
+        for (i = 0; i < items.length; i++) {
+            if (compareTimes(new Date(items[i].start), new Date(), new Date(items[i].end))) {
+                couponTabHeader.show();
+                renderSampleCoupon(items);
+                return;
+            }
+        }
+    }
+
+    $(function () {
+        window.locale = "{{ shop.locale }}";
+        switch (locale) {
+            case "th":
+                checkRenderProduct(window.list_sample_product_th);
+                checkRenderCoupon(window.list_sample_coupon_th);
+                break;
+            default:
+                checkRenderProduct(window.list_sample_product_en);
+                checkRenderCoupon(window.list_sample_coupon_en);
+        }
+
+        // Submit form subscibe email
+        $(document).on('submit', 'form.newsletter__sample-request', function(e) {
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url: "https://unilever-app.smartosc.com/api/request-sample-subscribe",
+                type: "POST",
+                dataType: "json",
+                data: formData,
+                beforeSend: function () {
+                },
+                success: function () {
+                    $('form.newsletter__sample-request .input-error-message').addClass('hide');
+                    $('form.newsletter__sample-request .form-message--success').removeClass('hide');
+                },
+                error: function () {
+                    $('form.newsletter__sample-request .form-message-error').removeClass('hide');
+                    $('form.newsletter__sample-request .form-message--success').addClass('hide');
+                }
+            });
+        });
+
+    });
+</script>
+<script src="{{ 'hide-keyboard-on-focus.js' | asset_url }}"></script>
+<script src="/apps/eai/js/track-adobe-events.js"></script>

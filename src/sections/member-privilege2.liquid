@@ -1,0 +1,57 @@
+<div class="businessMembers--partner">
+    <div class="container">
+        {% if section.settings.title != blank %}
+            <h2 class="h3 heading">{{ section.settings.title }}</h2>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+            <div class="row businessMembers--service">
+                {% for block in section.blocks limit: section.blocks.size %}
+                    <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="businessMembers--serviceItem">
+                            <img src="{{ block.settings.image | img_url: 'master' }}" alt="{{ block.settings.title }}"/>
+                            {% if block.settings.title != blank %}
+                                <p class=" title">{{ block.settings.title }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+    {
+    "name": "Business Partners members",
+    "class": "ss-businessMembers",
+    "settings": [
+    {
+    "type": "text",
+    "id": "title",
+    "label": "Title"
+    }
+    ],
+    "blocks": [
+    {
+    "type": "text",
+    "name": "Item",
+    "settings": [
+    {
+    "type": "text",
+    "id": "title",
+    "label": "Title"
+    },
+
+    {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Select image"
+    }
+
+
+    ]
+    }
+    ]
+    }
+{% endschema %}

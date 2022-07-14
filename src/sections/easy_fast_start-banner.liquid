@@ -1,0 +1,121 @@
+<style>
+    .banner-desktop {
+        background-image: url("{{section.settings.image_dk | img_url: 'master'}}");
+    }
+</style>
+
+<div class="easy-fast-start__banner index-section">
+    {%- assign img_dk = section.settings.image_dk -%}
+    {%- assign img_mb = section.settings.image_mb -%}
+    {%- if img_dk != blank and img_mb != blank -%}
+        {%- assign img_url_dk = img_dk | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        {%- assign img_url_mb = img_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <div class="media w-full-screen">
+            <div class="banner-desktop__wrapper display-dk">
+                <div class="banner-desktop display-dk"></div>
+            </div>
+            <img class="image__lazyload lazyload lazypreload display-mb"
+                src="{{ img_mb | img_url: '300x300' }}"
+                data-src="{{ img_url_mb }}"
+                data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                data-aspectratio="{{ img_mb.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ img_mb.alt | escape }}" />
+        </div>
+    {%- endif -%}
+    <div class="container">
+        <div class="content">
+            {%- if section.settings.title -%}
+                <h1 class="title primary_color">{{ section.settings.title }}</h1>
+            {%- endif -%}
+            {%- if section.settings.sub_title -%}
+                <h3 class="sub-title primary_color">{{ section.settings.sub_title }}</h3>
+            {%- endif -%}
+            {%- if section.settings.desc -%}
+                <div class="desc">{{ section.settings.desc }}</div>
+            {%- endif -%}
+            {%- if section.settings.button_label and section.settings.button_url -%}
+                <a href="{{ section.settings.button_url }}" class="btn">{{ section.settings.button_label }}</a>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+<div class="easy-fast-start__start index-section">
+    <div class="container">
+        {%- if section.settings.bottom_title -%}
+            <h2 class="title primary_color">{{ section.settings.bottom_title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.bottom_sub_title -%}
+            <h3 class="sub-title">{{ section.settings.bottom_sub_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.bottom_desc-%}
+            <div class="desc">{{ section.settings.bottom_desc }}</div>
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Banner",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+        "type": "image_picker",
+        "id": "image_dk",
+        "label": "Banner image desktop"
+    },
+    {
+        "type": "image_picker",
+        "id": "image_mb",
+        "label": "Banner image mobile"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+    },
+    {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub title"
+    },
+    {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Description"
+    },
+    {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+    },
+    {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button url"
+    },
+    {
+      "type": "header",
+      "content": "Banner bottom"
+    },
+    {
+        "type": "text",
+        "id": "bottom_title",
+        "label": "Bottom title"
+    },
+    {
+        "type": "text",
+        "id": "bottom_sub_title",
+        "label": "Bottom sub title"
+    },
+    {
+        "type": "textarea",
+        "id": "bottom_desc",
+        "label": "Description"
+    }
+  ]
+}
+{% endschema %}

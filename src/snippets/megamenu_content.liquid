@@ -1,0 +1,11 @@
+<div class="megamenu__content-custom">
+  {% if block.settings.content_title != blank %}
+    <h4 class="primary_color">{{ block.settings.content_title }}</h4>
+  {% endif %}
+  {% if block.settings.content_desc != blank %}
+    <div class="megamenu__content-desc">{{ block.settings.content_desc }}</div>
+  {% endif %}
+  {% if block.settings.content_button != blank and block.settings.content_link != blank %}
+    <a href="{{ block.settings.content_link }}" class="btn megamenu__content-btn">{{ block.settings.content_button }}</a>
+  {% endif %}
+</div>

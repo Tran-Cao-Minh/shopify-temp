@@ -1,0 +1,837 @@
+.main-content {
+  padding: 0; }
+  .main-content .breadcrumb__wrap {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 5;
+    padding: 15px 0;
+    width: 100%; }
+    .main-content .breadcrumb__wrap .breadcrumb {
+      margin-bottom: 0; }
+
+.page__why-uni-life .btn {
+  display: inline-flex;
+  min-height: 51px;
+  justify-content: center;
+  align-items: center;
+  line-height: 30px;
+  font-weight: normal;
+  min-width: 236px;
+  max-width: 100%; }
+
+@media (max-width: 575.98px) {
+  .page__why-uni-life .btn {
+    display: flex;
+    font-size: 18px;
+    line-height: 20px; } }
+
+.page__why-uni-life p {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-weight: 400; }
+
+.page__why-uni-life .section-1 {
+  background-image: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/why-v2_771db7de-7471-4c2d-8298-965b03a2b77a.png?v=1651029102);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 280px 0;
+  position: relative;
+  z-index: 1; }
+  @media (max-height: 650px) {
+    .page__why-uni-life .section-1 {
+      padding: 135px 0; } }
+  @media (min-width: 1025px) {
+    .page__why-uni-life .section-1 {
+      background-attachment: fixed; } }
+  .page__why-uni-life .section-1 .content {
+    max-width: 670px;
+    text-align: center;
+    color: #fff; }
+    .page__why-uni-life .section-1 .content .logo {
+      margin-bottom: 38px;
+      max-width: 178px; }
+    .page__why-uni-life .section-1 .content h2 {
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 31px;
+      margin: 0 0 10px;
+      color: #fff; }
+    .page__why-uni-life .section-1 .content p {
+      color: #fff; }
+  @media (max-width: 1170px) {
+    .page__why-uni-life .section-1 {
+      padding: 200px 0;
+      background-position: 70% 0; }
+      .page__why-uni-life .section-1 .content {
+        max-width: 600px;
+        color: black; } }
+  @media (max-width: 768px) {
+    .page__why-uni-life .section-1 {
+      background: linear-gradient(180deg, #A7A8A9 85%, transparent);
+      padding: 150px 0 0; }
+      .page__why-uni-life .section-1 .content {
+        max-width: none; } }
+  @media (max-width: 575.98px) {
+    .page__why-uni-life .section-1 {
+      padding: 100px 0 0; }
+      .page__why-uni-life .section-1 .content .logo {
+        margin-bottom: 30px; }
+      .page__why-uni-life .section-1 .content h2 {
+        line-height: 30px;
+        margin-bottom: 20px; }
+      .page__why-uni-life .section-1 .content p {
+        font-size: 18px;
+        line-height: 28px; } }
+
+.page__why-uni-life .img-mobile {
+  display: none;
+  z-index: 0;
+  margin-top: -72px; }
+  @media (max-width: 768px) {
+    .page__why-uni-life .img-mobile {
+      display: block;
+      width: 100%; } }
+
+.page__why-uni-life .section-2 .content {
+  padding-top: 60px; }
+  .page__why-uni-life .section-2 .content .title {
+    margin: 30px 0 20px;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: 400; }
+  .page__why-uni-life .section-2 .content .btn {
+    margin-top: 27px; }
+
+.page__why-uni-life .section-2 .content_items {
+  max-width: 570px; }
+
+.page__why-uni-life .section-2 .item {
+  line-height: 20px;
+  text-align: center; }
+  .page__why-uni-life .section-2 .item .sub-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+    font-family: "IBM Plex Sans Thai Looped", sans-serif;
+    font-weight: 400;
+    line-height: 20px; }
+  .page__why-uni-life .section-2 .item p {
+    font-size: 14px;
+    color: #999; }
+
+@media (max-width: 575.98px) {
+  .page__why-uni-life .section-2 .content {
+    padding: 40px 0; }
+    .page__why-uni-life .section-2 .content .title {
+      margin: 30px 0; }
+    .page__why-uni-life .section-2 .content p {
+      font-size: 18px;
+      line-height: 28px; }
+    .page__why-uni-life .section-2 .content .btn {
+      margin-top: 17px;
+      display: block; }
+  .page__why-uni-life .section-2 .content_items {
+    margin: 0 -6px; }
+    .page__why-uni-life .section-2 .content_items .item {
+      padding: 0 6px; } }
+
+.page__why-uni-life .section-3 {
+  margin: 130px 0 123px; }
+  .page__why-uni-life .section-3 .main-row {
+    align-items: flex-end; }
+  .page__why-uni-life .section-3 .item__media-wrap .media {
+    position: relative;
+    overflow: hidden;
+    max-width: 572px;
+    background: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/life-bg-logo.png?v=1651031251) no-repeat;
+    background-position: 66% 30%;
+    filter: grayscale(1); }
+  .page__why-uni-life .section-3 .item__media-wrap img {
+    position: relative;
+    width: 100%; }
+  .page__why-uni-life .section-3 .title {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 400;
+    color: var(--color-primary); }
+  .page__why-uni-life .section-3 .btn {
+    margin-top: 35px; }
+  @media (max-width: 768px) {
+    .page__why-uni-life .section-3 {
+      margin: 80px 0; } }
+  @media (max-width: 575.98px) {
+    .page__why-uni-life .section-3 .title {
+      font-size: 20px;
+      line-height: 25px; }
+    .page__why-uni-life .section-3 .item__media-wrap .media {
+      margin-bottom: 40px;
+      max-width: 100%; }
+    .page__why-uni-life .section-3 .btn {
+      display: block;
+      margin-top: 25px; }
+    .page__why-uni-life .section-3 .description {
+      font-size: 18px;
+      line-height: 25px; } }
+
+.page__why-uni-life .section_4 .ss_title {
+  font-size: 40px;
+  line-height: 46px;
+  font-weight: 400;
+  margin-bottom: 23px;
+  color: var(--color-primary); }
+
+.page__why-uni-life .section_4 .item_header {
+  display: flex; }
+  .page__why-uni-life .section_4 .item_header .number {
+    min-width: 45px;
+    font-size: 50px;
+    line-height: 19px;
+    letter-spacing: 0.25px;
+    font-weight: 400; }
+  .page__why-uni-life .section_4 .item_header .sub-title {
+    font-size: 25px;
+    line-height: 30px;
+    font-weight: 400;
+    margin: 0 0 10px 0; }
+
+.page__why-uni-life .section_4 .item_pdl {
+  padding-left: 45px; }
+
+.page__why-uni-life .section_4 .item1 {
+  margin-top: 50px; }
+  .page__why-uni-life .section_4 .item1 .number {
+    min-width: 35px; }
+  .page__why-uni-life .section_4 .item1 .item_pdl {
+    padding-left: 35px; }
+  .page__why-uni-life .section_4 .item1 .media {
+    max-width: 940px;
+    margin: 28px auto 20px; }
+
+.page__why-uni-life .section_4 .item2 {
+  background-image: url("https://cdn.shopify.com/s/files/1/0344/4139/6364/files/wul_s4_02.jpg?v=1636966864");
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: contain; }
+  .page__why-uni-life .section_4 .item2 .content {
+    padding: 141px 0 113px; }
+
+.page__why-uni-life .section_4 .item3 {
+  padding: 120px 0 110px; }
+  .page__why-uni-life .section_4 .item3 .media {
+    max-width: 910px;
+    margin: 0 auto; }
+  .page__why-uni-life .section_4 .item3 .item_header {
+    max-width: 330px;
+    margin: 0 30px 0 auto; }
+    .page__why-uni-life .section_4 .item3 .item_header .number {
+      min-width: 45px; }
+
+.page__why-uni-life .section_4 .item4 .item_note {
+  font-size: 15px;
+  color: #999;
+  margin-top: 26px; }
+
+.page__why-uni-life .section_4 .item5 {
+  padding: 90px 0 165px; }
+  .page__why-uni-life .section_4 .item5 .item_row {
+    align-items: center; }
+  .page__why-uni-life .section_4 .item5 .media {
+    max-width: 480px;
+    margin: 0 20px 0 auto; }
+
+.page__why-uni-life .section_4 .item6 {
+  padding-bottom: 100px; }
+  .page__why-uni-life .section_4 .item6 .content {
+    margin-top: 90px; }
+  .page__why-uni-life .section_4 .item6 .media {
+    margin-left: 15px; }
+
+@media (max-width: 1024px) {
+  .page__why-uni-life .section_4 .item6 .content {
+    margin-top: 0; } }
+
+@media (max-width: 768px) {
+  .page__why-uni-life .section_4 .item2 .content {
+    padding: 50px 0; }
+  .page__why-uni-life .section_4 .item3,
+  .page__why-uni-life .section_4 .item5 {
+    padding: 50px 0; } }
+
+@media (max-width: 575.98px) {
+  .page__why-uni-life .section_4 p {
+    font-size: 18px;
+    line-height: 28px; }
+  .page__why-uni-life .section_4 .item_pdl {
+    padding-left: 0; }
+  .page__why-uni-life .section_4 .ss_title {
+    font-size: 25px;
+    line-height: 30px;
+    margin-bottom: 30px; }
+  .page__why-uni-life .section_4 .item_header {
+    align-items: center; }
+    .page__why-uni-life .section_4 .item_header .sub-title {
+      font-size: 18px;
+      line-height: 24px; }
+  .page__why-uni-life .section_4 .item1 {
+    margin-top: 40px; }
+    .page__why-uni-life .section_4 .item1 .item_pdl {
+      padding-left: 0; }
+    .page__why-uni-life .section_4 .item1 .media {
+      margin: 40px 0 0; }
+  .page__why-uni-life .section_4 .item2 {
+    background-image: none; }
+    .page__why-uni-life .section_4 .item2 .ct-offset {
+      margin-left: 0; }
+    .page__why-uni-life .section_4 .item2 .content {
+      padding: 40px 0; }
+  .page__why-uni-life .section_4 .item3 .item-content {
+    display: flex;
+    flex-direction: column; }
+  .page__why-uni-life .section_4 .item3 .content {
+    order: -1;
+    margin-bottom: 40px; }
+  .page__why-uni-life .section_4 .item3 .item_header {
+    margin: 0; }
+  .page__why-uni-life .section_4 .item4 .item_note {
+    font-size: 18px;
+    line-height: 28px; }
+  .page__why-uni-life .section_4 .item4 .content {
+    margin-bottom: 30px; }
+  .page__why-uni-life .section_4 .item4 img {
+    margin: 0 0 0 -25px; }
+  .page__why-uni-life .section_4 .item5 {
+    padding: 30px 0; }
+    .page__why-uni-life .section_4 .item5 .media {
+      max-width: 100%;
+      margin: 0; }
+    .page__why-uni-life .section_4 .item5 .col-media {
+      order: 2;
+      margin-top: 30px; }
+  .page__why-uni-life .section_4 .item6 {
+    padding: 60px 0 30px; }
+    .page__why-uni-life .section_4 .item6 .content {
+      padding-bottom: 40px; } }
+
+.page__why-uni-life .section_5 {
+  position: relative;
+  background-image: url("https://cdn.shopify.com/s/files/1/0397/0098/8070/files/why_ul_ss_5_bg.jpg?v=1618392393");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 780px; }
+  @media (min-width: 1025px) {
+    .page__why-uni-life .section_5 {
+      background-attachment: fixed; } }
+  .page__why-uni-life .section_5 .image-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0; }
+  .page__why-uni-life .section_5 .content {
+    max-width: 510px;
+    padding-top: 80px; }
+    .page__why-uni-life .section_5 .content .title {
+      margin-bottom: 15px;
+      font-size: 50px;
+      line-height: 70px;
+      font-weight: 400;
+      color: var(--color-primary); }
+  .page__why-uni-life .section_5 .image-moblie {
+    display: none; }
+    .page__why-uni-life .section_5 .image-moblie img {
+      width: 100%; }
+  @media (max-width: 768px) {
+    .page__why-uni-life .section_5 {
+      height: 650px; } }
+  @media (max-width: 575.98px) {
+    .page__why-uni-life .section_5 {
+      background-image: none;
+      height: auto;
+      margin: 30px 0; }
+      .page__why-uni-life .section_5 .content {
+        padding-top: 0; }
+        .page__why-uni-life .section_5 .content .title {
+          font-size: 25px;
+          line-height: 30px;
+          margin: 15px 0 10px; }
+      .page__why-uni-life .section_5 .image-moblie {
+        margin-top: 20px;
+        display: block; }
+      .page__why-uni-life .section_5 .image-bottom {
+        display: none; }
+      .page__why-uni-life .section_5 p {
+        font-size: 18px;
+        line-height: 28px; } }
+
+.page__why-uni-life .section_6 {
+  position: relative; }
+  .page__why-uni-life .section_6 .list_items .content-main .title-top {
+    font-weight: 400; }
+  .page__why-uni-life .section_6 .list_items .item {
+    padding: 100px 0; }
+    .page__why-uni-life .section_6 .list_items .item p {
+      line-height: 22px; }
+  .page__why-uni-life .section_6 .list_items .content-header .title-top {
+    font-size: 60px;
+    line-height: 1.16;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-family: "Kanit", sans-serif; }
+    .page__why-uni-life .section_6 .list_items .content-header .title-top span {
+      color: #f2f2f2; }
+  .page__why-uni-life .section_6 .list_items .content-header .sub-title span {
+    color: var(--color-primary);
+    display: block; }
+  .page__why-uni-life .section_6 .list_items .content-header .sub-title .title {
+    margin-bottom: 0; }
+  .page__why-uni-life .section_6 .list_items .item1 {
+    background-image: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/wul_s6_bg.png?v=1651033874);
+    background-repeat: no-repeat;
+    background-position: 105% 0;
+    background-size: 620px;
+    padding: 160px 0 100px; }
+    .page__why-uni-life .section_6 .list_items .item1 .content-header .sub-title .title .title-top {
+      font-size: 40px;
+      line-height: 1;
+      color: #333;
+      margin: 0; }
+    .page__why-uni-life .section_6 .list_items .item1 .content-header .sub-title .title .title-bottom {
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: 0.25px; }
+    .page__why-uni-life .section_6 .list_items .item1 .content-main {
+      margin-top: 60px; }
+      .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features {
+        margin: 35px 0 -35px;
+        text-align: center; }
+        .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .media {
+          margin-bottom: 8px; }
+        .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature-item {
+          margin-bottom: 25px; }
+        @media (max-width: 575.98px) {
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-1 {
+            order: 1; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-2 {
+            order: 2; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-3 {
+            order: 5; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-4 {
+            order: 6; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-5 {
+            order: 3; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-6 {
+            order: 4; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-7 {
+            order: 7; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature__item-8 {
+            order: 8; } }
+  .page__why-uni-life .section_6 .list_items .item2 {
+    background-image: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/wul_s6_bg_2.png?v=1651034724);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: -7% 0;
+    padding-bottom: 0; }
+    .page__why-uni-life .section_6 .list_items .item2 .info {
+      font-size: 16px;
+      line-height: 26px;
+      color: #999; }
+    .page__why-uni-life .section_6 .list_items .item2 .content-header .sub-title .title-top {
+      color: #333;
+      font-size: 40px;
+      line-height: 1; }
+    .page__why-uni-life .section_6 .list_items .item2 .content-header .sub-title .title-bottom {
+      color: var(--color-primary);
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: 0.25px;
+      font-weight: 400; }
+    .page__why-uni-life .section_6 .list_items .item2 .content-main {
+      margin-top: 30px; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-main .title-top {
+        font-size: 20px;
+        line-height: 2; }
+    .page__why-uni-life .section_6 .list_items .item2 .list-features {
+      margin: 25px 0;
+      text-align: center; }
+    .page__why-uni-life .section_6 .list_items .item2 .content-footer {
+      border-top: 1px solid #d0d0d0;
+      margin-top: 13px;
+      padding-top: 20px;
+      max-width: 670px; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-footer .title {
+        font-size: 20px;
+        line-height: 26px; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-footer span {
+        font-weight: 400; }
+  .page__why-uni-life .section_6 .list_items .item3 {
+    background-image: url("https://cdn.shopify.com/s/files/1/0397/0098/8070/files/why_ul_ss_6_item_4.png?v=1618461885");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 100% 0;
+    padding-bottom: 60px; }
+    .page__why-uni-life .section_6 .list_items .item3 .container {
+      max-width: 940px; }
+    .page__why-uni-life .section_6 .list_items .item3 .content-left {
+      margin-top: 20px;
+      text-align: right; }
+      .page__why-uni-life .section_6 .list_items .item3 .content-left .h1 {
+        line-height: 40px; }
+      .page__why-uni-life .section_6 .list_items .item3 .content-left .list-features .sub-color {
+        color: var(--color-primary); }
+      .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item {
+        font-size: 20px;
+        line-height: 25px;
+        font-weight: 400;
+        min-height: 45px;
+        padding: 8px 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column; }
+        .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item::before {
+          content: "";
+          position: absolute;
+          height: 1px;
+          bottom: 0;
+          right: 0;
+          width: 60%;
+          background: #ededed; }
+        .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item:last-child::before {
+          display: none; }
+        .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item .desc {
+          font-weight: normal;
+          font-family: "Sarabun", sans-serif;
+          font-size: 16px;
+          line-height: 22px; }
+    .page__why-uni-life .section_6 .list_items .item3 .pricing-tables {
+      display: flex; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .btn {
+        min-width: 100%; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing__table-wrap {
+        width: 250px; }
+        .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing__table-wrap:first-child {
+          margin-right: 25px; }
+        .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing__table-wrap a {
+          width: 100%;
+          margin-top: 20px; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table {
+        background: #fff;
+        width: 100%;
+        text-align: center;
+        border-radius: 6px;
+        border: 1px solid #ededed;
+        overflow: hidden;
+        -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1); }
+        .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .header {
+          height: 68px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 25px;
+          line-height: 40px;
+          font-weight: 400; }
+          .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .header.header-style1 {
+            background-color: var(--color-primary);
+            color: #E0FB3F; }
+          .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .header.header-style2 {
+            background-color: #E0FB3F;
+            color: var(--color-primary); }
+        .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .feature-item {
+          min-height: 45px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: 1px solid #ededed; }
+          .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .feature-item:last-child {
+            border-bottom: none; }
+  @media (max-width: 1024px) {
+    .page__why-uni-life .section_6 .list_items .item2 {
+      background-size: 550px; }
+    .page__why-uni-life .section_6 .list_items .item3 .pricing__table-wrap a .display-dk {
+      display: none !important; }
+    .page__why-uni-life .section_6 .list_items .item3 .pricing__table-wrap a .display-mb {
+      display: block !important; } }
+  @media (max-width: 768px) {
+    .page__why-uni-life .section_6 .list_items .item {
+      background-image: none; }
+      .page__why-uni-life .section_6 .list_items .item .item2-col-left {
+        display: none; }
+        .page__why-uni-life .section_6 .list_items .item .item2-col-left + div {
+          min-width: 100%;
+          flex: 0 0 100%; }
+    .page__why-uni-life .section_6 .list_items .item1 {
+      padding-top: 100px; }
+    .page__why-uni-life .section_6 .list_items .item2 {
+      margin-top: 20px;
+      padding-top: 0; } }
+  @media (max-width: 575.98px) {
+    .page__why-uni-life .section_6 .btn {
+      width: 100%;
+      margin-top: 15px; }
+    .page__why-uni-life .section_6 .title__mobile-top {
+      margin-bottom: 15px;
+      line-height: 40px; }
+    .page__why-uni-life .section_6 .content {
+      position: relative;
+      width: auto;
+      height: auto; }
+      .page__why-uni-life .section_6 .content .item {
+        position: relative;
+        opacity: 1; }
+    .page__why-uni-life .section_6 .list_items .item {
+      background-image: none;
+      padding: 0;
+      margin-top: 35px; }
+    .page__why-uni-life .section_6 .list_items .content-header .title-top {
+      display: none; }
+    .page__why-uni-life .section_6 .list_items .content-header .sub-title {
+      font-size: 25px; }
+      .page__why-uni-life .section_6 .list_items .content-header .sub-title span {
+        display: block;
+        font-size: 20px;
+        padding: 10px 0px 0; }
+    .page__why-uni-life .section_6 .list_items .content-main .list-features .feature-item p {
+      font-size: 18px;
+      line-height: 23px; }
+    .page__why-uni-life .section_6 .list_items .content-main .btn {
+      margin-top: 15px;
+      width: 100%; }
+    .page__why-uni-life .section_6 .list_items .content-main .title-top {
+      font-size: 18px;
+      line-height: 40px; }
+    .page__why-uni-life .section_6 .list_items .item1 {
+      margin-top: 20px; }
+      .page__why-uni-life .section_6 .list_items .item1 .content-header .sub-title .title {
+        margin-bottom: 0; }
+        .page__why-uni-life .section_6 .list_items .item1 .content-header .sub-title .title .title-top {
+          font-size: 25px;
+          line-height: 30px; }
+        .page__why-uni-life .section_6 .list_items .item1 .content-header .sub-title .title .title-bottom {
+          font-size: 20px;
+          line-height: 26px;
+          padding-top: 0; }
+      .page__why-uni-life .section_6 .list_items .item1 .content-header p {
+        font-size: 18px;
+        line-height: 28px; }
+      .page__why-uni-life .section_6 .list_items .item1 .content-main {
+        margin-top: 26px; }
+        .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features {
+          margin: 26px 0 -26px; }
+          .page__why-uni-life .section_6 .list_items .item1 .content-main .list-features .feature-item {
+            margin-bottom: 16px; }
+    .page__why-uni-life .section_6 .list_items .item2 {
+      margin-top: 80px; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-header .sub-title .title-top {
+        font-size: 25px;
+        line-height: 30px;
+        margin: 0;
+        padding: 0; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-header .sub-title .title-bottom {
+        font-size: 20px;
+        line-height: 26px;
+        margin: 0;
+        padding: 0; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-footer {
+        max-width: 100%;
+        margin-top: 20px; }
+        .page__why-uni-life .section_6 .list_items .item2 .content-footer .title {
+          font-size: 18px;
+          line-height: 30px;
+          margin: 0 0 20px; }
+        .page__why-uni-life .section_6 .list_items .item2 .content-footer .btn {
+          width: 100%;
+          margin-top: 10px; }
+      .page__why-uni-life .section_6 .list_items .item2 p {
+        font-size: 18px;
+        line-height: 28px; }
+      .page__why-uni-life .section_6 .list_items .item2 .info {
+        line-height: 26px;
+        margin-top: 10px;
+        display: block; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-main .title-top {
+        font-size: 18px;
+        line-height: 40px; }
+      .page__why-uni-life .section_6 .list_items .item2 .content-main .list-features {
+        margin: 22px 0 30px; }
+    .page__why-uni-life .section_6 .list_items .item3 {
+      margin: 80px 0 70px; }
+      .page__why-uni-life .section_6 .list_items .item3 .content-left {
+        margin-top: 0;
+        text-align: left; }
+        .page__why-uni-life .section_6 .list_items .item3 .content-left .list-features {
+          margin-top: 48px; }
+        .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item {
+          font-size: 18px;
+          line-height: 20px;
+          min-height: 60px;
+          padding: 20px 0;
+          border: none;
+          display: flex;
+          align-items: flex-start;
+          flex-direction: column;
+          justify-content: center; }
+          .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item .desc {
+            font-size: 14px;
+            line-height: 20px; }
+          .page__why-uni-life .section_6 .list_items .item3 .content-left .feature-item::before {
+            width: 100%; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing__table-wrap:first-child {
+        margin-right: 10px; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing__table-wrap a {
+        padding: 2px 0;
+        margin-top: 12px; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .header {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 40px;
+        height: 47px; }
+      .page__why-uni-life .section_6 .list_items .item3 .pricing-tables .pricing-table .feature-item {
+        height: 60px; } }
+
+.page__why-uni-life .section_7 {
+  position: relative;
+  background-image: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/ss_5_bg.png?v=1651041898);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 142px 0 110px; }
+  @media (min-width: 1025px) {
+    .page__why-uni-life .section_7 {
+      background-attachment: fixed; } }
+  .page__why-uni-life .section_7 .content_header {
+    color: #fff; }
+    .page__why-uni-life .section_7 .content_header .title-top {
+      color: #999;
+      font-size: 12px;
+      font-family: "Kanit", sans-serif; }
+    .page__why-uni-life .section_7 .content_header h2,
+    .page__why-uni-life .section_7 .content_header p {
+      color: #fff; }
+    .page__why-uni-life .section_7 .content_header h2 {
+      font-size: 30px;
+      line-height: 40px; }
+    .page__why-uni-life .section_7 .content_header .item {
+      max-width: 670px; }
+  .page__why-uni-life .section_7 .content-main .content-top .title {
+    font-size: 30px;
+    line-height: 40px;
+    color: #E0FB3F;
+    margin: 60px 0 0 0; }
+  .page__why-uni-life .section_7 .content-main .item {
+    position: relative;
+    text-align: center;
+    color: #fff; }
+    .page__why-uni-life .section_7 .content-main .item p {
+      color: #fff; }
+    .page__why-uni-life .section_7 .content-main .item .item-top {
+      position: relative;
+      height: 285px;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .page__why-uni-life .section_7 .content-main .item .item-top .title {
+        font-size: 300px;
+        line-height: 1;
+        font-weight: 400;
+        position: absolute;
+        top: 0;
+        color: rgba(255, 255, 255, 0.15);
+        margin: 0; }
+      .page__why-uni-life .section_7 .content-main .item .item-top .sub-title {
+        font-size: 40px;
+        line-height: 1;
+        font-weight: 400;
+        margin: 0; }
+  @media (max-width: 1023.98px) and (min-width: 576px) {
+    .page__why-uni-life .section_7 .content-main .item .item-top .sub-title {
+      font-size: 28px; } }
+  @media (max-width: 575.98px) {
+    .page__why-uni-life .section_7 {
+      padding: 74px 0 64px; }
+      .page__why-uni-life .section_7 .content_header h2 {
+        font-size: 25px;
+        line-height: 34px;
+        letter-spacing: 0; }
+      .page__why-uni-life .section_7 p {
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 0.25px; }
+      .page__why-uni-life .section_7 .content-main .content-top .title {
+        margin-top: 40px;
+        font-size: 25px;
+        line-height: 30px;
+        letter-spacing: 0.25px; }
+      .page__why-uni-life .section_7 .content-main .item .item-top {
+        height: 300px;
+        align-items: end; }
+        .page__why-uni-life .section_7 .content-main .item .item-top .title {
+          font-size: 340px; }
+        .page__why-uni-life .section_7 .content-main .item .item-top .sub-title {
+          margin: 0 0 50px 0; } }
+
+.page__why-uni-life .section_8 .smart_modal .drawer__close::after,
+.page__why-uni-life .section_8 .smart_modal .drawer__close::before {
+  background: #fff; }
+
+.page__why-uni-life .section_8 .video-content {
+  background-image: url("https://cdn.shopify.com/s/files/1/0344/4139/6364/files/wul_s8_bg.jpg?v=1637032816");
+  background-size: cover;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  padding: 300px 0 100px;
+  z-index: 2; }
+  .page__why-uni-life .section_8 .video-content .main-title,
+  .page__why-uni-life .section_8 .video-content p {
+    color: #fff; }
+  .page__why-uni-life .section_8 .video-content .main-title {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 400;
+    color: #E0FB3F; }
+
+.page__why-uni-life .section_8 .content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center; }
+
+.page__why-uni-life .section_8 .content-main {
+  max-width: 768px;
+  margin: 0 auto; }
+
+.page__why-uni-life .section_8 .content-media {
+  max-width: 164px;
+  margin-bottom: 45px; }
+
+@media (max-width: 575.98px) {
+  .page__why-uni-life .section_8 {
+    background: #fff;
+    padding-top: 0;
+    margin-top: 0;
+    z-index: 1;
+    position: relative; }
+    .page__why-uni-life .section_8 .video-content {
+      padding: 120px 0 50px; }
+    .page__why-uni-life .section_8 .main-title {
+      font-size: 20px;
+      line-height: 26px; }
+    .page__why-uni-life .section_8 .content__video-mobile {
+      background: #000;
+      color: #fff;
+      padding: 25px 0 70px; }
+      .page__why-uni-life .section_8 .content__video-mobile .main-title {
+        color: #fff;
+        font-size: 25px;
+        line-height: 30px;
+        letter-spacing: 0.25px;
+        font-weight: 600;
+        margin-bottom: 10px; }
+      .page__why-uni-life .section_8 .content__video-mobile p {
+        color: #fff;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: 0.25px; }
+    .page__why-uni-life .section_8 .content-media {
+      max-width: 82px;
+      margin: auto; } }

@@ -1,0 +1,175 @@
+<section class="banner__text--link">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 banner__item">
+        {% if section.settings.img_left != blank %}
+          <div class="background left" style="background-image: url({{ section.settings.img_left | img_url: 'master' }})"></div>
+          <div class="images__mobile"><img src="{{ section.settings.img_left | img_url: 'master' }}" alt="" /></div>
+        {% else %}
+          <div class="background left" style="background-image: url('http://via.placeholder.com/705x540')"></div>
+          <div class="images__mobile"><img src="http://via.placeholder.com/705x540" alt="" /></div>
+        {% endif %}
+        <div class="wrapper">
+          <div class="content">
+            {% if section.settings.title_left != blank %}
+              <h3 class="title__left">{{ section.settings.title_left }}</h3>
+            {% endif %}
+            {% if section.settings.desc_left != blank %}
+              <p class="desc">{{ section.settings.desc_left }}</p>
+            {% endif %}
+            <a class="btn fix-width" href="{{ section.settings.btn_link_left }}">{{ section.settings.btn_text_left }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 banner__item">
+        {% if section.settings.img_right != blank %}
+          <div class="background right" style="background-image: url({{ section.settings.img_right | img_url: 'master' }})"></div>
+          <div class="images__mobile"><img src="{{ section.settings.img_right | img_url: 'master' }}" alt="" /></div>
+        {% else %}
+          <div class="background right" style="background-image: url('http://via.placeholder.com/705x540')"></div>
+          <div class="images__mobile"><img src="http://via.placeholder.com/705x540" alt="" /></div>
+        {% endif %}
+        <div class="wrapper">
+          <div class="content right">
+            {% if section.settings.title_right != blank %}
+              <h3 class="title__right">{{ section.settings.title_right }}</h3>
+            {% endif %}
+            {% if section.settings.desc_right != blank %}
+              <p class="desc right">{{ section.settings.desc_right }}</p>
+            {% endif %}
+            <a class="btn fix-width" href="{{ section.settings.btn_link_right }}">{{ section.settings.btn_text_right }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": {
+    "en": "Banner With Text Link",
+    "th": "แบนเนอร์พร้อมลิงค์ข้อความ"
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en": "Banner Left",
+        "th": "แบนเนอร์ซ้าย"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "img_left",
+      "label": {
+        "en": "Background",
+        "th": "พื้นหลัง"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title_left",
+      "label": {
+        "en": "Title",
+        "th": "หัวข้อ"
+      },
+      "default": {
+        "en": "VIP Subscription",
+        "th": "โปรแกรม VIP"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "desc_left",
+      "label": {
+        "en": "Description",
+        "th": "ลักษณะ"
+      },
+      "default": "Lorem ipsum dolor sitamet,<br>conse dipiscing elit, sed dia<br>nonummy nibh euismod.<br>Lorem ipsum dolor sitamet,<br>conse dipiscing."
+    },
+    {
+      "type": "text",
+      "id": "btn_text_left",
+      "label": {
+        "en": "Button Text",
+        "th": "ข้อความปุ่ม"
+      },
+      "default": {
+        "en": "More Details",
+        "th": "รายละเอียดเพิ่มเติม"
+      }
+    },
+    {
+      "type": "url",
+      "id": "btn_link_left",
+      "label": {
+        "en": "Button Link",
+        "th": "ลิงค์ปุ่ม"
+      }
+    },
+    {
+      "type": "header",
+      "content": {
+        "en": "Banner Right",
+        "th": "แบนเนอร์ขวา"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "img_right",
+      "label": {
+        "en": "Background",
+        "th": "พื้นหลัง"
+      }
+    },
+    {
+      "type": "text",
+      "id": "title_right",
+      "label": {
+        "en": "Title",
+        "th": "หัวข้อ"
+      },
+      "default": {
+        "en": "Bring back<br>your beauty",
+        "th": "นำความงามของคุณกลับมา"
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "desc_right",
+      "label": {
+        "en": "Description",
+        "th": "ลักษณะ"
+      },
+      "default": "Lorem ipsum dolor sit amet,consec. dipisci<br>ng elit, sed diam nonummy nibh euismod<br>tinc idunt ut laoree. Lorem ipsum dolor sit<br>amet,consec. dipisci ng elit, sed diam<br>nonummy nibh."
+    },
+    {
+      "type": "text",
+      "id": "btn_text_right",
+      "label": {
+        "en": "Button Text",
+        "th": "ข้อความปุ่ม"
+      },
+      "default": {
+        "en": "More Details",
+        "th": "รายละเอียดเพิ่มเติม"
+      }
+    },
+    {
+      "type": "url",
+      "id": "btn_link_right",
+      "label": {
+        "en": "Button Link",
+        "th": "ลิงค์ปุ่ม"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner With Text Link",
+      "category": "Banners"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,55 @@
+{%- capture locale_primary -%}
+  {%- for locale in shop.published_locales -%}
+    {%- if locale.primary -%}{{- locale.iso_code -}}{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{% if locale_primary != shop.locale %}
+	{% assign local = '/' | append: shop.locale %}
+{% endif %}
+<div class="offcanvas--right offcanvas--right__search">
+  <div class="offcanvas-content offcanvas-search">
+      <span class="close drawer__close" title="{{ 'general.tooltip.close' | t }}"></span>
+    <div class="offcanvas-header">
+      <h2 class="offcanvas__header-title">{{ 'layout.canvas.search' | t }}</h2>
+    </div>
+    <div class="offcanvas-cart__content">
+      <form id="canvas__form-search" class="search-form" action="{{ pages['search'].url }}" method="get" role="search">
+        <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+        <div class="search-form__input-wrapper" data-locale_primary="{{ locale_primary }}" data-locale="{{ shop.locale }}"
+          data-search-drawer-top>
+          <input
+            type="text"
+            name="q"
+            placeholder="{{ 'general.search.placeholder' | t }}"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-label="{{ 'general.search.placeholder' | t }}"
+            aria-haspopup="listbox"
+            autocomplete=off
+            class="search-form__input search-bar__input border_bottom"
+            data-predictive-search-drawer-input
+          />
+          <button class="search-form__connected-submit"
+            type="submit"
+            title="{{ 'general.tooltip.search' | t }}"
+            data-search-form-submit>
+            {% include 'icon-search' %}
+            <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+          </button>
+          <div class="search__loading">
+            <div class="loader hide" style="margin: 10px 0;"></div>
+          </div>
+          <div class="predictive-search-wrapper predictive-search-wrapper--drawer" data-predictive-search-mount="drawer">
+            <div class="canvas__search-term hide">{{ 'general.search.title_term_html' | t }}</div>
+            <div class="products_result-wrap"></div>
+            <div class="article_result-wrap"></div>
+            <div class="link-readmore hide" data-page_search>{{ 'layout.canvas.see_full_search' | t }}</div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="overlay"></div>
+</div>

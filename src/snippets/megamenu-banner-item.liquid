@@ -1,0 +1,52 @@
+<style>
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default {
+    background: {{ content_bg_color }};
+  }
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default a.sm__content-button {
+    color: {{ button_color }};
+  }
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default a.sm__content-button svg path {
+    stroke: {{ button_color }};
+  }
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default a.sm__content-button:hover { 
+    color: {{ button_hover_color }};
+  }
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default a.sm__content-button:hover svg path {
+    stroke: {{ button_hover_color }};
+  }
+  .sm__megamenu-banner-{{id}}.megamenu__banner-default .sm__content-text {
+    color: {{ content_color }};
+  }
+</style>
+{% comment %} capture banner menu 1 {% endcomment %}
+{%- if showBannerMenu -%}
+    {%- capture content_banner_menu -%}
+        {% if banner_show_all %}<div class="col-md-6 banner__image-content">{% endif %}
+        <div class="sm__megamenu-banner megamenu__banner-default sm__megamenu-banner-{{id}}">
+            <a class="megamenu__banner-img" href="{{ button_link }}">
+              <img class="lazyload" data-src="{{ image | img_url: '450x' }}" alt="">
+            </a>
+            <div class="sm__banner-content">
+                <div class="sm__content-text">{{ text_content }}</div>
+                {%- if button_type == 'default' -%}
+                    <a class="btn btn-primary d-block" href="{{ button_link }}">{{ button_text }}</a>
+                {%- else -%}
+                    <a class="sm__content-button" href="{{ button_link }}">{{ button_text }} {% render 'icon-arrow-right' %}</a>
+                {%- endif -%}
+            </div>
+        </div>
+        {% if banner_show_all %}</div>{% endif %}
+    {%- endcapture -%}
+{%- endif -%}
+<div class="{{ banner_col }} order__custom-{{ menu_item_order }}">
+    {%- if banner_show_all -%}<div class="row megamenu__banner-row">{%- endif -%}
+    {%- if product_status -%}
+        {% if banner_show_all %}
+            <div class="col-md-6 megamenu__banner-col">{% include 'product-item-for-megamenu', product: product, section_id: id %}</div>
+        {% else %}
+            {% include 'product-item-for-megamenu', product: product, section_id: id %}
+        {% endif %}
+    {%- endif -%}
+    {%- if showBannerMenu -%}{{ content_banner_menu }}{%- endif -%}
+    {%- if banner_show_all -%}</div>{%- endif -%}
+</div>

@@ -1,0 +1,139 @@
+{% capture contact_info_html %}
+  {% assign contact_info = shop.metafields.data.contact_info %}
+  {% if contact_info != blank %}
+    {% if contact_info.contact_phone != blank %}
+      <div class="row">
+        <div class="col-2 pr-0 container__phone-icon">
+          {% render 'icon-phone-new' %}
+        </div>
+        <div class="col-10 pr-0">
+          <h3 class="title">{{ 'faqs.our_customer_service' | t }}</h3>
+          <p class="phone__number"><a class="phone__number-action text-underline" href="tel:{{contact_info.contact_phone}}">{{ contact_info.contact_phone }}</a></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2 pr-0 display-mb">
+        </div>
+        <div class="col-10 col-sm-12 pr-0">
+          {% if contact_info.contact_line_id != blank %}
+            {% assign line_id_text = 'faqs.line_id_html' | t %}
+            {% assign line_id_text = line_id_text | replace: "${line_id}", contact_info.contact_line_id %}
+            <p class="line_id">{{ line_id_text }}</p>
+          {% endif %}
+          {% if contact_info.contact_email != blank %}
+            {% assign email_text = 'faqs.email_html' | t %}
+            {% assign email_text = email_text | replace: "${email}", contact_info.contact_email %}
+            <p class="email_address">{{ email_text }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+  {% comment %}
+   {% if contact_info.contact_line_id != blank %}
+      {% assign line_id_text = 'faqs.line_id_html' | t %}
+      {% assign line_id_text = line_id_text | replace: "${line_id}", contact_info.contact_line_id %}
+      <p class="line_id">{{ line_id_text }}</p>
+    {% endif %}
+    {% if contact_info.contact_email != blank %}
+      {% assign email_text = 'faqs.email_html' | t %}
+      {% assign email_text = email_text | replace: "${email}", contact_info.contact_email %}
+      <p class="email_address">{{ email_text }}</p>
+    {% endif %}
+  {% endcomment %}
+
+  {% endif %}
+{% endcapture %}
+<div class="container faqs__page">
+  <div class="section-header text-center">
+    <h1> {{ 'faqs.heading' | t }}</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-lg-3">
+      <div class="faqs-sidebar">
+        <ul class="faqs-menu">
+          {%- for link in linklists['faqs'].links -%}
+            <li class="site-faqs__linklist-item">
+              <a href="{{ link.url }}"{% if link.current %} class="active" aria-current="page"{% endif %}>{{ link.title | escape }}
+                {% if link.current %}
+                {% include "icon-chevron-down" %}
+                {% endif %}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="faqs-sidebar__bottom show__on-desktop">
+          <p class="label">{{ 'faqs.if_you_need_any_support_please_contact' | t }}</p>
+
+          {% if contact_info_html != blank %}
+            {{ contact_info_html }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 col-lg-9">
+      <div class="rte faqs_content">
+        <div>{{ page.content }}</div>
+      </div>
+      <div class="faqs-sidebar__bottom show__on-mobile">
+        <p class="label">{{ 'faqs.if_you_need_any_support_please_contact' | t }}</p>
+
+        {% if contact_info_html != blank %}
+          {{ contact_info_html }}
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script>
+
+    $(function () {
+      let countH3 = $('.faqs_content h3').length;
+      let newContent = '<ul class="list_faqs">';
+      let iconDown = '{% include "icon-chevron-down" %}';
+      if (countH3 > 0) {
+        let strContent = $('.faqs_content').html();
+        let arrTab = strContent.split('<h3>');
+        arrTab.shift();
+        for (let i = 0; i < arrTab.length; i++) {
+          newContent += '<li>';
+          newContent += '<h3>' + iconDown + arrTab[i];
+          newContent += '</li>';
+        }
+      }
+      newContent += '</ul>';
+      $('.faqs_content').html(newContent);
+
+      // Action click
+      $('body').on('click', '.faqs_content h3', function () {
+        $(this).parent().toggleClass('show');
+
+        //Anchor Link Clicks Call function SDR_ULife
+        let tabName = $(this).text();
+        //  console.log(tabName);
+        var ev = {};
+        ev.eventInfo={
+          'type':ctConstants.trackEvent,
+          'eventAction': ctConstants.anchorLinkClicked,
+          'eventLabel' : tabName,
+          'eventValue' :1 };
+        ev.category ={'primaryCategory':ctConstants.custom};
+        digitalData.event.push(ev);
+      });
+
+      // Scroll on mobile when click to category
+      if ($(window).width() < 768) {
+        let offsetTopFaq = $(".faqs_content").offset().top;
+          offsetTopFaq = offsetTopFaq - 150;
+        $('html, body').animate({
+          scrollTop: offsetTopFaq
+        }, 1000);
+      }
+
+    });
+
+
+  </script>
+{% include 'sharing-popup', share_permalink: page.url %}

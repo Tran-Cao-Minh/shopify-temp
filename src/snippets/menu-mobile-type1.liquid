@@ -1,0 +1,280 @@
+{% assign menu1 = block.settings.sub_menu_menu_link_1 %}
+{% assign menu2 = block.settings.sub_menu_menu_link_2 %}
+{% assign menu3 = block.settings.sub_menu_menu_link_3 %}
+{% assign menu4 = block.settings.sub_menu_menu_link_4 %}
+{% assign menu5 = block.settings.sub_menu_menu_link_5 %}
+<ul class="">
+  {% if block.settings.sub_menu_text_1 != blank %}
+  <li class="level2">
+    <div class="sit-title__header">
+      <a href="{{ block.settings.sub_menu_link_1 | default: "#" }}">
+        <span>{{ block.settings.sub_menu_text_1 }}</span>
+      </a>
+      {% if menu1 != blank %}
+        <span class="site-nav__icon">{% render 'icon-arrow-down' %}</span>
+      {% endif %}
+    </div>
+    {% if menu1 != blank %}
+      <ul>
+        {% for link in linklists[menu1].links %}
+          {% assign childLink = link.handle %}
+          {% if link.links != blank %}
+            <li class="level3 dropdown sm-submenu">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <ul>
+                  {% for child_link in link.links %} 
+                    {% if child_link.links != blank %}
+                      <li class="level4">
+                        {% for grandchild_link in child_link.links %}
+                        {% assign items = forloop.length %}
+                        {% endfor %}
+                        <a href="{{ child_link.url }}" class="sm-title-submenu">
+                          <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                          <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+                        </a>
+                        <ul>
+                          <li><a href="{{ child_link.url }}" class="child__title">{{ child_link.title }}</a></li>
+                          {% for grandchild_link in child_link.links %}
+                            <li class="level5"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+                <div class="border"></div>
+            </li>
+          {% else %}
+            <li class="level3">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+              <div class="border"></div>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  {% endif %}
+
+  {% if block.settings.sub_menu_text_2 != blank %}
+  <li class="level2">
+    <div class="sit-title__header">
+      <a href="{{ block.settings.sub_menu_link_2 | default: "#" }}">
+        <span>{{ block.settings.sub_menu_text_2 }}</span>
+      </a>
+      {% if menu2 != blank %}
+        <span class="site-nav__icon">{% render 'icon-arrow-down' %}</span>
+      {% endif %}
+    </div>
+    {% if menu2 != blank %}
+      <ul>
+        {% for link in linklists[menu2].links %}
+          {% assign childLink = link.handle %}
+          {% if link.links != blank %}
+            <li class="level3 dropdown sm-submenu">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <ul>
+                  {% for child_link in link.links %} 
+                    {% if child_link.links != blank %}
+                      <li class="level4">
+                        {% for grandchild_link in child_link.links %}
+                        {% assign items = forloop.length %}
+                        {% endfor %}
+                        <a href="{{ child_link.url }}" class="sm-title-submenu">
+                          <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                          <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+                        </a>
+                        <ul>
+                          <li><a href="{{ child_link.url }}" class="child__title">{{ child_link.title }}</a></li>
+                          {% for grandchild_link in child_link.links %}
+                            <li class="level5"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+            </li>
+          {% else %}
+            <li class="level3">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  {% endif %}
+
+  {% if block.settings.sub_menu_text_3 != blank %}
+  <li class="level2">
+    <div class="sit-title__header">
+      <a href="{{ block.settings.sub_menu_link_3 | default: "#" }}">
+        <span>{{ block.settings.sub_menu_text_3 }}</span>
+      </a>
+      {% if menu3 != blank %}
+        <span class="site-nav__icon">{% render 'icon-arrow-down' %}</span>
+      {% endif %}
+    </div>
+    {% if menu3 != blank %}
+      <ul>
+        {% for link in linklists[menu3].links %}
+          {% assign childLink = link.handle %}
+          {% if link.links != blank %}
+            <li class="level3 dropdown sm-submenu">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <ul>
+                  {% for child_link in link.links %} 
+                    {% if child_link.links != blank %}
+                      <li class="level4">
+                        {% for grandchild_link in child_link.links %}
+                        {% assign items = forloop.length %}
+                        {% endfor %}
+                        <a href="{{ child_link.url }}" class="sm-title-submenu">
+                          <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                          <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+                        </a>
+                        <ul>
+                          <li><a href="{{ child_link.url }}" class="child__title">{{ child_link.title }}</a></li>
+                          {% for grandchild_link in child_link.links %}
+                            <li class="level5"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+            </li>
+          {% else %}
+            <li class="level3">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  {% endif %}
+
+  {% if block.settings.sub_menu_text_4 != blank %}
+  <li class="level2">
+    <div class="sit-title__header">
+      <a href="{{ block.settings.sub_menu_link_4 | default: "#" }}">
+        <span>{{ block.settings.sub_menu_text_4 }}</span>
+      </a>
+      {% if menu4 != blank %}
+        <span class="site-nav__icon">{% render 'icon-arrow-down' %}</span>
+      {% endif %}
+    </div>
+    {% if menu4 != blank %}
+      <ul>
+        {% for link in linklists[menu4].links %}
+          {% assign childLink = link.handle %}
+          {% if link.links != blank %}
+            <li class="level3 dropdown sm-submenu">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <ul>
+                  {% for child_link in link.links %} 
+                    {% if child_link.links != blank %}
+                      <li class="level4">
+                        {% for grandchild_link in child_link.links %}
+                        {% assign items = forloop.length %}
+                        {% endfor %}
+                        <a href="{{ child_link.url }}" class="sm-title-submenu">
+                          <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                          <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+                        </a>
+                        <ul>
+                          <li><a href="{{ child_link.url }}" class="child__title">{{ child_link.title }}</a></li>
+                          {% for grandchild_link in child_link.links %}
+                            <li class="level5"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+            </li>
+          {% else %}
+            <li class="level3">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  {% endif %}
+
+  {% if block.settings.sub_menu_text_5 != blank %}
+  <li class="level2">
+    <div class="sit-title__header">
+      <a href="{{ block.settings.sub_menu_link_5 | default: "#" }}">
+        <span>{{ block.settings.sub_menu_text_5 }}</span>
+      </a>
+      {% if menu5 != blank %}
+        <span class="site-nav__icon">{% render 'icon-arrow-down' %}</span>
+      {% endif %}
+    </div>
+    {% if menu5 != blank %}
+      <ul>
+        {% for link in linklists[menu5].links %}
+          {% assign childLink = link.handle %}
+          {% if link.links != blank %}
+            <li class="level3 dropdown sm-submenu">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+                <ul>
+                  {% for child_link in link.links %} 
+                    {% if child_link.links != blank %}
+                      <li class="level4">
+                        {% for grandchild_link in child_link.links %}
+                        {% assign items = forloop.length %}
+                        {% endfor %}
+                        <a href="{{ child_link.url }}" class="sm-title-submenu">
+                          <span>{{ child_link.title }} <span class="count__item-menu">({{ items }})</span></span>
+                          <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+                        </a>
+                        <ul>
+                          <li><a href="{{ child_link.url }}" class="child__title">{{ child_link.title }}</a></li>
+                          {% for grandchild_link in child_link.links %}
+                            <li class="level5"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="{{ child_link.url }}" style="display: inline-block;">{{ child_link.title }}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+            </li>
+          {% else %}
+            <li class="level3">
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  {% endif %}
+  
+</ul>
+

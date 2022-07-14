@@ -1,0 +1,31 @@
+{%- if customer -%}
+    {%- assign promotedMetafield = customer.metafields.promoted.popup -%}
+    {%- if customer.metafields.data.associate.first_name != blank -%}
+        {%- assign associateName = customer.metafields.data.associate.first_name | append: ' ' | append: customer.metafields.data.associate.last_name -%}
+    {%- endif -%}
+    {% comment %}{% assign promotedMetafield = 'vvv' %}{% endcomment %}
+    <div class="congratulations__modal smart_modal smart_modal-medium modal-center text-center" id="congratulations__modal">
+        <div class="modal-content modal-content__padding">
+            <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="modal__content-congratulations">
+                <div class="avatar">
+                    <img src="{{ 'avatar.png' | asset_img_url: '300x' }}" alt="" data-congratulations_modal_image />
+                </div>
+                <div class="title primary_color h2" data-congratulations_modal_title>
+                    {{ 'general.congratulations.title_html' | t }}
+                </div>
+                <div class="desc" data-congratulations_modal_desc>
+                    {{ 'general.congratulations.content_html' | t }}
+                </div>
+                <span class="btn">{{ 'general.congratulations.ready_for_the_new_journey' | t }}</span>
+            </div>
+        </div>
+        <div class="modal__overlay overlay"></div>
+    </div>
+    <script type="text/javascript">
+        let promotedUserName = {{ customer.name | json }},
+            promotedAvatar = {{ customer.metafields.data.personal.avatar_url | json }},
+            promotedMetafield = {{ promotedMetafield | json }},
+            promotedAssociateName = {{ associateName | json }};
+    </script>
+{%- endif -%}

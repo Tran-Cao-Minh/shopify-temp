@@ -1,0 +1,48 @@
+{% if block.settings.show_bn_1 %}
+  <div class="col-12 col-md-3 order-{{ block.settings.bn_1_order }}">
+    <div class="sm__megamenu-banner megamenu__banner-type5">
+      {% if block.settings.image_1 != blank %}        
+          <a href="{% if shop.locale =='th' and block.settings.banner_link_1 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_1 | default: "#" }}"><img class="lazyload" data-src="{{ block.settings.image_1 | img_url: '350x' }}" alt="" /></a>
+      {% endif %}
+      {% if block.settings.title_1 != blank %}
+        <h3 class="sm__banner-title"><a href="{% if shop.locale =='th' and block.settings.banner_link_1 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_1 | default: "#" }}">{{ block.settings.title_1 }}</a></h3>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% if block.settings.show_bn_2 %}
+  <div class="col-12 col-md-3 order-{{ block.settings.bn_2_order }}">
+    <div class="sm__megamenu-banner megamenu__banner-type5">
+      {% if block.settings.image_2 != blank %}
+        <a href="{% if shop.locale =='th' and block.settings.banner_link_2 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_2 | default: "#" }}"><img class="lazyload" data-src="{{ block.settings.image_2 | img_url: '350x' }}" alt="" /></a>
+      {% endif %}
+      {% if block.settings.title_2 != blank %}
+        <h3 class="sm__banner-title"><a href="{% if shop.locale =='th' and block.settings.banner_link_2 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_2 | default: "#" }}">{{ block.settings.title_2 }}</a></h3>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% if block.settings.show_bn_3 %}
+<div class="col-12 col-md-3 order-{{ block.settings.bn_3_order }}">
+  <div class="sm__megamenu-banner megamenu__banner-type5">
+    {% if block.settings.image_3 != blank %}
+      <a href="{% if shop.locale =='th' and block.settings.banner_link_3 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_3 | default: "#" }}"><img class="lazyload" data-src="{{ block.settings.image_3 | img_url: '350x' }}" alt="" /></a>
+    {% endif %}
+    {% if block.settings.title_3 != blank %}
+      <h3 class="sm__banner-title"><a href="{% if shop.locale =='th' and block.settings.banner_link_3 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_3 | default: "#" }}">{{ block.settings.title_3 }}</a></h3>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% if block.settings.show_bn_4 %}
+<div class="col-12 col-md-3 order-{{ block.settings.bn_4_order }}">
+  <div class="sm__megamenu-banner megamenu__banner-type5">
+    {% if block.settings.image_4 != blank %}
+      <a href="{% if shop.locale =='th' and block.settings.banner_link_4 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_4 | default: "#" }}"><img class="lazyload" data-src="{{ block.settings.image_4 | img_url: '350x' }}" alt="" /></a>
+    {% endif %}
+    {% if block.settings.title_4 != blank %}
+      <h3 class="sm__banner-title"><a href="{% if shop.locale =='th' and block.settings.banner_link_4 contains 'tagged' %}/th{% endif %}{{ block.settings.banner_link_4 | default: "#" }}">{{ block.settings.title_4 }}</a></h3>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,25 @@
+{%- assign blog_handle = section.settings.sb_blog -%}
+{%- assign limit = section.settings.sb_blog_limit -%}
+{% unless blogs[blog_handle].empty? or blogs[blog_handle].articles.size == 0 %}
+
+{% for article in blogs[blog_handle].articles limit: limit %}
+    <div class="item__blog">
+        <div class="item__blog-header">
+            {% if article.image %}
+            <a href="{{ article.url }}">
+                <img src="{{ article.image | img_url: '500x500' }}" alt="{{ article.title | escape }}" />
+            </a>
+            {% endif %}
+            <div class="item__blog-date">
+                <span class="day">{{ article.published_at | date: '%d'}}</span>
+                <span class="month">{{ article.published_at | date: '%b'}}</span>
+            </div>
+            <h3><a href="{{article.url}}">{{ article.title }}</a></h3>
+        </div>
+        <div class="item__blog-desc">
+            {{ article.content | truncatewords: 15 }}
+            <p><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} &rarr;</a></p>
+        </div>
+    </div>
+{% endfor %}
+{% endunless %}

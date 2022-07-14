@@ -1,0 +1,269 @@
+{%- if section.settings.bg_image_dk != blank -%}
+    <style>
+        .easy-fast-start__business {
+            background-image: url({{ section.settings.bg_image_dk | img_url: 'master' }});
+        }
+    </style>
+{%- endif -%}
+<div class="easy-fast-start__business">
+    <div class="container">
+        <div class="row row__content">
+            <div class="col-md-6">
+                <div class="business__content">
+                    {%- if section.settings.bg_image_mb != blank -%}
+                        {%- assign bg_image_mb = section.settings.bg_image_mb -%}
+                        {%- assign img_url_mb = section.settings.bg_image_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                        <img class="image__lazyload lazyload lazypreload display-mb"
+                            src="{{ bg_image_mb | img_url: '300x300' }}"
+                            data-src="{{ img_url_mb }}"
+                            data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                            data-aspectratio="{{ bg_image_mb.aspect_ratio }}"
+                            data-sizes="auto"
+                            alt="{{ bg_image_mb.alt | escape }}" />
+                    {%- endif -%}
+                    {%- if section.settings.desc -%}
+                        <div class="business__desc">{{ section.settings.desc }}</div>
+                    {%- endif -%}
+                    <div class="business__list row">
+                        {%- if section.settings.item1_icon or section.settings.item1_desc -%}
+                            <div class="col-md-6 container-item">
+                                <div class="item">
+                                    {%- if section.settings.item1_icon -%}
+                                        <img src="{{ section.settings.item1_icon | img_url: '100x' }}" alt="" />
+                                    {%- endif -%}
+                                    {%- if section.settings.bl_item1_desc_desktop -%}
+                                        <div class="desc">
+                                            <span class="display-mb">
+                                                {{ section.settings.bl_item1_desc_mobile }}
+                                            </span>
+                                            <span class="display-dk"">
+                                                {{ section.settings.bl_item1_desc_desktop }}
+                                            </span>
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.item2_icon or section.settings.item2_desc -%}
+                            <div class="col-md-6 container-item">
+                                <div class="item">
+                                    {%- if section.settings.item2_icon -%}
+                                        <img src="{{ section.settings.item2_icon | img_url: '100x' }}" alt="" />
+                                    {%- endif -%}
+                                    {%- if section.settings.bl_item2_desc_desktop -%}
+                                        <div class="desc">
+                                            <span class="display-mb">
+                                                {{ section.settings.bl_item2_desc_mobile }}
+                                            </span>
+                                            <span class="display-dk"">
+                                                {{ section.settings.bl_item2_desc_desktop }}
+                                            </span>
+                                        </div>
+                                    {%- endif -%}
+                                </div>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                    {%- if section.settings.button_label and section.settings.button_url -%}
+                        <a href="{{ section.settings.button_url }}" class="btn">{{ section.settings.button_label }}</a>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="easy-fast-start__plan">
+    <div class="container">
+        {%- if section.settings.plan_desc != blank or section.settings.plan_sub_desc != blank -%}
+            <div class="plan__heading">
+                {%- if section.settings.plan_desc != blank -%}
+                    <div class="heading-top">{{ section.settings.plan_desc }}</div>
+                {%- endif -%}
+                {%- if section.settings.plan_sub_desc != blank -%}
+                    <div class="sub__heading-top">{{ section.settings.plan_sub_desc }}</div>
+                {%- endif -%}
+            </div>
+        {%- endif -%}
+        <div class="row list__plan">
+            {%- if section.settings.plan_item1_icon != blank or section.settings.plan_item1_title != blank or section.settings.plan_item1_desc_dk != blank -%}
+                <div class="col-md-4">
+                    <div class="item">
+                        {%- if section.settings.plan_item1_icon != blank -%}
+                            <div class="media"><img src="{{ section.settings.plan_item1_icon | img_url: 'master' }}" alt="" /></div>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item1_title != blank -%}
+                            <h4 class="title">{{ section.settings.plan_item1_title }}</h4>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item1_desc_dk != blank -%}
+                            <div class="desc">
+                                <span class="display-dk">{{ section.settings.plan_item1_desc_dk }}</span>
+                                <span class="display-mb">{{ section.settings.plan_item1_desc_mb }}</span>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            {%- endif -%}
+            {%- if section.settings.plan_item2_icon != blank or section.settings.plan_item2_title != blank or section.settings.plan_item2_desc != blank -%}
+                <div class="col-md-4">
+                    <div class="item">
+                        {%- if section.settings.plan_item2_icon != blank -%}
+                            <div class="media"><img src="{{ section.settings.plan_item2_icon | img_url: 'master' }}" alt="" /></div>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item2_title != blank -%}
+                            <h4 class="title">{{ section.settings.plan_item2_title }}</h4>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item2_desc != blank -%}
+                            <div class="desc">{{ section.settings.plan_item2_desc }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            {%- endif -%}
+            {%- if section.settings.plan_item3_icon != blank or section.settings.plan_item3_title != blank or section.settings.plan_item3_desc != blank -%}
+                <div class="col-md-4">
+                    <div class="item">
+                        {%- if section.settings.plan_item3_icon != blank -%}
+                            <div class="media"><img src="{{ section.settings.plan_item3_icon | img_url: 'master' }}" alt="" /></div>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item3_title != blank -%}
+                            <h4 class="title">{{ section.settings.plan_item3_title }}</h4>
+                        {%- endif -%}
+                        {%- if section.settings.plan_item3_desc != blank -%}
+                            <div class="desc">{{ section.settings.plan_item3_desc }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Business",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Business top"
+    },
+    {
+        "type": "image_picker",
+        "id": "bg_image_dk",
+        "label": "Background image desktop"
+    },
+    {
+        "type": "image_picker",
+        "id": "bg_image_mb",
+        "label": "Background image mobile"
+    },
+    {
+        "type": "html",
+        "id": "desc",
+        "label": "Description"
+    },
+    {
+        "type": "image_picker",
+        "id": "item1_icon",
+        "label": "Item 1 icon"
+    },
+    {
+        "type": "textarea",
+        "id": "bl_item1_desc_desktop",
+        "label": "Item 1 description (desktop)"
+    },
+    {
+        "type": "textarea",
+        "id": "bl_item1_desc_mobile",
+        "label": "Item 1 description (mobile)"
+    },
+    {
+        "type": "image_picker",
+        "id": "item2_icon",
+        "label": "Item 2 icon"
+    },
+    {
+        "type": "textarea",
+        "id": "bl_item2_desc_desktop",
+        "label": "Item 2 description (desktop)"
+    },
+    {
+        "type": "textarea",
+        "id": "bl_item2_desc_mobile",
+        "label": "Item 2 description (mobile)"
+    },
+    {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+    },
+    {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button url"
+    },
+    {
+      "type": "header",
+      "content": "Business plan"
+    },
+    {
+        "type": "html",
+        "id": "plan_desc",
+        "label": "Plan description top"
+    },
+    {
+        "type": "html",
+        "id": "plan_sub_desc",
+        "label": "Plan sub description"
+    },
+    {
+        "type": "image_picker",
+        "id": "plan_item1_icon",
+        "label": "Plan item 1 image"
+    },
+    {
+        "type": "text",
+        "id": "plan_item1_title",
+        "label": "Plan item 1 title"
+    },
+    {
+        "type": "html",
+        "id": "plan_item1_desc_dk",
+        "label": "Plan item 1 description (desktop)"
+    },
+    {
+        "type": "html",
+        "id": "plan_item1_desc_mb",
+        "label": "Plan item 1 description (mobile)"
+    },
+    {
+        "type": "image_picker",
+        "id": "plan_item2_icon",
+        "label": "Plan item 2 image"
+    },
+    {
+        "type": "text",
+        "id": "plan_item2_title",
+        "label": "Plan item 2 title"
+    },
+    {
+        "type": "html",
+        "id": "plan_item2_desc",
+        "label": "Plan item 2 description"
+    },
+    {
+        "type": "image_picker",
+        "id": "plan_item3_icon",
+        "label": "Plan item 3 image"
+    },
+    {
+        "type": "text",
+        "id": "plan_item3_title",
+        "label": "Plan item 3 title"
+    },
+    {
+        "type": "html",
+        "id": "plan_item3_desc",
+        "label": "Plan item 3 description"
+    }
+  ]
+}
+{% endschema %}

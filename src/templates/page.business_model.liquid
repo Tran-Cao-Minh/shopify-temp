@@ -1,0 +1,20 @@
+{{ 'pages-support.scss.css' | asset_url | stylesheet_tag }}
+<style type="text/css">
+    .businessModel--about {
+        background:url({{ 'business-bg.png' | asset_url }}) bottom;
+    }
+</style>
+<div class="section-content d-none">
+    <div class="container">
+        {{ page.content }}
+    </div>
+</div>
+{% section 'business_model' %}
+<script>
+    $(function () {
+        $(window).resize(function () {
+            // window.swiperBusiness.update();
+        });
+    });
+</script>
+{% include 'sharing-popup', share_permalink: page.url %}

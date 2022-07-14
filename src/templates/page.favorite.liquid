@@ -1,0 +1,64 @@
+{% assign class_grid = 'col-lg-3 col-6' %}
+<div class="page_wishlist">
+  <div class="container">
+    {% unless customer %}
+    <h3 class="text-center">{{ "general.pages.logged_in_to_perform_this_feature" | t }}</h3>
+    {% endunless %}
+
+    {% if customer %}
+    <div class="section-header">
+      <h1>{{ page.title }}</h1>
+      <div class="nav">
+        <a href="{{ pages['my-wishlist'].url }}" class="link-readmore text-underline">{{ "general.pages.view_wishlist" | t }}</a>
+        <a href="{{ pages['my-favorite'].url }}" class="active link-readmore text-underline">{{ "general.pages.view_favorite" | t }}</a>
+      </div>
+    </div>
+
+    <div data-scope="page_favorite">
+      <div class="loader" style="margin: 100px auto;" data-container="loader"></div>
+      <div class="text-center page__no-item hide" data-container="empty">
+        <div class="media media__no-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="85.239" height="122.395" viewBox="0 0 85.239 122.395">
+            <g data-name="Group 2377" transform="translate(-936 -423)">
+              <path data-name="Path 396" d="M313.551,301.524a1.051,1.051,0,0,0-.868-.684l-13.25-1.515-5.925-11.769a1.052,1.052,0,0,0-1.878,0l-5.939,11.8-13.21,1.985a1.051,1.051,0,0,0-.585,1.783l9.456,9.425-1.641,13.042a1.051,1.051,0,0,0,1.559,1.048l11.571-6.516,11.512,6.389a1.052,1.052,0,0,0,1.553-1.057l-1.74-13.176,9.162-9.669A1.053,1.053,0,0,0,313.551,301.524Z" transform="translate(685.913 163.522)" fill="#f4f4ff" stroke="#6371d8" stroke-miterlimit="10" stroke-width="3"/>
+              <path data-name="Path 230" d="M953.421,971.87,921.38,945.993a4.467,4.467,0,0,0-5.291-.04l-.051.04L884,971.87a4.462,4.462,0,0,1-5.286.044,2.7,2.7,0,0,1-1.123-2.115V856.549c0-1.634,1.673-2.959,3.737-2.96h74.763c2.065,0,3.738,1.324,3.738,2.959h0V969.8c0,1.634-1.67,2.96-3.735,2.961a4.276,4.276,0,0,1-2.673-.889" transform="translate(59.909 -429.089)" fill="none" stroke="#6371d8" stroke-miterlimit="10" stroke-width="3"/>
+            </g>
+          </svg>
+        </div>
+        <div class="content">
+          <h3 class="title text__no-item">{{ "general.pages.your_favourite_is_empty" | t }}</h3>
+          {%- assign desc_no_product = 'general.pages.wishlist_favorite_view_all_prodcuts_html' | t -%}
+          {%- assign desc_no_product = desc_no_product | replace: '${collection_url}', routes.collections_url -%}
+          <div class="desc">{{ desc_no_product }}</div>
+        </div>
+      </div>
+      <div class="product_lists">
+        <div class="row grid--view-items" data-container="list"></div>
+        <div class="pagination-wrap hide">
+          <div class="pagination_show-more">
+            <label>{{ 'general.pagination.show' | t }}</label>
+            <div class="select2_wrap select2_border_bottom">
+                <select id="select_show_more" name="limit" class="select2_single" data-class="select_show_more">
+                  <option value="12" selected="selected">12</option>
+                  <option value="16">16</option>
+                  <option value="20">20</option>
+                </select>
+            </div>
+            <span class="per_page">{{ 'general.pagination.items_per_page' | t }}</span>
+          </div>
+          <div class="pagination pagination-container smart_pagination" data-container="paginate"></div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script type="text/html" id="product-card-template">
+  {% include 'product-card-template', show_favorite: true %}
+</script>
+
+{% include 'customer-title' %}
+<script>
+  let collection_products = {% include 'all-products' %};
+</script>

@@ -1,0 +1,85 @@
+<script>
+    old_add_markers = add_markers;
+    add_markers = function (){
+     // this is the default Icon image displayed on the map
+     mainIcon = "https://cdn.shopify.com/s/files/1/0344/4139/6364/files/pin-icon-2.svg?v=1608635444";
+     // this is the icon used to display the users address
+     youIcon = "https://cdn.shopify.com/s/files/1/0344/4139/6364/files/pin-icon-2.svg?v=1608635444";
+     // this is a shadow used for both icons
+     myshadow = "https://cdn.shopify.com/s/files/1/0344/4139/6364/files/pin-icon-2.svg?v=1608635444";
+     add_markers = old_add_markers;
+     add_markers ();
+    
+    expanderBlockaddress= function (){
+            // Resonsive footer-info-heading
+    $("#addresses_list li").click(function (e) {
+            e.preventDefault();
+            if (!$(this).hasClass('active')) {           
+                $("#addresses_list li").removeClass('active');
+                $(this).addClass('active');
+            }
+        });
+    
+        }
+        expanderBlockaddress();
+    }
+    // Move submit buttoninto new place
+    const submitBtn = document.getElementById('submitBtn');
+    const newParent = document.querySelector('.main_search_bar');
+    newParent.appendChild(submitBtn);
+    // clear text of submit button
+    submitBtn.innerText = '';
+</script>
+<style>
+#direction_destination, .addresses li {
+/*this should also be the default Icon image displayed on the map */
+background-image: url("https://cdn.shopify.com/s/files/1/0344/4139/6364/files/pin-icon-2.svg?v=1608635444");
+}
+</style>
+
+
+<!--
+    *These tags are only available in the Detailed template
+    Address: -->
+[name]
+[address]
+[address2]
+[city], [postal_zip]
+[phone][hours]<div class="addresses-arrow icon-chevron-down"><svg xmlns="http://www.w3.org/2000/svg" width="14.874" height="8.502" viewBox="0 0 14.874 8.502"><path id="path_up" data-name="Path 76" d="M.419.067a.257.257,0,0,0-.347,0,.244.244,0,0,0,0,.346L6.558,6.9.072,13.385a.244.244,0,0,0,0,.347.258.258,0,0,0,.347,0L7.251,6.9Z" transform="translate(0.538 7.958) rotate(-90)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/><path id="path_down" data-name="Path 76" d="M.419.067a.257.257,0,0,0-.347,0,.244.244,0,0,0,0,.346L6.558,6.9.072,13.385a.244.244,0,0,0,0,.347.258.258,0,0,0,.347,0L7.251,6.9Z" transform="translate(14.336 0.544) rotate(90)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/></svg></div>
+
+<!-- Detailed: -->
+<div class="gm-heading">[name]<div class="info">[address] [address2] [city], [prov_state] [postal_zip], ประเทศไทย</div></div>[phone][hours]
+
+
+<!-- hours -desc -->
+<div class="time">
+    <span class="label">Monday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Tuesday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Wednesday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Thursday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Friday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Saturday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+<div class="time">
+    <span class="label">Sunday</span>
+    <span class="value">10:00 AM - 6:30 PM</span>
+</div>
+
+
+

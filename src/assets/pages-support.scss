@@ -1,0 +1,1461 @@
+//
+//  Smartosc - Unileverlife
+//  Variables
+//  -----------------------------------------
+$primary_color      : #6445EE;
+$secondary_color: #E0FB3F;
+$color-border       :#E5E5E5;
+$color-border-list  : rgba(153, 153, 153, 0.2);
+$offlineTag         :   #CE98D9;
+$onlineTag          :   #1EB2FC;
+/* Gray and brand colors for use across Bootstrap*/
+$white :                #fff ;
+$gray-base:             #000 ;
+$gray-darker:           #222 ; // #222
+$gray-dark:             #333 ; // #333
+$gray:                  #666 ;
+$gray-light:            #999 ;
+$gray-lighter:          #eee ; // #eee
+
+$grid-medium: 767px;
+$grid-large: 1024px;
+$grid-xlarge: 1200px;
+$grid-widescreen: 1400px;
+$grid-gutter: 30px;
+$grid-gutter-mobile: 22px;
+
+
+//===== Minxin UTILITIES =======
+@mixin linkColor($linkColor:$gray-dark ,$linkColorHover: $primary_color){
+    color: $linkColor;
+    &:hover{color: $linkColorHover;}
+}
+
+@mixin line-clamp($numLines : 1, $lineHeight: 1.1) {
+    overflow: hidden;
+    text-overflow: -o-ellipsis-lastline;
+    text-overflow: ellipsis;
+    display: block;
+    /* autoprefixer: off */
+    display: -webkit-box;
+    -webkit-line-clamp: $numLines;
+    -webkit-box-orient: vertical;
+    line-height: $lineHeight + unquote('em');
+    max-height: $numLines * $lineHeight + unquote('em');
+    min-height: $numLines * $lineHeight + unquote('em');
+}
+//======   @include scrollbars(.5em, slategray);
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%)) {
+    // For Google Chrome
+    &::-webkit-scrollbar {
+        width:  $size;
+        height: $size;
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+        border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        //background: $background-color;
+        padding: $size;
+    }
+
+    // For Internet Explorer
+    & {
+        scrollbar-face-color: $foreground-color;
+        scrollbar-track-color: $background-color;
+    }
+}
+
+@mixin breakpoints($point){
+    @if ($point == xl){
+        @media (min-width: 1900px){ @content }
+    }
+    @if ($point == lg){
+        @media (min-width: 1200px){ @content }
+    }
+    @else if ($point == md){
+        @media (min-width: 992px) and (max-width: 1199px){ @content }
+    }
+
+    @else if ($point == sm){
+        @media (min-width: 768px) and (max-width: 991px){ @content }
+    }
+
+    @else if ($point == xs){
+        @media (max-width: 767px){ @content }
+    }
+
+    @else if ($point == xxs){
+        @media (max-width: 767px) and (min-width: 321px){ @content }
+    }
+
+    @else if ($point == xxxs){
+        @media  (max-width: 321px){ @content }
+    }
+}
+
+//
+//  Smartosc - Unileverlife
+//  Page Community
+//  -----------------------------------------//
+
+// Hero community
+.hero__overlaydis{
+    //background-size: auto;
+    .hero__content{
+        background: none;
+        box-shadow: none;
+        padding: 0;
+
+        @media only screen and (min-width: $grid-large) {
+            max-width: 580px;
+            margin: -100px 0 0;
+        }
+        @media (min-width: 768px) and (max-width: 1024px) {
+            max-width: 57%;
+        }
+        .headings{
+            font-size: 30px;
+            margin-bottom: 30px;
+
+        }
+        .rte-setting{
+            font-size: 16px;
+            line-height: 30px;
+            font-family: "IBM Plex Sans Thai Looped", sans-serif;
+            font-weight: 400;
+        }
+    }
+}
+.community_bg-top,.community_bg-bottom,.ingredients_bg{
+    background-attachment: fixed;
+}
+.hero-hero-community2{
+    .hero__content{
+        text-align: center;
+        @media only screen and (min-width: $grid-large) {
+            max-width: 600px;
+            margin: -280px auto 0;
+        }
+    }
+    .headings{
+        color: $gray;
+    }
+
+
+}
+.hero-hero-formulation{
+    background-attachment: fixed;
+}
+.hero-hero-formulation2{
+    .hero__content{
+        text-align: center;
+        @media only screen and (min-width: $grid-large) {
+            max-width: 1000px;
+            margin:  -100px auto 0;
+        }
+    }
+    .headings{
+        color: $gray-light;
+    }
+}
+
+.hero-hero-formulation3{
+    .hero__content{
+        text-align: center;
+        @media only screen and (min-width: $grid-large) {
+            max-width: 1000px;
+            margin:  0px auto 0;
+        }
+    }
+    .headings{
+        color: $gray-light;
+    }
+}
+
+.hero-hero-ingredients2{
+    @media only screen and (min-width: $grid-xlarge) {
+        height: 850px;
+    }
+    .hero__content{
+
+        @media only screen and (min-width: $grid-large) {
+            max-width: 39%;
+            margin: -200px 0 0;
+            float: right;
+        }
+    }
+    .headings{
+        color: $gray-light;
+    }
+}
+
+
+.hero-hero-ingredients3{
+    background-position: top center !important;
+    background-attachment: unset !important;
+    margin-top: -50px;
+    @media only screen and (min-width: $grid-xlarge) {
+        margin-top: -165px;
+    }
+    background-size: contain;
+    .hero__content{
+        text-align: center;
+        @media only screen and (min-width: $grid-large) {
+            max-width: 700px;
+            margin:  100px auto 0;
+        }
+    }
+    .headings{
+        color: $gray-light;
+    }
+}
+
+// Feature community
+.feature-row-community {
+    display: flex;
+
+    .feature-row__text--left{
+        padding: 0;
+        padding-left: 35px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .feature-row__text--right{
+        padding-left: 35px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        @media only screen and (min-width: $grid-large) {
+            padding-right: 35px;
+            padding-left: 0;
+        }
+    }
+    .headings{
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+    .rte-setting{
+        font-size: 16px;
+        line-height: 30px;
+        display: inline;
+        p{
+            font-family: "IBM Plex Sans Thai Looped", sans-serif;
+            font-weight: 400;
+
+            &:first-child{
+                display: inline;
+            }
+        }
+    }
+
+    .btn{
+        background: none;
+        border-radius: 0;
+        padding: 0;
+        display: inline-block;
+        color: $primary_color;
+        text-decoration: underline;
+        text-align: left;
+        &:hover{
+            text-decoration: none;
+        }
+    }
+}
+
+//
+//  Smartosc - Unileverlife
+//  Desktops
+//  -----------------------------------------
+@media only screen and (min-width: $grid-large) {
+
+    .feature-community1{
+        margin: 50px 0 0;
+    }
+    .feature-community1,
+    .feature-community3,
+    .feature-formulation1,
+    .feature-formulation3{
+
+        .feature-row__image{
+            flex: 0 1 60%;
+        }
+    }
+
+    .feature-community2,
+    .feature-formulation2{
+        .feature-row__image{
+            flex: 0 1 55%;
+        }
+    }
+
+}
+
+//
+//  Smartosc - Unileverlife
+//  Tablet
+//  -----------------------------------------
+@include breakpoints(sm){
+    .hero-hero-community2{
+        background-size: contain;
+        background-position: 0 bottom !important;
+        background-color: white;
+        height: 500px;
+        .hero__inner{
+            vertical-align: top;
+        }
+    }
+    .hero-hero-ingredients3 .hero__content{
+        margin: 50px auto 0;
+    }
+
+    .hero-hero-ingredients2{
+        background-size: contain;
+        .hero__content{
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+    }
+
+}
+
+//
+//  Smartosc - Unileverlife
+//  Page Business-download
+//  -----------------------------------------
+.business_download{
+    .main-content{
+        padding-top: 0;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: 68% 36%;
+
+        @include breakpoints(xs){
+            background-image: none !important;
+        }
+
+        @media (max-height: 700px) and (min-width: 1024px) and (max-width: 1440px) {
+            background-position: 65% 120%;
+        }
+    }
+    .breadcrumb__wrap{
+        padding: 16px 0;
+        .breadcrumb{
+            margin: 0;
+
+        }
+
+    }
+}
+
+.businessInfo--top{
+    margin-bottom: 30px;
+    @include breakpoints(xs){
+        padding: 10px;
+    }
+    img{
+        visibility: hidden;
+    }
+    .heading{
+        font-size: 40px;
+        line-height: 50px;
+        color: $primary_color ;
+        font-family: 'Prompt', sans-serif;
+        @include breakpoints(xs){
+            margin-top: 30px;
+            font-size: 30px;
+            line-height: 36px;
+        }
+    }
+    .businessInfo--top__content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
+}
+.businessInfo--about{
+    @include breakpoints(xs){
+        padding: 10px;
+    }
+}
+.businessInfo--about__item{
+    padding: 15px;
+    background: $white;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0px 1px 7px rgba(0,0,0, 0.15%);
+    height: calc(100% - 25px);
+    @include breakpoints(lg){
+        padding: 20px;
+    }
+    .title{
+        font-size: 25px;
+    }
+    .businessInfo--about__item__desc{
+        margin-bottom: 80px;
+        line-height: 26px;
+        font-family: "IBM Plex Sans Thai Looped", sans-serif;
+        font-weight: 400;
+    }
+    .card-body{
+        position: relative;
+        height: 100%;
+    }
+    .btn-block{
+        display: block;
+        line-height: 26px;
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        width: 100%;
+        svg{
+            margin: 0px 5px -3px;
+        }
+    }
+}
+//Share-popup
+.enroll-url .form-control {
+    width: 100%;
+}
+.enroll-url-copy {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    svg {
+        margin-left: 10px;
+    }
+}
+
+.enrollment__share-popup {
+    .button__group {
+        display: flex;
+        align-items: center;
+        color: $primary_color;
+        cursor: pointer;
+        &.button__group-canvas {
+            background: #F2F2F2;
+            padding: 11px 18px;
+            border-radius: 5px 0 0 5px;
+            position: fixed;
+            right: 0;
+            top: 180px;
+            box-shadow: 0px 3px 1px 0px #afafaf40;
+            z-index: 9;
+        }
+        span {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: 0.25px;
+            margin-left: 5px;
+        }
+    }
+    &.active .offcanvas__enrollment-share {
+        opacity: 1;
+        visibility: inherit;
+        z-index: 9999;
+        .offcanvas-content {
+            -moz-transform: matrix(1, 0, 0, 1, 0, 0);
+            -webkit-transform: matrix(1, 0, 0, 1, 0, 0);
+            -o-transform: matrix(1, 0, 0, 1, 0, 0);
+            transform: matrix(1, 0, 0, 1, 0, 0);
+        }
+    }
+    .offcanvas__enrollment-share {
+        opacity: 0;
+        visibility: hidden;
+        z-index: -1;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+    .offcanvas-content {
+        background: #F2F2F2;
+        box-shadow: 0 0 4px rgba(41, 43, 46, 0.1);
+        width: 380px;
+        bottom: auto;
+        height: auto;
+        top: 50px;
+        padding: 30px;
+    }
+    .offcanvas__enrollment-header {
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
+    .offcanvas__enrollment-content {
+        .title {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 5px 0;
+        }
+        p {
+            font-size: 12px;
+        }
+    }
+    .share {
+        justify-content: inherit;
+        margin: 15px 0 10px;
+    }
+}
+//
+//  Smartosc - Unileverlife
+//  Page Business-Model
+//  -----------------------------------------
+
+
+@keyframes myeffect-large {
+    0%   {opacity: 0;transform: translateY(200px);}
+    100% {opacity: 1;transform: translateY(0);}
+}
+@keyframes myeffect-largeText {
+    0%   {opacity: 0;transform: translateX(200px);}
+    100% {opacity: 1;transform: translateX(0);}
+}
+//====== EFFECT - SLIDERHOME  ====
+
+body.business_model{
+    .main-content{
+        padding-top: 0;
+    }
+    .breadcrumb__wrap{
+        position: absolute;
+        z-index: 1;
+        padding: 15px 0;
+        width: 100%;
+        background: rgba(255,255,255,0.5);
+    }
+    .breadcrumb{
+        margin: 0;
+    }
+}
+.businessModel--bannerslider{
+    display: none;
+}
+.businessModel--about{
+    padding-top: 50px;
+    .heading{
+        font-size: 30px;
+        margin-bottom: 30px;
+        font-weight: 200;
+
+        @include breakpoints(lg){
+            width: 50%;
+            margin-bottom: 50px;
+            font-size: 40px;
+        }
+
+    }
+
+}
+
+.businessModel--banner{
+    padding-top: 60px;
+    min-height: 560px;
+    @media(min-width: 1024px) {
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+}
+.businessModel--banner__content{
+    margin-top: 30px;
+
+    .heading{
+        color: $primary_color;
+        line-height: 35px;
+    }
+
+    .businessModel--banner-desc {
+        font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+    }
+
+    @include breakpoints(lg){
+        width: 50%;
+        margin-top: 85px;
+        .heading{
+            line-height: 50px;
+            font-size: 40px;
+            margin-bottom: 25px;
+        }
+    }
+    @include breakpoints(xxs){
+        line-height: 35px;
+    }
+}
+.businessModel--banner-desc{
+    p{
+        margin-bottom: 20px;
+    }
+}
+.businessModel--slide{
+    margin-bottom: 0px;
+    padding-bottom: 50px;
+    .swiper-slide{
+        width: 255px;
+        @include breakpoints(xs){
+            width: 155px;
+        }
+        display: flex;
+        min-height: 653px;
+        //max-height: 615px;
+        align-items: flex-end;
+        //transition: width 0.3s ease-in-out 0s;
+        img{
+            margin: inherit !important;
+        }
+
+        .business--slide__media{
+            position: relative;
+            .business--slide__short-desc{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                right: 0;
+                margin: 10px 0 0 20px;
+                font-weight: 200;
+                font-size: 25px;
+                line-height: 25px;
+                color: #333;
+            }
+            img.slide__media--small-img{
+                display: block;
+                height: 100%;
+            }
+            img.slide__media--large-img {
+                display: none;
+            }
+        }
+    }
+
+
+    //swiper Active
+    .swiper-slide-active{
+        width: 475px !important;
+        border-radius: 15px;
+
+
+        @include breakpoints(sm){
+            width: 375px !important;
+        }
+        @include breakpoints(xs){
+            width: 275px !important;
+        }
+
+        .businessModel--slide__content{
+            display: block;
+            visibility: visible;
+            opacity: 1;
+
+            //Animation Text
+            .title{animation: myeffect-largeText 0.6s ease-in-out ;}
+            .businessModel--slide__content__desc {
+                animation: myeffect-largeText 0.8s ease-in-out;
+                font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+            }
+        }
+
+        .businessModel--slide__item{
+            height: 100%;
+            .business--slide__media{
+                position: relative;
+                .business--slide__short-desc{
+                   display: none;
+                }
+            }
+                img.slide__media--large-img {
+                    display: block;
+                    min-height: 375px;
+                    @include breakpoints(lg){
+                    min-height: 645px;
+                    //Animation Large Image
+                    animation: myeffect-large 0.5s ease-in-out ;
+                    }
+                }
+                img.slide__media--small-img {
+                    display: none;
+                }
+        }
+
+    }
+
+
+
+    .businessModel--slide__content{
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top: 0;
+
+        @include breakpoints(lg){
+            width: 610px;
+        }
+        @media (min-width: 1400px) {
+            width: 687px;
+        }
+        display: none;
+        transform: translateX(calc(100% + 35px));
+        text-align: left;
+        //transition: width 0.5s ease-in 0s;
+
+        .title{
+            font-size: 30px;
+            line-height: 100%;
+            font-weight: 200;
+
+            @include breakpoints(lg){
+                font-size: 50px;
+                //@include line-clamp(2);
+            }
+        }
+
+        // .businessModel--slide__content__desc{
+        //     //@include line-clamp(2,1.4);
+        //     ul {
+        //         padding-left: 25px;
+        //         li{
+        //             position: relative;
+        //             padding-left: 15px;
+        //             &:before{
+        //                 content: "";
+        //                 position: absolute;
+        //                 left: 0;
+        //                 width: 6px;
+        //                 height: 6px;
+        //                 background: #333;
+        //                 border-radius: 50%;
+        //                 margin: 10px 0;
+        //             }
+        //         }
+        //     }
+        // }
+
+    }
+    .businessModel--slide__item{
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        height: 310px;
+
+        @include breakpoints(xs){
+            height: 210px;
+        }
+        img{
+            width: 100%;
+            border-radius: 15px;
+        }
+    }
+    .swiper-button{
+        position: absolute;
+        width: 110px;
+        top: 43%;
+        left: 500px;
+        z-index: 1;
+
+
+    }
+    .swiper-button-next,
+    .swiper-button-prev{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $secondary_color;
+        &:hover {
+            opacity: 0.6;
+        }
+        &:after{
+            font-size: 20px;
+            color: $primary_color;
+        }
+    }
+}
+
+//
+//  Smartosc - Unileverlife
+//  Page Member Privilege
+//  -----------------------------------------
+.member_privilege{
+    .main-content{
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .breadcrumb__wrap{
+        position: absolute;
+        z-index: 5;
+        padding: 15px 0;
+        width: 100%;
+        background: rgba(255,255,255,0.5);
+    }
+    .breadcrumb{
+        margin: 0;
+    }
+    .benefits__btn{
+        margin-top: 20px;
+        line-height: 26px;
+        font-weight: 400;
+        text-transform: none;
+    }
+    .hero__overlaydis {
+        .rte-setting {
+            line-height: 26px;
+        }
+    }
+    .ss-businessMembers {
+        @media (min-width: 768px) and (max-width: 1199px) {
+            margin-top: 40px;
+        }
+        @include breakpoints(lg) {
+            margin-top: 10px;
+        }
+    }
+    .ss-businessBrand {
+        @include breakpoints(xs) {
+            margin-top: 30px;
+        }
+        .h3.heading {
+            font-weight: 400;
+            @include breakpoints(xs) {
+                font-size: 16px;
+            }
+        }
+    }
+    .rte-setting {
+        p {
+            &:nth-child(2) {
+                margin-bottom: 0;
+            }
+        }
+        p.sub--title {
+            line-height: 24px;
+        }
+    }
+    .hero--medium {
+        height: auto;
+        min-height: 357px;
+        @media (min-width: 780px) {
+            min-height: 475px;
+        }
+    }
+}
+
+
+.page_memberPrivilege,
+.ss-businessBrand{
+    .hero__overlaydis .hero__content{
+        margin: 0;
+    }
+    .hero-heading{
+
+        @include breakpoints(lg){
+            padding-top: 100px;
+        }
+        .headings {
+            font-size: 30px;
+            @include breakpoints(lg){
+                font-size: 30px;
+                line-height: 40px;
+            }
+
+        }
+
+    }
+    .hero__overlaydis{
+        .headings{
+            margin-bottom: 15px;
+        }
+        .heading--color{
+            font-size: 25px;
+            color: #FF9D00;
+            margin-bottom: 0;
+            @include breakpoints(xs) {
+                font-size: 20px;
+            }
+        }
+        .sub--title{
+            font-size: 14px;
+            color: #999999;
+        }
+        .hero__btn{
+            width: auto;
+            margin-top: 30px;
+            @include breakpoints(lg) {
+                margin-top: -10px;
+            }
+        }
+        @include breakpoints(lg){
+            .hero__btn{
+                position: absolute;
+                right: 0;
+                line-height: 26px;
+                transform: translate(-100%, -100px);
+                z-index: 5;
+            }
+        }
+
+    }
+
+}
+
+.page_memberPrivilege {
+    .shopify-section {
+        &:nth-child(2) {
+            .headings {
+                color: $primary_color;
+                @include breakpoints(lg) {
+                    font-size: 40px;
+                    line-height: 50px;
+                }
+                @include breakpoints(xs) {
+                    line-height: 30px;
+                }
+            }
+        }
+        &:nth-child(3) {
+            @include breakpoints(xs) {
+                margin-top: 40px;
+            }
+            .hero--medium {
+                min-height: auto;
+            }
+        }    
+    }
+}
+
+.ss-businessBrand{
+    .hero-member-privilege3{
+        background-color: transparent;
+    }
+    .hero__overlaydis .hero__btn{
+        bottom: -65px;
+        @media (min-width: 768px) and (max-width: 1199px) {
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+    }
+    .rte-setting{
+        margin-bottom: 20px;
+    }
+}
+.ss-businessMembers{
+    h2.heading{
+        font-weight: 400;
+    }
+}
+.businessMembers--serviceItem{
+    margin: 15px 0;
+    @include breakpoints(lg){
+        margin: 25px auto ;
+        max-width: 250px;
+    }
+    text-align: center;
+    .title{
+        line-height: 22px;
+        margin-top: 15px;
+        font-family: "IBM Plex Sans Thai Looped", sans-serif;
+    }
+}
+.ss-businessBenefits{
+    .businessMembers--benefits{
+        padding: 30px 10px;
+        @include breakpoints(lg){
+            padding: 80px 0;
+        }
+    }
+
+    h2.heading{
+        font-size: 30px;
+        margin-bottom: 15px;
+        margin-top: 15px;
+        font-weight: 400;
+        text-align: right;
+    }
+    .ss-businessBenefits--left ul.list--member{
+        li{
+            min-height: 62px;
+            &:nth-child(2) {
+                min-height: 120px;
+            }
+        }
+        @include breakpoints(xs) {
+            margin-top: -1px;
+        }
+        @media screen and (min-width: $grid-medium){
+            li {
+                min-height: 45px;
+                &:nth-child(2) {
+                    min-height: 45px;
+                    padding: 10px 0 9px;
+                }
+            }
+            padding-top: 1px;
+        }
+        @media screen and (max-width: 450px){
+            li:nth-child(2) {
+                min-height: 140px;
+            }
+        }
+    }
+    .ss-businessBenefits--right{
+        .card-deck {
+            .card {
+                &:first-child {
+                    .card-header {
+                        background-color: $secondary_color;
+                    }
+                }
+                &:nth-child(2) {
+                    .card-header {
+                        background-color: $primary_color;
+                        color: $secondary_color;
+                    }
+                }
+            }
+        }
+    }
+    ul.list--member{
+        li{
+            padding: 11px 0 10px;
+            text-align: right;
+            position: relative;
+
+            &:after{
+                content: "";
+                width: 50%;
+                background: #CCCCCC;
+                height: 1px;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                display: block;
+            }
+            &:last-child{
+                &:after{
+                    height: 0;
+                }
+            }
+        }
+        .text-color{
+            color: $primary_color;
+        }
+        .text-subdesc{
+            font-weight: normal;
+            display: block;
+            font-size: 16px;
+            padding-top: 9px;
+            font-family: 'Sarabun', sans-serif;
+        }
+        .h3{
+            font-weight: 400;
+            margin-bottom: 0;
+            font-family: "IBM Plex Sans Thai Looped", sans-serif;
+            font-weight: normal;
+        }
+    }
+}
+
+.card-deck{
+    display: flex;
+
+    margin-right: -15px;
+    margin-left: -15px;
+    @include breakpoints(lg) {
+        flex-flow: row wrap;
+    }
+    .card-header--mobile{
+        display: none;
+    }
+    .card{
+        @include breakpoints(lg) {
+            min-width: 220px;
+            max-width: 250px;
+        }
+
+        display: flex;
+        flex: 1 0 0%;
+        flex-direction: column;
+        margin-right: 15px;
+        margin-bottom: 0;
+        margin-left: 15px;
+
+
+        .icon{
+            width: auto;
+            height: auto;
+        }
+        ul li{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &.brandItem2{
+                display: flex;
+                align-items: center;
+            }
+            + li{
+                border-top:1px solid #EDEDED ;
+            }
+        }
+    }
+
+    .card--business{
+        .card-header{
+            //#EDEDED
+            background: $secondary_color;
+        }
+    }
+    .card-header {
+        padding: .75rem 1.25rem;
+        height: 68px;
+        font-size: 25px;
+        color: $primary_color;
+        background: $secondary_color;
+        line-height: 100%;
+        border-radius: 6px 6px 0 0;
+        margin: -1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card--brand{
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: 6px;
+    }
+    .box-shadow {
+        box-shadow: 0 1px 8px rgba(0,0,0,0.18);
+    }
+    .hero__btn{
+        margin-top: 20px;
+        line-height: 26px;
+        font-weight: normal;
+    }
+}
+//
+//  Smartosc - Unileverlife
+//  Ipad
+//  -----------------------------------------
+@include breakpoints(sm){
+    .businessModel--slide{
+        overflow: visible;
+        margin-bottom: 200px;
+
+        .businessModel--slide__content{
+            transform: translate(0,100%);
+            bottom: 0;
+            top: inherit;
+            width: 500px;
+            left: 0;
+            padding-top: 20px;
+        }
+        .swiper-button{
+            top: 25%;
+            left: 400px;            
+        }
+        .swiper-slide{
+            min-height: 470px;
+        }
+    }
+    .hero-hero-formulation,.ingredients_bg, .community_bg-top,.community_bg-bottom{
+        background-attachment: unset;
+    }
+}
+//
+//  Smartosc - Unileverlife
+//  Mobile
+//  -----------------------------------------
+
+@include breakpoints(xs){
+    .hero-hero-community1{
+        .hero__inner{
+            vertical-align: top;
+            background: rgba(255,255,255,0.5);
+        }
+    }
+    .hero-hero-community2{
+        height: 400px;
+        background-size: contain;
+        background-position: 0 bottom !important;
+        .hero__inner{
+            vertical-align: top;
+        }
+    }
+    .hero-hero-formulation,.ingredients_bg, .community_bg-top,.community_bg-bottom{
+        background-attachment: unset;
+    }
+    .hero-hero-formulation1{
+        height: 290px;
+        background-position: 0 bottom ;
+    }
+
+    .hero-hero-formulation2{
+        height: 300px;
+        background-size: contain;
+        background-position: 0 bottom !important;
+        .hero__inner{
+            vertical-align: top;
+        }
+    }
+
+
+    div.hero-hero-formulation3{
+        background-position: left top !important;
+        .hero__inner{
+            vertical-align: bottom;
+            .headings{
+                font-size: 20px;
+            }
+        }
+    }
+
+    .hero-hero-ingredients1{
+        height: 490px;
+        background-size: 200% auto;
+
+    }
+    .hero-hero-ingredients2{
+        background-position: 0px bottom !important;
+        background-size: 200% auto;
+        height: 500px;
+        .hero__inner{
+            vertical-align: top;
+        }
+    }
+
+    div.hero-hero-ingredients3{
+        background-position: top left !important;
+        background-size: 180% auto;
+        height: 250px;
+
+        .hero__inner{
+            vertical-align: bottom;
+            .headings{
+                font-size: 20px;
+            }
+        }
+    }
+
+    .hero__overlaydis{
+
+        .hero__content .headings{
+            font-size: 25px;
+            margin-bottom: 10px;
+
+        }
+        .rte-setting{
+            font-size: 18px;
+            margin:0;
+        }
+    }
+
+    .feature-row-community{
+        flex-wrap: wrap;
+        .feature-row__image{
+            order: 2;
+            flex-basis: 100%;
+        }
+        .feature-row__text{
+            order: 1;
+            padding: 0;
+            flex-basis: 100%;
+            padding-bottom: 15px;
+        }
+        .headings{
+            font-size: 20px;
+        }
+
+        .rte-setting{
+            font-size: 18px;
+        }
+    }
+
+    // BusinessModel Slider
+    .businessModel--bannerslider{
+        display: block;
+        object-fit: cover;
+        height: 280px;
+    }
+    .businessModel--banner{
+        padding: 0;
+        background: none !important;
+        min-height: inherit;
+    }
+    .businessModel--slide{
+        overflow: visible;
+        margin-bottom: 200px;
+
+        .businessModel--slide__content{
+            transform: translate(0,100%);
+            bottom: 0;
+            top: inherit;
+            width: 300px;
+            left: 0;
+            padding-top: 20px;
+        }
+        .swiper-button{
+            display: none;
+        }
+        .swiper-slide{
+            min-height: 375px;
+        }
+    }
+
+    // Page Member Privilege
+    .businessInfo--top{
+        .media img{
+            object-fit: cover;
+            height: auto;
+            visibility: visible;
+        }
+    }
+
+    body.member_privilege{
+       background: none;
+
+        .hero-img--mobile {
+            display: block;
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+        }
+        .hero__overlaydis .hero__content{
+            .rte-setting{
+                font-size: 16px;
+            }
+        }
+        .ss-businessBrand .hero-member-privilege3{
+            background-size: 130%;
+            background-position: right top !important;
+            padding-top: 46%;
+            &:before{
+                content: "";
+                width: 100%;
+                height: 40px;
+                position: absolute;
+                transform: translateY(-50%);
+                background: rgb(255,255,255);
+                background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 48%, rgba(255,255,255,0) 100%);
+            }
+        }
+        .businessMembers--serviceItem .title{
+            font-size: 16px;
+        }
+        .hero__btn{
+            line-height: 26px;
+            max-width: 80%;
+            margin: 0 auto 30px;
+            display: table;
+        }
+
+        .benefits__btn{
+            padding: 2px;
+        }
+
+        .hero-heading{
+            height: auto;
+            min-height: auto;
+            .hero__inner{
+                padding-top: 0;
+                vertical-align: top;
+            }
+        }
+        .businessMembers--benefits{
+            padding-top: 70px;
+            position: relative;
+            h2.heading{
+                position: absolute;
+                z-index: 1;
+                top:0;
+                font-size: 25px;
+            }
+            .hero__btn{
+                //min-width: inherit;
+                //display: none;
+            }
+            .ss-businessBenefits--left{
+                position: static;
+                padding-top: 68px;
+            }
+            ul.list--member {
+                .text-color{
+                    display: block;
+                }
+            }
+            .h3{
+                font-size: 18px;
+            }
+            .text-subdesc{
+                font-size: 14px;
+            }
+        }
+        .card-deck{
+            flex-flow: nowrap;
+            margin: 0 -5px;
+            .card{
+                margin: 0 5px;
+                min-width: inherit;
+                ul li{
+                    min-height: 62px;
+                    &.brandItem2{
+                        min-height: 120px;
+                        @media screen and (max-width: 450px){
+                            min-height: 140px;
+                        }
+                    }
+                }
+            }
+            .card-header--desktop{
+                display: none;
+            }
+            .card-header--mobile{
+                display: block;
+            }
+        }
+        .group-buttons{
+            .hero__btn{
+                max-width: 100%;
+                margin: 0 0 10px;
+            }
+        }
+    }
+
+}
+
+@include breakpoints(xxs){
+    .businessModel--slide{
+        .swiper-button{
+            top: 20%;
+            left: 300px;
+            display: unset;
+
+            .swiper-button-next, .swiper-button-prev{
+                right: unset;
+                left: unset;
+            }
+            .swiper-button-prev{
+                top: 45px;
+            }
+        }
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.member_privilege {
+        .benefits__btn {
+            line-height: 20px;
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

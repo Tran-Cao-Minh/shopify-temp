@@ -1,0 +1,1488 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "ข้ามไปที่เนื้อหา",
+      "close_modal": "ปิด",
+      "link_messages": {
+        "new_window": "เปิดในหน้าต่างใหม่",
+        "external": "เปิดเว็บไซต์ภายนอก",
+        "new_window_and_external": "เปิดเว็บไซต์ภายนอกในหน้าต่างใหม่"
+      },
+      "refresh_page": "การเลือกตัวเลือกจะส่งผลให้มีการรีเฟรชทั้งหน้า",
+      "selection_help": "กดปุ่ม Space แล้วกดปุ่มลูกศรเพื่อเลือก",
+      "unit_price_separator": "ต่อ",
+      "error": "ผิดพลาด"
+    },
+    "tooltip": {
+      "close": "ปิด",
+      "add_to_bag": "ใส่ลงในถุง",
+      "close_popup": "ปิดหน้าต่าง\n",
+      "read_more": "อ่านต่อ",
+      "search": "ค้นหา",
+      "next": "",
+      "previous": ""
+    },
+    "meta": {
+      "tags": "แท็กด้วย \"{{ tags }}\"",
+      "page": "หน้า {{ page }}"
+    },
+    "404": {
+      "title": "404 ไม่พบหน้านี้",
+      "subtext": "ไม่มีหน้าที่คุณร้องขอ",
+      "link": "เลือกซื้อต่อ",
+      "back": "กลับสู่หน้าหลัก",
+      "subtext_html": "ขออภัยในความไม่สะดวก<br>\nดูเหมือนว่าคุณกำลังพยายามเข้าถึงหน้าที่ถูกลบไปแล้วหรือไม่เคยมีอยู่",
+      "search_placeholder": "ค้นหาสิ่งที่คุณกำลังตามหา"
+    },
+    "pagination": {
+      "previous": "หน้าก่อนหน้านี้",
+      "next": "หน้าถัดไป",
+      "current_page": "หน้า {{ current }} จาก {{ total }}",
+      "item_per_page": "รายการต่อหน้า",
+      "show": "รายการต่อหน้า",
+      "previous_html": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"7.128\" height=\"11.748\" viewBox=\"0 0 7.128 11.748\"><path data-name=\"Path 192\" d=\"M571.966,5007.27l5.679-5.169-5.679-5.167\" transform=\"translate(578.388 5007.976) rotate(180)\" fill=\"none\" stroke=\"#333\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"1\"><\/path><\/svg>หน้าก่อนหน้า",
+      "next_html": "หน้าถัดไป <svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"7.128\" height=\"11.748\" viewBox=\"0 0 7.128 11.748\"><path data-name=\"Path 207\" d=\"M571.966,5007.27l5.679-5.169-5.679-5.167\" transform=\"translate(-571.26 -4996.228)\" fill=\"none\" stroke=\"#333\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"1\"><\/path><\/svg>",
+      "items_per_page": "รายการต่อหน้า"
+    },
+    "password_page": {
+      "opening_soon": "จะเปิดเร็วๆ นี้",
+      "login_form_heading": "เข้าร้านค้าโดยใช้รหัสผ่าน",
+      "login_form_password_label": "รหัสผ่าน",
+      "login_form_password_placeholder": "รหัสผ่านของคุณ",
+      "login_form_submit": "ป้อน",
+      "signup_form_email_label": "อีเมล",
+      "signup_form_success": "เราจะส่งอีเมลแจ้งคุณก่อนที่ร้านจะเปิด!",
+      "admin_link_html": "คุณเป็นเจ้าของร้านใช่ไหม <a href=\"\/admin\" class=\"text-link\">เข้าสู่ระบบที่นี่<\/a>",
+      "password_link": "เข้าโดยใช้รหัสผ่าน",
+      "powered_by_shopify_html": "ร้านค้านี้จะได้รับการสนับสนุนจาก {{ shopify }}"
+    },
+    "social": {
+      "share_on_facebook": "แชร์",
+      "share_on_twitter": "ทวีต",
+      "share_on_pinterest": "ปักหมุด",
+      "alt_text": {
+        "share_on_facebook": "แชร์บน Facebook",
+        "share_on_twitter": "ทวีตบน Twitter",
+        "share_on_pinterest": "ปักหมุดบน Pinterest"
+      },
+      "share": "แชร์",
+      "copy_link": "คัดลอกลิ้งค์",
+      "copied": "คัดลอกแล้ว\n",
+      "get_link_tooltip": "คลิกที่นี่เพื่อคัดลอก URL ของเพจไปยังคลิปบอร์ดของคุณ URL ที่คัดลอกนี้จะมีโปรโมโค้ดของคุณ",
+      "facebook": "เฟสบุ๊ค",
+      "line": "ไลน์",
+      "instagram": "อินสตาแกรม",
+      "youtube": "ยูทูป",
+      "get_link": "",
+      "twitter": ""
+    },
+    "search": {
+      "empty_search_message": "ไม่สามารถเว้นว่างในช่องค้นหาได้",
+      "title": "ค้นหาในเว็บไซต์ของเรา",
+      "placeholder": "ค้นหา",
+      "submit": "ส่ง",
+      "close": "ปิดการค้นหา",
+      "heading": {
+        "one": "ผลลัพธ์การค้นหา",
+        "other": "ผลลัพธ์การค้นหา"
+      },
+      "search_for": "ค้นหา",
+      "loading": "กำลังโหลด",
+      "clear_search_term": "ล้างคำค้นหา",
+      "number_of_results": "{{ result_number }} จาก {{ results_count }}",
+      "products": "สินค้า",
+      "number_of_results_found": "พบผลลัพธ์ {{ results_count }} รายการ",
+      "one_result_found": "พบผลลัพธ์ 1 รายการ",
+      "no_results": "ลองตรวจสอบการสะกดคำหรือใช้คำอื่น",
+      "results_with_count": {
+        "one": "ผลลัพธ์ {{ count }} รายการสำหรับ “{{ terms }}”",
+        "other": "ผลลัพธ์ {{ count }} รายการสำหรับ “{{ terms }}”"
+      },
+      "articles": "บทความ",
+      "title_term_html": "ผลลัพธ์การค้นหา “<span class=\"text__search-term\"><\/span>” :",
+      "or": ""
+    },
+    "newsletter_form": {
+      "newsletter_email": "สมัครรับข้อมูลจากรายชื่ออีเมลของเรา",
+      "email_placeholder": "อีเมล",
+      "confirmation": "ขอบคุณสำหรับการสมัคร! คุณจะได้รับการอัปเดตล่าสุดเกี่ยวกับดีลพิเศษและข้อเสนอพิเศษ",
+      "submit": "สมัครรับข้อมูล",
+      "get": ""
+    },
+    "filters": {
+      "show_more": "แสดงเพิ่ม",
+      "show_less": "แสดงน้อยลง"
+    },
+    "payment": {
+      "method": "วิธีการชำระเงิน"
+    },
+    "validate": {
+      "required": "กรุณากรอกข้อมูลให้ครบถ้วน",
+      "email": "อีเมล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "incorrect_email_password": "รหัสสมาชิก \/ รหัสประชาชน หรือรหัสผ่านไม่ถูกต้อง",
+      "valid_postal_code": "รหัสไปรษณีย์ {0} ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "valid_phone": "กรุณาใส่เบอร์โทรศัพท์ที่ถูกต้อง",
+      "valid_first_name_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 50 ตัวอักษร",
+      "valid_last_name_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 20 ตัวอักษร",
+      "valid_address_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 255 ตัวอักษร",
+      "restrict_delimiter": ""
+    },
+    "currency": {
+      "dropdown_label": "สกุลเงิน"
+    },
+    "language": {
+      "dropdown_label": "ภาษา"
+    },
+    "checkout_sidebar": {
+      "subtotal_label": "ราคาสินค้า",
+      "discount_label": "ส่วนลด",
+      "cvqv_label": "CV I QV รวมทั้งหมด",
+      "estimated_total_label": "ราคารวมทั้งหมด",
+      "autoship_due_date": "เลือกวันครบกำหนดชำระ VIP ครั้งต่อไป",
+      "representative": "ช้อปกับสมาชิก",
+      "apply_code_button": "ใช้โค้ดส่วนลด",
+      "shipping_label": "ค่าจัดส่ง",
+      "autoship_heading": "เลือกวันที่ต้องการให้ระบบตัดบัตรเครดิตเพื่อชำระค่า VIP subscription ในแต่ละเดือน",
+      "order_summary": "สรุปรายการสั่งซื้อ",
+      "item_quantity": "จำนวน:",
+      "autoship_due_date_selected": "ทุกวันที่ 5 ของเดือน",
+      "item_label": "ชิ้น",
+      "autoship_due_date_selected_2_html": " ของเดือน",
+      "autoship_due_date_selected_1_html": " ทุกวันที่ <span class=\"due_date-text\">{{ duedate }}<\/span>",
+      "applied_label": "คูปองที่ใช้เป็นส่วนลด",
+      "autoship_due_date_selected_default": "เลือกวันที่",
+      "autoship_due_date_selecte_a_date": "- เลือกวันที่ -",
+      "calculating_price": "กำลังคำนวณราคา"
+    },
+    "checkout_progress_step": {
+      "shopping_bag_html": "ถุงช้อปปิ้ง",
+      "shipping_address_html": "ที่อยู่จัดส่ง",
+      "payment_info_html": "ข้อมูลชำระเงิน",
+      "shipping_method_html": "วิธีจัดส่ง"
+    },
+    "cookie_notice": {
+      "content_html": "เว็บไซต์ของเราใช้คุ้กกี้เพื่อเพิ่มประสบการณ์การใช้ให้ดีมากยิ่งขึ้น คุ้กกี้สามารถช่วยให้คุณเพลิดเพลินไปกับการใช้ฟีเจอร์ต่างๆ (เช่น การบันทึกข้อมูลการสั่งซื้อสินค้าออนไลน์ใน “ตะกร้าของคุณ”) การแชร์ในโซเชียลมีเดีย (ในเฟสบุ๊ค อินสตาแกรม ฯลฯ) และการส่งข้อความและโฆษณาต่างๆ ที่ตรงกับความสนใจของคุณ (ในเว็บไซต์ และอื่นๆ) คุ้กกี้ยังสามารถช่วยให้เราเข้าใจว่า เว็บไซต์ของเราถูกใช้ในรูปแบบไหนบ้าง คุณสามารถศึกษาข้อมูลเพิ่มเติมได้ที่นี่  <a target=\"__blank\" href=\"https:\/\/www.unilevernotices.com\/united-kingdom\/english\/cookie-notice\/notice.html\" style=\"color: #FE7AC7; text-decoration: underline;\">ประกาศเกี่ยวกับคุ้กกี้<\/a> คลิ๊ก “ยินยอม” เพื่ออนุญาตให้เราใช้คุ้กกี้กับคุณ",
+      "button": "ยอมรับ"
+    },
+    "checkout_form_label": {
+      "zip_code": "รหัสไปรษณีย์*",
+      "province": "จังหวัด*",
+      "district": "อำเภอ*",
+      "mobile_number": "เบอร์มือถือ*",
+      "country": "ประเทศ",
+      "first_name": "ชื่อ*",
+      "last_name": "นามสกุล*",
+      "address": "ที่อยู่*",
+      "national_id": "เลขบัตรประชาชน",
+      "email": "อีเมล*",
+      "same_shipping_address": "ที่อยู่เดียวกับที่อยู่จัดส่ง",
+      "different_billing_address": "ใช้ที่อยู่ใบเสร็จหรือใบกำกับภาษีอื่น",
+      "country_name": "Thailand"
+    },
+    "pages": {
+      "view_wishlist": "ดูรายการสินค้าที่ต้องการ",
+      "view_favorite": "ดูรายการสินค้าโปรด",
+      "how_to_shop_online_step": "ขั้นตอน",
+      "your_wishlist_is_empty": "ยังไม่มีรายการสินค้าที่ต้องการบันทึกไว้",
+      "wishlist_favorite_view_all_prodcuts_html": "เลือกดูผลิตภัณฑ์อื่นๆ ได้ <a href=\"${collection_url}\">ที่นี่<\/a>",
+      "your_favourite_is_empty": "ยังไม่มีรายการสินค้าโปรดบันทึกไว้",
+      "logged_in_to_perform_this_feature": "",
+      "promotion_no_matches": "",
+      "testimonial_continute": ""
+    },
+    "share_popup": {
+      "share": "แชร์",
+      "copy_link": "คัดลอกลิ้งค์",
+      "introduce_unilever_life_to_other": "แนะนำธุรกิจ ยูนิลิเวอร์ ไลฟ์ ให้เพื่อน\n",
+      "shop_share_and_get_unlimited_5_bonus_html": "ช้อบ & แชร์ มีคนซื้อก็รับเริ่มต้น 5% แบบไม่อั้น",
+      "content_bottom": "คุณสามารถแชร์คอนเทนส์นี้ให้เพื่อน เพียงแค่คลิกโซเชียล ไอคอนด้านล่าง ถ้าคุณเป็นบิซิเนส พาร์ตเนอร์ แค่แชร์โค้ดพร้อมรับ Cash back 5% จากทุกยอดซื้อ*",
+      "content_bottom_note": "*จากทุกยอดซื้อของตัวเอง และจากลูกค้าที่ไม่ใช่สมาชิก(บิซิเนส พาร์ตเนอร์) รวมทั้งรายได้จาก Life Max Plan",
+      "would_you_like_to_share_this_page_to_your_friends": ""
+    },
+    "congratulations": {
+      "title": "ขอแสดงความยินดีกับ คุณ${USER} และ คุณ${ASSOCIATE_NAME}!\nในการปรับตำแหน่งใหม่เป็น ${NEWRAND}",
+      "content_html": "เราขอชื่นชมในพลังและความมุ่งมั่นสู่เป้าหมายในธุรกิจของคุณ<br \/>เราจะตั้งตารอที่จะแสดงความยินดีกับคุณในตำแหน่งถัดไป!",
+      "ready_for_the_new_journey": "ฉันพร้อมแล้วสำหรับก้าวต่อไป",
+      "title_html": "<span>ขอแสดงความยินดีกับ<\/span> คุณ${USER} และ คุณ${ASSOCIATE_NAME}! <br \/>ในการปรับตำแหน่งใหม่เป็น ${NEWRAND}"
+    },
+    "checkout_tooltip": {
+      "auto_ship": "เลือกวันที่ต้องการให้ระบบตัดบัตรเครดิตเพื่อชำระค่า VIP subscription ในแต่ละเดือน",
+      "representative": "ค้นหาสมาชิกเพื่อรับโค้ดส่วนลด 25% สำหรับสินค้าทุกชิ้น",
+      "contact_infomation": "กรุณาใส่อีเมลของคุณเพื่อรับการยืนยันคำสั่งซื้อและข่าวสารต่างๆจากบริษัท"
+    },
+    "footer_bottom_link": {
+      "item_title_1": "ข้อตกลงการใช้งาน",
+      "item_title_2": "นโยบายข้อมูลส่วนบุคคล",
+      "item_title_3": "ใบทะเบียนพาณิชย์\n",
+      "item_title_4": "นโยบายข้อมูลส่วนบุคคล ยูนิลีเวอร์",
+      "item_title_5": "นโยบายการใช้ cookie",
+      "item_title_6": "ประกาศการเข้าถึง",
+      "item_title_7": "ประกาศทางกฎหมาย"
+    },
+    "breadcrumb": {
+      "home": "หน้าหลัก",
+      "my_account": "",
+      "address_book": ""
+    },
+    "magazine": {
+      "open": "เปิด",
+      "download": "ดาวน์โหลด"
+    },
+    "checkout_contact": {
+      "contact_information_label": "ข้อมูลติดต่อ",
+      "check_up_to_date": "ต้องการติดตามข่าวสารและข้อเสนอพิเศษต่างๆ",
+      "shipping_address": "ที่อยู่จัดส่งสินค้า",
+      "choose_your_address_note": "คุณสามารถเลือกที่อยู่ของคุณได้จากกล่องเมนูนี้หรือกรอกข้อมูลที่อยู่ใหม่ในช่องด้านล่าง",
+      "choose_your_address": "เลือกที่อยู่",
+      "like_a_tax_invoice": "หากต้องการขอใบกำกับภาษี กรุณากรอกเลขที่บัตรประชาชนให้ครบถ้วนและถูกต้อง",
+      "shipping_method": "วิธีจัดส่งสินค้า",
+      "payment": "วิธีชำระเงิน",
+      "billing_address": "ที่อยู่ใบเสร็จ \/ ใบกำกับภาษี",
+      "account_already": "",
+      "account_login": ""
+    },
+    "form": {
+      "location_form": {
+        "province": "จังหวัด",
+        "district": "อำเภอ",
+        "zip_code": "รหัสไปรษณีย์",
+        "province_placeholder": "เลือกจังหวัด",
+        "district_placeholder": "เลือกอำเภอ"
+      },
+      "cancel": "",
+      "confirm": ""
+    },
+    "checkout_step_button": {
+      "next_to_shipping": "ไปที่วิธีจัดส่ง",
+      "return_to_shopping_bag": "กลับไปถุงช้อปปิ้ง",
+      "continue_to_payment": "ไปข้อมูลชำระเงิน",
+      "confirm_to_payment": "ยืนยันชำระเงิน",
+      "return_to_bag": "กลับไปถุงช้อปปิ้ง",
+      "next_to_shipping_mb": "ไปที่วิธีจัดส่ง",
+      "return_shipping_method_html": "กลับไปที่วิธีจัดส่ง",
+      "return_info_html": "กลับไปที่วิธีจัดส่ง"
+    },
+    "checkout_review_block": {
+      "ship_to": "ที่อยู่จัดส่ง",
+      "contact": "ข้อมูลติดต่อ",
+      "shipping_method": "วิธีจัดส่ง",
+      "change": "เปลี่ยน"
+    },
+    "checkout_note": {
+      "contact_change_billing_address_html": "<strong>หมายเหตุ<\/strong> หากคุณต้องการเปลี่ยนที่อยู่จัดส่งใบเสร็จรับเงิน กรุณาติดต่อ Call Center  :<br \/><a href='tel:+{{ contact_phone }}'>+{{ contact_phone }}<\/a> หรือ \nLINE : <a class=\"text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">{{ contact_line_id }}<\/a>",
+      "remind_otp_code_receiver_html": "<strong>หมายเหตุ <\/strong>ถ้าคุณเลือกบัตรที่อยู่ในบัญชี คุณจะได้รับรหัส OTP ทางข้อความ (SMS) เพื่อทำการยืนยันตัวตนก่อนชำระเงิน"
+    },
+    "checkout_popup": {
+      "belong_memeber": {
+        "text_2_html": "หากคุณไม่ใช่สมาชิก กรุณาใส่เลขบัตรประชาชนอื่น<br><strong>\nหรือปล่อยว่างเพื่อดำเนินการต่อ<\/strong>",
+        "text_1_html": "ถ้าคุณคือ  <span class='username'><\/span>, <br class=\"display-mb\">กรุณา",
+        "login_to_continue": "เข้าสู่ระบบ"
+      },
+      "otp_payment": {
+        "title_modal": "ยืนยันบัตรเครดิต",
+        "description_html": "กรุณาใส่รหัส OTP ที่เราส่งให้ทางเบอร์โทรศัพท์:",
+        "otp_code": "รหัส OTP",
+        "otp_time_html": "กรุณาใส่รหัส OTP ภายใน <span id='otp-timer'>120<\/span>  วินาที",
+        "otp_note_1_html": "หากเบอร์โทรศัพท์ของคุณไม่ถูกต้อง กรุณาติดต่อ Call Center",
+        "otp_resend_html": "หากคุณไม่ได้รับรหัส OTP?<br class=\"display-mb\" \/> กรุณาคลิก  <a class='text-underline otp-resend' href='#' style='text-transform: uppercase;' data-action='otp-resend'> ส่งรหัส OTP อีกครั้ง<\/a>",
+        "otp_note_2_html": "{{ contact_phone }}<\/a> หรือ LINE: <a href='#'>{{ contact_line }}<\/a> to change your phone number",
+        "otp_button": "ยืนยันรหัส OTP"
+      },
+      "otp": {
+        "otp_code": "รหัส OTP",
+        "otp_time_html": "กรุณาใส่รหัส OTP ภายใน <span id='otp-timer'>120<\/span>วินาที",
+        "otp_resend_html": "หากคุณไม่ได้รับรหัส OTP กรุณาคลิก <a class='text-underline otp-resend' href='#' style='text-transform: uppercase;' data-action='otp-resend'>ส่งรหัส OTP อีกครั้ง<\/a>",
+        "otp_note_1_html": "หากเบอร์โทรศัพท์ของคุณไม่ถูกต้อง กรุณาติดต่อ Call Center",
+        "otp_note_2_html": "",
+        "title_modal": "ยืนยันตัวตน",
+        "description_html": "",
+        "otp_button": "ยืนยันรหัส OTP"
+      }
+    },
+    "toolbar_lists": {
+      "home": "หน้าหลัก",
+      "special_offers": "ข้อเสนอพิเศษ",
+      "order_form": "ฟอร์มสั่งซื้อด่วน",
+      "enrollment": "การลงทะเบียน",
+      "activities": "กิจกรรม",
+      "toolbox": "Toolbox",
+      "dashboard": "",
+      "subscription": ""
+    },
+    "checkout_condition": {
+      "condition11_html": "ข้อมูลส่วนบุคคลของคุณ เช่น ข้อมูลส่วนบุคคลที่ได้รับจากคุณโดยตรงเมื่อคุณให้ข้อมูลส่วนบุคคลกับเราเช่น เมื่อคุณลงทะเบียนสำหรับการแข่งขัน, บัตรกำนัลและหรือกิจกรรมโรดโชว์ของเรา, การใช้เว็บไซต์ของเราเพื่อซื้อผลิตภัณฑ์หรือบริการ, การลงทะเบียนเพื่อรับข้อมูลใช้แอปพลิเคชันของเรา, การกรอกแบบสำรวจหรือแสดงความคิดเห็นหรือสอบถามรายละเอียดเพิ่มเติม และหรือการอัปเดตข้อมูลส่วนบุคคลเพิ่มเติมของคุณ,ภาพถ่ายรูปภาพ, การบันทึกเสียงและหรือวิดีโอที่เราได้รับ (ซึ่งรวมเรียกว่า “ข้อมูลส่วนบุคคล”) จะถูกประมวลผลสำหรับการโฆษณา, การตลาด, การวิจัยทางการตลาด  หรือวัตถุประสงค์ที่เกี่ยวข้องใด ๆ , การเข้าร่วมในการประกวดและหรือโรดโชว์และหรือกิจกรรมของคุณเพื่อจัดหาผลิตภัณฑ์หรือบริการที่คุณร้องขอจากเรา หรือเพื่อแจ้งให้คุณทราบเกี่ยวกับกิจกรรมในอนาคตของเรา ,",
+      "condition12_html": "เพื่อตอบคำถามของคุณ, เพื่อให้ข้อมูลเกี่ยวกับผลิตภัณฑ์บริการและหรือผลิตภัณฑ์รใหม่ที่คุณอาจสนใจ , เพื่อเชิญคุณและสมัครสมาชิกจดหมายข่าวของเราและหรือเพื่อวัตถุประสงค์ในการตรวจสอบในกรณีที่มีข้อพิพาท (ซึ่งรวมเรียกว่า “วัตถุประสงค์”).เราจะเก็บข้อมูลส่วนบุคคลของคุณตราบเท่าที่เราต้องการเพื่อวัตถุประสงค์ในการประมวลผล เราต้องการให้คุณทราบว่าข้อมูลส่วนบุคคลของคุณอาจถูกเปิดเผยต่อบุคคลที่สามเช่นสำนักงานใหญ่, สำนักงานภูมิภาคสาขา บริษัท ในเครือและหรือสมาชิกในกลุ่ม บริษัท ยูนิลีเวอร์และแบรนด์ของยูนิลีเวอร์ (กรุณาเยี่ยมชมแบรนด์ของเรา) (for offline : https:\/\/www.unilever.com\/brands\/)  และหรือผู้ให้บริการ, ผู้จัดจำหน่ายและซัพพลายเออร์ของเราซึ่งอาจอยู่นอกประเทศไทยด้วยเหตุผลที่เกี่ยวข้องกับวัตถุประสงค์ดังกล่าวข้างต้น",
+      "condition14_html": "<p>หากคุณต้องการเข้าถึงและขอรับสำเนาข้อมูล ขอรับ ลบหรือทำลาย ระงับ อัปเดตข้อมูลส่วนบุคคลของคุณหรือ ถอนความยินยอมของคุณ หากคุณมีข้อสอบถามหรือร้องเรียนใดๆ เกี่ยวกับการประมวลผลข้อมูลดังกล่าวกรุณาติดต่อ: เจ้าหน้าที่คุ้มครองข้อมูลส่วนบุคคลของบริษัท ยูนิลีเวอร์ไทยแลนด์ อาคารยูนิลีเวอร์เฮ้าส์ 161 ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กทม. 10310 หรือ ยูนิลิเวอร์ ไลฟ์ ฝ่าย Call Center โทร. <a class=\"text-underline\" href='tel:+{{ contact_phone }}'>+{{ contact_phone }}<\/a> หรืออีเมล <a class=\"\" href=\"mailto:{{contact_email}}\">{{contact_email}}<\/a>.<\/p>",
+      "condition15_html": "<p>โปรดทราบว่าเราจำเป็นต้องประมวลผลข้อมูลส่วนบุคคลของคุณ หากเราไม่สามารถประมวลผลข้อมูลดังกล่าว เราจะไม่สามารถดำเนินการตามวัตถุประสงค์ข้างต้นได้ สำหรับรายละเอียดเพิ่มเติม เกี่ยวกับวิธีที่เราประมวลผลข้อมูลส่วนบุคคลของคุณ โปรดเยี่ยมชมประกาศความเป็นส่วนตัวของเรา  (for offline: https:\/\/www.unilevernotices.com\/thailand\/thai\/privacy-notice\/notice.html) <\/p>\n",
+      "condition21_html": "<p>ข้าพเจ้าอายุมากกว่า 18 ปีและข้าพเจ้าได้อ่านและ  <a class=\"text-underline\" href=\"#\"> ทำความเข้าใจข้อกำหนดของปร <\/a>ะกาศความเป็นส่วนตัวและยินยอมให้มีการประมวลผลข้อมูลส่วนบุคคลของฉันตามที่อธิบายไว้ข้างต้น<\/p>",
+      "condition13_html": "<p> <\/p>",
+      "condition22_html": "",
+      "condition23_html": ""
+    },
+    "welcome_back": {
+      "title": "ยินดีต้อนรับกลับมาอีกครั้ง!",
+      "do_you_want_to_login_as_html": "คุณต้องการล็อคอินด้วยชื่อ <strong>${first_name}<\/strong> หรือไม่?",
+      "yes_continue_login": "ใช่ ดำเนินการล็อคอินต่อ",
+      "no_i_want_to_login_with_different_account": "ไม่ ฉันต้องการล็อคอินด้วยชื่อบัญชีอื่น"
+    },
+    "countdown": {
+      "days": "วัน",
+      "seconds": "วินาที",
+      "hours": "ชั่วโมง",
+      "minutes": "นาที"
+    },
+    "slide": {
+      "next": "ถ้ดไป",
+      "previous": "ก่อนหน้า"
+    },
+    "bad_connection": {
+      "title": "ระบบการเชื่อมต่อขัดข้อง :(",
+      "subtext": "ยูนิลิเวอร์ ไลฟ์ พบข้อผิดพลาดขณะพยายามเชื่อมต่อกับ ระบบไลน์",
+      "rte_desc_1": "โปรดกลับมาตรวจสอบอีกครั้ง ภายใน 5 นาที หรือติดต่อศูนย์บริการลูกค้า",
+      "rte_desc_2": "หรือ LINE",
+      "rte_desc_3": "สำหรับรายละเอียดเพิ่มเติม",
+      "verify_line": "ยืนยันตัวตนผ่านไลน์",
+      "back_home": "กลับไปที่หน้าหลัก"
+    },
+    "login_error": {
+      "oops_an_unexpected_error_occurred_while_logging_in": "Oops! เกิดข้อผิดพลาดขณะเข้าสู่ระบบ",
+      "please_contact_call_center": "กรุณาติดต่อ call center",
+      "or_line": "หรือ LINE",
+      "for_more_detail": "สำหรับรายละเอียดเพิ่มเติม",
+      "back_to_home": "กลับไปที่หน้าหลัก"
+    },
+    "popup": {
+      "confirm": "ยืนยัน",
+      "cancel": "ยกเลิก"
+    }
+  },
+  "sections": {
+    "slideshow": {
+      "next_slide": "สไลด์ถัดไป",
+      "previous_slide": "สไลด์ก่อนหน้า",
+      "pause_slideshow": "หยุดสไลด์โชว์ชั่วคราว",
+      "rotate_slideshow": "เล่นสไลด์โชว์",
+      "load_slide": "โหลดสไลด์ {{ slide_number }}",
+      "navigation_instructions": "ใช้ลูกศรซ้าย\/ขวาเพื่อดูสไลด์โชว์ หรือปัดไปทางซ้าย\/ขวาหากคุณกำลังใช้อุปกรณ์มือถือ"
+    },
+    "featured_product": {
+      "title": "สินค้าที่แนะนำ",
+      "gallery_thumbnail_alt": "โหลดรูปภาพลงในเครื่องมือใช้ดูของ Gallery {{ imageAlt }}",
+      "video_thumbnail_alt": "โหลดและเล่นวิดีโอในเครื่องมือดูของแกลเลอรี {{ imageAlt }}",
+      "model_thumbnail_alt": "โหลดโมเดล 3 มิติลงในเครื่องมือใช้ดูของ Gallery {{ imageAlt }}"
+    },
+    "map": {
+      "address_error": "เกิดข้อผิดพลาดในการค้นหาที่อยู่ดังกล่าว",
+      "address_no_results": "ไม่พบผลลัพธ์สำหรับที่อยู่ดังกล่าว",
+      "address_query_limit_html": "คุณใช้ Google API ของคุณเกินขีดจำกัดการใช้งานแล้ว ลองพิจารณาอัปเกรดเป็น<a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">แผนพรีเมียม<\/a>",
+      "auth_error_html": "เกิดปัญหาในการยืนยันตัวตนสำหรับบัญชีผู้ใช้ Google Maps ของคุณ",
+      "section_heading": "ตำแหน่งที่ตั้ง"
+    },
+    "video": {
+      "play": "เล่นวิดีโอ {{ video_title }}",
+      "pause": "หยุดวิดีโอ {{ video_title }}",
+      "resume": "เล่นวิดีโอ {{ video_title }} ต่อ",
+      "close": "ปิดวิดีโอ {{ video_title }}"
+    },
+    "calendar": {
+      "page_heading": "ปฏิทินกิจกรรม",
+      "upcoming_activities": "กิจกรรมที่จะเกิดขึ้น",
+      "activities": "กิจกรรม",
+      "onlineTag": "ออนไลน์",
+      "offlineTag": "ออฟไลน์",
+      "reserve": "สำรองที่นั่ง",
+      "find_out_more": "ดูข้อมูลเพิ่มเติม",
+      "lecturer": "วิทยากร",
+      "date_time": "วัน - เวลา",
+      "the_place": "สถานที่",
+      "number_of_exposure": "จำนวนที่เปิดรับ",
+      "people": "คน",
+      "price": "ราคา",
+      "number": "จำนวน",
+      "register": "สำรองที่นั่ง",
+      "baht": "บาท",
+      "event_details": "รายละเอียดอีเว้นท์",
+      "no_event": "ไม่มีกิจกรรมในขณะนี้",
+      "reserveTitle": "คุณกำลังออกจากหน้านี้",
+      "reserveContent_html": "กรุณากด \"ตกลง\" เพื่อไปที่เว็บไซต์ Unilever Life Event เพื่อทำการสำรองที่นั่ง",
+      "reserveContinue": "ตกลง",
+      "reserveCancel": "ยกเลิก",
+      "event_member": "กิจกรรมจัดโดยยูนิลีเวอร์ ไลฟ์ ",
+      "event_paid": " กิจกรรมจัดโดยสมาชิก",
+      "event_free": "ฟรี",
+      "reserve_ticket": "สำรองที่นั่ง",
+      "event_live": ""
+    }
+  },
+  "blogs": {
+    "article": {
+      "view_all": "ดูทั้งหมด",
+      "view_all_blogs": "ดูบล็อกทั้งหมด",
+      "all_topics": "ทุกหัวข้อ",
+      "by_author": "โดย {{ author }}",
+      "posted_in": "โพสต์ลงใน",
+      "read_more": "อ่านเพิ่มเติม",
+      "close_popup": "ปิดป๊อปอัป",
+      "read_more_title": "อ่านเพิ่มเติม: {{ title }}",
+      "back_to_blog": "กลับไปยัง {{ title }}",
+      "tags": "แท็ก",
+      "article_with_count": {
+        "one": "1 บทความ",
+        "other": "{{ count }} บทความ",
+        "zero": "0 บทความ"
+      },
+      "related": ""
+    },
+    "comments": {
+      "title": "แสดงความคิดเห็น",
+      "name": "ชื่อ",
+      "email": "อีเมล",
+      "message": "ข้อความ",
+      "post": "โพสต์ความคิดเห็น",
+      "moderated": "โปรดทราบว่าความคิดเห็นจะต้องได้รับการอนุมัติก่อนที่จะมีการเผยแพร่",
+      "success_moderated": "โพสต์ความคิดเห็นของคุณเรียบร้อยแล้ว เราจะเผยแพร่ความคิดเห็นดังกล่าวในอีกไม่ช้า เนื่องจากบล็อกของเราอยู่ในระหว่างการกลั่นกรอง",
+      "success": "โพสต์ความคิดเห็นของคุณเรียบร้อยแล้ว! ขอขอบคุณ!",
+      "unapproved": "ที่อยู่อีเมลที่ให้ไว้ไม่ได้รับอนุมัติให้โพสต์ความคิดเห็น",
+      "comments_with_count": {
+        "one": "{{ count }} คิดเห็น",
+        "other": "{{ count }} ความคิดเห็น"
+      }
+    },
+    "category": {
+      "title": "บทความ",
+      "no_matches": ""
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "ตะกร้าสินค้าของคุณ",
+      "note": "เพิ่มบันทึกไปยังคำสั่งซื้อของคุณ",
+      "removed_item_html": "ลบ <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> ออกจากตะกร้าของคุณแล้ว",
+      "remove": "ลบออก",
+      "subtotal": "ยอดรวมย่อย",
+      "savings": "คุณจะประหยัด",
+      "taxes_and_shipping_at_checkout": "ภาษีและค่าจัดส่งที่คิดคำนวณในระหว่างขั้นตอนการชำระเงิน",
+      "taxes_and_shipping_policy_at_checkout_html": "ภาษีและ<a href=\"{{ link }}\">ค่าจัดส่ง<\/a>ที่คิดคำนวณในระหว่างขั้นตอนการชำระเงิน",
+      "taxes_included_but_shipping_at_checkout": "รวมภาษีและค่าจัดส่งที่คิดคำนวณในระหว่างขั้นตอนการชำระเงิน",
+      "taxes_included_and_shipping_policy_html": "รวมภาษี <a href=\"{{ link }}\">ค่าจัดส่ง<\/a>ที่คิดคำนวณในระหว่างขั้นตอนการชำระเงิน",
+      "update": "อัพเดต",
+      "checkout": "การชำระเงิน",
+      "empty": "ตะกร้าของคุณว่างอยู่ในขณะนี้",
+      "cookies_required": "เปิดใช้คุกกี้เพื่อใช้ตะกร้าสินค้า",
+      "continue_shopping": "ช้อปปิ้งต่อ",
+      "cart_error": "เกิดข้อผิดพลาดระหว่างการอัปเดตตะกร้าสินค้าของคุณ โปรดลองอีกครั้ง"
+    },
+    "label": {
+      "discounted_total": "ยอดรวมที่ใช้ส่วนลดแล้ว",
+      "product": "สินค้า",
+      "price": "ราคา",
+      "price_column": "ดูที่คอลัมน์ราคาสำหรับรายละเอียดของส่วนลด",
+      "product_details": "รายละเอียดสินค้า",
+      "quantity": "จำนวน",
+      "qty": "จำนวน",
+      "regular_total": "ยอดรวมปกติ",
+      "remove": "ลบ {{ product }} ออก",
+      "total": "ยอดรวม",
+      "update": "อัพเดต",
+      "discount": "ส่วนลด",
+      "delivered": "จัดส่งแล้ววันที่",
+      "unit_price_label": "",
+      "regular_price": "",
+      "cvqv_label": ""
+    },
+    "popup": {
+      "added_to_cart": "เพิ่มลงในตะกร้าเมื่อไม่นานมานี้",
+      "cart_count": {
+        "one": "{{ count }} รายการ",
+        "other": "{{ count }} รายการ"
+      },
+      "product_details": "รายละเอียดสินค้า",
+      "quantity": "จำนวน",
+      "quantity_label": "ปริมาณ: {{ quantity_count }}"
+    },
+    "minicart": {
+      "add_to_receive_free_shipping_html": "ซื้อสินค้าเพิ่มอีก <strong>{{ price_to_free }}<\/strong>  เพื่อรับบริการจัดส่งฟรีทั่วไทย",
+      "title": "ถุงช้อปปิ้ง",
+      "view_full_bag": "ดูรายการสินค้าในถุงช้อปปิ้ง",
+      "checkout": "ชำระเงิน",
+      "total": "ราคารวมทั้งหมด",
+      "total_cvqv": "CV | QV รวมทั้งหมด",
+      "quantity": "จำนวน",
+      "free_shipping": "คุณได้รับสิทธิ์การจัดส่งฟรี",
+      "no_item": "ไม่มีสินค้าที่เลือก, กรุณาเติมสินค้าลงในถุงช้อปปิ้งของคุณ",
+      "all_items_in_cart": "สินค้านี้ทั้งหมดในสต็อกอยู่ถุงช้อปปิ้งของคุณแล้ว",
+      "continue_shoping_html": "ช้อปปิ้งต่อ",
+      "cv": "",
+      "qv": ""
+    },
+    "code_label": {
+      "coupon_code_not_found": "Coupon Code \":CODE\" าตรวจสอบอีกครั้ง",
+      "promo_code_applied": "",
+      "promo_code_invalid": "",
+      "unallowed_code": "",
+      "unavailable_product_in_cart_label": "",
+      "different_code_warning": "You're using different promo code, your order will be recorded for :Name with :CODE, please confirm",
+      "autoship_promo_code_required": "",
+      "coupon_code_applied": "",
+      "coupon_code_expired": "",
+      "coupon_code_used": "",
+      "coupon_code_invalid": "",
+      "max_coupon_code_applied": ""
+    }
+  },
+  "collections": {
+    "general": {
+      "view_all": "คอลเลคชั่น",
+      "view_all_label": "ดูสินค้าทั้งหมดในคอลเลกชัน {{ collection_name }}",
+      "no_matches": "ขออภัย ไม่มีสินค้าในคอลเลกชันนี้",
+      "items_with_count": {
+        "one": "สินค้า {{ count }} ราย",
+        "other": "สินค้า {{ count }} รายการ"
+      },
+      "collection_label": "คอลเลกชัน",
+      "collection": "คอลเลกชัน ",
+      "see_more_product": "ดูผลิตภัณฑ์เพิ่มเติม",
+      "no_matches_view_all_prodcuts_html": "กลับไปหน้าผลิตภัณฑ์ได้ <a href=\"${collection_url}\">ที่นี่<\/a>."
+    },
+    "catalog": {
+      "title": "แค็ตตาล็อก"
+    },
+    "sorting": {
+      "title": "เรียงตาม"
+    },
+    "filters": {
+      "title_tags": "กรองตาม",
+      "all_tags": "สินค้าทั้งหมด",
+      "category": "ประเภท",
+      "preriod": "ระยะเวลา"
+    },
+    "quickview": {
+      "title": "ดูข้อมูลแบบย่อ"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "ชื่อ*",
+      "email": "อีเมล*",
+      "phone": "หมายเลขโทรศัพท์*",
+      "message": "ข้อความ*",
+      "submit": "ส่งข้อความ",
+      "post_success": "ขอขอบคุณที่ติดต่อเรา เราจะติดต่อกลับโดยเร็วที่สุด",
+      "error_heading": "โปรดปรับแก้ไขข้อมูลดังต่อไปนี้:",
+      "example": "ตัวอย่าง",
+      "product": "",
+      "error_phone": ""
+    },
+    "customer_service": "Call Center:",
+    "line": "",
+    "email": ""
+  },
+  "customer": {
+    "account": {
+      "title": "บัญชีผู้ใช้ของฉัน",
+      "details": "รายละเอียดบัญชีผู้ใช้",
+      "view_addresses": "ดูที่อยู่",
+      "return": "กลับไปยังรายละเอียดบัญชีผู้ใช้",
+      "welcome_back": "สวัสดีคุณ ",
+      "title_my_account": "บัญชีของฉัน",
+      "log_out": "ออกจากระบบ",
+      "speak": "คุณพูดภาษาอะไร:",
+      "contact_information": "ข้อมูลติดต่อ:",
+      "email": "อีเมล์:",
+      "change_your_password": "เปลี่ยนรหัส",
+      "edit": "แก้ไข",
+      "line_id": "LINE ID:",
+      "line_connected": "เชื่อมต่อ LINE บัญชีแรก",
+      "connect_2nd_line_account": "เชื่อมต่อ LINE บัญชีที่สอง",
+      "line_connected_note_html": "หากคุณต้องการเปลี่ยนบัญชีของ LINE กรุณาติดต่อ Call Center ของเรา <a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone}<\/a>",
+      "personal_information": "ข้อมูลส่วนตัว",
+      "primary_info_tab": "ผู้สมัครหลัก",
+      "associate_info_tab": "ผู้สมัครร่วม",
+      "member_id": "รหัสสมาชิก:",
+      "national_id": "เลขบัตรประชาชน:",
+      "full_name": "ชื่อ-นามสกุล:",
+      "date_of_birth": "วันเกิด:",
+      "bank_account_information": "ข้อมูลบัญชีธนาคาร",
+      "bank_name": "ชื่อบัญชีธนาคาร:",
+      "bank_account": "เลขบัญชีธนาคาร:",
+      "billing_information": "ข้อมูลที่อยู่ใบเสร็จ \/ ใบกำกับภาษี",
+      "billing_information_address": "ที่อยู่:",
+      "billing_information_phone": "เบอร์มือถือ:",
+      "note_information_html": "หากคุณต้องการแก้ไขข้อมูล กรุณาติดต่อ Call Center ของเรา <a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone}<\/a> หรือ LINE: <a class=\"link-readmore text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">${line_id}<\/a>",
+      "shipping_information": "ข้อมูลที่อยู่จัดส่งสินค้า",
+      "shipping_information_address": "ที่อยู่:",
+      "shipping_information_phone": "เบอร์มือถือ:",
+      "coapplicant_information": "ข้อมูลผู้สมัครร่วม",
+      "failed_connect_line_content_html": "บัญชี LINE ของคุณถูกใช้เพื่อเชื่อมโยงกับบัญชีอื่นแล้ว <br> โปรดติดต่อฝ่าย Call Center <a href='tel:+(66)2-554-2455'>+(66)2-554-2455<\/a> หรือ LINE <a href='email:@unileverlife'>@unileverlife<\/a> เพื่อดูรายละเอียดเพิ่มเติม",
+      "facebook": "",
+      "2nd_line_connected": "",
+      "success": "",
+      "success_change_password_title": "",
+      "success_change_password_content_html": "",
+      "failed_connect_line_title_html": "",
+      "success_connect_line_title_html": "",
+      "success_connect_line_content_html": ""
+    },
+    "activate_account": {
+      "title": "เปิดใช้งานบัญชีผู้ใช้",
+      "subtext": "สร้างรหัสผ่านเพื่อเปิดใช้งานบัญชีผู้ใช้ของคุณ",
+      "password": "รหัสผ่าน",
+      "password_confirm": "ยืนยันรหัสผ่าน",
+      "submit": "เปิดใช้งานบัญชีผู้ใช้",
+      "cancel": "ปฏิเสธคำเชิญ"
+    },
+    "addresses": {
+      "title": "ข้อมูลที่อยู่",
+      "default": "ค่าเริ่มต้น",
+      "add_new": "เพิ่มที่อยู่ใหม่",
+      "edit_address": "แก้ไขที่อยู่",
+      "first_name": "ชื่อ",
+      "last_name": "นามสกุล",
+      "company": "บริษัท",
+      "address1": "ที่อยู่",
+      "address2": "อพาร์ทเม้นท์ ห้องชุด เป็นต้น",
+      "city": "เมือง",
+      "country": "ประเทศ:",
+      "province": "จังหวัด:",
+      "zip": "รหัสไปรษณีย์:",
+      "phone": "โทรศัพท์",
+      "set_default": "ตั้งที่อยู่เป็นค่าเริ่มต้น",
+      "add": "เพิ่มที่อยู่",
+      "update": "อัปเดตที่อยู่",
+      "cancel": "ยกเลิก",
+      "edit": "แก้ไข",
+      "delete": "ยืนยัน",
+      "delete_confirm": "คุณแน่ใจหรือไม่ว่าต้องการลบที่อยู่นี้",
+      "add_new_button": "+ เพิ่มที่อยู่ใหม่",
+      "add_btn": "เพิ่มที่อยู่ใหม่",
+      "name": "ชื่อ:",
+      "address": "ที่อยู่:",
+      "district": "ตำบล:",
+      "mobile_number": "เบอร์มือถือ:",
+      "first_name_input": "ชื่อ*",
+      "last_name_input": "นามสกุล*",
+      "address_input": "ที่อยู่*",
+      "mobile_number_input": "เบอร์มือถือ:",
+      "country_input": "ประเทศ",
+      "delete_confirm_alert": "ที่อยู่นี้จะถูกลบในทันที  หลังจากการลบข้อมูลของที่อยู่นี้จะถูกลบอย่างถาวร",
+      "back": ""
+    },
+    "login": {
+      "title": "เข้าสู่ระบบ",
+      "email": "อีเมล",
+      "password": "รหัสผ่าน",
+      "forgot_password": "ลืมรหัสผ่านของคุณใช่ไหม",
+      "sign_in": "ลงชื่อเข้าใช้",
+      "guest_title": "ดำเนินการต่อในฐานะผู้ใช้ชั่วคราว",
+      "guest_continue": "ดำเนินการต่อ"
+    },
+    "orders": {
+      "title": "ประวัติคำสั่งซื้อ",
+      "order_number": "คำสั่งซื้อ",
+      "order_number_link": "คำสั่งซื้อหมายเลข {{ number }}",
+      "date": "วันที่",
+      "payment_status": "สถานะการชำระเงิน",
+      "fulfillment_status": "สถานะการจัดการคำสั่งซื้อ",
+      "total": "ยอดรวม",
+      "none": "คุณยังไม่ได้ดำเนินการสั่งซื้อใดๆ เลย"
+    },
+    "order": {
+      "title": "คำสั่งซื้อ {{ name }}",
+      "date_html": "สั่งซื้อเมื่อ {{ date }}",
+      "cancelled_html": "ยกเลิกคำสั่งซื้อเมื่อ {{ date }}",
+      "cancelled_reason": "เหตุผล: {{ reason }}",
+      "billing_address": "ที่อยู่สำหรับเรียกเก็บเงิน",
+      "payment_status": "สถานะการชำระเงิน",
+      "shipping_address": "ที่อยู่สำหรับจัดส่ง",
+      "fulfillment_status": "สถานะการจัดการคำสั่งซื้อ",
+      "discount": "ส่วนลด",
+      "shipping": "การจัดส่ง",
+      "tax": "ภาษี",
+      "product": "สินค้า",
+      "sku": "รหัสสินค้าคงคลัง",
+      "price": "ราคา",
+      "quantity": "จำนวน",
+      "total": "ยอดรวม",
+      "fulfilled_at_html": "จัดการ {{ date }}",
+      "subtotal": "ยอดรวมย่อย",
+      "track_shipment": "ติดตามการจัดส่ง"
+    },
+    "recover_password": {
+      "title": "รีเซ็ตรหัสผ่านของคุณ",
+      "email": "อีเมล",
+      "submit": "ส่ง",
+      "cancel": "ยกเลิก",
+      "subtext": "เราจะส่งอีเมลสำหรับใช้รีเซ็ตรหัสผ่านให้แก่คุณ",
+      "success": "เราได้ส่งอีเมลพร้อมลิงก์สำหรับใช้อัปเดตรหัสผ่านของคุณแล้ว"
+    },
+    "reset_password": {
+      "title": "รีเซ็ตรหัสผ่านของบัญชีผู้ใช้",
+      "subtext": "ป้อนรหัสผ่านใหม่สำหรับ {{ email }}",
+      "password": "รหัสผ่าน",
+      "password_confirm": "ยืนยันรหัสผ่าน",
+      "submit": "รีเซ็ตรหัสผ่าน"
+    },
+    "register": {
+      "title": "สร้างบัญชีผู้ใช้",
+      "first_name": "ชื่อ",
+      "last_name": "นามสกุล",
+      "email": "อีเมล",
+      "password": "รหัสผ่าน",
+      "submit": "สร้าง"
+    },
+    "edit_account": {
+      "nick_name": "ชื่อเล่น",
+      "introduce_yourself": "แนะนำตัวเอง",
+      "line_id": "Line ID",
+      "facebook": "Facebook",
+      "what_languages_do_you_speak": "คุณพูดภาษาอะไร?",
+      "you_can_select_more_than_1_option": "คุณสามารถเลือกได้มากกว่า 1ข้อ",
+      "select_language": "เปลี่ยนภาษา",
+      "save": "บันทึก",
+      "cancel": "ยกเลิก",
+      "avatar_file_info": "ขนาดรูปไม่ควรเกิน 100 MB (JPG, PNG, GIF)",
+      "nick_name_note_html": "",
+      "invalid_file_html": "",
+      "avatar_file_info_html": ""
+    },
+    "account_change_password": {
+      "old_password": "รหัสเก่า*",
+      "new_password": "รหัสใหม่*",
+      "example_password": "ตัวอย่าง: Johny#14",
+      "confirm_new_password": "ยืนยันรหัสผ่านใหม่*",
+      "confirm_password_change": "ยืนยันการเปลี่ยนรหัส",
+      "cancel": "ยกเลิก"
+    },
+    "account_connect_line": {
+      "connect_to_secondary_line": "เชื่อมต่อ LINE บัญชีที่สอง",
+      "connect_to_line": "เชื่อมต่อ LINE บัญชีที่สอง",
+      "cancel": "ยกเลิก",
+      "connect_to_line_html": "เชื่อมต่อ LINE บัญชีที่สอง"
+    },
+    "my_wallet": {
+      "my_credit_card": "บัตรเครดิต (${number})",
+      "my_credit_card_description": "บัตรเครดิตด้านล่างนี้จะแสดงในหน้าชำระเงิน ซึ่งสามารถใช้ในการซื้อสินค้าบนเว็ปไซต์",
+      "credit_cards_for_autoship_program_used_only": "บัตรเครดิตด้านล่างนี้ใช้สำหรับชำระ VIP Subscription เท่านั้น (${number})",
+      "credit_cards_for_autoship_program_description": "บัตรเครดิตนี้ใช้ในการชำระสินค้า VIP Subscription ในแต่ละเดือน และจะถูกลบอัตโนมัติเมื่อ VIP Subscription นั้นๆ สิ้นสุดลง*",
+      "set_as_default_card": "ตั้งค่าเป็นบัตรเริ่มต้น",
+      "autoship_order_id": "คำสั่งซื้อหมายเลข",
+      "delete_card_confirm_html": "คุณแน่ใจหรือว่าต้องการลบบัตรเครดิต <br \/> ที่ลงท้ายด้วย \"${number}\" ?",
+      "this_credit_card_will_be_deleted_immediately": "ถ้าคุณกดปุ่ม \"ยืนยัน\" บัตรเครดิตนี้จะถูกลบทันที และคุณไม่สามารถยกเลิกการดำเนินการนี้ได้",
+      "cancel": "ยกเลิก",
+      "confirm": "ยืนยันลบบัตรเครดิต",
+      "no_item": "เพื่อการเข้าถึงที่รวดเร็วและง่ายดาย เพียงแค่คุณเก็บบัตรของคุณในเว็ปไซต์นี้",
+      "no_item_note": "ยังไม่มีเครดิตการ์ดบันทึกไว้",
+      "note": "หมายเหตุ: ในกรณีที่บัตรเครดิตได้รับการยินยอมให้บันทึกจะไม่ถูกลบในระบบ แต่คุณสามารถลบได้จากส่วนด้านบนด้วยตนเอง"
+    }
+  },
+  "homepage": {
+    "general": {
+      "title": "หน้าแรก",
+      "backtotop": "กลับไปด้านบน"
+    },
+    "onboarding": {
+      "product_title": "ชื่อสินค้าของคุณ",
+      "product_description": "พื้นที่ตรงนี้มีไว้เพื่ออธิบายรายละเอียดสินค้าของคุณ บอกลูกค้าทราบว่าสินค้าของคุณมีรูปลักษณ์ ให้ความรู้สึกและมีสไตล์อย่างไร เพิ่มรายละเอียดเรื่องสี วัสดุที่ใช้ ขนาดและสถานที่ผลิต",
+      "collection_title": "ชื่อคอลเลกชันของคุณ",
+      "blog_title": "ชื่อโพสต์ของคุณ",
+      "blog_excerpt": "ร้านค้าของคุณยังไม่ได้เผยแพร่โพสต์ในบล็อกใดๆ เลย คุณสามารถใช้บล็อกเพื่อพูดคุยเกี่ยวกับการเปิดตัวสินค้าใหม่ๆ เคล็ดลับต่างๆ หรือข่าวสารอื่นใดที่คุณอยากจะแบ่งปันให้ลูกค้าทราบ รวมถึงสามารถเข้าไปดูบล็อกอีคอมเมิร์ซของ Shopify เพื่อหาแรงบันดาลใจและคำแนะนำสำหรับร้านค้าและบล็อกของคุณได้",
+      "blog_author": "ชื่อผู้เขียน",
+      "no_content": "ขณะนี้ส่วนนี้ยังไม่มีเนื้อหาใดๆ เลย เพิ่มเนื้อหาลงในส่วนนี้โดยใช้แถบด้านข้าง"
+    }
+  },
+  "layout": {
+    "navigation": {
+      "search": "ค้นหา",
+      "expand": "ขยาย",
+      "collapse": "ย่อ",
+      "menu": "เมนู",
+      "toolbox": "Toolbox",
+      "my_profile": "ข้อมูลส่วนตัว",
+      "my_order": "รายการสั่งซื้อ",
+      "shop_location": "ที่ตั้งช็อป",
+      "wishlist": "รายการที่ต้องการ \/ รายการโปรด",
+      "track_and_trace": "เช็คสถานะคำสั่งซื้อ",
+      "address_book": "สมุดที่อยู่",
+      "my_wallet": "เครดิตการ์ดวอลเล็ท",
+      "log_out": "ออกจากระบบ",
+      "online_shopping": "ช้อปปิ้งออนไลน์",
+      "business": "ธุรกิจ",
+      "bag_tooltip": "ถุง",
+      "close": "",
+      "back": "",
+      "dashboard": "",
+      "favorites": "",
+      "top_content_logined_html": "ลงทะเบียนแทนผู้ที่สนใจร่วมธุรกิจหรือ แนะนำธุรกิจกับผู้อื่นผ่านแชร์ลิงค์",
+      "top_content_online_shopping_not_login_html": "ร่วมธุรกิจกับเราเพื่อรับส่วนลด 25% เมื่อซื้อสินค้า และสร้างรายได้ที่สองของคุณ",
+      "top_content_business_not_login_html": "",
+      "enroll_for_other": "สมัครแทนผู้สนใจร่วมธุรกิจ",
+      "start_business": "เริ่มต้นธุรกิจกับเรา"
+    },
+    "cart": {
+      "title": "ตะกร้าสินค้า",
+      "items_count": {
+        "one": "รายการ",
+        "other": "รายการ"
+      }
+    },
+    "customer": {
+      "account": "บัญชีผู้ใช้",
+      "log_out": "ออกจากระบบ",
+      "log_in": "เข้าสู่ระบบ",
+      "create_account": "สร้างบัญชีผู้ใช้",
+      "welcome": "สวัสดี",
+      "you_are_login": "",
+      "already_account": "เป็นสมาชิกอยู่แล้ว?",
+      "is_logged_in": "ล็อคอินอยู่"
+    },
+    "footer": {
+      "social_platform": "{{ name }} บน {{ platform }}",
+      "shop_location": ""
+    },
+    "canvas": {
+      "search": "ค้นหา",
+      "see_full_search": "ผลลัพธ์การค้นหาทั้งหมด",
+      "price_member_from": "ราคาสมาชิก",
+      "price_retails_from": "ราคาปกติ",
+      "price_from": "ราคาปกติ",
+      "login": "เข้าสู่ระบบ",
+      "sign_in": "ออกจากระบบ",
+      "member_national_id": "รหัสสมาชิก \/ รหัสประชาชน",
+      "password": "รหัสผ่าน",
+      "forgot_password": "ลืมรหัสผ่าน?",
+      "desc_top": "หากคุณสมัครสมาชิกที่ยูนิลิเวอร์ ไลฟ์ ช็อป เรียบร้อยแล้ว กรุณาตั้งรหัสผ่านของคุณเพื่อเข้าใช้เว็บไซต์และ Toolbox",
+      "here": " ได้ที่นี่",
+      "desc_bottom": "หากคุณไม่ใช่สมาชิก กรุณาสมัครสมาชิก "
+    }
+  },
+  "products": {
+    "product": {
+      "regular_price": "ราคาปกติ",
+      "sold_out": "ของหมดชั่วคราว",
+      "unavailable": "ไม่พร้อมใช้งาน",
+      "on_sale": "การขาย",
+      "sale_price": "ราคาขาย",
+      "quantity": "จำนวน",
+      "add_to_cart": "ใส่ถุงช้อปปิ้ง",
+      "loader_label": "กำลังเพิ่มสินค้าไปยังตะกร้าสินค้าของคุณ",
+      "back_to_collection": "กลับไปยัง {{ title }}",
+      "vendor": "ผู้ขาย",
+      "quantity_minimum_message": "ปริมาณต้องมากกว่าหรือเท่ากับ 1",
+      "include_taxes": "รวมภาษี",
+      "shipping_policy_html": "<a href=\"{{ link }}\">ค่าจัดส่ง<\/a>ที่คิดคำนวณในระหว่างขั้นตอนการชำระเงิน",
+      "unit_price_label": "ราคาต่อหน่วย",
+      "view_cart": "ดูตะกร้าสินค้า",
+      "availability": "ความพร้อมในการเผยแพร่",
+      "from_lowest_price": "จาก {{ lowest_price }}",
+      "view_in_space": "ดูในพื้นที่ของคุณ",
+      "view_in_space_label": "ดูในพื้นที่ของคุณ โหลดรายการในหน้าต่างการสร้างวัตถุเสมือน",
+      "ingredient": "ส่วนผสม",
+      "cashback_estimate": "รับเงินคืนโดยประมาณ",
+      "retail_price": "ราคาปกติ",
+      "retail_price_mobile": "ราคาปกติ",
+      "member_price": "ราคาสมาชิก",
+      "member_price_mobile": "ราคาสมาชิก",
+      "products_in_stock": "สินค้าในสต๊อก",
+      "add_to_wishList": "เพิ่มในรายการถูกใจ",
+      "add_to_favorite": "เพิ่มในรายการโปรด",
+      "buy_it_now": "ซื้อเลย",
+      "description": "รายละเอียด",
+      "howtouse": "วิธีใช้",
+      "testimonial": "รีวิวจากผู้ใช้จริง",
+      "warning": "คำเตือน:",
+      "fda_registration_no": "เลขที่ใบรับแจ้ง\/อย.",
+      "howitwork": "ผลิตภัณฑ์ทำงานอย่างไร",
+      "purchase_at_member_price_using_promo_code": "ซื้อในราคาสมาชิกโดยใช้โปรโมโค้ด หากคุณไม่มีโปรโมโค้ดคุณสามารถขอโค้ดจากเพื่อนที่เป็นสมาชิกของ Unilever Life หรือสมัครสมาชิกเพื่อรับโปรโมโค้ดของคุณเอง",
+      "cashback_estimate_tooltip": "Cash Back 5% จากทุกยอดซื้อของตัวเองและของ BF รวมทั้งรายได้จาก Life Max Plan",
+      "autoship_promocode_html": "การสั่งซื้อ VIP Subscription ต้องใช้  <span>“โปรโมโค้ด”<\/span>\n",
+      "net_weight": "น้ำหนักสุทธิ:",
+      "purchase_at_member_price_using_promo_code_autoship_note": "“การสั่งซื้อสินค้า VIP Supscription จำเป็นต้องใช้ โปรโมโค้ด หากคุณไม่มีโปรโมโค้ดคุณสามารถขอโค้ดจากเพื่อนที่เป็นสมาชิกของ Unilever Life หรือสมัครสมาชิกเพื่อรับโปรโมโค้ดของตัวคุณเอง.”",
+      "this_variant_has_only_item_in_store": "สินค้ามีในสต๊อกแค่ {maxQt} ชิ้น",
+      "autoship": "",
+      "cv_qv": "",
+      "price": "",
+      "buy_autoship": "",
+      "buy_auto_ship": "",
+      "remove_form_wishList": "",
+      "remove_form_favorite": ""
+    },
+    "recently_viewed": {
+      "title": "รายการที่ดูล่าสุด"
+    },
+    "brand": {
+      "beyonde": "ผลิตภัณฑ์เสริมอาหารเพื่อสุขภาพและความงาม",
+      "aviance_supplement": "ผลิตภัณฑ์เสริมอาหารเพื่อสุขภาพและความงาม",
+      "accessories": "อุปกรณ์ส่งเสริมการขายอื่นๆ",
+      "event": "",
+      "premium": "",
+      "sale_aids": "",
+      "sale_kit": "",
+      "training": "",
+      "aviance_bpc": "",
+      "ifresh": "",
+      "lever_home": ""
+    },
+    "tags": {
+      "sold_out": "ของหมดชั่วคราว",
+      "new": "",
+      "off": "",
+      "sale": "",
+      "autoship_program": "",
+      "autoship_short": ""
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "นี่คือบัตรของขวัญมูลค่า {{ value }} สำหรับใช้ที่ {{ shop }}!",
+      "subtext": "บัตรของขวัญของคุณ",
+      "gift_card_code": "รหัสบัตรของขวัญ",
+      "disabled": "ปิดใช้งาน",
+      "expired": "หมดอายุใน {{ expiry }}",
+      "active": "หมดอายุใน {{ expiry }}",
+      "redeem_html": "ใช้โค้ดนี้ในระหว่างขั้นตอนการชำระเงินเพื่อแลกใช้บัตรของขวัญมูลค่า {{ value }}",
+      "shop_link": "เริ่มช้อปปิ้ง",
+      "print": "พิมพ์บัตรของขวัญนี้",
+      "remaining_html": "เหลือเงิน {{ balance }}",
+      "add_to_apple_wallet": "เพิ่มลงใน Apple Wallet",
+      "qr_image_alt": "คิวอาร์โค้ด — สแกนเพื่อแลกใช้บัตรของขวัญ"
+    }
+  },
+  "order_form": {
+    "cart": {
+      "reach_milestone": "คุณได้รับการจัดส่งที่รวดเร็วฟรี",
+      "unreach_milestone_1": "เพิ่ม ",
+      "unreach_milestone_2": " เพื่อรับการจัดส่งที่รวดเร็วฟรี",
+      "discount": "ส่วนลด",
+      "process_to_checkout": "ตรวจสอบและชำระเงิน",
+      "apply": "ใช้",
+      "promo": "โปรโมโค้ด",
+      "coupon": "คูปองโค้ด",
+      "member_check": "ฉันไม่ได้เป็นสมาชิก",
+      "order_summary": "สรุปคำสั่งซื้อ",
+      "shop_with_representative": "ช้อปกับสมาชิก",
+      "bag_header": "ผลิตภัณฑ์ที่คุณเลือก",
+      "subtotal": "ราคาสินค้า",
+      "total_cv_qv": "CV I QV รวมทั้งหมด",
+      "total": "ราคารวมทั้งหมด",
+      "view_full_bag": "ดูรายการสินค้าในถุงช้อปปิ้ง",
+      "no_product_1": "ไม่มีสินค้าที่เลือก",
+      "no_product_2": "กรุณาเติมสินค้าลงในถุงช้อปปิ้งของคุณ",
+      "quantity": "จำนวน",
+      "show_order_summary": "แสดงข้อมูลคำสั่งซื้อ",
+      "hide_order_summary": "ซ่อนข้อมูลคำสั่ง",
+      "hide_order_summary_html": "ซ่อนข้อมูล<br \/>คำสั่งซื้อ",
+      "show_order_summary_html": "แสดงข้อมูล<br \/>คำสั่งซื้อ",
+      "item": "",
+      "items": ""
+    },
+    "products": {
+      "image": "ภาพ",
+      "name": "ผลิตภัณฑ์",
+      "collection": "ชุด",
+      "stock": "คลังสินค้า",
+      "weight": "น้ำหนัก",
+      "price": "ราคาปกติ",
+      "promo_price": "ราคา สมาชิก",
+      "price_html": "ราคา <br> ปกติ",
+      "promo_price_html": "ราคา <br> สมาชิก",
+      "cv_qv": "CV\/QV",
+      "quantity": "จำนวน",
+      "wishlist": "อยากได้\nเก็บไว้ก่อน",
+      "add_to_cart": "ใส่ถุง",
+      "add_to_cart_text": "ใส่ถุง",
+      "add_to_wishlist": "เพิ่มสิ่งที่อยากได้",
+      "added_to_wishlist": "เพิ่มในสิ่งที่อยากได้",
+      "in_stock": "สินค้าในสต๊อก\n",
+      "wishlist_html": "<div class=\"container__wishlist-label\"><div><p>อยากได้<\/p><p>เก็บไว้ก่อน<\/p><\/div><\/div>",
+      "delete": "ลบ",
+      "wishlist_tooltip": "เก็บไว้ในรายการสินค้าที่อยากได้ คุณสามารถกลับมาดูได้โดยไม่ต้องค้นหาใหม่",
+      "promocode_require": "ต้องใช้  “โปรโมโค้ด” ในการสั่งซื้อสินค้า VIP"
+    },
+    "general": {
+      "search": "ใส่ชื่อสินค้าที่ต้องการค้นหา",
+      "category": "ประเภทผลิตภัณฑ์",
+      "heading": "แบบฟอร์มสั่งซื้อด่วน",
+      "sub_heading": "วิธีง่ายๆในการเพิ่มสินค้าลงในถุงสินค้าอย่างรวดเร็วโดยไม่ต้องเลือกดูจากผลิตภัณฑ์ทั้งหมดในเว็บไซต์!",
+      "description": "ใช้แบบฟอร์มนี้เพื่อเพิ่มผลิตภัณฑ์ที่คุณถูกใจใส่ตะกร้าช้อปปิ้งเพียงนิ้วสัมผัส เปิดประสบการณ์ใหม่ที่ทำให้คุณช้อปง่ายช้อบไวยิ่งกว่าที่เคย เพียงใส่ชื่อผลิตภัณฑ์ที่ชอบ และเพิ่มเข้าถุงช้อปปิ้งได้เลย",
+      "cv_qv": "CV | QV",
+      "search_result_html": "ผลลัพท์ของคำ <span>\"{{ search }}\"<\/span> ที่คุณค้นหา",
+      "empty_bag": "ไม่มีสินค้าที่เลือก, กรุณาเติมสินค้าลงในถุงช้อปปิ้งของคุณ",
+      "description_html": "<strong>เปิดประสบการณ์ใหม่ที่ทำให้คุณช้อปง่ายช้อบไวยิ่งกว่าที่เคย เพียงใส่ชื่อผลิตภัณฑ์ที่ชอบ และเพิ่มเข้าถุงช้อปปิ้งได้เลย<\/strong>",
+      "not_found": "",
+      "login_required": "",
+      "confirm_login": "",
+      "not_found_desc": ""
+    }
+  },
+  "find_representative": {
+    "search-button": "ค้นหา",
+    "page-title": "ค้นหาผู้แนะนำ",
+    "description": "ค้นหาสมาชิกเพื่อรับโปรโมโค้ดใช้ซื้อผลิตภัณฑ์ในราคาลด 25% หรือรับโค้ดแนะนำในการสมัครเป็นบิซิเนสพาร์ตเนอร์ เพียงคุณใส่ชื่อและนามสกุลของสมาชิก\nที่คุณรู้จัก หรือใส่ที่อยู่ของคุณเพื่อระบบจะจัดการหาสมาชิกใกล้คุณ",
+    "seach-form-title": "ค้นหาสมาชิกใกล้คุณหรือเลือกสมาชิกที่คุณรู้จัก",
+    "tab-header-title-1": "ค้นหาสมาชิกใกล้ฉัน",
+    "tab-header-title-2": "ค้นหาสมาชิกที่ฉันรู้จัก",
+    "first-name-label": "ชื่อ*",
+    "last-name-label": "นามสกุล*",
+    "advance-search-label": "ค้นหาขั้นสูง",
+    "no-result-text-line-1": "ขออภัยไม่มีข้อมูลตรงกับที่คุณค้นหา",
+    "no-result-text-line-2": "กรุณาตรวจสอบตัวสะกดเว้นวรรคและลองใหม่อีกครั้ง หากคุณต้องการให้เราแนะนำสมาขิกใกล้คุณ กรุณาเลือกค้นหาสมาชิกใกล้ฉันแท็บ และใส่รหัสไปรษณีย์ และจังหวัด",
+    "address-label": "ที่อยู่ (ไม่บังคับ)",
+    "hide-advance-search-label": "ซ่อนค้นหาขั้นสูง",
+    "choose-me": "เลือกคนนี้เลย",
+    "know-more-about-me": "ข้อมูลเกี่ยวกับสมาชิก",
+    "representative": "ชื่อสมาชิก",
+    "recommend": "แนะนำ",
+    "state-error-message": "กรุณากรอกข้อมูลให้ครบถ้วน",
+    "found": "พบสมาชิก",
+    "match": "ท่าน",
+    "zip-code-error-message": "กรุณากรอกข้อมูลเพราะเป็นข้อมูลจำเป็น",
+    "first-name-error-message": "กรุณากรอกข้อมูลให้ครบถ้วน",
+    "last-name-error-message": "กรุณากรอกข้อมูลให้ครบถ้วน",
+    "advance-search": "ค้นหาขั้นสูง",
+    "cancel-button": "ยกเลิก",
+    "modal-title": "ค้นหาผู้แนะนำ",
+    "modal-description": "ค้นหาสมาชิกเพื่อรับโปรโมโค้ดใช้ซื้อผลิตภัณฑ์ในราคาลด 25% หรือรับโค้ดแนะนำในการสมัครเป็นบิซิเนสพาร์ตเนอร์ เพียงคุณใส่ชื่อและนามสกุลของสมาชิก ที่คุณรู้จัก หรือใส่ที่อยู่ของคุณเพื่อระบบจะจัดการหาสมาชิกใกล้คุณ",
+    "city-error-message": "",
+    "back_to_search": ""
+  },
+  "validator": {
+    "password": {
+      "requirements": "เงื่อนไขรหัสผ่าน:",
+      "contain_at_least_one_lower_case_letter": "ต้องมีอักษรเล็กอย่างน้อย1ตัว",
+      "contain_at_least_one_number": "ต้องมีเลขอย่างน้อย1ตัว",
+      "least_8_characters": "ต้องมีตัวอักษรอย่างน้อย 8ตัว",
+      "confirmation": "รหัสผ่านใหม่และรหัสผ่านที่ยืนยันไม่ตรงกัน",
+      "contain_at_least_one_capital_letter": "ต้องมีอักษรใหญ่อย่างน้อย1ตัว",
+      "contain_multiple_identical_consecutive_characters": "ห้ามมีตัวอักษรเหมือนกันเรียงกัน",
+      "not_be_the_same_as_the_account_name": "ห้ามเหมือนกับชื่อแอคเค้า",
+      "not_be_a_common_password": "ห้ามเป็นรหัสผ่านทั่วไป",
+      "incorrect_old": "รหัสผ่านเก่าไม่ถูกต้อง",
+      "not_be_the_same_as_member_id_national_id": "ห้ามเหมือนกับชื่อแอคเค้า"
+    },
+    "zipcode": {
+      "invalid": "รหัสไปรษณีย์ {0} ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง"
+    },
+    "national_id": {
+      "invalid": "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง"
+    },
+    "telephone": {
+      "invalid": "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง"
+    }
+  },
+  "request_sample": {
+    "form": {
+      "mobile_phone_label": "เบอร์มือถือ*",
+      "country_label": "ประเทศ",
+      "fisrt_name_label": "ชื่อ*",
+      "email_label": "อีเมล์*",
+      "last_name_label": "นามสกุล*",
+      "term_condition_11_html": "ข้อมูลส่วนบุคคลของคุณ เช่น ข้อมูลส่วนบุคคลที่ได้รับจากคุณโดยตรงเมื่อคุณให้ข้อมูลส่วนบุคคลกับเราเช่น เมื่อคุณลงทะเบียนสำหรับการแข่งขัน, บัตรกำนัลและหรือกิจกรรมโรดโชว์ของเรา, การใช้เว็บไซต์ของเราเพื่อซื้อผลิตภัณฑ์หรือบริการ, การลงทะเบียนเพื่อรับข้อมูลใช้แอปพลิเคชันของเรา, การกรอกแบบสำรวจหรือแสดงความคิดเห็นหรือสอบถามรายละเอียดเพิ่มเติม และหรือการอัปเดตข้อมูลส่วนบุคคลเพิ่มเติมของคุณ,ภาพถ่ายรูปภาพ, การบันทึกเสียงและหรือวิดีโอที่เราได้รับ (ซึ่งรวมเรียกว่า “ข้อมูลส่วนบุคคล”) จะถูกประมวลผลสำหรับการโฆษณา, การตลาด, การวิจัยทางการตลาด  หรือวัตถุประสงค์ที่เกี่ยวข้องใด ๆ , การเข้าร่วมในการประกวดและหรือโรดโชว์และหรือกิจกรรมของคุณเพื่อจัดหาผลิตภัณฑ์หรือบริการที่คุณร้องขอจากเรา หรือเพื่อแจ้งให้คุณทราบเกี่ยวกับกิจกรรมในอนาคตของเรา ,เพื่อตอบคำถามของคุณ, เพื่อให้ข้อมูล",
+      "term_condition_12_html": "เกี่ยวกับผลิตภัณฑ์บริการและหรือผลิตภัณฑ์รใหม่ที่คุณอาจสนใจ , เพื่อเชิญคุณและสมัครสมาชิกจดหมายข่าวของเราและหรือเพื่อวัตถุประสงค์ในการตรวจสอบในกรณีที่มีข้อพิพาท (ซึ่งรวมเรียกว่า “วัตถุประสงค์”). เราจะเก็บข้อมูลส่วนบุคคลของคุณตราบเท่าที่เราต้องการเพื่อวัตถุประสงค์ในการประมวลผล เราต้องการให้คุณทราบว่าข้อมูลส่วนบุคคลของคุณอาจถูกเปิดเผยต่อบุคคลที่สามเช่นสำนักงานใหญ่, สำนักงานภูมิภาคสาขา บริษัท ในเครือและหรือสมาชิกในกลุ่ม บริษัท ยูนิลีเวอร์และแบรนด์ของยูนิลีเวอร์ (กรุณาเยี่ยมชมแบรนด์ของเรา) (for offline : <a class=\"text-underline\" href=\"https:\/\/www.unilever.com\/brands\/\">https:\/\/www.unilever.com\/brands\/<\/a>)  และหรือผู้ให้บริการ, ผู้จัดจำหน่ายและซัพพลายเออร์ของเราซึ่งอาจอยู่นอกประเทศไทยด้วยเหตุผลที่เกี่ยวข้องกับวัตถุประสงค์ดังกล่าวข้างต้น",
+      "term_condition_13_html": "<p class=\"mt-10\">หากคุณต้องการเข้าถึงและขอรับสำเนาข้อมูล ขอรับ ลบหรือทำลาย ระงับ อัปเดตข้อมูลส่วนบุคคลของคุณหรือ ถอนความยินยอมของคุณ หากคุณมีข้อสอบถามหรือร้องเรียนใดๆ เกี่ยวกับการประมวลผลข้อมูลดังกล่าวกรุณาติดต่อ: เจ้าหน้าที่คุ้มครองข้อมูลส่วนบุคคลของบริษัท ยูนิลีเวอร์ไทยแลนด์ อาคารยูนิลีเวอร์เฮ้าส์ 161 ถนนพระราม 9 แขวงห้วยขวาง เขตห้วยขวาง กทม. 10310 หรือ ยูนิลิเวอร์ ไลฟ์ ฝ่าย Call Center โทร. <a class=\"text-underline\" href=\"tel:{phone_number}\">{phone}<\/a> หรืออีเมล <a href=\"mailto:{email}\">{email}<\/a>.<\/p>",
+      "term_condition_14_html": "<p class=\"mt-10\">โปรดทราบว่าเราจำเป็นต้องประมวลผลข้อมูลส่วนบุคคลของคุณ หากเราไม่สามารถประมวลผลข้อมูลดังกล่าว เราจะไม่สามารถดำเนินการตามวัตถุประสงค์ข้างต้นได้ สำหรับรายละเอียดเพิ่มเติม เกี่ยวกับวิธีที่เราประมวลผลข้อมูลส่วนบุคคลของคุณ โปรดเยี่ยมชมประกาศความเป็นส่วนตัวของเรา  (for offline: <a class=\"text-underline\" href=\"https:\/\/www.unilevernotices.com\/thailand\/thai\/privacy-notice\/notice.html\">https:\/\/www.unilevernotices.com\/thailand\/thai\/privacy-notice\/notice.html<\/a>)\n<\/p>",
+      "term_condition_15_html": "   ",
+      "term_condition_21_html": "ข้าพเจ้าอายุมากกว่า 18 ปีและข้าพเจ้าได้อ่านและทำความเข้าใจข้อกำหนดของประกาศความเป็นส่วนตัวและยินยอมให้มีการประมวลผลข้อมูลส่วนบุคคลของฉันตามที่อธิบายไว้ข้างต้น",
+      "address_label": "ที่อยู่*",
+      "button_submit_product": "ขอตัวอย่าง",
+      "button_submit_coupon": "ขอรับคูปอง",
+      "term_condition_22_html": "",
+      "term_condition_23_html": ""
+    },
+    "general": {
+      "page-title": "ลงทะเบียนลองใช้ผลิตภัณฑ์ หรือคูปองส่วนลด",
+      "description": "ถ้าคุณยังไม่ได้เป็นสมาชิก ยูนิลีเวอร์ ไลฟ์ และอยากลองสัมผัสประสบการณ์ที่แตกต่างจากผลิตภัณฑ์ของเรา บอกเราสิ เราจะจัดส่งผลิตภัณฑ์ขนาดทดลองหรือคูปองส่วนลดให้คุณ",
+      "content_title_3": "รับง่ายๆ เพียง 2 ขั้นตอน",
+      "content_description_3_html": "1. คุณยังไม่ได้เป็นสมาชิก ยูนิลีเวอร์ ไลฟ์ <br>2. ยืนยันตัวตนของคุณผ่าน LINE ก่อนขอรับผลิตภัณฑ์ตัวอย่างและคูปอง",
+      "content_title_1": "ผลิตภัณฑ์ขนาดทดลอง",
+      "content_description_1_html": "สัมผัสผลิตภัณฑ์ความงามระดับพรีเมี่ยมของ ยูนิลีเวอร์ ไลฟ์ ด้วยตัวคุณเอง กับผลิตภัณฑ์ขนาดทดลองที่จัดส่งให้คุณถึงบ้าน!",
+      "content_label_1": "* มีจำนวนจำกัด",
+      "content_label_2": "* มีจำนวนจำกัด",
+      "content_title_2": "คูปองส่วนลด",
+      "content_description_2_html": "แม้ยังไม่ได้เป็นสมาชิก คุณก็รับคูปองส่วนลด ใช้ซื้อผลิตภัณฑ์ ยูนิลีเวอร์ ไลฟ์ ตามเงื่อนไขที่กำหนดไปลองใช้ก่อนได้เลย!",
+      "note_label": "*การรับผลิตภัณฑ์ขนาดทดลองและคูปองส่วนลดสงวนสิทธิ์ให้เฉพาะผู้ที่ยังไม่ได้เป็นสมาชิกเท่านั้น",
+      "not_available": "ไม่มีสินค้า",
+      "say_hi_member": "สวัสดี คุณ",
+      "share_link_label": "แชร์คูปองส่วนลดหรือผลิตภัณฑ์ตัวอย่างให้ผู้ที่ยังไม่เป็นสมาชิก?",
+      "email_placeholder": "อีเมล์",
+      "button_line_label": "ยืนยันตัวตนผ่านไลน์",
+      "alert_for_member": "ขออภัยด้วยค่ะ ผลิตภัณฑ์ตัวอย่างและคูปองส่วนลดให้สำหรับผู้ที่ยังไม่ได้เป็นสมาชิก\nเท่านั้น แต่คุณสามารถแชร์โอกาสดีๆ นี้ให้กับเพื่อนที่ยังไม่ได้เป็นสมาชิกได้นะ",
+      "page_title": "ลงทะเบียนทดลองใช้ผลิตภัณฑ์หรือขอรับคูปอง",
+      "expired_date": "วันที่หมดอายุ",
+      "content_title_3_html": "รับง่ายๆ เพียง 2 ขั้นตอน",
+      "button_line_label_mobile": ""
+    },
+    "product": {
+      "tab_header": "ผลิตภัณฑ์",
+      "tab_content_title": "ผลิตภัณฑ์",
+      "tab_content_description": "กรุณาเลือกผลิตภัณฑ์ตัวอย่างที่ต้องการทดลอง",
+      "modal_thank_you_title": "ขอบคุณ คุณ${firstName} ที่สนใจผลิตภัณฑ์ยูนิลิเวอร์ไลฟ์!",
+      "modal_thank_you_description": "เราได้รับคำขอของคุณแล้วและจะติดต่อคุณกลับไปเพื่อดำเนินการจัดส่งผลิตภัณฑ์",
+      "modal_thank_you_button_text": "ช้อปปิ้งออนไลน์",
+      "requested_all_thank_you_title": "ขอบคุณที่สนใจผลิตภัณฑ์ ยูนิลิเวอร์ ไลฟ์",
+      "requested_all_thank_you_description": "คุณได้ยื่นเรื่องขอผลิตภัณฑ์ขนาดทดลองครอบหมดแล้ว ไม่ทราบว่าคุณได้มีโอกาสได้ใช้ผลิตภัณฑ์ของเราแล้วหรือยัง? \nถ้าทดลองใช้แล้ว อย่าลืมแชร์ความคิดเห็นของคุณต่อผลิตภัณฑ์ของเรา ทุกความคิดเห็นของคุณมีค่าต่อเรา",
+      "subscribe_form_title": "บอกอีเมล์ของคุณกับเรา\n",
+      "subscribe_form_description": "เพื่อรับข่าวสารต่างๆ จากบริษัทและแคมเปญใหม่ๆ ก่อนใคร",
+      "subscribe_form_button": "แจ้งเตือนฉันด้วย",
+      "requested_product": "*คุณเคยเลือกผลิตภัณฑ์นี้แล้ว",
+      "review_product": "รีวิวผลิตภัณฑ์ หลังทดลองใช้",
+      "request_product_samples": "ลงทะเบียนลองใช้ผลิตภัณฑ์",
+      "request_empty_title": "ไม่มีรายการทดลองสินค้าในขณะนี้",
+      "request_empty_content_html": "คุณสามารถเลือกซื้อสินค้าอื่นๆ พร้อมรับส่วนลด 25% ทันที ซึ่งส่วนลดจะถูกคำนวณในหน้าชำระเงิน ",
+      "shop_now": "ช็อปเลย"
+    },
+    "coupon": {
+      "tab_content_title": "คูปองโค้ด",
+      "tab_content_description_html": "กรุณาเลือก COUPON CODE ที่คุณต้องการและใช้คูปองผ่านลิ้งค์นี้เท่านั้น <a class=\"text-underline\" href='https:\/\/www.unileverlife.com'>https:\/\/www.unileverlife.com<\/a>",
+      "tab_header": "คูปอง",
+      "modal_thank_you_title": "คูปองถูกส่งไปยังอีเมลของคุณแล้ว",
+      "modal_thank_you_description_html": "<span>มาเป็นสมาชิก ยูนิลีเวอร์ ไลฟ์ <span style='color:#2035C7;'>พร้อมรับส่วนลด 25%<\/span> <strong>ในทุกผลิตภัณฑ์<\/strong>",
+      "modal_thank_you_button_text": "สมัครสมาชิกรับส่วนลด 25%",
+      "footer_thank_you_button": "สมัครสมาชิกรับส่วนลด 25%",
+      "requested_all_thank_you_title": "ขอบคุณที่สนใจรับคูปอง ยูนิลิเวอร์ ไลฟ์ เพื่อใช้ซื้อผลิตภัณฑ์สุขภาพและความงาม",
+      "requested_all_thank_you_description": "คูปองส่วนลดหมดแล้ว ไม่ทราบว่าคุณใช้คูปองส่วนลดแล้วหรือยัง ถ้าใช้คูปองซื้อผลิตภัณฑ์แล้ว \nอย่าลืมแชร์ความคิดเห็นของคุณต่อผลิตภัณฑ์ของเรา ทุกความคิดเห็นของคุณมีค่าต่อเรา",
+      "footer_thank_you_text_html": "มาเป็นสมาชิก ยูนิลีเวอร์ ไลฟ์ กับเรา <span style='color:#2035C7;'>พร้อมรับส่วนลด 25%<\/span> ในทุกผลิตภัณฑ์ทุกครั้งที่ซื้อ",
+      "requested_coupon": "*ได้ส่งคูปองนี้เรียบร้อยแล้ว",
+      "request_discount_coupon": "ลงทะเบียนขอรับคูปองส่วนลด",
+      "request_empty_title": "ไม่มีคูปองส่วนลดพิเศษในขณะนี้",
+      "request_empty_content_html": "คุณสามารถเลือกซื้อสินค้าในราคาพิเศษลด 25% ได้เลย ส่วนลดจะถูกคำนวณในหน้าชำระเงิน",
+      "shop_now": "ช็อปเลย"
+    },
+    "validate": {
+      "product": "เลือกผลิตภัณฑ์ที่คุณต้องการทดลอง",
+      "field_required": "กรุณากรอกข้อมูลให้ครบถ้วน",
+      "email": "อีเมล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "address_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 255 ตัวอักษร",
+      "fisrt_name_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 50 ตัวอักษร",
+      "last_name_max_length": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 20 ตัวอักษร",
+      "agree_term": "โปรดอ่านข้อตกลงอย่างละเอียด คุณต้องยอมรับเงื่อนไขของข้อตกลงนี้เพื่อเข้าถึงผลิตภัณฑ์ตัวอย่าง หรือ คูปอง",
+      "phone": "กรุณากรอกเบอร์มือถือตัวเลข 10 หลัก",
+      "phone_max_length": "กรุณากรอกเบอร์มือถือตัวเลข 10 หลัก",
+      "phone_min_length": "กรุณากรอกเบอร์มือถือตัวเลข 10 หลัก",
+      "coupon": "เลือกคูปองที่คุณต้องการใช้เป็นส่วนลดผลิตภัณฑ์ ยูนิลิเวอร์ ไลฟ์",
+      "age_term": "คุณต้องมีอายุ 18 ปีจึงจะได้รับสินค้าตัวอย่างหรือคูปอง"
+    }
+  },
+  "checkout": {
+    "coupon_code": "คูปองโค้ด",
+    "promo_code": "โปรโมโค้ด",
+    "freeship_qualified": "คุณได้รับสิทธิ์การจัดส่งฟรี",
+    "set_national_id_title": "เลขบัตรประจำตัวประชาชนนี้เป็นของสมาชิก!",
+    "message": {
+      "address1_maxlength": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 255 ตัวอักษร",
+      "phone_invalid": "กรุณากรอกเบอร์มือถือตัวเลข 10 หลัก",
+      "firtname_maxlength": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 50 ตัวอักษร",
+      "lastname_maxlength": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน 20 ตัวอักษร",
+      "nationalid_invalid": "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "zipcode_invalid": "กรุณากรอกรหัสไปรษณีย์ให้ถูกต้อง",
+      "email_invalid": "อีเมล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "policy_required": "โปรดอ่านข้อตกลงอย่างละเอียด คุณต้องยอมรับเงื่อนไขของข้อตกลงนี้เพื่อเข้าถึงผลิตภัณฑ์ตัวอย่าง หรือ คูปอง",
+      "age_required": "คุณต้องมีอายุ 18 ปีจึงจะได้รับสินค้าตัวอย่างหรือคูปอง",
+      "shipping_required": ""
+    },
+    "calculate_shipping_fee": "คำนวณในหน้าถัดไป",
+    "use_default_address": "ใช้ที่อยู่ใหม่",
+    "out_of_stock_description": "เนื่องจากสินค้าบางชิ้นหมดหรือโปรชั่นหมดอายุ ระบบจึงมีการอัพเดทถุงช้อปปิ้งของคุณอัตโนมัติ",
+    "out_of_stock_label": "สินค้าหมด หรือ โปรโมชั่นหมดอายุ",
+    "set_national_id_title": "เลขบัตรประจำตัวประชาชนนี้เป็นของสมาชิก!"
+  },
+  "reorder": {
+    "header": {
+      "delete": "ลบ",
+      "product": "ผลิตภัณฑ์",
+      "price": "ราคา",
+      "quantity": "จำนวน",
+      "cv_qv": ""
+    },
+    "title": "ซื้ออีกครั้ง",
+    "change_price_warning_html": "ทางบริษัทได้มีการปรับราคา <span>{{ product }}<\/span> ตั้งแต่คำสั่งซื้อล่าสุดของคุณ",
+    "description_html": "รายการสินค้าที่มีอยู่ในคำสั่งซื้อหมายเลข <a href=\"{{ link }}\" class=\"id-order\">{{ order }}<\/a>",
+    "in_stock": "มีสินค้า",
+    "estimated_total_html": "ราคารวมทั้งหมด ",
+    "confirm_add_btn": "ยืนยันการเพิ่มสินค้าทั้งหมดในถุง",
+    "cancel_btn": "ยกเลิก",
+    "unavailable_warning_html": "<span>{{ product }}<\/span> ไม่มีจำหน่ายบนเว็ปไซด์แล้ว",
+    "inactive_list": "รายการที่ไม่มีแล้ว",
+    "change_qty_warning_html": "",
+    "outstock_warning_html": "",
+    "not_found": "",
+    "quantity": ""
+  },
+  "order": {
+    "general": {
+      "delete": "ลบ",
+      "offline_channel": "ร้านค้า",
+      "online_channel": "ออนไลน์",
+      "product": "สินค้า",
+      "price": "ราคา",
+      "quantity": "จำนวน",
+      "price_sub_total": "ราคา",
+      "cv_qv": ""
+    },
+    "detail": {
+      "promo_code": "โปรโมโค้ด",
+      "coupon_code": "คูปองโค้ด",
+      "payment_method": "วิธีชำระเงิน",
+      "billing_address": "ที่อยู่ใบเสร็จ \/ ใบกำกับภาษี",
+      "shipping_address": "ที่อยู่จัดส่งสินค้า",
+      "name": "ชื่อ:",
+      "address": "ที่อยู่:",
+      "delivery_status": "สถานะการจัดส่ง:",
+      "code_information": "ข้อมูลโค้ด",
+      "order_placed_on": "เมื่อวันที่",
+      "subtotal": "ราคาสินค้า",
+      "shipping_standard": "ค่าจัดส่ง (มาตรฐาน)",
+      "my_order_list": "รายการของฉัน",
+      "view_order_tracking": "ติดตามการสั่งซื้อ",
+      "order_number": "คำสั่งซื้อหมายเลข",
+      "discount": "ส่วนลด",
+      "total": "ราคา:",
+      "total_cv_qv": "CV I QV รวมทั้งหมด",
+      "at": "เวลา",
+      "system_order_id": "หมายเลขคำสั่งซื้อในระบบ",
+      "round": "รอบการ จัดส่ง",
+      "return_order_number": "เลขที่ใบสั่งซื้อส่งคืน",
+      "code_payment_information": "รหัสและข้อมูลการชำระเงิน",
+      "place_on": "สั่งซื้อเมื่อ",
+      "return_order_details": "รายละเอียดการสั่งซื้อคืน",
+      "order_details": "รายละเอียดการสั่งซื้อ",
+      "billing_and_payment_information": "",
+      "shipping_and_status_information": "",
+      "vip_subscription_next_payment_due_date_html": "",
+      "return_total_cv_qv": "",
+      "return_total": "",
+      "delivered": ""
+    },
+    "order_list": {
+      "order": "หมายเลข\nคำสั่งซื้อ\n",
+      "channel": "ช่องทาง <br \/>\nการสั่งซื้อ",
+      "order_date": "วันที่สั่งซ้อ",
+      "payment_method": "วิธีชำระเงิน",
+      "status": "สถานะ\nการติดตาม",
+      "total": "ราคา",
+      "reorder": "ซื้ออีกครั้ง",
+      "reorder_button": "ซื้ออีกครั้ง",
+      "order_history_tab": "สินค้าปกติ",
+      "autoship_order_tab": "สินค้า VIP Subscription",
+      "heading": "รายการคำสั่งซื้อ",
+      "renew": "ต่ออายุ VIP <br \/>\nSubscription",
+      "renew_button": "ต่ออายุ",
+      "end_date": "สิ้นสุด\nวันที่",
+      "start_date": "เริ่มต้น\nวันที่",
+      "status_tracking_html": "สถานะ<br class=\"display-dk\" \/> การติดตาม",
+      "order_no": "หมายเลข <br \/>\nคำสั่งซื้อ",
+      "end_date_html": "สิ้นสุด<br class=\"display-dk\" \/>วันที่",
+      "autoship_monthly_due_date": "กำหนดวัน <br \/>\nชำระเงินรายเดือน",
+      "auto_renew_html": "ต่ออายุ<br class=\"display-dk\" \/> อัตโนมัติ",
+      "monthly_order_html": "หมายเลขคำสั่งซื้อ<br \/>รายเดือน\n",
+      "vip_subscription_products": "ผลิตภัณฑ์ <br \/>\nVIP subscription",
+      "round": "รอบการ\n<br \/> จัดส่ง",
+      "recurring_date": "วันชำระเงินรายเดือน",
+      "children_status_tracking_html": "สถานะ<span class=\"display-dk\">\/<\/span>การติดตาม",
+      "there_are_no_order_listings": "ขณะนี้ไม่มีรายการสั่งซื้อ",
+      "start_purchasing_products_here_html": "เริ่มสั่งซื้อผลิตภัณฑ์ได้ <a href=\"${collection_url}\">ที่นี่.<\/a>",
+      "order_date_html": "วันที่สั่งซื้อ​",
+      "total_html": "รวม",
+      "payment_method_html": "ช่องทางชำระ​",
+      "order_no_html": "เลขที่ใบสั่งซื้อ",
+      "channel_html": "ช่องทาง",
+      "reorder_html": "ซื้ออีกครั้ง",
+      "period": "",
+      "cv_qv_html": "",
+      "renew_html": "",
+      "renew_button_html": "",
+      "detail_button": "",
+      "hide_button": "",
+      "sub_order": "",
+      "autoship_monthly_due_date_html": ""
+    },
+    "order_status": {
+      "shipped": "จัดส่งแล้ว",
+      "order_placed": "สั่งซื้อแล้ว",
+      "processing": "กำลังดำเนินการ",
+      "prepare_to_ship": "เตรียมจัดส่ง",
+      "pending": "",
+      "partial_prepare_to_ship": "",
+      "partial_shipped": "",
+      "picked_at_shop": "",
+      "canceled": "",
+      "return": ""
+    },
+    "renew": {
+      "renew_autoship_title": "ต่ออายุ VIP subscription",
+      "autoship_information_html": "ข้อมูล<br \/>VIP Subscription",
+      "current_autoship_for_order_html": "ข้อมูล VIP subscription คำสั่งซื้อหมายเลข <span class=\"text-bold primary_color\">${order_id}<\/span> เป็นแบบช่วงเวลา <span class=\"period\">${period} เดือน<\/span>",
+      "do_you_want_to_change_your_autoship_period": "คุณต้องการเปลี่ยนช่วงเวลา VIP Subscription ของคุณหรือไม่?",
+      "back_to_autoship_information": "กลับไปดูข้อมูลVIP subscription",
+      "note_vip_subscription_product_must_be_the_same_period_you_chose_in_the_previous_step_which_is_html": "<span><em>หมายเหตุ:<\/em><\/span><em> VIP Subscription ที่คุณต้องการเลือกเพิ่มเติมจะต้องเป็นช่วงเวลาเดียวกับที่คุณเลือกในขั้นตอนก่อนหน้านี้คือ<span class=\"period\">9 เดือน ถ้าคุณต้องการเลือกช่วงเวลที่ต่างกัน คุณสามารถกลับไปหน้า ออนไลน์ช้อปปิ้ง เพื่อเลือก VIP Subscription ที่ช่วงเวลาต่างกันได้<\/em><\/span>",
+      "period_change": "VIP subscription เปลี่ยนจาก {from} เดือนเป็น {to} เดือน ตามที่คุณเลือกเรียบร้อยแล้ว",
+      "confirm_changes_html": "ยืนยัน<br \/>การเปลี่ยนแปลง",
+      "shipping_address_and_payment_information_html": "ที่อยู่จัดส่ง <br \/>และข้อมูลชำระเงิน",
+      "do_you_want_to_change_your_payment_due_date": "คุณต้องการเปลี่ยนวันที่ครบกำหนดชำระเงินของคุณหรือไม่?",
+      "current_monthly_payment_due_date_html": "ปัจจุบันวันครบกำหนดชำระเงินรายเดือนของ VIP Subscription คือทุกวันที่ <span class=\"due_date\">${due_date}<\/span>",
+      "no": "ไม่เปลี่ยน",
+      "yes": "เปลี่ยน",
+      "cancel": "ยกเลิก",
+      "proceed_next_step": "ไปขั้นตอนต่อไป",
+      "default_product_options": "เพิ่มสินค้า vip subscription",
+      "note_html": "<span><em>หมายเหตุ:<\/em><\/span><em> VIP Subscription ที่คุณต้องการเลือกเพิ่มเติมจะต้องเป็นช่วงเวลาเดียวกับที่คุณเลือกในขั้นตอนก่อนหน้านี้คือ<span class=\"period\">9 เดือน ถ้าคุณต้องการเลือกช่วงเวลที่ต่างกัน คุณสามารถกลับไปหน้า ออนไลน์ช้อปปิ้ง เพื่อเลือก VIP Subscription ที่ช่วงเวลาต่างกันได้<\/em><\/span>",
+      "estimated_total_per_month_html": "ราคารวมทั้งหมด <span>ต่อเดือน<\/span>",
+      "estimated_total_cv_qv_per_month_html": "<span class=\"text-mb\">ราคารวมทั้งหมด<\/span> CV | QV <span class=\"per_month\">ต่อเดือน<\/span>",
+      "current_shipping_address_in_your_order_html": "ที่อยู่จัดส่งปัจจุบันสำหรับคำสั่งซื้อหมายเล <span class=\"primary_color\">#{order}<\/span>",
+      "do_you_want_to_change_your_shipping_address": "คุณต้องการเปลี่ยนที่อยู่จัดส่งของคุณหรือไม่?",
+      "select_payment": "เลือกวิธีชำระเงิน ",
+      "note_you_will_receive_otp_code_by_text_message_sms_to_securely_purchase_with_2c2p_html": "<span class=\"text-bold\">หมายเหตุ*:<\/span> คุณจะได้รับรหัส OTP ผ่านข้อความ SMS เมื่อเลือกชำระผ่านบัตรที่เก็บใน ULife วอลเล็ท เพื่อความปลอดภัยในการซื้อสินค้ากับ 2C2P",
+      "months": "เดือน",
+      "price_change_html": "ทางบริษัทได้มีการปรับราคา <strong>{product}<\/strong> - VIP subscription ตั้งแต่คำสั่งซื้อล่าสุดของคุณ",
+      "verify_otp": "ยืนยันรหัส OTP",
+      "if_your_phone_number_found_in_our_database_is_not_correct_html": "หากหมายเลขโทรศัพท์ที่พบในฐานข้อมูลของเราไม่ถูกต้อง คุณสามารถติดต่อฝ่าย Call Center ของเรา: <br \/><a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone} <\/a> หรือ LINE: <a class=\"link-readmore text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">${line_id}<\/a> เพื่อเปลี่ยนหมายเลขโทรศัพท์ของคุณ",
+      "period_change_html": "",
+      "unavailable_html": "",
+      "period_not_support_html": "",
+      "no_product_options": "",
+      "choose_address_from_your_address_book": "",
+      "thank_you": "",
+      "your_vip_subscription_renewal_has_been_submitted_successfully": "",
+      "you_will_receive_a_confirmation_in_your_email_shortly": "",
+      "view_order": "",
+      "credit_card_confirmation": "",
+      "we_found_a_phone_number_attached_to_your_account_in_our_database_html": "",
+      "otp_code": "",
+      "please_enter_otp_within_html": "",
+      "if_you_dont_receive_otp_please_click_re_send_otp_html": "",
+      "need_products": "",
+      "promo_not_allow_product": "",
+      "continue_pay": "",
+      "payment_method_2c2p": ""
+    },
+    "autoship_status": {
+      "Open": "",
+      "Completed": "",
+      "Canceled": ""
+    },
+    "tbc": ""
+  },
+  "enrollment": {
+    "validate": {
+      "phone": "กรุณาใส่เบอร์โทรศัพท์ที่ถูกต้อง",
+      "email": "อีเมล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "required": "กรุณากรอกข้อมูลให้ครบถ้วน",
+      "condition_1": "โปรดอ่านข้อตกลงอย่างละเอียด คุณต้องยอมรับเงื่อนไขของข้อตกลงนี้ในการสมัครบิซิเนสพาร์ตเนอร์ ",
+      "nationalId": "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "maxlength": "ความยาวเกินกำหนด ต้องมีความยาวไม่เกิน {length} ตัวอักษร",
+      "minlength": "กรุณากรอกอย่างน้อย {length} ตัวอักษร",
+      "bankConfirmEqual": "หมายเลขบัญชีธนาคาร และ การยืนยันหมายเลขบัญชีธนาคาร ไม่ตรงกัน",
+      "zipCode": "กรุณากรอกรหัสไปรษณีย์ให้ถูกต้อง",
+      "condition_2": "คุณต้องมีอายุ 18 ปี ในการสมัครบิซิเนสพาร์ตเนอร์ ",
+      "dob": ""
+    },
+    "form": {
+      "information": {
+        "promo_applied": "รหัสสมาชิกผู้แนะนำที่ใช้อยู่คือ  {sponsor_code}"
+      }
+    },
+    "customer_exist": {
+      "message": "บัญชี LINE ของคุณได้ถูกใช้ลงทะเบียนแล้ว",
+      "word_please": "กรุณา ",
+      "word_or": "หรือ",
+      "word_go_back": "กลับไปที่หน้าลงทะเบียน",
+      "message_redirect": "และลองใช้บัญชีไลน์ อื่น",
+      "contact": "หรือติดต่อ call center",
+      "link_contact": "+(66)2-554-2455",
+      "link_login": "https:\/\/app.unileverlife.com\/multipass\/login",
+      "link_go_back": "\/th\/apps\/eai\/enroll"
+    }
+  },
+  "faqs": {
+    "if_you_need_any_support_please_contact": "ต้องการความช่วยเหลือ?",
+    "our_customer_service": "Call Center ของเรา",
+    "heading": "คำถามที่พบบ่อย",
+    "line_id_html": "",
+    "email_html": ""
+  },
+  "setup-password": {
+    "validate": {
+      "required": "กรุณากรอกข้อมูลเพราะเป็นข้อมูลจำเป็น",
+      "nationalId": "เลขบัตรประจำตัวประชาชนไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "email": "อีเมล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง",
+      "pwdConfirm": "รหัสผ่านใหม่และรหัสผ่านที่ยืนยันไม่ตรงกัน"
+    }
+  },
+  "shopify": {
+    "checkout": {
+      "payment_gateway": {
+        "cash_on_delivery_label": "เก็บเงินปลายทาง"
+      },
+      "general": {
+        "back_to_shipping_method": "กลับไปที่วิธีจัดส่ง\n"
+      },
+      "order_summary": {
+        "collapse_order_summary": "แสดงข้อมูล<br \/>คำสั่งซื้อ",
+        "title": "สรุปรายการสั่งซื้อ"
+      }
+    },
+    "sentence": {
+      "two_words_connector": "และ"
+    }
+  },
+  "order-tracking": {
+    "content": {
+      "order_id_label": "หมายเลขคำสั่งซื้อ",
+      "contact_label": "อีเมล์ \/ เบอร์โทรศัพท์",
+      "hint": "เพื่อเช็คสถานะคำสั่งซื้อ โปรดระบุอีเมล์หรือเบอร์โทรศัพท์ที่ใช้สั่งซื้อ",
+      "submit": "เช็คสถานะ",
+      "order_id_tooltip_text": "ค้นหาหมายเลขคำสั่งซื้อ ได้ที่อีเมล์ยืนยันคำสั่งซื้อ หรือใบเสร็จรับเงิน\/ใบกำกับภาษี",
+      "email_mobile_tooltip_text": "อีเมล์ที่ใช้รับการยืนยันคำสั่งซื้อ หรือเบอร์มือถือที่ระบุในการขอใบกำกับภาษี"
+    },
+    "result": {
+      "not_found": "เราไม่พบหมายเลขคำสั่งซื้อของคุณ กรุณาเช็คข้อมูลสั่งซื้อและลองใหม่อีกครั้ง หากต้องการความช่วยเหลือ ติดต่อ ศูนย์บริการลูกค้า ${phone}​ หรือเช็คได้จากลิ้งค์ติดตามพัสดุในอีเมล์ยืนยันคำสั่งซื้อ",
+      "processing": "กำลังดำเนินการ กรุณาเช็คสถานะใหม่ภายหลัง",
+      "shipped": "พัสดุของคุณอยู่ระหว่างจัดส่ง โดยบริษัทโลจิสติกส์\n",
+      "tracking_url_html": "<a href=\"{{ url }}\" target=\"_blank\">คลิกที่นี่<\/a> เพื่อเช็คสถานะพัสดุของคุณ",
+      "order_id": "คำสั่งซื้อหมายเลข {{ order_id }}",
+      "prepare_to_ship": "กำลังเตรียมจัดส่ง กรุณาเช็คสถานะใหม่ภายหลัง",
+      "not_found_html": "เราไม่พบหมายเลขคำสั่งซื้อของคุณ กรุณาเช็คข้อมูลสั่งซื้อและลองใหม่อีกครั้ง หากต้องการความช่วยเหลือ ติดต่อ Call Center <a href=\"tel:+6625542455\">+(66)2-554-2455<\/a>​ หรือเช็คได้จากลิ้งค์ติดตามพัสดุในอีเมล์ยืนยันคำสั่งซื้อ",
+      "pending": "การชำระเงินอยู่ระหว่างดำเนินการ การสั่งซื้อจึงยังไม่เสร็จสมบูรณ์ ",
+      "canceled_html": "คำสั่งซื้อของคุณถูกยกเลิก หากข้อมูลไม่ถูกต้องกรุณาติดต่อ Call Center <a class=\"text-underline\" href=\"tel:${phone}\">${phone}<\/a>.",
+      "partial_shipped": "คำสั่งซื้อของคุณถูกแบ่งการจัดส่งเป็นหลายครั้ง เนื่องจากมีสินค้าบางรายการต้องใช้เวลาเพิ่มเติมในการดำเนินการ\n",
+      "tracking_end": "เพื่อเช็คสถานะพัสดุของคุณ",
+      "order_placed": "เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว และจะเริ่มดำเนินการเร็วๆ นี้ โปรดกลับมาตรวจสอบอีกครั้ง",
+      "order_returned": "",
+      "picked_at_shop": "",
+      "partial_prepare_to_ship": "",
+      "tracking_url_with_name_html": "",
+      "autoship_result_html": "สถานะคำสั่งซื้อ VIP ของคุณ คือ  \\\"{{ status }}\\\" <br> \nกรุณาคลิกบนหมายเลขคำสั่งซื้อดังต่อไปนี้เพื่อติดตามสถานะ : {{ children }}"
+    }
+  },
+  "order_success": {
+    "customer_service": "ศูนย์บริการลูกค้า",
+    "order_ids": "คำสั่งซื้อหมายเลข",
+    "note_info_html": "คำสั่งซื้อของคุณถูกแยกออก เนื่องจากมีทั้งผลิตภัณฑ์ปกติ และVIP Subscription หรือมี VIP Subscription หลายช่วงเวลา หากต้องการดูรายละเอียดคำสั่งซื้อของคุณ <b>กรุณาคลิกที่หมายเลขคำสั่งซื้อแต่ละรายการ<\/b>",
+    "thank_you": "ขอบคุณ คุณ",
+    "confirm_message": "เราได้รับคำสั่งซื้อของคุณแล้ว",
+    "confirm_note": "คุณจะได้รับอีเมลยืนยันการสั่งซื้อในไม่ช้า",
+    "page_title": "ยืนยันคำสั่งซื้อ",
+    "customer_info": "ข้อมูลการสั่งซื้อ",
+    "contact_info": "ชื่อผู้รับ",
+    "payment_method": "วิธีการชำระเงิน",
+    "shipping_address": "ที่อยู่จัดส่งสินค้า",
+    "billing_address": "ที่อยู่ใบเสร็จ \/ ใบกำกับภาษี",
+    "shipping_method": "วิธีจัดส่ง",
+    "need_help": "ต้องการความช่วยเหลือ? สามารถติดต่อได้ที่",
+    "email": "อีเมล์ :",
+    "continue_shop": "ช้อปปิ้งต่อ",
+    "items": "ชิ้น",
+    "save_card_title": "คุณต้องการให้ บริษัทยูนิลิเวอร์ บันทึกบัตรเครดิตนี้ไหม?",
+    "save_payment": "บันทึกข้อมูลการชำระเงินเพื่อการชำระเงินที่เร็วขึ้น",
+    "md_description_html": "บัตรเครดิตจะถูกบันทึกไว้กับผู้ให้บริการระบบชำระเงินออนไลน์ <strong>2C2P<\/strong> ที่มีความปลอดภัย โดยบัตรจะเชื่อมโยงกับบัญชีของคุณและจะไม่ถูกเรียกเก็บเงินเว้นแต่คุณจะเลือกให้เป็นวิธีการชำระเงินที่ใช้งานได้บน <strong>unileverlife.com<\/strong>",
+    "save_payment_checkbox": "บันทึกข้อมูลการชำระเงินลงในบัญชีของฉันสำหรับการซื้อต่อไป",
+    "term_and_condition": "เงื่อนไขและข้อกำหนด",
+    "save_card_button": "บันทึกบัตร",
+    "no_thank": "ไม่ ขอบคุณ",
+    "line_id": ""
+  },
+  "otp": {
+    "resend_success": "",
+    "invalid_html": "",
+    "wait": ""
+  }
+}

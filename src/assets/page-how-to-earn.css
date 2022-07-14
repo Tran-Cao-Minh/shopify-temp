@@ -1,0 +1,217 @@
+.page__how-to-earn p {
+  font-family: "IBM Plex Sans Thai Looped", sans-serif;
+  font-weight: normal; }
+
+.page__how-to-earn .how-to-earn__section-1 .section-1__head-text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%; }
+  .page__how-to-earn .how-to-earn__section-1 .section-1__head-text .head-text__title {
+    margin-bottom: 13px;
+    font-size: 40px;
+    line-height: 50px; }
+    @media (max-width: 575.98px) {
+      .page__how-to-earn .how-to-earn__section-1 .section-1__head-text .head-text__title {
+        margin-bottom: 30px;
+        margin-top: 0;
+        font-size: 25px;
+        line-height: 31px; } }
+
+.page__how-to-earn .how-to-earn__section-1 .section-1__head-image {
+  max-width: 400px;
+  margin: auto; }
+  .page__how-to-earn .how-to-earn__section-1 .section-1__head-image img {
+    width: 100%; }
+
+.page__how-to-earn .how-to-earn__section-1 .link-pdf {
+  padding: 0 10px; }
+  .page__how-to-earn .how-to-earn__section-1 .link-pdf .btn-icon {
+    margin-left: 5px; }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .how-to-earn__section-1 .head-text__description {
+    font-size: 16px; } }
+
+.page__how-to-earn .how-to-earn__section-2 .section-2__head-text .head-text__title {
+  color: #333; }
+
+.page__how-to-earn .how-to-earn__section-2 .section-2__head-text .head-text__description-1 a {
+  text-decoration: underline; }
+
+.page__how-to-earn .how-to-earn__section-2 .section-2__head-text .head-text__description-2 {
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 35px; }
+  @media (max-width: 575.98px) {
+    .page__how-to-earn .how-to-earn__section-2 .section-2__head-text .head-text__description-2 {
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 0;
+      line-height: 28px; } }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .how-to-earn__section-2.index-section {
+    padding-bottom: 15px; }
+  .page__how-to-earn .how-to-earn__section-2 .head-text__title,
+  .page__how-to-earn .how-to-earn__section-2 .head-text__description-1 {
+    display: none; } }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__cash-bonus .cash-bonus__text {
+  color: #333;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__cash-bonus .cash-bonus__image {
+  display: flex;
+  justify-content: center; }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .how-to-earn__section-3 .section-3__cash-bonus .col-sm-12:nth-child(2) {
+    order: -1;
+    margin-bottom: 20px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__cash-bonus .cash-bonus__text {
+    flex-basis: auto;
+    margin-bottom: 25px; } }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__text {
+  margin-bottom: 20px;
+  color: #333; }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items {
+  margin: 0 100px 45px 100px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .pool-items__item .item__title {
+    color: #666666;
+    font-weight: 400;
+    font-size: 20px; }
+    @media (max-width: 575.98px) {
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .pool-items__item .item__title {
+        color: #333;
+        margin-bottom: 5px;
+        font-size: 16px; } }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .pool-items__item .item__desc-list {
+    margin-left: 20px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .pool-items__item .item__desc-list li {
+      list-style: disc; }
+  @media (max-width: 575.98px) {
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .pool-items__item.country-pool:first-child {
+      margin-bottom: 20px; } }
+  @media (max-width: 575.98px) {
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items {
+      font-size: 16px; } }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link {
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 400;
+  font-family: "Kanit", sans-serif; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link p {
+    color: var(--color-primary); }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link a {
+    font-weight: 400; }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link-mobile {
+  display: none; }
+
+.page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video {
+  margin: 0 100px 10px 100px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video video {
+    width: 100%;
+    height: 250px;
+    object-fit: fill; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video .ctn-image {
+    width: 100%;
+    height: 250px;
+    border: 2px solid #eee; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video .ctn-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video,
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video {
+    max-width: 377px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video p.title,
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video p.title {
+      text-align: center;
+      margin-top: 5px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video p.video-title,
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video p.video-title {
+      position: relative;
+      top: -7px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .btn-icon {
+    margin-left: 5px; }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__text {
+    margin-bottom: 25px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items {
+    margin: 0 0 25px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__pool-items .item__title span:first-child {
+      display: none; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video {
+    margin: 0 0 30px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .col-video {
+      margin-bottom: 35px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video,
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video {
+      max-width: 100%;
+      margin: auto; }
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video .ctn-image,
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video video,
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video .ctn-image,
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video video {
+        width: 100%;
+        height: 234px; }
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .plan-video__video p.title,
+      .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__video .download-video p.title {
+        text-align: left;
+        font-size: 18px;
+        margin-top: 10px; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link {
+    display: none; }
+  .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link-mobile {
+    display: block;
+    margin-bottom: 15px; }
+    .page__how-to-earn .how-to-earn__section-3 .section-3__pool-of-fund .pool-of-fund__link-mobile p {
+      font-size: 25px; } }
+
+.page__how-to-earn .how-to-earn__section-3 .cash-bonus__text > h3,
+.page__how-to-earn .how-to-earn__section-3 .pool-of-fund__text > h3 {
+  margin-bottom: 5px;
+  font-size: 30px;
+  line-height: 30px; }
+
+.page__how-to-earn .how-to-earn__footer .footer_btn-group {
+  display: flex;
+  align-items: center;
+  flex-direction: column; }
+  .page__how-to-earn .how-to-earn__footer .footer_btn-group div {
+    margin-bottom: 20px; }
+  .page__how-to-earn .how-to-earn__footer .footer_btn-group .btn-back-to-top {
+    margin-top: 20px; }
+    .page__how-to-earn .how-to-earn__footer .footer_btn-group .btn-back-to-top a {
+      text-decoration: underline;
+      font-size: 16px;
+      display: block; }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .how-to-earn__footer {
+    margin-bottom: 15px; }
+    .page__how-to-earn .how-to-earn__footer .footer_btn-group a {
+      width: 100%; } }
+
+.page__how-to-earn .index-section {
+  padding-top: 0px; }
+
+@media (max-width: 575.98px) {
+  .page__how-to-earn .swiper-wrapper {
+    display: unset; }
+  .page__how-to-earn br {
+    display: none; }
+  .page__how-to-earn .how-to-earn__section-3 {
+    padding-bottom: 0; } }
+
+.smart_modal-video .drawer__close::after,
+.smart_modal-video .drawer__close::before {
+  background: #FFF; }

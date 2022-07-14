@@ -1,0 +1,75 @@
+{%- assign compare_member_price = variant.metafields.ulife.compare_member_price -%}
+{%- assign member_price         = variant.metafields.ulife.member_price -%}
+{%- assign variant_cv           = variant.metafields.ulife.cv_value -%}
+{%- assign variant_qv           = variant.metafields.ulife.qv_value -%}
+{%- assign variant_freeship     = variant.metafields.ulife.freeship -%}
+{%- if shop.locale == 'th' -%}
+    {%- assign variant_promo_period = variant.metafields.ulife.promotion_period_th -%}
+    {%- assign custom_tag = variant.metafields.ulife.promotion_label_th -%}
+{%- else -%}
+    {%- assign variant_promo_period = variant.metafields.ulife.promotion_period_en -%}
+    {%- assign custom_tag = variant.metafields.ulife.promotion_label_en -%}
+{%- endif -%}
+{%- assign product_status = true -%}
+{%- if count_variant == 0 -%}
+    {%- assign current_variant = variant -%}
+{%- endif -%}
+{%- assign count_variant = count_variant | plus: 1 -%}
+{
+    "available": {{ variant.available | json }},
+    "id": {{ variant.id | json }},
+    "sku":{{ variant.sku | json }},
+    "featured_image": {{ variant.featured_image | json }},
+    "featured_media": {{ variant.featured_media | json }},
+    "compare_at_price": {{ variant.compare_at_price | divided_by: 1.00 | json }},
+    "price": {{ variant.price | divided_by: 1.00 | json }},
+    "title": {{ variant.title | json }},
+    "option1": {{ variant.option1 | json }},
+    "option2": {{ variant.option2 | json }},
+    "option3": {{ variant.option3 | json }},
+    "options": {{ variant.options | json }},
+    "inventory_management": {{ variant.inventory_management | json }},
+    "inventory_quantity": {{ variant.inventory_quantity | json }},
+    "inventory_policy": {{ variant.inventory_policy | json }},
+    "cv":{{ variant_cv | divided_by: 1 | json}},
+    "qv":{{ variant_qv | divided_by: 1 | json}},
+    {%- if compare_member_price != blank -%}
+    {%- assign compare_member_price = compare_member_price | times: 100.00 -%}
+    "compare_member_price": {{ compare_member_price | json }},
+    {%- else -%}
+    "compare_member_price": null,
+    {%- endif -%}
+    {%- if member_price != blank -%}
+    {%- assign member_price = member_price | times: 100.00 -%}
+    "member_price": {{ member_price | json }},
+    {%- else -%}
+    "member_price": null,
+    {%- endif -%}
+    {%- if variant.compare_at_price > variant.price -%}
+    "price_sale": true,
+    {%- else -%}
+    "price_sale": false,
+    {%- endif -%}
+    {%- if compare_member_price > member_price -%}
+    "price_member_sale": true,
+    {%- else -%}
+    "price_member_sale": false,
+    {%- endif -%}
+    {%- if variant_freeship == 1 or variant_freeship == "1" -%}
+    "freeship": true,
+    {%- else -%}
+    "freeship": false,
+    {%- endif -%}
+    {%- if variant_promo_period != blank and variant_promo_period != 'Please update content here' -%}
+    "promo_period_text": {{ variant_promo_period | json }},
+    {%- else -%}
+    "promo_period_text": "",
+    {%- endif -%}
+    {%- if custom_tag != blank and custom_tag != 'Please update content here' -%}
+    "custom_tag": {{ custom_tag | json }},
+    {%- else -%}
+    "custom_tag": "",
+    {%- endif -%}
+    "weight": {{ variant.weight | weight_with_unit: variant.weight | json }},
+    "weight_unit": {{ variant.weight | weight_with_unit: variant.weight_unit | json }}
+}

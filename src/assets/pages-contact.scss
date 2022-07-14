@@ -1,0 +1,187 @@
+//
+//  Smartosc - Unileverlife
+//  Variables
+//  -----------------------------------------
+$primary_color      : #2035C7;
+$color-border       :#E5E5E5;
+$color-border-list  : rgba(153, 153, 153, 0.2);
+$offlineTag         :   #CE98D9;
+$onlineTag          :   #1EB2FC;
+/* Gray and brand colors for use across Bootstrap*/
+$white :                #fff ;
+$gray-base:             #000 ;
+$gray-darker:           #222 ; // #222
+$gray-dark:             #333 ; // #333
+$gray:                  #666 ;
+$gray-light:            #999 ;
+$gray-lighter:          #eee ; // #eee
+
+$grid-medium: 767px;
+$grid-large: 1024px;
+$grid-xlarge: 1200px;
+$grid-widescreen: 1400px;
+$grid-gutter: 30px;
+$grid-gutter-mobile: 22px;
+
+
+//===== Minxin UTILITIES =======
+@mixin linkColor($linkColor:$gray-dark ,$linkColorHover: $primary_color){
+    color: $linkColor;
+    &:hover{color: $linkColorHover;}
+}
+
+@mixin line-clamp($numLines : 1, $lineHeight: 1.1) {
+    overflow: hidden;
+    text-overflow: -o-ellipsis-lastline;
+    text-overflow: ellipsis;
+    display: block;
+    /* autoprefixer: off */
+    display: -webkit-box;
+    -webkit-line-clamp: $numLines;
+    -webkit-box-orient: vertical;
+    line-height: $lineHeight + unquote('em');
+    max-height: $numLines * $lineHeight + unquote('em');
+    min-height: $numLines * $lineHeight + unquote('em');
+}
+
+
+
+@mixin breakpoints($point){
+    @if ($point == xl){
+        @media (min-width: 1900px){ @content }
+    }
+    @if ($point == lg){
+        @media (min-width: 1200px){ @content }
+    }
+    @else if ($point == md){
+        @media (min-width: 992px) and (max-width: 1199px){ @content }
+    }
+
+    @else if ($point == sm){
+        @media (min-width: 768px) and (max-width: 991px){ @content }
+    }
+
+    @else if ($point == xs){
+        @media (max-width: 767px){ @content }
+    }
+
+    @else if ($point == xxs){
+        @media (max-width: 767px) and (min-width: 321px){ @content }
+    }
+
+    @else if ($point == xxxs){
+        @media  (max-width: 321px){ @content }
+    }
+}
+//
+//  Smartosc - Unileverlife
+//  Page Contact us
+//  -----------------------------------------
+.section-contactSuccess {
+    @include breakpoints(lg){
+        //padding-top: 30px;
+        //min-height: 500px;
+        .contactSuccess__into{
+            display: flex;
+            align-items: center;
+        }
+
+    }
+}
+
+.contactSuccess__image{
+    text-align: center;
+    @include breakpoints(lg) {
+        text-align: left;
+
+    }
+
+}
+.contactSuccessRole{
+    text-align: center;
+    @include breakpoints(lg){
+        padding-bottom: 80px;
+    }
+    .contactSuccess__title{
+        margin-bottom: 5px;
+        color: #6445ee;
+        @include breakpoints(xs){
+            font-size: 20px;
+        }
+    }
+    .contactSuccess__subtitle{
+        @include breakpoints(xs){
+            font-size: 18px;
+        }
+    }
+    .contactSuccess__Description{
+        margin-bottom: 20px;
+        font-weight: 400;
+        &:before{
+            content: "";
+            display: inline-block;
+            background: #BFCFE2;
+            width: 50px;
+            height: 3px;
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+    }
+    .btn.fix-width{
+        line-height: 24px;
+        width: auto;
+        margin: 0 5px;
+        min-width: 230px;
+
+        @media (min-width: 1200px) and (max-width: 1400px) {
+            min-width: 200px;
+        }
+        
+        @include breakpoints(xs){
+            width: auto;
+            margin: 0 ;
+            min-width: 240px;
+        }
+
+        .icon{
+            width: 30px;
+            height: 30px;
+        }
+
+        &.btn--line{
+            background: #00C800;
+            color: #fff;
+            @include breakpoints(xs){
+                margin-bottom: 10px ;
+            }
+            &:hover{
+                background: #00ad00;
+            }
+        }
+
+    }
+}
+//
+//  Smartosc - Unileverlife
+//  Page Community
+//  -----------------------------------------
+
+//
+//  Smartosc - Unileverlife
+//  Ipad
+//  -----------------------------------------
+@include breakpoints(sm){
+    .contactSuccess__into{
+        padding: 50px 0;
+    }
+
+}
+//
+//  Smartosc - Unileverlife
+//  Mobile
+//  -----------------------------------------
+
+@include breakpoints(xs){
+
+
+}

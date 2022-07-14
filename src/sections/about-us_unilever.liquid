@@ -1,0 +1,58 @@
+<style>
+    .page__about-us .section__about-unilever-life{
+        background-image: url("{{section.settings.about_unilever_image | img_url: 'master'}}");
+    }
+     @media (max-width: 576px){
+        .page__about-us .section__about-unilever-life{
+            background-image: url("{{section.settings.about_unilever_image_mb | img_url: 'master'}}");
+        }
+     }
+</style>
+<section  class="section section__about-unilever-life">
+    <div class="container">
+        <div class="row">
+            <div class="section__content col-12 col-md-6 col-lg-4">
+                {% if section.settings.section_about_unilever_title != blank %}
+                <h1 class="section__tittle primary_color">
+                    {{ section.settings.section_about_unilever_title }}
+                </h1>
+                {% endif %}
+                {% if section.settings.section_about_unilever_content != blank %}
+                <div class="section__description">
+                    {{ section.settings.section_about_unilever_content }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "About Unilever",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_about_unilever_title",
+            "label": "About Unilever life title",
+            "default": "About Unilever life"
+        },
+        {
+            "type": "richtext",
+            "id": "section_about_unilever_content",
+            "label": "About Unilever life content",
+            "default": "<p>Unilever Life is <strong>Unilever’s premium health and beauty products business.</strong></p>"
+        },
+        {
+            "type": "image_picker",
+            "id": "about_unilever_image",
+            "label": "About Unilever life background"
+        },
+        {
+            "type": "image_picker",
+            "id": "about_unilever_image_mb",
+            "label": "About Unilever life background mobile"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,48 @@
+
+  {% for link in linklists[linklist].links %}
+    {% assign check_mega = false %}
+    {% for block in section.blocks %}
+      {% assign for_menu = block.settings.for_menu | downcase %}
+      {% assign link_title = link.title | downcase %}
+      {% if for_menu == link_title %}
+        {% if check_mega == false %}
+          <li class="level1 {{ link.title | strip_html | replace: ' ', '-' | downcase  }}">
+            <div class="sit-title__header">
+              <a href="{{ link.url }}">
+                <span class="site-nav__label">{{ link.title | escape }}</span>
+              </a>
+              <span class="site-nav__icon">{% include 'icon-arrow-down' %}</span>
+            </div>
+            {%- assign check_mega = true -%}
+            {% case block.type %}
+              {% when 'banner_type1' %}
+                {% render 'menu-mobile-type1', block: block %}
+              {% when 'banner_type2' %}
+                {% render 'menu-mobile-type2', block: block %}
+              {% when 'banner_type3' %}
+                <div class="sub__menu--wrapper">
+                  <div class="row">{% render 'megamenu-banner-type3', block: block %}</div>
+                </div>
+              {% else %}
+            {% endcase %}
+          {% if forloop.last == true %}
+          </li>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if check_mega == false %}
+      {% if customer %}
+        {%- assign link_url_last_mb = "" -%}
+      {% else %}
+        {%- assign link_url_last_mb = link.url | split: '/' | last -%}
+      {% endif %}
+      <li class="level1 {% if link.active %}site-nav--active group_submenu-active{% else %}{{ link_url_last_mb }}{% endif %}">
+        <div class="sit-title__header">
+          <a href="{{ link.url }}" class="site-nav__link site-nav__link--main{% if link.active %} site-nav__link--active{% endif %}" {% if link.current %} aria-current="page" {% endif %}>
+            <span class="site-nav__label">{{ link.title }}</span>
+          </a>
+        </div>
+      </li>
+    {% endif %}
+  {% endfor %}

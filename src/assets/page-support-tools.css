@@ -1,0 +1,206 @@
+html:not(.disable-overflow), html:not(.disable-overflow) body {
+  overflow-x: inherit; }
+
+.main-content {
+  padding-top: 0; }
+  .main-content .breadcrumb__wrap {
+    position: absolute;
+    background: white;
+    z-index: 5;
+    padding: 15px 0;
+    width: 100%; }
+    .main-content .breadcrumb__wrap .breadcrumb {
+      margin-bottom: 0; }
+  @media (max-width: 575.98px) {
+    .main-content {
+      padding-bottom: 0; }
+      .main-content .breadcrumb__wrap {
+        background: transparent;
+        z-index: 1; } }
+
+.page_support-tools .section_slide {
+  padding-top: 90px;
+  padding-bottom: 140px; }
+
+.page_support-tools p {
+  font-family: 'IBM Plex Sans Thai Looped', sans-serif; }
+
+.section_slide {
+  background-image: url(https://cdn.shopify.com/s/files/1/0513/1865/3091/files/support_tools_slide_1_bg.jpg?v=1651051873);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative; }
+  .section_slide .row {
+    align-items: center; }
+  .section_slide .content-top {
+    max-width: 475px; }
+    .section_slide .content-top .title {
+      font-size: 40px;
+      line-height: 50px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #6445EE;
+      margin-bottom: 16px; }
+  .section_slide .media {
+    max-width: 500px; }
+  .section_slide .list-items .media {
+    max-width: 220px; }
+  .section_slide .list-items .title {
+    font-size: 30px;
+    line-height: 22px;
+    font-weight: 600; }
+  @media (max-width: 767.98px) {
+    .section_slide .order__reverse {
+      order: -1; }
+    .section_slide .content-top .title {
+      font-size: 25px;
+      line-height: 30px;
+      margin: 10px 0; }
+    .section_slide .content-top p {
+      font-size: 18px;
+      line-height: 25px; } }
+  @media (max-width: 575.98px) {
+    .section_slide {
+      background-image: url("https://cdn.shopify.com/s/files/1/0513/1865/3091/files/support_tools_slide_1_bg_mobile.jpg?v=1651745610");
+      background-size: 100% 100%; }
+      .section_slide .media {
+        max-width: 250px;
+        margin: 0 auto; }
+      .section_slide .list-items {
+        margin-top: -15px;
+        margin-bottom: 30px; }
+        .section_slide .list-items .item {
+          text-align: center;
+          margin-top: 50px; }
+          .section_slide .list-items .item .media {
+            max-width: 170px;
+            margin: 0 auto 20px; }
+        .section_slide .list-items .title {
+          font-size: 25px;
+          line-height: 30px; }
+        .section_slide .list-items .desc {
+          font-size: 18px;
+          line-height: 25px;
+          letter-spacing: 0.5px; } }
+
+.section_list-tools {
+  position: relative;
+  z-index: 2; }
+  .section_list-tools .container {
+    margin-top: -120px; }
+  .section_list-tools .section-row {
+    align-items: flex-start; }
+  .section_list-tools .media {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 45px; }
+  .section_list-tools .content-header .title {
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 12px; }
+  @media (min-width: 1024px) {
+    .section_list-tools .list-items > div:nth-child(2n+1) {
+      padding-right: 40px; }
+    .section_list-tools .list-items > div:nth-child(2n) {
+      padding-left: 30px; } }
+  .section_list-tools .list-items .item {
+    display: flex;
+    align-items: center;
+    margin-top: 22px;
+    line-height: 24px; }
+    .section_list-tools .list-items .item .svg_icon {
+      flex: 0 0 82px;
+      margin-right: 16px;
+      width: 82px;
+      height: 82px;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+  .section_list-tools .content {
+    padding: 150px 0 0 0; }
+  @media (max-width: 990px) {
+    .section_list-tools .media {
+      margin-right: 0; }
+    .section_list-tools .content {
+      padding: 130px 0 0 0; }
+    .section_list-tools .list-items .item {
+      margin-top: 10px; }
+      .section_list-tools .list-items .item .svg_icon {
+        flex: 0 0 80px;
+        margin-right: 10px;
+        width: 80px;
+        height: 80px; } }
+  @media (max-width: 767.98px) {
+    .section_list-tools .media {
+      margin: 0 auto;
+      justify-content: center; }
+    .section_list-tools .content {
+      padding-top: 40px; } }
+  @media (max-width: 575.98px) {
+    .section_list-tools .media {
+      margin-bottom: 20px;
+      justify-content: center;
+      max-width: 270px; }
+    .section_list-tools .list-items .item {
+      align-items: center;
+      font-size: 18px;
+      line-height: 25px; }
+      .section_list-tools .list-items .item:first-child {
+        margin-top: 33px; }
+      .section_list-tools .list-items .item .svg_icon {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+    .section_list-tools .content-header .title {
+      font-size: 25px;
+      line-height: 30px; }
+    .section_list-tools .content {
+      padding: 0; }
+      .section_list-tools .content p {
+        font-size: 18px;
+        line-height: 25px; } }
+
+.section_video {
+  padding-top: 95px; }
+  .section_video .title {
+    line-height: 40px;
+    font-size: 30px; }
+  .section_video .content {
+    padding-right: 8%; }
+    .section_video .content .desc p:first-child {
+      margin-bottom: 20px; }
+  .section_video .media {
+    position: relative; }
+    .section_video .media img.poster {
+      position: absolute;
+      top: 0;
+      cursor: pointer;
+      z-index: 1; }
+    .section_video .media video {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%; }
+  @media (max-width: 1170px) {
+    .section_video {
+      padding-top: 30px; } }
+  @media (max-width: 767.98px) {
+    .section_video.index-section {
+      padding-bottom: 36px; }
+    .section_video .title {
+      line-height: 30px;
+      font-size: 25px; }
+    .section_video .content {
+      padding-right: 0; }
+      .section_video .content h3 {
+        margin: 30px 0 15px 0;
+        line-height: 30px; }
+      .section_video .content .desc {
+        font-size: 18px;
+        line-height: 25px; }
+        .section_video .content .desc p {
+          margin-bottom: 24px; }
+    .section_video .order__reverse {
+      order: -1; } }

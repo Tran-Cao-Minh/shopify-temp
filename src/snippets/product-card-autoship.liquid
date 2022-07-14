@@ -1,0 +1,95 @@
+<%
+    current_variant = product.variants[0];
+%>
+<div class="grid__item col-sm-6">
+    <div class="product-card__autoship grid-view-item product-card product-item"
+        data-section_id="{{ section.id }}-<%- product.id %>">
+        {% include 'product-tag-label' %}
+        <div class="row">
+            <div class="col-7 col-md-6">
+                <div aria-hidden="true" class="h4 grid-view-item__title product-card__title">
+                    <a href="<%- product.url %>"><%= product.title %></a>
+                </div>
+                <% if (product.description != '' && product.description) {
+                    let descAutoship = smartosc.trimString(product.description, 50, '...');
+                %>
+                    <div class="desc"><%= descAutoship %></div>
+                <% } %>
+
+                <% if (product.variants.length > 1) { %>
+                <div class="product-form__selector hidden">
+                    <select name="id" id="product-selectors-{{ section.id }}-<%- product.id %>" class="product-form__variants">
+                    <% _.forEach(product.variants, function(value) { %>
+                        <option value="<%- value.id %>"
+                        data-quantity="<%- value.inventory_quantity %>"
+                        data-manager="<%- value.inventory_management %>"
+                        data-continue="<%- value.inventory_policy %>"><%- value.title %></option>
+                    <% }); %>
+                    </select>
+                </div>
+                <div class="product-card__options product-form__swatch">
+                    <% _.forEach(product.options, function(option, key_option) { %>
+                    <div class="product-card__variants swatch clearfix" data-option-index="<%- key_option %>">
+                        <div class="product-card__option header"><%- option %>:</div>
+                        <%
+                        var values = [];
+                        _.forEach(product.variants, function(variant) {
+                            var value = variant.options[key_option];
+                            if (values.indexOf(value) < 0) {
+                            values.push(value); %>
+                            <div data-value="<%- value %>"
+                                class="product-card__variant swatch-element <%- value %>
+                                <% if (variant.available) { %> available<% }else{ %> soldout<%} %>">
+                                <input id="swatch-<%- key_option %>-{{ section.id }}-<%- variant.id %>"
+                                type="radio" name="option-<%- key_option %>-{{ section.id }}-<%- product.id %>" value="<%- value %>">
+                                <label for="swatch-<%- key_option %>-{{ section.id }}-<%- variant.id %>"><%- value %><img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" /></label>
+                            </div>
+                        <%
+                            }
+                        }); %>
+                    </div>
+                    <% }); %>
+                </div>
+                <% }else { %>
+                <% if (current_variant.title != '' && current_variant.title != 'Default Title') { %>
+                    <div class="product-card__variant-title"><%= current_variant.title %></div>
+                <% } %>
+                <input type="hidden" name="id" value="<%- current_variant.id %>" />
+                <% } %>
+
+                <div class="product-card__price-wrap price__autoship-wrap">
+                    <div class="product-card__price product-card__price-member<% if (current_variant.price_member_sale) { %> price--on-sale<% } %>">
+                        <span class="price_note display-dk">{{ 'products.product.member_price' | t }}</span>
+                        <span class="price_note display-mb">{{ 'products.product.member_price_mobile' | t }}</span>
+                        <span class="price price__sale"><%= theme.Currency.formatMoney(current_variant.compare_member_price, theme.moneyFormat) %></span>
+                        <span class="price price__regular"><%= theme.Currency.formatMoney(current_variant.member_price, theme.moneyFormat) %></span>
+                    </div>
+                </div>
+
+                <div class="action">
+                    <a href="javascript:void(0)" class="product-form__cart<% if (!product.available) { %> disable<% } %>"
+                        title="{{ 'general.tooltip.add_to_bag' | t }}"
+                        data-product_tags="{{ product.tags | join: ',' | downcase }}">{% include 'icon-cart' %}</a>
+                </div>
+            </div>
+            <div class="col-5 col-md-6">
+            <% if (product.featured_image) { %>
+                <div class="product-card__image-with-placeholder-wrapper" data-image-with-placeholder-wrapper>
+                    <div class="grid-view-item__image-wrapper product-card__image-wrapper js">
+                        <a href="<%- product.url %>">
+                            <img class="grid-view-item__image lazyload" src="<%- product.featured_image %>" alt="<%= product.title %>" data-image />
+                        </a>
+                        <div class="placeholder-background placeholder-background--animation" data-image-placeholder></div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            <div class="quickview">
+                <a href="javascript:void(0)" class="quickview_button btn btn--small"
+                    data-quickview-id="<%- product.id %>" data-product_handle="<%- product.handle %>">{{ 'collections.quickview.title' | t }}</a>
+            </div>
+        </div>
+        <div class="prd__error-message"></div>
+        <div class="product-card__json" data-json="<%- JSON.stringify(product) %>"></div>
+    </div>
+</div>

@@ -1,0 +1,357 @@
+{{ 'page-how-to-earn.css' | asset_url | stylesheet_tag }}
+
+<div class="page__how-to-earn">
+    <section class="how-to-earn__section-1 index-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-sm-12">
+              <div class="section-1__head-text section-header">
+                  <h1 class="head-text__title">{{ section.settings.section1_heading }}</h1>
+                  <p class="head-text__description">{{ section.settings.section1_desc }}</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <div class="section-1__head-image">
+                  {% if section.settings.image_lifeMaxPlan != blank %}
+                      <img src="{{ section.settings.image_lifeMaxPlan | img_url: '400x' }}" alt="life_max_plan"/>
+                  {% else %}
+                      <span>
+                        {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                        {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                      </span>
+                  {% endif %}
+              </div>
+            </div>
+              <a href="{{ section.settings.down_pdf_link }}" class="display-mb link-readmore text-underline link-pdf" target="_blank">
+                <span>{{ section.settings.down_pdf_label }}</span> <span class="btn-icon">{% render 'icon-down-primary' %}</span>
+              </a>
+          </div>
+          </div>
+    </section>
+    <section class="how-to-earn__section-2 index-section">
+      <div class="container">
+          <div class="section-2__head-text">
+              <h4 class="head-text__description-2">{{ section.settings.section1_desc2 }}</h4>
+          </div>
+      </div>
+    </section>
+    <section class="how-to-earn__section-3 index-section">
+        <div class="container">
+            <div class="section-3__cash-bonus">
+                <div class="row">
+                  <div class="col-lg-6 col-md-7 col-sm-12">
+                    <div class="cash-bonus__text section-header">
+                        <h3 class="text__title page__heading">{{ section.settings.cashBonus_heading }}</h3>
+                        <p class="text__description">{{ section.settings.hte_cashBonus_desc }}</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-5 col-sm-12">
+                    <div class="cash-bonus__image">
+                        {% if section.settings.image_cashBonus != blank %}
+                            <img src="{{ section.settings.image_cashBonus | img_url: '400x' }}" alt="life_max_plan"/>
+                        {% else %}
+                            <span>
+                              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            </span>
+                        {% endif %}
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="section-3__pool-of-fund">
+                <div class="content__wrapper">
+                    <div class="pool-of-fund__text section-header">
+                        <h3 class="text__title page__heading">{{ section.settings.pool_heading }}</h3>
+                        <p class="text__description">{{ section.settings.pool_desc }}</p>
+                    </div>
+                    <div class="pool-of-fund__pool-items">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="pool-items__item country-pool">
+                                    <h3 class="item__title"><span>2.1</span><span> {{ section.settings.countryPool_heading }}</span></h3>
+                                    <ol class="item__desc-list">
+                                       {{ section.settings.countryPool_descList }}
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="pool-items__item country-pool">
+                                    <h3 class="item__title"><span>2.2</span><span> {{ section.settings.worldPool_heading }}</span></h3>
+                                    <ol class="item__desc-list">
+                                        {{ section.settings.worldPool_descList }}
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pool-of-fund__link">
+                        {{ section.settings.pool_title_desktop }}
+                    </div>
+                    <h2 class="pool-of-fund__link-mobile">{{ section.settings.pool_title_mobile }}</h2>
+                    <div class="pool-of-fund__video">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-video">
+                                <div class="plan-video__video">
+                                    <video 
+                                        controls
+                                        {% if section.settings.vid1_poster != blank %}
+                                            poster="{{ section.settings.vid1_poster | img_url: '300x' }}"
+                                        {% else %}
+                                            poster=""
+                                        {% endif %}><source src="{{ section.settings.vid1_url  }}" >
+                                    </video>
+                                    <p class="title video-title">
+                                        <a href="#" class="link-readmore text-underline"
+                                          data-video_popup1 data-url="{{ section.settings.vid_title_url }}">
+                                            <span>{{ section.settings.vid_title_label }}</span><span class="btn-icon">{% render 'icon-video' %}</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12 col-download">
+                                <div class="download-video">
+                                    <div class="ctn-image">
+                                        {% if section.settings.image_download_vid != blank %}
+                                            <img src="{{ section.settings.image_download_vid | img_url: '377x251' }}" alt="life_max_plan"/>
+                                        {% else %}
+                                            <span>
+                                              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                                              {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <p class="title download-video-title">
+                                        <a href="{{ section.settings.down_title_url }}" class="link-readmore text-underline" target="_blank">
+                                            <span>{{ section.settings.down_title_label }}</span> <span class="btn-icon">{% render 'icon-down-primary' %}</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="how-to-earn__footer">
+        <div class="container">
+            <div class="footer_btn-group">
+                <a class="btn" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="smart_modal smart_modal-medium smart_modal-video">
+    <div class="modal-center">
+        <div class="modal-content text-center">
+            <span class="close drawer__close drawer__close-large" data-close_video></span>
+            <div class="video-wrapper">
+                <iframe id="iframe_video1" width="420" height="315" src="" frameborder="0" allow='autoplay'></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay" data-close_video></div>
+</div>
+<script>
+$(document).ready(function() {
+    $(document).on('click', '[data-video_popup1]', function (e) {
+        e.preventDefault();
+        const urlYT = $(this).data('url');
+        $('#iframe_video1').attr("src", urlYT);
+        $('.smart_modal-video').show();
+    });
+    $(document).on('click', '[data-close_video]', function (e) {
+        e.preventDefault();
+        $('#iframe_video1').attr("src", "");
+        $('.smart_modal').hide();
+    });
+});
+</script>
+
+  {% schema %}
+  {
+    "name": "How to earn",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section 1"
+      },
+      {
+        "type": "text",
+        "id": "section1_heading",
+        "label": "Heading",
+        "default": "แผนรายได้ ไลฟ์แม๊กซ์ ตอบโจทย์ <br/> รายได้และไลฟ์สไตล์แบบเต็มแม๊กซ์"
+      },
+      {
+        "type": "text",
+        "id": "down_pdf_label",
+        "label": "Download PDF Label (mobile)",
+        "default": "DOWNLOAD INFORMATION ABOUT LIFE MAX PLAN"
+      },
+      {
+        "type": "url",
+        "id": "down_pdf_link",
+        "label": "Download PDF Link (mobile)"
+      },
+      {
+        "type": "textarea",
+        "id": "section1_desc",
+        "label": "Description 1",
+        "default": "ยูนิลีเวอร์ ไลฟ์ จ่ายจริง ได้จริง ด้วยแผนการรับรายได้ ไลฟ์แม็กซ์ (Life Max Plan) ที่มีความชัดเจนและไม่มีขีดจำกัด"
+      },
+      {
+        "type": "textarea",
+        "id": "section1_desc2",
+        "label": "Description 2",
+        "default": "คุณจะได้รับผลตอบแทนใน 2 รูปแบบ คือ โบนัสเงินสดในแต่ละเดือน และเงินสนับสนุนจากกองทุนต่างๆ ของ ยูนิลีเวอร์ ไลฟ์ (Unilever LIfe)"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_lifeMaxPlan",
+        "label": "Image Life Max Plan"
+      },
+      {
+        "type": "header",
+        "content": "Cash Bonus"
+      },
+      {
+        "type": "text",
+        "id": "cashBonus_heading",
+        "label": "Heading",
+        "default": "1. โบนัสเงินสด (Cash Bonus)"
+      },
+      {
+        "type": "text",
+        "id": "hte_cashBonus_desc",
+        "label": "Description",
+        "default": "คุณสามารถกำหนดรายได้จากโบนัสเงินสดที่ต้องการในแต่ละเดือนได้เอง และด้วยโมเดลธุรกิจแบบทวีค่า คุณไม่เพียงได้รับรายได้จากผลงานธุรกิจของคุณเองเท่านั้น แต่ยังได้รับผลตอบแทนจากผลงานธุรกิจของทีมงานอีกด้วย โดยโบนัสเงินสดจะโอนเข้าบัญชีธนาคารของคุณในแต่ละเดือน"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_cashBonus",
+        "label": "Image"
+      },
+      {
+        "type": "header",
+        "content": "Pool Of Funds"
+      },
+      {
+        "type": "text",
+        "id": "pool_heading",
+        "label": "Heading",
+        "default": "2. เงินปันผลจากกองทุนต่างๆ (Pool of Funds)"
+      },
+      {
+        "type": "textarea",
+        "id": "pool_desc",
+        "label": "Description",
+        "default": "บิซิเนสพาร์ตเนอร์สามารถได้รับเงินปันผลจากกองทุนต่างๆ ของ ยูนิลีเวอร์ ไลฟ์ จากผลประกอบการของบริษัททั้งในประเทศและจากทั่วโลก เมื่อบิซิเนสพาร์ตเนอร์ผ่านคุณสมบัติผลงานทางธุรกิจตามที่กำหนด"
+      },
+      {
+        "type": "header",
+        "content": "Country Pool"
+      },
+      {
+        "type": "text",
+        "id": "countryPool_heading",
+        "label": "Heading",
+        "default": "กองทุนปันผลในประเทศ (Country Pool)"
+      },
+      {
+        "type": "textarea",
+        "id": "countryPool_descList",
+        "label": "Description List",
+        "default": "<li>กองทุนบ้าน (Housing Fund)</li><li>กองทุนขยายธุรกิจ (Business Expansion Fund)</li>"
+      },
+      {
+        "type": "header",
+        "content": "World Pool"
+      },
+      {
+        "type": "text",
+        "id": "worldPool_heading",
+        "label": "Heading",
+        "default": "กองทุนปันผลจากทั่วโลก (World Pool)"
+      },
+      {
+        "type": "textarea",
+        "id": "worldPool_descList",
+        "label": "Description List",
+        "default": "<li>กองทุนเติบโตทั่วโลก (Grow Together Fund)</li>"
+      },
+      {
+        "type": "richtext",
+        "id": "pool_title_desktop",
+        "label": "Title Desktop",
+        "default": "<p><a href='#'>สนใจดูรายละเอียดเกี่ยวกับ Life Max Plan</a></p>"
+      },
+      {
+        "type": "richtext",
+        "id": "pool_title_mobile",
+        "label": "Title Mobile",
+        "default": "<p>สนใจ Life Max Plan</p>"
+      },
+      {
+        "type": "header",
+        "content": "Videos"
+      },
+      {
+        "type": "textarea",
+        "id": "vid1_url",
+        "label": "Video 1 Url"
+      },
+      {
+        "type": "image_picker",
+        "id": "vid1_poster",
+        "label": "Poster Video"
+      },
+      {
+        "type": "text",
+        "id": "vid_title_label",
+        "label": "Video Title Label",
+        "default": "VIEW CLIP LIFE MAX PLAN"
+      },
+      {
+        "type": "url",
+        "id": "vid_title_url",
+        "label": "Video Title Link"
+      },
+      {
+        "type": "header",
+        "content": "Download"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_download_vid",
+        "label": "Download Image"
+      },
+      {
+        "type": "text",
+        "id": "down_title_label",
+        "label": "Download Title Label",
+        "default": "DOWNLOAD LIFE MAX PLAN"
+      },
+      {
+        "type": "url",
+        "id": "down_title_url",
+        "label": "Download Title Link"
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button Label",
+        "default": "ร่วมธุรกิจกับ ยูนิลีเวอร์ ไลฟ์"
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button Link"
+      }
+    ]
+  }
+  {% endschema %}

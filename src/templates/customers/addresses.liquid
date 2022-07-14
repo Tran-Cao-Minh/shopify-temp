@@ -1,0 +1,277 @@
+{% paginate customer.addresses by 20 %}
+<div class="page_account-addresses" data-page_border>
+  <div class="container">
+    {% comment %}
+    <div class="display-mb mb-10">
+      <a href="{{ routes.account_url }}" class="link-readmore text-underline btn-back">
+        {% include 'icon-arrow-left' %}
+        {{ 'customer.addresses.back' | t }}
+      </a>
+    </div>
+    {% endcomment %}
+    <div class="section-header text-center">
+      <h1>{{ 'customer.addresses.title' | t }}</h1>
+      <p>
+        <button type="button" class="btn address-new-toggle full__width-mb" id="AddressNewButton" aria-expanded="false"
+          aria-owns="AddressNewForm">{{ 'customer.addresses.add_new_button' | t }}</button>
+      </p>
+    </div>
+
+    <div class="address__form">
+      {% comment %}
+      Add address form, hidden by default
+      {% endcomment %}
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div id="AddressNewForm" class="AddressNewForm hide">
+            {% form 'customer_address', customer.new_address, class: "form-vertical", id: "address_form_new" %}
+            <h2>{{ 'customer.addresses.add_new' | t }}</h2>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="AddressFirstNameNew">{{ 'customer.addresses.first_name_input' | t }}</label>
+                <input type="text" id="AddressFirstNameNew" class="form-control validate-space"
+                  name="address[first_name]" value="" autocomplete="given-name" required>
+              </div>
+              <div class="col-md-6 form-group">
+                <label for="AddressLastNameNew">{{ 'customer.addresses.last_name_input' | t }}</label>
+                <input type="text" id="AddressLastNameNew" class="form-control validate-space" name="address[last_name]"
+                  value="" autocomplete="family-name" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="AddressAddress1New">{{ 'customer.addresses.address_input' | t }}</label>
+                <input type="text" id="AddressAddress1New" class="form-control validate-space" name="address[address1]"
+                  value="" autocomplete="street-address address-line1" required>
+              </div>
+              <div class="col-md-6 form-group">
+                <div class="AddressPostCodeNew"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <div class="select2_wrap">
+                  <div class="AddressProvinceCodeNew"></div>
+                </div>
+                <input type="hidden" id="AddressProvinceNew" name="address[province]" value="" />
+              </div>
+              <input type="hidden" id="AddressProvinceCodeNewInput" name="address[province_code]" value="" />
+              <div class="col-md-6 form-group">
+                <div class="select2_wrap">
+                  <div class="AddressDistrictCodeNew"></div>
+                </div>
+                <input type="hidden" id="AddressDistrictNew" name="address[city]" value="" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label for="AddressPhoneNew">{{ 'customer.addresses.mobile_number_input' | t }}</label>
+                <input type="tel" id="AddressPhoneNew" class="form-control validate-space" name="address[phone]"
+                  value="" autocomplete="phone" required>
+              </div>
+              <div class="col-md-6 form-group">
+                <label for="AddressCountryNew">{{ 'customer.addresses.country_input' | t }}</label>
+                <input type="tel" id="AddressCountryNew" class="form-control validate-space" name="address[country]"
+                  value="Thailand" readonly>
+              </div>
+            </div>
+
+            <div class="checbox__switch form-group">
+              <span class="label">{{ 'customer.addresses.set_default' | t }}</span>
+              <input type="checkbox" id="address_default_address_new" name="address[default]" value="1"/>
+              <label for="address_default_address_new"></label>
+            </div>
+
+            <div class="form-actions group-buttons d-flex justify-content-end">
+              <button type="submit" class="btn">{{ 'customer.addresses.add_btn' | t }}<div class="loader"></div></button>
+              <button type="button" id="AddNewCancel" class="btn btn-cancel address-new-toggle">{{
+                'customer.addresses.cancel' | t }}</button>
+            </div>
+
+            {% endform %}
+            <hr>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        {% comment %}
+        List all customer addresses with a unique edit form.
+        Also add pagination in case they have a large number of addresses
+        {% endcomment %}
+        {% for address in customer.addresses %}
+        <div class="col-lg-6 address-item{% if address == customer.default_address %} address-default{% endif %}">
+          <div class="address-box">
+            <div class="address">
+              <div class="address-header">
+                <h3 class="title">{{ address.address1 }}
+                  {% if address == customer.default_address %}
+                  <span class="address__default-title">{{ 'customer.addresses.default' | t }}</span>
+                  {% endif %}
+                </h3>
+                <a class="group_edit address-edit-toggle" href="#" data-form-id="{{ address.id }}"
+                  data-edit_header="true">
+                  {% include 'icon-edit' %} <span class="link-readmore text-underline">{{ 'customer.account.edit' | t
+                    }}</span>
+                </a>
+              </div>
+
+              <ul class="address__list">
+                <li>
+                  <label>{{ 'customer.addresses.name' | t }}</label>
+                  <span>{{ address.first_name }} {{ address.last_name }}</span>
+                </li>
+                <li><label>{{ 'customer.addresses.address' | t }}</label>
+                  <span>{{ address.address1 }}</span>
+                </li>
+                <li><label>{{ 'customer.addresses.zip' | t }}</label>
+                  <span>{{ address.zip }}</span>
+                </li>
+
+                <li><label>{{ 'customer.addresses.province' | t }}</label>
+                  <span>{{ address.province }}</span>
+                </li>
+                <li><label>{{ 'customer.addresses.district' | t }}</label>
+                  <span class="address__city" id='{{address.address2}}'></span>
+                </li>
+
+                <li><label>{{ 'customer.addresses.country' | t }}</label>
+                  <span>{{ address.country }}</span>
+                </li>
+
+                <li><label>{{ 'customer.addresses.mobile_number' | t }}</label>
+                  <span>{{ address.phone }}</span>
+                </li>
+              </ul>
+
+              {%- unless address == customer.default_address -%}
+                <div class="address-bottom">
+                  <a class="group_delete address-delete" href="#" data-form-id="{{ address.id }}"
+                    data-target="{{ address.url }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                    {% include 'icon-delete2' %} <span class="text-underline">{{ 'customer.addresses.delete' | t }}</span>
+                  </a>
+                </div>
+              {%- endunless -%}
+
+            </div>
+
+            <div id="EditAddress_{{ address.id }}" class="form-vertical hide">
+              {% form 'customer_address', address, class: "form__edit-address" %}
+              <div class="edit__address-header">
+                <h3>{{ 'customer.addresses.edit_address' | t }}</h3>
+                {%- unless address == customer.default_address -%}
+                  <a class="group_delete address-delete" href="#" data-form-id="{{ address.id }}"
+                    data-target="{{ address.url }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                    {% include 'icon-delete2' %} <span class="text-underline">{{ 'customer.addresses.delete' | t }}</span>
+                  </a>
+                {%- endunless -%}
+              </div>
+
+              <div class="form-group">
+                <label for="AddressFirstName_{{ form.id }}">{{ 'customer.addresses.first_name_input' | t }}</label>
+                <input type="text" id="AddressFirstName_{{ form.id }}" class="form-control validate-space"
+                  name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="AddressLastName_{{ form.id }}">{{ 'customer.addresses.last_name_input' | t }}</label>
+                <input type="text" id="AddressLastName_{{ form.id }}" class="form-control validate-space"
+                  name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="AddressAddress1_{{ form.id }}">{{ 'customer.addresses.address_input' | t }}</label>
+                <input type="text" id="AddressAddress1_{{ form.id }}" class="form-control validate-space"
+                  name="address[address1]" value="{{ form.address1 }}" autocomplete="street-address address-line1"
+                  required>
+              </div>
+
+              <div class="form-group">
+                <div class="AddressPostCodeEdit AddressPostCodeEdit_{{ form.id }}"
+                  data-class_location="AddressPostCodeEdit_{{ form.id }}" data-value="{{ form.zip }}"></div>
+              </div>
+
+              <div class="form-group">
+                <div class="select2_wrap">
+                  <div class="AddressProvinceCodeEdit AddressProvinceCodeEdit_{{ form.id }}"
+                    data-class_location="AddressProvinceCodeEdit_{{ form.id }}"
+                    data-value="{{ address.province_code }}"></div>
+                </div>
+                <input type="hidden" class="AddressProvinceEdit" name="address[province]" value="{{ form.province }}" />
+              </div>
+              <input type="hidden" class="AddressProvinceCodeEditInput" name="address[province_code]" value="" />
+              <div class="form-group">
+                <div class="select2_wrap">
+                  <div class="AddressDistrictCodeEdit AddressDistrictCodeEdit_{{ form.id }}"
+                    data-class_location="AddressDistrictCodeEdit_{{ form.id }}" data-value="{{ address.city }}"></div>
+                </div>
+                <input type="hidden" class="AddressDistrictEdit" name="address[city]" value="{{ form.city }}" />
+              </div>
+
+              <div class="form-group">
+                <label for="AddressPhoneEdit__{{ form.id }}">{{ 'customer.addresses.mobile_number_input' | t }}</label>
+                <input type="tel" id="AddressPhoneEdit_{{ form.id }}" class="form-control validate-space"
+                  name="address[phone]" value="{{ form.phone }}" autocomplete="phone" required>
+              </div>
+              <div class="form-group">
+                <label for="AddressCountryEdit_{{ form.id }}">{{ 'customer.addresses.country_input' | t }}</label>
+                <input type="tel" id="AddressCountryEdit_{{ form.id }}" class="form-control validate-space"
+                  name="address[country]" value="Thailand" readonly>
+              </div>
+
+              <div class="checbox__switch form-group justify-content-between">
+                <span class="label">{{ 'customer.addresses.set_default' | t }}</span>
+                <input type="checkbox" id="address_default_address_{{ form.id }}" name="address[default]" value="1" checked />
+                <label for="address_default_address_{{ form.id }}"></label>
+              </div>
+
+              <div class="form-actions group-buttons d-flex justify-content-between">
+                <button type="submit" class="btn">{{ 'customer.addresses.update' | t }}<div class="loader"></div></button>
+                <button type="button" class="btn btn-cancel address-edit-toggle" data-form-id="{{ form.id }}">{{
+                  'customer.addresses.cancel' | t }}</button>
+              </div>
+
+              {% endform %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+      </div>
+      {%- if paginate.pages > 1 -%}
+      <div class="smart_pagination">
+        {% include 'pagination', paginate: paginate %}
+      </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}
+{% include 'popup-delete-address' %}
+<script>
+  var postalCodeShop = {{ shop.metafields.location.postal_codes }},
+  stateShop = {{ shop.metafields.location.states }},
+  cityShop = {{ shop.metafields.location.cities }},
+  shopLocale = "{{ shop.locale }}";
+  const citiesName = document.querySelectorAll('.address__list .address__city');
+  citiesName.forEach(item => {
+    const id = item.id;
+    const city = cityShop.find(item => item.id == id);
+    if (!city) {
+      return;
+    }
+    if (shopLocale === 'en') {
+      item.textContent = city.en_name;
+    } else {
+      item.textContent = city.th_name;
+    }
+  });
+</script>
+<script src="{{ 'location-form.js' | asset_url }}"></script>
+<script src="{{ 'customer-address.js' | asset_url }}"></script>

@@ -1,0 +1,16 @@
+<div class="delete-address__modal smart_modal smart_modal-medium">
+    <div class="modal-center">
+        <div class="modal-content modal-content__padding">
+            <div class="delete-address__icon-wrapper">
+                <img src="{{ 'alert_delete_address.png' | asset_img_url: '120x' }}" alt="alert delete address icon">
+                <span class="title">{{ 'customer.addresses.delete_confirm' | t }}</span>
+                <span class="alert">{{ 'customer.addresses.delete_confirm_alert' | t }}</span>
+            </div>
+            <div class="group-buttons">
+                <button class="btn btn-primary delete-address__affirmative">{{ 'customer.addresses.delete' | t }}</button>
+                <button class="btn btn-cancel delete-address__cancel">{{ 'customer.addresses.cancel' | t }}</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay"></div>
+</div>

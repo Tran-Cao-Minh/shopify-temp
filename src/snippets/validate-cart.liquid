@@ -1,0 +1,10 @@
+{
+{% for item in cart.items %}
+    {% assign variant = item.variant %}
+    {% if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny' %}
+        {% if variant.inventory_quantity <= 0 or variant.inventory_quantity < item.quantity %}
+            {{ variant.id }}: {{ variant.inventory_quantity }},
+        {% endif %}
+    {% endif %}
+{% endfor %}
+}

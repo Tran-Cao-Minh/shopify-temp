@@ -1,0 +1,211 @@
+$grid-mobile-down: 575.98px;
+$grid-mobile-up: 576px;
+
+.page_promotion {
+    .product-single__title {
+        font-size: 20px;
+    }
+    .swiper-pagination .swiper-pagination-bullet {
+        background: rgba(153,153,153,.7);
+        &.swiper-pagination-bullet-active {
+            background: #999;
+        }
+    }
+}
+
+.promotion__block {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.promotion__item-media {
+    text-align: right;
+    display: flex;
+    align-items: center;
+}
+
+.image__mb {
+    display: none;
+}
+.promotion .main-content {
+    background: #F2F2F2;
+    padding-top: 0;
+    .breadcrumb__wrap {
+        background: #fff;
+        padding: 16px 0;
+        margin-bottom: 20px;
+        .breadcrumb {
+            margin: 0;
+        }
+    }
+}
+
+.promotion__slideshow {
+    .swiper-button-next, .swiper-button-prev {
+        z-index: 5;
+        display: none;
+        &:after, &:before {
+            font-size: 33px;
+            line-height: 1;
+            font-family: swiper-icons;
+        }
+        &:after {
+            color: #000;
+            margin-left: -16px;
+        }
+        &:before {
+            color: #FFF;
+        }
+    }
+    .swiper-button-next {
+        right: 20px;
+        &:before {
+            content: 'next';
+        }
+    }
+    .swiper-button-prev {
+        left: 20px;
+        &:before {
+            content: 'prev';
+        }
+    }
+    .swiper-pagination {
+        bottom: 20px;
+    }
+}
+
+.promotion__product,
+.promotion__collection {
+    background: #fff;
+    .promotion__item-content {
+        padding: 15px 30px;
+    }
+    .promotion__item-media {
+        order: -1;
+    }
+
+    @media (max-width: $grid-mobile-down) {
+        .share__icon-wrap {
+            margin-right: 10px;
+        }
+    }
+
+}
+.promotion__collection {
+    
+    .title {
+        line-height: 1.4;
+        margin-bottom: 12px;
+        p {
+            margin: 0 5px 0 0;
+            display: inline;
+        }
+    }
+    .sub-title {
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+    }
+    .desc {
+        padding-top: 20px;
+        border-top: 1px solid #ccc;
+    }
+    .btn {
+        margin-top: 10px;
+    }
+
+    @media (max-width: $grid-mobile-down) {
+        .group-buttons {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            .btn {
+                margin: 0;
+            }
+        }
+    }
+}
+
+.promotion__product .product-single__collections {
+    margin-bottom: 20px;
+}
+@media (min-width: $grid-mobile-up) {
+    .page_promotion {
+        .product-single__title {
+            font-size: 25px;
+        }
+        .product-form__item--submit .available, .product-form__item--submit .unavailable {
+            margin-left: 0;
+        }
+    }
+
+    .promotion__slideshow {
+        .swiper-wrapper {
+            position: relative;
+            &::after {
+                background: #e5e5e5;
+                content: "";
+                display: block;
+                position: absolute;
+                width: 95%;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+                height: 10px;
+                bottom: -10px;
+            }
+        }
+        .swiper-button-next, .swiper-button-prev {
+            display: flex;
+            &.swiper-button-disabled {
+                display: none;
+            }
+        }
+        .swiper-container[data-page="true"] {
+            padding-bottom: 50px;
+        }
+        .swiper-pagination {
+            bottom: 0;
+        }
+    }
+
+    .promotion__product,
+    .promotion__collection {
+        
+        &::after {
+            background: #e5e5e5;
+            content: "";
+            display: block;
+            position: absolute;
+            width: 95%;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            height: 10px;
+            bottom: -10px;
+        }
+        
+        .promotion__item-media {
+            order: 1;
+        }
+        .image_left {
+            .promotion__item-media {
+                order: -1;
+            }
+        }
+        .promotion__item-content {
+            padding: 50px 70px 50px 100px;
+        }
+    }
+
+    .promotion__collection {
+        .title p {
+            margin: 0;
+            display: block;
+        }
+        .btn {
+            margin-top: 35px;
+        }
+    }
+
+}

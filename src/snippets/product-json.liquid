@@ -1,0 +1,94 @@
+{%- if product.tags contains 'Starter Kits' or product.tags contains 'starter kits' -%}
+  {%- assign product_status = false -%}
+{%- else -%}
+{%- if product.metafields.ulife.brand != blank -%}
+  {%- case product.metafields.ulife.brand -%}
+    {%- when 'L2_Event' -%}
+      {%- assign brand_product = 'products.brand.event' | t -%}
+    {%- when 'L2_Premium' -%}
+      {%- assign brand_product = 'products.brand.premium' | t -%}
+    {%- when 'L2_Sale Aids' -%}
+      {%- assign brand_product = 'products.brand.sale_aids' | t -%}
+    {%- when 'L2_Sale Kit' -%}
+      {%- assign brand_product = 'products.brand.sale_kit' | t -%}
+    {%- when 'L2_Training' -%}
+      {%- assign brand_product = 'products.brand.training' | t -%}
+    {%- when 'L2_beyonde' -%}
+      {%- assign brand_product = 'products.brand.beyonde' | t -%}
+    {%- when 'L2_aviance-supplement' -%}
+      {%- assign brand_product = 'products.brand.aviance_supplement' | t -%}
+    {%- when 'L2_aviance-BPC' -%}
+      {%- assign brand_product = 'products.brand.aviance_bpc' | t -%}
+    {%- when 'L2_iFresh' -%}
+      {%- assign brand_product = 'products.brand.ifresh' | t -%}
+    {%- when 'L2_Lever Home' -%}
+      {%- assign brand_product = 'products.brand.lever_home' | t -%}
+    {%- when 'L2_Accessories' -%}
+      {%- assign brand_product = 'products.brand.accessories' | t -%}
+    {%- else -%}
+      {%- assign brand_product = product.metafields.ulife.brand | replace: 'L2_', '' -%}
+  {%- endcase -%}
+{%- else -%}
+  {%- assign brand_product = "" -%}
+{%- endif -%}
+{
+  "id": {{ product.id | json }},
+  "available": {{ product.available | json }},
+  "title": {{ product.title | json }},
+  "collections": {{ product.collections | json }},
+  "compare_at_price": {{ product.compare_at_price | divided_by: 1.00 | json }},
+  "description": {{ product.description | json }},
+  "ingredient": {{ product.metafields.ulife.ingredient | json }},
+  "howtouse": {{ product.metafields.ulife.how_to_use | json }},
+  "testimonial": {{ product.metafields.ulife.testimonial | json }},
+  "brand": {{ brand_product | json }},
+  {%- if product.featured_image -%}
+    "featured_image": {{ product.featured_image | json }},
+  {%- else -%}
+    "featured_image": "{{ 'default_product.png' | asset_img_url: '400x' }}",
+  {%- endif -%}
+  "media": {{ product.media | json }},
+  "handle": {{ product.handle | json }},
+  "price" : {{ product.price | divided_by: 1.00 | json }},
+  "url": {{ product.url | within: collection | json }},
+  {%- if product_tags contains "autoship" -%}
+    "autoship": true,
+  {%- else -%}
+    "autoship": false,
+  {%- endif -%}
+  "options": {{ product.options | json }},
+  "tags": {{ product.tags | json }},
+  {%- if product.compare_at_price > product.price -%}
+    "price_sale": true,
+  {%- else -%}
+    "price_sale": false,
+  {%- endif -%}
+  {%- if customer -%}
+    {%- assign wishlists = customer.metafields.wishlist.wishlist -%}
+    {%- if wishlists contains product.handle -%}
+      "wishlist": true,
+    {%- else -%}
+      "wishlist": false,
+    {%- endif -%}
+  {%- endif -%}
+  "variants": [
+    {%- assign status_first = false -%}
+    {%- assign count_variant = 0 -%}
+    {%- for variant in product.variants -%}
+      {%- assign sku_tag = variant.sku | append: '_end_rank' | downcase -%}
+      {%- if product_tags contains sku_tag -%}
+        {%- if customer -%}
+          {%- assign variant_tag = tag_customer | append: '_' | append: variant.sku | append: '_END_RANK' -%}
+          {%- if product.tags contains variant_tag -%}
+            {%- if status_first -%},{%- endif -%}{%- include 'variant-json' -%}
+            {%- assign status_first = true -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- if status_first -%},{%- endif -%}{%- include 'variant-json' -%}
+        {%- assign status_first = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+{%- endif -%}

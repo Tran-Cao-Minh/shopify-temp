@@ -1,0 +1,325 @@
+<style>
+    .error {
+        color: red;
+    }
+</style>
+{%- capture locale_primary -%}
+    {%- for locale in shop.published_locales -%}
+        {%- if locale.primary -%}{{ locale.iso_code }}{%- endif -%}
+    {%- endfor -%}
+{%- endcapture -%}
+{% if cart.item_count != 0 %}
+    <div class="container">
+        <div class="section-header text-center">
+            <h1>{{ page.title }}</h1>
+        </div>
+    </div>
+    <div class="checkout__progress-bar" data-page_border>
+        <div class="container">
+            <div class="row">
+                <ul class="smart-progress__steps smart-progress__checkout">
+                    <li class="progress__step-item active" id="step_shoppingBag">
+                        <div class="progress__step-number"><a href="{{ routes.cart_url }}">{% render 'icon-checked-progress' %}</a></div>
+                        <div class="progress__step-content"><a href="{{ routes.cart_url }}">{{ 'general.checkout_progress_step.shopping_bag_html' | t }}</a></div>
+                    </li>
+                    <li class="progress__step-item progress__step--contact">
+                        <div class="progress__step-number"><div class="icon_active"> <a href="#" data-action="to:contact">{% render 'icon-checked-progress' %}</a></div><span class="number">2</span></div>
+                        <div class="progress__step-content"><a href="#" data-action="to:contact">{{ 'general.checkout_progress_step.shipping_address_html' | t }}</a></div>
+                    </li>
+                    <li class="progress__step-item progress__step--payment">
+                        <div class="progress__step-number"><div class="icon_active">{% render 'icon-checked-progress' %}</div><span class="number">3</span></div>
+                        <div class="progress__step-content">{{ 'general.checkout_progress_step.payment_info_html' | t }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="uni__checkout">
+        <div class="cart__stock-wrap">
+            <div class="container">
+                <div class="col-12">
+                    <div class="update-cart-stock" style="display: none">
+                        <label for="">{{ 'checkout.out_of_stock_label' | t }}</label>
+                        <span>{{ 'checkout.out_of_stock_description' | t }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row row__column-0">
+                <div class="col-lg-8 uni__checkout--left">
+                    <div class="form">
+                        {% section 'checkout-contact' %}
+                        {% section 'checkout-payment' %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="mb-calculating-price" data-mb-calculating-price><div class="loader"></div>{{ 'general.checkout_sidebar.calculating_price' | t }}</div>
+                    {% section 'checkout-sidebar' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="checkout__modal-belong-member smart_modal">
+        <div class="modal-center">
+            <div class="modal-content">
+                <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                <div>
+                    <h3 class="md__title">{{ 'checkout.set_national_id_title' | t }}</h3>
+                    <div class="description-form">
+                        <p class="md__description">
+                            {{ 'general.checkout_popup.belong_memeber.text_1_html' | t }}
+                        </p>
+                        <form class="form-vertical"
+                            name="login" method="GET" action="{{ shop.metafields.route.sso_login }}">
+                            {% assign redirect_url = shop.secure_url | append: request.path %}
+                            <input type="hidden" name="shop_redirect" value="{{ redirect_url }}" />
+                            <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+                            <button type="submit" class="btn btn--link" data-role="btn-login"> {{ 'general.checkout_popup.belong_memeber.login_to_continue' | t }}</button>
+                        </form>
+                    </div>
+                    <div class="md__bottom">{{ 'general.checkout_popup.belong_memeber.text_2_html' | t }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal__overlay overlay"></div>
+    </div>
+
+    <div class="otp-modal smart_modal smart_modal-medium" id="otp-modal">
+        <div class="modal-center">
+            <div class="modal-content modal-content__padding">
+                <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                <div class="content__scroll">
+                </div>
+                <div class="modal__loading hide">Loading...</div>
+            </div>
+        </div>
+        <div class="modal__overlay overlay"></div>
+    </div>
+
+    <script src="/apps/eai/js/checkout.js"></script>
+    <script>
+        window.FindARepInCheckout = true;
+        let invalidItems = {% include 'validate-cart' %};
+        var customData = '';
+        var options = {
+            OTPLength: 6,
+            OTPGenerateUrl: "",
+            OTPValidateUrl: ""
+        }
+        var contactOptions = {
+            OTPGenerateUrl: "{{ shop.metafields.route.checkout_otp_generate }}",
+            OTPValidateUrl: "{{ shop.metafields.route.checkout_otp_validate }}"
+        }
+        var paymentOptions = {
+            OTPGenerateUrl: "/apps/eai/api/checkout/resend-saved-card-otp",
+            OTPValidateUrl: "/apps/eai/api/checkout/verify-saved-card"
+        }
+        var validationErrors = {
+            email: {
+                email: {{ 'checkout.message.email_invalid' | t | json }},
+            },
+            first_name: {
+                maxlength:  {{ 'checkout.message.firtname_maxlength' | t | json }},
+            },
+            last_name: {
+                maxlength:  {{ 'checkout.message.lastname_maxlength' | t | json }},
+            },
+            phone: {
+                phone:  {{ 'checkout.message.phone_invalid' | t | json }},
+            },
+            address1: {
+                maxlength:  {{ 'checkout.message.address1_maxlength' | t | json }},
+            },
+            zipcode: {
+                validZipcode:  {{ 'checkout.message.zipcode_invalid' | t | json }},
+            },
+            national_id: {
+                validNationalId:  {{ 'checkout.message.nationalid_invalid' | t | json }},
+            },
+            check_box_policy_1: {
+                requireCheckbox:  {{ 'checkout.message.policy_required' | t | json }},
+            },
+            check_box_policy_2: {
+                requireCheckbox:  {{ 'checkout.message.age_required' | t | json }},
+            },
+            shipping_method: {
+                required: {{ 'checkout.message.shipping_required' | t | json }},
+            }
+        };
+
+        var strings = {
+            use_default_address: {{ 'checkout.use_default_address' | t | json }},
+        };
+    </script>
+    <script type="text/javascript">
+        let customerAvatarUrl = {{ customer.metafields.data.personal.avatar_url | json }};
+        if (customerAvatarUrl) {
+        $('#customer__avatar').attr('src', customerAvatarUrl);
+        }
+        let page = 'checkout';
+        let customerAddresses;
+        let customerEmail;
+		let customerAddressDefault;
+
+        {% if customer %}
+        $('#customer_address').show();
+
+        customerEmail = "{{ customer.email }}";
+        customerAddresses = [];
+      	customerAddressDefault = {
+      		"id":{{ customer.default_address.id | json }},
+            "first_name": {{ customer.default_address.first_name | json }},
+            "last_name": {{ customer.default_address.last_name | json }},
+            "address1": {{ customer.default_address.address1 | json }},
+            "address2": {{ customer.default_address.address2 | json }},
+            "street":  {{ customer.default_address.street | json }},
+            "province": {{ customer.default_address.province | json }},
+            "city": {{ customer.default_address.city | json }},
+            "zip": {{ customer.default_address.zip | json }},
+            'phone': {{ customer.default_address.phone | json }}
+      	};
+
+
+        {% for address in customer.addresses %}
+          var tmp = {
+            "id":{{ address.id | json }},
+            "first_name": {{ address.first_name | json }},
+            "last_name": {{ address.last_name | json }},
+            "address1": {{ address.address1 | json }},
+            "address2": {{ address.address2 | json }},
+            "street":  {{ address.street | json }},
+            "province": {{ address.province | json }},
+            "city": {{ address.city | json }},
+            "zip": {{ address.zip | json }},
+            'phone': {{ address.phone | json }}
+          };
+
+          // Sort the objects by locale name
+          if ( _.isEqual(tmp, customerAddressDefault)) {
+            customerAddresses.unshift(tmp)
+          } else {
+            customerAddresses.push(tmp);
+          }
+
+        {% endfor %}
+        {% endif %}
+        let locale = '{{ shop.locale }}';
+        let primaryLocale = '{{ locale_primary }}'
+        let sort = function (objects) {
+            return objects.sort(function (a, b) {
+                return a[`${locale}_name`].localeCompare(b[`${locale}_name`]);
+            });
+        }
+        // Init location options
+        let states = sort({{ shop.metafields.location.states }});
+        let cities = sort({{ shop.metafields.location.cities }});
+        let postalCodes = {{ shop.metafields.location.postal_codes }};
+
+        $(document).ready(function() {
+            $('#customer_address').select2({
+                dropdownCssClass: 'customer_address-checkout'
+            });
+        });
+    </script>
+
+    <script type="text/template" id="template-method-item">
+        <div class="radio__checkbox-item">
+            <div class="form-check">
+                <input id="<%= method.id %>"
+                   class="form-check-input"
+                   value="<%= method.code %>"
+                   data-card="<%= method.card && method.card > 0 ? method.card : '' %>"
+                   type="radio"
+                   <%= method.attribute %>
+                    <% if (method.sub_methods) { %>
+                   name="<%= 'parent_' + name %>"
+                   data-method="<%= name + '_' + method.code %>"
+                    <% } else { %>
+                    data-parent="<%= name + '_' + method.code %>"
+                    name="<%= name %>"
+                    <% } %>
+                >
+                <label class="form-check-label" for="<%= method.id %>">
+                    <% if (method.type == 'visa') { %>
+                    {% render "icon", name: "card-visa" %}
+                    <% } else if(method.type == 'master_card') { %>
+                    {% render "icon", name: "card-master_card" %}
+                    <% } %>
+                    <%= method.title %>
+                </label>
+            </div>
+
+            <% if (method.sub_methods) { %>
+            <div class="sub_methods">
+            <% method.sub_methods.forEach((subMethod, idx) => {
+                subMethod.card = subMethod.id;
+                subMethod.id = `${name}_${subMethod.code}${subMethod.id ?? ''}`;
+                subMethod.name = name;
+                subMethod.attribute = (idx === 0) ? 'checked' : '';
+
+                let template = _.template($('#template-method-item').html())
+                print(template({method: subMethod, name}));
+            }) %>
+            </div>
+            <% } %>
+        </div>
+    </script>
+{% else %}
+    <div class="cart-header">
+        <h1 class="cart-header__title">{{ 'cart.general.title' | t }}</h1>
+        <a href="{{ routes.all_products_collection_url }}" class="text-link text-link--accent">
+            {{ 'cart.general.continue_shopping' | t }}
+        </a>
+    </div>
+{% endif %}
+
+<style>
+    /* Absolute Center Spinner */
+    .opacity {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: show;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    /* Transparent Overlay */
+    .opacity:after {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+        background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+    }
+</style>
+
+<script type="text/template" id="ni-belong-other">
+    <div>
+        <div class="close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="29.815" height="29.815" viewBox="0 0 29.815 29.815">
+                <g data-name="Group 148" transform="translate(1.414 1.414)" opacity="0.998">
+                    <line data-name="Line 16" x2="26.987" y2="26.987" transform="translate(0)" fill="none" stroke="#333" stroke-miterlimit="10" stroke-width="4"></line>
+                    <line data-name="Line 17" x1="26.987" y2="26.987" transform="translate(0)" fill="none" stroke="#333" stroke-miterlimit="10" stroke-width="4"></line>
+                </g>
+            </svg>
+        </div>
+        <div>
+            <h4>Your TaxID belongs to a member!</h4>
+            <p>If you are <%= name %>, please <a href="#" >login to continue</a>.</p>
+            <p>If you are not <%= name %>, please enter another TaxID or leave it blank to continue.</p>
+        </div>
+    </div>
+</script>

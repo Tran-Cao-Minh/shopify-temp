@@ -1,0 +1,430 @@
+<!doctype html>
+<html class="no-js{% if template.name contains 'product' %} disable-overflow{% endif %}" lang="{{ shop.locale }}">
+  <head>
+    {% include 'customer-title' %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"/>
+    <meta name="theme-color" content="{{ settings.color_button }}">
+    <!-- Google Analytics -->
+    <meta name="google-site-verification" content="WDtiCbpP_kwVYjKBbSUWXk--XA6KhQ3A_ACMBuoi5jQ" />
+
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+    {%- endif -%}
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7HYEYQWJH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-R7HYEYQWJH');
+    </script> 
+    <!-- End Google Analytics -->
+
+    {%- capture seo_title -%}
+      {%- if request.page_type == 'search' and search.performed == true -%}
+        {{ 'general.search.heading' | t: count: search.results_count }}:
+        {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+      {%- else -%}
+        {{ page_title }}
+      {%- endif -%}
+      {%- if current_tags -%}
+        {%- assign meta_tags = current_tags | join: ', ' -%}
+        &ndash;
+        {{ 'general.meta.tags' | t: tags: meta_tags -}}
+      {%- endif -%}
+      {%- if current_page != 1 -%}
+        &ndash;
+        {{ 'general.meta.page' | t: page: current_page }}
+      {%- endif -%}
+      {%- assign escaped_page_title = page_title | escape -%}
+      {%- unless escaped_page_title contains shop.name -%}
+        &ndash;
+        {{ shop.name }}
+      {%- endunless -%}
+    {%- endcapture -%}
+    <title>{{ seo_title | strip }}</title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% include 'social-meta-tags' %}
+
+    {%- if template.name != 'index' -%}
+      {{ 'select2.min.css' | asset_url | stylesheet_tag }}
+      {{ 'jquery.datetimepicker.min.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
+    {{ 'swiper.min.css' | asset_url | stylesheet_tag }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'site.css' | asset_url | stylesheet_tag }}
+    {{ 'find-representative-modal.scss' | asset_url | stylesheet_tag }}
+    {%- if template.name == 'account' or template.suffix contains 'myaccount' or template.name == 'addresses' -%}
+      {{ 'account.scss.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
+    {%- if template.suffix contains 'order' -%}
+      {{ 'order.scss.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
+    {%- if template.name contains 'article' -%}
+      {{ 'article.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
+    <!-- Checkout styles -->
+    {{ 'checkout.scss.css' | asset_url | stylesheet_tag }}
+
+    {% render 'style-variable' %}
+
+    {% assign customer_status = false %}
+    {% if customer %}
+      {% assign customer_status = true %}
+    {% endif %}
+    <script>
+      function smartSetCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+        var expires = 'expires=' + d.toUTCString();
+        document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/;secure';
+      }
+      function smartGetCookie(cname) {
+        var name = cname + '=';
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return '';
+      }
+      function smartEraseCookie(name) {
+        smartSetCookie(name, '', -1);
+      }
+
+      let params = (new URLSearchParams(window.location.search));
+      let whiteList = [
+      	"/pages/checkout",
+      	"/apps/eai/enroll",
+      	"/apps/eai/enroll/line/callback/guest",
+      	"/apps/eai/line/token",
+      	"/apps/eai/enroll/form/personal-information",
+        "/pages/product-sample-request",
+        "/apps/eai/enroll/form/address-bank",
+        "/apps/eai/enroll/form/products",
+        "/apps/eai/enroll/success",
+        "/products/account",
+      	"/apps/eai/api/checkout/set-card-permanent",
+      	"/checkout/callback",
+      	"/apps/eai/line/callback",
+        "/apps/eai/enroll/line/validate",
+      	"/th/pages/checkout",
+      	"/th/apps/eai/enroll",
+      	"/th/apps/eai/enroll/line/callback/guest",
+      	"/th/apps/eai/line/token",
+      	"/th/apps/eai/enroll/form/personal-information",
+        "/th/pages/product-sample-request",
+        "/th/apps/eai/enroll/form/address-bank",
+        "/th/apps/eai/enroll/form/products",
+        "/th/apps/eai/enroll/success",
+        "/th/products/account",
+      	"/th/apps/eai/api/checkout/set-card-permanent",
+      	"/th/checkout/callback",
+      	"/th/apps/eai/line/callback",
+        "/th/apps/eai/enroll/line/validate",
+        "/pages/search",
+        "/th/pages/search",
+        "/pages/how-to-earn-from-unilever-life",
+        "/th/pages/how-to-earn-from-unilever-life",
+      ];
+      if ("{{ customer.id }}" == "" && !params.get('origin') && !whiteList.includes("{{ request.path }}") && !params.get('oseid')
+      && !("{{ request.path }}").includes("/apps/eai/customer/password")
+      && !("{{ request.path }}").includes("/apps/eai/order/success/")
+      && !("{{ request.path }}").includes("/apps/eai/order/cancel")) {
+        window.location.href = '/apps/eai/multipass/login?origin=sso&shop_redirect=' + encodeURIComponent(window.location.href);
+      }
+
+      if ("{{ customer.id }}") {
+        let params = (new URLSearchParams(window.location.search));
+        if (params.get('session_id')) {
+          smartSetCookie('session_id', params.get('session_id'), 3); //remove after 72h
+          smartSetCookie('name_id', params.get('name_id'), 3); //remove after 72h
+        }
+        if (params.get('force_logout') == 'true') {
+          smartEraseCookie('session_id');
+          smartEraseCookie('name_id');
+        }
+        {% unless request.design_mode %}
+          if (smartGetCookie('session_id') == '' || smartGetCookie('name_id') == '') {
+            window.location.href = "account/logout?origin=sso";
+          }
+        {% endunless %}
+      }
+
+    var theme = {
+      breakpoints: {
+        medium: 750,
+        large: 990,
+        widescreen: 1400
+      },
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        salePrice: {{ 'products.product.sale_price' | t | json }},
+        sale: {{ 'products.product.on_sale' | t | json }},
+        vendor: {{'products.product.vendor' | t | json }},
+        showMore: {{ 'general.filters.show_more' | t | json }},
+        showLess: {{ 'general.filters.show_less' | t | json }},
+        searchFor: {{ 'general.search.search_for' | t | json }},
+        addressError: {{ 'sections.map.address_error' | t | json }},
+        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+        authError: {{ 'sections.map.auth_error_html' | t | json }},
+        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
+        external: {{ 'general.accessibility.link_messages.external' | t | json }},
+        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }},
+        removeLabel: {{ 'cart.label.remove' | t: product: '[product]' | json }},
+        update: {{ 'cart.label.update' | t | json }},
+        quantity: {{ 'cart.label.quantity' | t | json }},
+        discountedTotal: {{ 'cart.label.discounted_total' | t | json }},
+        regularTotal: {{ 'cart.label.regular_total' | t | json }},
+        priceColumn: {{ 'cart.label.price_column' | t | json }},
+        cartError: {{ 'cart.general.cart_error' | t | json }},
+        qtyInputMax: {{ 'products.product.this_variant_has_only_item_in_store' | t | json }},
+        removedItemMessage: {{ 'cart.general.removed_item_html' | t: quantity: '[quantity]', link: '[link]' | json }},
+        products: {{ 'general.search.products' | t | json }},
+        articles: {{ 'general.search.articles' | t | json }},
+        loading: {{ 'general.search.loading' | t | json }},
+        number_of_results: {{ 'general.search.number_of_results' | t: result_number: '[result_number]', results_count: '[results_count]' | json }},
+        number_of_results_found: {{ 'general.search.number_of_results_found' | t: results_count: '[results_count]' | json }},
+        one_result_found: {{ 'general.search.one_result_found' | t | json }},
+        reachMilestone: {{ 'order_form.cart.reach_milestone' | t | json }},
+        unReachMilestone1: {{ 'order_form.cart.unreach_milestone_1' | t | json }},
+        unReachMilestone2: {{ 'order_form.cart.unreach_milestone_2' | t | json }},
+        tag_new: {{ 'products.tags.new' | t | json }},
+        tag_hot: {{ 'products.tags.hot' | t | json }},
+        quickview: {{ 'collections.quickview.title' | t | json }},
+        incorrect_email_password: {{ 'general.validate.incorrect_email_password' | t | json }},
+        read_more: {{ 'blogs.article.read_more' | t | json }},
+        validPostalCode: {{ 'general.validate.valid_postal_code' | t | json }},
+        firstNameMaxLength: {{ 'general.validate.valid_first_name_max_length' | t | json }},
+        lastNameMaxLength: {{ 'general.validate.valid_last_name_max_length' | t | json }},
+        addressMaxLength: {{ 'general.validate.valid_address_max_length' | t | json }},
+        validPhone: {{ 'general.validate.valid_phone' | t | json }},
+        validEmail: {{ 'general.validate.email' | t | json }},
+        paginationNext: {{ 'general.pagination.next_html' | t | json }},
+        paginationPrev: {{ 'general.pagination.previous_html' | t | json }},
+        copy: {{ 'general.social.copy_link' | t | json }},
+        copied: {{ 'general.social.copied' | t | json }},
+        calculateShippingFee: {{ 'checkout.calculate_shipping_fee' | t | json }},
+        checkoutPromo: {{ 'checkout.promo_code' | t | json }},
+        checkoutCoupon: {{ 'checkout.coupon_code' | t | json }},
+        validateRequired: {{ 'general.validate.required' | t | json }},
+        freeshipPriceBar: {{ 'cart.minicart.add_to_receive_free_shipping_html' | t | json }},
+        confirm: {{ 'general.popup.confirm' | t | json }},
+        cancel: {{ 'general.popup.cancel' | t | json }},
+        freeshipQualified: {{ 'checkout.freeship_qualified' | t | json }},
+        otp: {
+          resend_success: {{ 'otp.resend_success' | t | json }},
+          invalid: {{ 'otp.invalid_html' | t | json }},
+          wait: {{ 'otp.wait' | t | json }}
+        },
+        enroll: {
+          promo_applied: {{ 'enrollment.form.information.promo_applied' | t | json }},
+          validate: {
+            required: {{ 'enrollment.validate.required' | t | json }},
+            email: {{ 'enrollment.validate.email' | t | json }},
+            dob: {{ 'enrollment.validate.dob' | t | json}},
+            minlength: {{ 'enrollment.validate.minlength' | t | json }},
+            maxlength: {{ 'enrollment.validate.maxlength' | t | json }},
+            nationalId: {{ 'enrollment.validate.nationalId' | t | json }},
+            phone: {{ 'enrollment.validate.phone' | t | json }},
+            condition_1: {{ 'enrollment.validate.condition_1' | t | json }},
+            condition_2: {{ 'enrollment.validate.condition_2' | t | json }},
+            zipCode: {{ 'enrollment.validate.zipCode' | t | json }},
+            bankConfirmEqual: {{ 'enrollment.validate.bankConfirmEqual' | t | json }}
+          }
+        },
+        setupPassword: {
+          validate: {
+            required: {{ 'setup-password.validate.required' | t | json }},
+            nationalId: {{ 'setup-password.validate.nationalId' | t | json }},
+            email: {{ 'setup-password.validate.email' | t | json }},
+            pwdConfirm: {{ 'setup-password.validate.pwdConfirm' | t | json }}
+          }
+        },
+        locationForm:{
+          zipCode: {{ 'general.form.location_form.zip_code' | t | json }},
+          province: {{ 'general.form.location_form.province' | t | json }},
+          district: {{ 'general.form.location_form.district' | t | json }},
+          provincePlaceHolder: {{ 'general.form.location_form.province_placeholder' | t | json }},
+          districtPlaceHolder: {{ 'general.form.location_form.district_placeholder' | t | json }}
+        },
+        validRestrictDelimiter: {{ 'general.validate.restrict_delimiter' | t | json }},
+        duedateSelectorPlaceholder: {{ 'general.checkout_sidebar.autoship_due_date_selecte_a_date' | t | json }},
+        countdown: {
+          days: {{ 'general.countdown.days' | t | json }},
+          hours: {{ 'general.countdown.hours' | t | json }},
+          minutes: {{ 'general.countdown.minutes' | t | json }},
+          seconds: {{ 'general.countdown.seconds' | t | json }}
+        }
+      },
+      moneyFormat: {{ shop.money_format | json }},
+      moneyFormatWithCurrency: {{ shop.money_with_currency_format | json }},
+      settings: {
+        predictiveSearchEnabled: {{ settings.predictive_search_enabled | json }},
+        predictiveSearchShowPrice: {{ settings.predictive_search_show_price | json }},
+        predictiveSearchShowVendor: {{ settings.predictive_search_show_vendor | json }},
+        api_sso_login: {{ shop.metafields.route.api_sso_login | json }},
+        customerStatus: {{ customer_status | json }},
+        cookies_expires: {{ shop.metafields.data.cookies_expires | json }},
+      }
+    }
+    var product__json = '';
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+    {%- if request.page_type contains 'customers/' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    <script src="{{ 'jquery.min.js' | asset_url }}" crossorigin="anonymous"></script>
+    <script src="{{'api.jquery.js' | shopify_asset_url }}"></script>
+    <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'swiper.min.js' | asset_url }}" defer="defer"></script>
+    {%- if template.name != 'index' -%}
+      <script src="{{ 'select2.min.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'jquery.datetimepicker.full.min.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+    <script src="{{'option_selection.js' | shopify_asset_url }}"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'lodash.js' | asset_url }}" type="text/javascript"></script>
+    <script src="{{ 'confetti.js' | asset_url }}" type="text/javascript"></script>
+    <script>
+    {%- assign hash_code = customer.id | hmac_sha256: shop.metafields.api.secret -%}
+
+    window.locale = {{ shop.locale | json }};
+    window.eai_customer = {
+      id: '{{ customer.id }}',
+      hash: '{{ hash_code }}',
+      member_id: '{{ customer.metafields.data.personal.member_id }}'
+    }
+    window.customer_title = {{ customer_title | json }};
+    window.cookies_expires = {{ shop.metafields.data.cookies_expires | json }};
+    window.enrollment_exist = {
+        message: {{ 'enrollment.customer_exist.message' | t | json }},
+        word_please: {{ 'enrollment.customer_exist.word_please' | t | json }},
+        link_login: {{ 'enrollment.customer_exist.link_login' | t | json }},
+        word_or: {{ 'enrollment.customer_exist.word_or' | t | json }},
+        link_go_back: {{ 'enrollment.customer_exist.link_go_back' | t | json }},
+        word_go_back: {{ 'enrollment.customer_exist.word_go_back' | t | json }},
+        message_redirect: {{ 'enrollment.customer_exist.message_redirect' | t | json }},
+        contact: {{ 'enrollment.customer_exist.contact' | t | json }},
+        link_contact: {{ 'enrollment.customer_exist.link_contact' | t | json }},
+    };
+  </script>
+    {% include 'adobe-tag' %}
+    {{ content_for_header }}
+  </head>
+  <body class="template-{{ request.page_type | handle }}{% if customer %} customer-login{% endif %} {{ template.suffix }} " data-template_name="{{ template.name }}" data-template_suffix="{{ template.suffix }}">
+    {% include 'fb-customerchat' %}
+    <div class="smart_cookieconsent hide">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="cookieconsent__content-left col-md-10">
+            <div class="cookieconsent__desc">{{ 'general.cookie_notice.content_html' | t }}</div>
+          </div>
+          <div class="cookieconsent__content-right col-md-2">
+            <span class="btn btn--cookieconsent">{{ 'general.cookie_notice.button' | t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+    {% assign pageurl = content_for_header| split:'"pageurl":"' | last | split:'"' | first | replace:'\/','/' | replace:'%20',' ' | replace:'\u0026','&' %}
+    {% unless pageurl contains "apps/eai/customer/password/forgot" %}
+      {% section 'header' %}
+    {% endunless %}
+    <div class="page-container drawer-page-content" id="PageContainer">
+      <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
+        {% unless template.name == "index"
+          or template.name == "collection"
+          or template.suffix == "business"
+          or template.suffix == "calendar"
+          or pageurl contains "apps/eai"
+        %}
+          {% include 'breadcrumbs' %}
+        {% endunless %}
+        {{ content_for_layout }}
+      </main>
+      {% if template.name == "index" %}
+        {% include 'sharing-popup', share_permalink: '' %}
+      {% endif %}
+      {% unless pageurl contains "apps/eai/customer/password/forgot" %}
+        {% section 'list-card' %}
+        {% section 'newsletter' %}
+        {% section 'footer' %}
+        {% section 'footer-stickey' %}
+      {% endunless %}
+      <div aria-hidden="true" class="visually-hidden" id="slideshow-info">
+        {{- 'sections.slideshow.navigation_instructions' | t -}}
+      </div>
+    </div>
+    <div class="smart-loading">
+      <div class="content">
+        {% render 'loading_fountain' %}
+      </div>
+    </div>
+    {% unless page.template_suffix == 'checkout' %}
+      <div class="offcanvas--right offcanvas--right__cart">
+        <div class="offcanvas-content offcanvas-cart">
+          {% include 'offcanvas-cart' %}
+        </div>
+        <div class="overlay"></div>
+      </div>
+    {% endunless %}
+    {% include 'search-drawer' %}
+    {% include 'quickview' %}{% include 'promo-popup' %}{% include 'congratulations-popup' %}{% include 'welcome-back' %}
+    <div class="error-message"></div>
+    <ul hidden>
+      <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+      <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+    </ul>
+    <div class="overlay hide"></div>
+    <script src="{{ 'jquery.validate.min.js' | asset_url }}"></script>
+    <!-- pagination js -->
+    {%- if page.template_suffix == 'search' or page.template_suffix == 'my-order' or page.template_suffix == 'order-form' -%}
+      <script src="{{ 'jquery.simple_pagination.js' | asset_url }}"></script>
+    {%- endif -%}
+    <script src="{{ 'site.js' | asset_url }}"></script>
+    {% if template.name == 'collection' %}
+      <script defer src="{{ 'pagination.js' | asset_url }}"></script>
+      <script src="{{ 'collection-template.js' | asset_url }}"></script>
+    {% endif %}
+    {%- if template.name contains 'product' or template.suffix == 'promotion' -%}
+      <script src="{{ 'product-detail.js' | asset_url }}"></script>
+    {%- endif -%}
+    <script type="text/javascript" src="/apps/eai/js/wishlist.js"></script>
+    <script type="text/html" id="product-suggestion-template">
+      {% include 'product-suggestion-template' %}
+    </script>
+    <script type="text/html" id="article-suggestion-template">
+      {% include 'article-suggestion-template' %}
+    </script>
+  </body>
+</html>

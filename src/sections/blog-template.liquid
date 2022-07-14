@@ -1,0 +1,156 @@
+{% assign page_url = blog.url %}
+{% case template %}
+   {% when 'blog.by_9' %}
+      {% assign blog_pagination = 9 %}
+   {% when 'blog.by_15' %}
+      {% assign blog_pagination = 15 %}
+   {% when 'blog.by_21' %}
+      {% assign blog_pagination = 21 %}
+   {% else %}
+      {% assign blog_pagination = 15 %}
+{% endcase %}
+
+{% paginate blog.articles by blog_pagination %}
+<div class="page__blog--list">
+    <div class="container">
+        <header class="section-header text-center">
+            <h1 class="page__heading">{{ 'blogs.category.title' | t }}</h1>
+            {% if section.blocks.size > 0 and section.settings.blog_show_filter %}
+                <div class="blog-filter">
+                    {% for block in section.blocks limit: section.blocks.size %}
+                        {%- assign tag_label = block.settings.title -%}
+                        {% if tag_label != blank and tag_label contains '#category_' %}
+                            {%- assign cat_tags = tag_label | remove_first: "#category_" -%}
+                            {% if shop.locale =='th' %}
+                                {%- assign cat_tags_name = block.settings.title_th -%}
+                            {% else %}
+                                {%- assign cat_tags_name = cat_tags -%}
+                            {% endif %}
+                            {%- assign tag_label_handle = tag_label | handle -%}
+                            {%- if current_tags contains tag_label -%}
+                                {% assign page_url = page_url | append: '/tagged/' | append: tag_label_handle %}
+                                <a href="{{ blog.url }}/tagged/{{ tag_label_handle }}" class="active">{{ cat_tags_name }}</a>
+                            {%- else -%}
+                                <a href="{{ blog.url }}/tagged/{{ tag_label_handle }}">{{ cat_tags_name }}</a>
+                            {%- endif -%}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </header>
+    </div>
+    <div class="container">
+        {% if blog.articles.size > 0 %}
+        <div class="blog-list-view row">
+            {% for article in blog.articles %}
+              <div class="col-md-4">
+                {% include 'article-card-grid', class: "article__card-item" %}
+              </div>
+            {% endfor %}
+        </div>
+        <div class="pagination-wrap smart_pagination">
+            <div class="pagination_show-more">
+                <label>{{ 'general.pagination.show' | t }}</label>
+                <div class="select2_wrap">
+                    <select class="select2_single" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                        <option value="?view=by_9"{% if blog_pagination == 9 %} selected="selected"{% endif %}>9</option>
+                        <option value="?view=by_15"{% if blog_pagination == 15 %} selected="selected"{% endif %}>15</option>
+                        <option value="?view=by_21"{% if blog_pagination == 21 %} selected="selected"{% endif %}>21</option>
+                    </select>
+                </div>
+                <span class="per_page">{{ 'general.pagination.items_per_page' | t }}</span>
+            </div>
+            {%- if paginate.pages > 1 -%}
+                {% include 'pagination', paginate: paginate %}
+            {%- endif -%}
+        </div>        
+        {% else %}
+            <div class="blog__no-matches text-center">{{ 'blogs.category.no_matches' | t }}</div>
+        {% endif %}
+    </div>
+</div>
+{% endpaginate %}
+<script>
+    (function() {
+        $(document).on('click', '.btn__link-share', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            $(`#share__${id}`).toggleClass('show');
+            $(this).toggleClass('active');
+        });
+        $(document).on('click', '.btn__getLink', function(e) {
+            e.preventDefault();
+            $(this).parent().find('.input__value--share').select();
+            let spanText = $(this).find('span');
+            smartosc.copyChangeText(spanText);
+            document.execCommand('copy');
+        });
+
+        // Change breadcrumb
+        if ($('[data-breadcrumb_blog_tag]').length > 0) {
+            const textTagName = $('.blog-filter a.active').html();
+            $('[data-breadcrumb_blog_tag]').html(textTagName);
+        }
+
+    })();
+
+    //Article Click Call function SDR_ULife
+    $('.article__card-item').click(function (event) {
+        articleTitle = $(this).find('.article__title').children().text();
+        //console.log(articleTitle);
+        var ev = {};
+        ev.eventInfo={
+            'type':ctConstants.trackEvent,
+            'eventAction': ctConstants.articleClick,
+            'eventLabel' : articleTitle,
+            'eventValue' :1 };
+        ev.category ={'primaryCategory':ctConstants.other};
+        ev.subcategory = 'Read';
+        digitalData.event.push(ev);
+    });
+
+</script>
+{% include 'sharing-popup', share_permalink: page_url %}
+{% schema %}
+{
+  "name": {
+    "en": "Blog pages",
+    "th": "หน้าบล็อก"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_filter",
+      "label": "Show filter 1",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "en": "Show date",
+        "th": "แสดงวันที่"
+      },
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tags",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tag name"
+        },
+        {
+          "type": "text",
+          "id": "title_th",
+          "label": "Title translation (TH)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

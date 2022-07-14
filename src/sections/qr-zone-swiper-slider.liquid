@@ -1,0 +1,140 @@
+{{ 'swiper.min.css' | asset_url | stylesheet_tag }}
+
+<div class="special-offers">
+  <div class="container">
+    <div class="special-offers__header">
+      {% if section.settings.title != blank%}
+        <h3 class="special-offers__header__title">{{ section.settings.title}} 
+          {% if section.settings.subtitle != blank %}
+            <span class="special-offers__header__subtitle">{{ section.settings.subtitle }}</span>
+          {% endif %}
+        </h3>
+      {% endif %}
+    </div>
+    <div class="special-offers__body">
+      <div class="special-offers__body__title">
+        {% if section.settings.product-list-title != blank %}
+          <div class="special-offers__body__title__horizontal special-offers__body__title__horizontal--left"></div>
+          <h4 class="special-offers__body__title__center">{{ section.settings.product-list-title }}</h4>
+          <div class="special-offers__body__title__horizontal special-offers__body__title__horizontal--right"></div>
+        {% endif %}
+      </div> 
+      <div class="special-offers__body__slide swiper">
+        <div class="swiper-wrapper">
+          {% for product in collections["special_offers"].products limit: collections["special_offers"].all_products_count %}
+            {% assign product_status = false %}
+            {% assign product_tags = product.tags | downcase %}
+            {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+            {% if product_status %}
+              <div class="special-offers__item swiper-slide" >
+                <div class="special-offers__item__information">
+                  {% assign compare_at_price = current_variant.compare_at_price %}
+                  {% assign price                = current_variant.price %}
+                  {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                  {% assign member_price         = current_variant.metafields.ulife.member_price %}
+                  <div class="special-offers__item__information__content">
+                    <h5 class="special-offers__item__information__content__title">{{ product.title }}</h5>
+                    <div class="special-offers__item__information__content__price">
+                      <p class="special-offers__item__information__content__price__note special-offers__item__information__content__price--red">{{ 'products.product.member_price' | t }}</p>
+                      <div class="special-offers__item__information__content__price__member">
+                        {% if compare_member_price != blank %}
+                          <span class="price-sale special-offers__item__information__content__price--pirk">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                        {% endif %}
+                        <span class="price-regular special-offers__item__information__content__price--red special-offers__item__information__content__price--size25">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                      </div>
+                      <p class="special-offers__item__information__content__price__note special-offers__item__information__content__price--gray">{{ 'products.product.retail_price' | t }}</p>
+                      <div class="special-offers__item__information__content__price__retail special-offers__item__information__content__price--gray">
+                        {% if compare_at_price != blank %}
+                          <span class="price-sale special-offers__item__information__content__price--size16">{{ compare_at_price | money | remove: '.00' }}</span>
+                        {% endif %}
+                        <span class="price-regular ">{{ price | money | remove: '.00' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="special-offers__item__information__img">
+                    {% if product.featured_image %}
+                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                    {% else %}
+                      <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                    {% endif %}
+                  </div>
+                </div>
+                <a class="special-offers__item__qr-code" href="{{ section.settings.link-qr}}">
+                  <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                  <h5 class="special-offers__item__qr-code__title">Create qr code</h5>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{ 'swiper.min.js' | asset_url | script_tag }}
+<script>
+  var swiper = new Swiper(".special-offers__body__slide", {
+    slidesPerView: 1,
+    spaceBetween: 30,
+    breakpoints: {  
+    '768': {
+      slidesPerView: 3,
+      spaceBetween: 10, }
+    },
+    slidesPerGroup: 1,
+    loop: true,
+    loopFillGroupWithBlank: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    }, 
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "special-offers",
+    "settings": [
+                  {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": {
+                      "en": "Generate QR Code to pass Unilever Life products to your friends and your love one with your Member price code",
+                      "th": "สร้าง QR Code เพื่อส่งต่อผลิตภัณฑ์ของยูนิลิเวอร์ ไลฟ์ พร้อมรหัสสมาชิกของคุณ"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Subtitle",
+                    "default": {
+                      "en": "25% Discount",
+                      "th": "ส่วนลด 25%"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "id": "product-list-title",
+                    "label": "Product List Title",
+                    "default": {
+                      "en": "Special offers",
+                      "th": "ข้อเสนอพิเศษ"
+                    }
+                  },
+                  {
+                    "type": "url",
+                    "id": "link-qr",
+                    "label": "Link QR Code"
+                  }
+                ]
+  }
+{% endschema %}

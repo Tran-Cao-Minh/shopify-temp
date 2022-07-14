@@ -1,0 +1,5 @@
+{% if routes.root_url == "/" %}
+    {% assign shop_url = "" %}
+{% else %}
+    {% assign shop_url = routes.root_url %}
+{% endif %}

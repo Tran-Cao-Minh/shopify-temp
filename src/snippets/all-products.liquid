@@ -1,0 +1,12 @@
+{
+    {% paginate collections['all'].products by collections['all'].all_products_count %}
+        {% for product in collections['all'].products %}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- assign product_status = false -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+            {%- if product_status -%}
+                '{{ product.id }}' : {{ product_json }},
+            {%- endif -%}
+        {% endfor %}
+    {% endpaginate %}
+}

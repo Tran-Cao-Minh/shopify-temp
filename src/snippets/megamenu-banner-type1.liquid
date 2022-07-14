@@ -1,0 +1,243 @@
+{%- assign tag_customer = '' -%}
+{%- if customer -%}
+   {%- for tag in customer.tags -%}
+      {% assign tag_downcase = tag | downcase %}
+      {%- if tag_downcase contains 'bp_rank' -%}
+         {% assign tag_customer = tag %}
+         {% break %}
+      {%- endif -%}
+   {%- endfor -%}
+{%- endif -%}
+{%- assign menu1 = block.settings.sub_menu_menu_link_1 -%}
+{%- assign menu2 = block.settings.sub_menu_menu_link_2 -%}
+{%- assign menu3 = block.settings.sub_menu_menu_link_3 -%}
+{%- assign menu4 = block.settings.sub_menu_menu_link_4 -%}
+{%- assign menu5 = block.settings.sub_menu_menu_link_5 -%}
+<div class="megamenu__wrapper-banner_type1">
+  <div class="sm__megamenu-tabs ">
+    <ul class="sm__megamenu-tabs-header">
+      {% if block.settings.sub_menu_text_1 != blank %}
+        <li>
+          <a class="tablinks active" data-tab="#{{ block.settings.sub_menu_text_1 | append: block.id | downcase | handleize }}" href="{{ block.settings.sub_menu_link_1 | default: "#" }}">{{ block.settings.sub_menu_text_1 }}
+          {% if menu1 != blank %}
+            <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+          {% endif %}
+          </a>
+        </li>
+      {% endif %}
+      {% if block.settings.sub_menu_text_2 != blank %}
+        <li>
+          <a class="tablinks" data-tab="#{{ block.settings.sub_menu_text_2 | append: block.id | downcase | handleize }}" href="{{ block.settings.sub_menu_link_2 | default: "#" }}">{{ block.settings.sub_menu_text_2 }}
+          {% if menu2 != blank %}
+            <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+          {% endif %}
+          </a>
+        </li>
+      {% endif %}
+      {% if block.settings.sub_menu_text_3 != blank %}
+        <li>
+          <a class="tablinks" data-tab="#{{ block.settings.sub_menu_text_3 | append: block.id | downcase | handleize }}" href="{{ block.settings.sub_menu_link_3 | default: "#" }}">{{ block.settings.sub_menu_text_3 }}
+          {% if menu3 != blank %}
+            <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+          {% endif %}
+          </a>
+        </li>
+      {% endif %}
+      {% if block.settings.sub_menu_text_4 != blank %}
+        <li>
+          <a class="tablinks" data-tab="#{{ block.settings.sub_menu_text_4 | append: block.id | downcase | handleize }}" href="{{ block.settings.sub_menu_link_4 | default: "#" }}">{{ block.settings.sub_menu_text_4 }}
+          {% if menu4 != blank %}
+            <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+          {% endif %}
+          </a>
+        </li>
+      {% endif %}
+      {% if block.settings.sub_menu_text_5 != blank %}
+        <li>
+          <a class="tablinks" data-tab="#{{ block.settings.sub_menu_text_5 | append: block.id | downcase | handleize }}" href="{{ block.settings.sub_menu_link_5 | default: "#" }}">{{ block.settings.sub_menu_text_5 }}
+          {% if menu5 != blank %}
+            <span class="icon__arrow">{% render 'icon-arrow-right' %}</span>
+          {% endif %}
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+    {% if menu1 != blank %}
+      <div id="{{ block.settings.sub_menu_text_1 | append: block.id | downcase | handleize }}" class="tabcontent active" style="display: block; flex: 1;">
+        <div class="row">
+          {% assign menu_item_id = block.id | append: block.settings.sub_menu_text_1 | downcase | handleize %}
+          {% assign menu_item_order = block.settings.bn_m_1_product_order %}
+          {% assign showBannerMenu = block.settings.show_bn_m_1 %}
+          {% assign image = block.settings.bn_m_1_image %}
+          {% assign text_content = block.settings.bn_m_1_content %}
+          {% assign content_color = block.settings.bn_m_1_content_color %}
+          {% assign content_bg_color = block.settings.bn_m_1_bg_color %}
+          {% assign button_text = block.settings.bn_m_1_button_text %}
+          {% assign button_link = block.settings.bn_m_1_button_link %}
+          {% assign button_color = block.settings.bn_m_1_button_color %}
+          {% assign button_hover_color = block.settings.bn_m_1_button_hover_color %}
+          {% assign button_type = block.settings.bn_m_1_button_type %}
+
+          {%- assign product_status = false -%}
+          {%- assign banner_show_all = false -%}
+
+          {% if block.settings.bn_m_1_product != blank %}
+            {%- assign product = all_products[block.settings.bn_m_1_product] -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+          {% endif %}
+
+          {%- if showBannerMenu and product_status -%}
+            {% assign menu_col = 'col-md-7' %}
+            {% assign banner_col = 'col-md-5' %}
+            {% assign banner_show_all = true %}
+          {%- elsif showBannerMenu or product_status -%}
+            {% assign menu_col = 'col-md-9' %}
+            {% assign banner_col = 'col-md-3' %}
+          {%- else -%}
+            {% assign menu_col = 'col-md-12' %}
+            {% assign banner_col = '' %}
+          {%- endif -%}
+          <div class="{{ menu_col }}">
+            {% render 'megamenu_linklist', menu_list: linklists[menu1] %}
+          </div>
+          {% include 'megamenu-banner-item', id: menu_item_id %}
+        </div>
+      </div>
+    {% endif %}
+    {% if menu2 != blank %}
+      <div id="{{ block.settings.sub_menu_text_2 | append: block.id | downcase | handleize }}" class="tabcontent" style="display: none; flex: 1;">
+        <div class="row">
+          {% assign menu_item_id = block.id | append: block.settings.sub_menu_text_2 | downcase | handleize %}
+          {% assign menu_item_order = block.settings.bn_m_2_product_order %}
+          {% assign showBannerMenu = block.settings.show_bn_m_2 %}
+          {% assign image = block.settings.bn_m_2_image %}
+          {% assign text_content = block.settings.bn_m_2_content %}
+          {% assign content_color = block.settings.bn_m_2_content_color %}
+          {% assign content_bg_color = block.settings.bn_m_2_bg_color %}
+          {% assign button_text = block.settings.bn_m_2_button_text %}
+          {% assign button_link = block.settings.bn_m_2_button_link %}
+          {% assign button_color = block.settings.bn_m_2_button_color %}
+          {% assign button_hover_color = block.settings.bn_m_2_button_hover_color %}
+          {% assign button_type = block.settings.bn_m_2_button_type %}
+
+          {%- assign product_status = false -%}
+          {%- assign banner_show_all = false -%}
+
+          {% if block.settings.bn_m_2_product != blank %}
+            {%- assign product = all_products[block.settings.bn_m_2_product] -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+          {% endif %}
+
+          {%- if showBannerMenu and product_status -%}
+            {% assign menu_col = 'col-md-7' %}
+            {% assign banner_col = 'col-md-5' %}
+            {% assign banner_show_all = true %}
+          {%- elsif showBannerMenu or product_status -%}
+            {% assign menu_col = 'col-md-9' %}
+            {% assign banner_col = 'col-md-3' %}
+          {%- else -%}
+            {% assign menu_col = 'col-md-12' %}
+            {% assign banner_col = '' %}
+          {%- endif -%}
+          <div class="{{ menu_col }}">
+            {% render 'megamenu_linklist', menu_list: linklists[menu2] %}
+          </div>
+          {% include 'megamenu-banner-item', id: menu_item_id %}
+        </div>
+      </div>
+    {% endif %}
+    {% if menu3 != blank %}
+      <div id="{{ block.settings.sub_menu_text_3 | append: block.id | downcase | handleize }}" class="tabcontent" style="display: none; flex: 1;">
+        <div class="row">
+          {% assign menu_item_id = block.id | append: block.settings.sub_menu_text_3 | downcase | handleize %}
+          {% assign menu_item_order = block.settings.bn_m_3_product_order %}
+          {% assign showBannerMenu = block.settings.show_bn_m_3 %}
+          {% assign image = block.settings.bn_m_3_image %}
+          {% assign text_content = block.settings.bn_m_3_content %}
+          {% assign content_color = block.settings.bn_m_3_content_color %}
+          {% assign content_bg_color = block.settings.bn_m_3_bg_color %}
+          {% assign button_text = block.settings.bn_m_3_button_text %}
+          {% assign button_link = block.settings.bn_m_3_button_link %}
+          {% assign button_color = block.settings.bn_m_3_button_color %}
+          {% assign button_hover_color = block.settings.bn_m_3_button_hover_color %}
+          {% assign button_type = block.settings.bn_m_3_button_type %}
+
+          {%- assign product_status = false -%}
+          {%- assign banner_show_all = false -%}
+
+          {% if block.settings.bn_m_3_product != blank %}
+            {%- assign product = all_products[block.settings.bn_m_3_product] -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+          {% endif %}
+
+          {%- if showBannerMenu and product_status -%}
+            {% assign menu_col = 'col-md-7' %}
+            {% assign banner_col = 'col-md-5' %}
+            {% assign banner_show_all = true %}
+          {%- elsif showBannerMenu or product_status -%}
+            {% assign menu_col = 'col-md-9' %}
+            {% assign banner_col = 'col-md-3' %}
+          {%- else -%}
+            {% assign menu_col = 'col-md-12' %}
+            {% assign banner_col = '' %}
+          {%- endif -%}
+          <div class="{{ menu_col }}">
+            {% render 'megamenu_linklist', menu_list: linklists[menu3] %}
+          </div>
+          {% include 'megamenu-banner-item', id: menu_item_id %}
+        </div>
+      </div>
+    {% endif %}
+    {% if menu4 != blank %}
+      <div id="{{ block.settings.sub_menu_text_4 | append: block.id | downcase | handleize }}" class="tabcontent" style="display: none; flex: 1;">
+        <div class="row">
+          {% assign menu_item_id = block.id | append: block.settings.sub_menu_text_4 | downcase | handleize %}
+          {% assign menu_item_order = block.settings.bn_m_4_product_order %}
+          {% assign showBannerMenu = block.settings.show_bn_m_4 %}
+          {% assign image = block.settings.bn_m_4_image %}
+          {% assign text_content = block.settings.bn_m_4_content %}
+          {% assign content_color = block.settings.bn_m_4_content_color %}
+          {% assign content_bg_color = block.settings.bn_m_4_bg_color %}
+          {% assign button_text = block.settings.bn_m_4_button_text %}
+          {% assign button_link = block.settings.bn_m_4_button_link %}
+          {% assign button_color = block.settings.bn_m_4_button_color %}
+          {% assign button_hover_color = block.settings.bn_m_4_button_hover_color %}
+          {% assign button_type = block.settings.bn_m_4_button_type %}
+
+          {%- assign product_status = false -%}
+          {%- assign banner_show_all = false -%}
+
+          {% if block.settings.bn_m_4_product != blank %}
+            {%- assign product = all_products[block.settings.bn_m_4_product] -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+          {% endif %}
+
+          {%- if showBannerMenu and product_status -%}
+            {% assign menu_col = 'col-md-7' %}
+            {% assign banner_col = 'col-md-5' %}
+            {% assign banner_show_all = true %}
+          {%- elsif showBannerMenu or product_status -%}
+            {% assign menu_col = 'col-md-9' %}
+            {% assign banner_col = 'col-md-3' %}
+          {%- else -%}
+            {% assign menu_col = 'col-md-12' %}
+            {% assign banner_col = '' %}
+          {%- endif -%}
+          <div class="{{ menu_col }}">
+            {% render 'megamenu_linklist', menu_list: linklists[menu4] %}
+          </div>
+          {% include 'megamenu-banner-item', id: menu_item_id %}
+        </div>
+      </div>
+    {% endif %}
+    {% if menu5 != blank %}
+      <div id="{{ block.settings.sub_menu_text_5 | append: block.id | downcase | handleize }}" class="tabcontent" style="display: none; flex: 1;">
+        {% render 'megamenu_linklist', menu_list: linklists[menu5] %}
+      </div>
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container page__cookie-notice">
+    <div class="section-header text-center">
+        <h1>{{ page.title }}</h1>
+    </div>
+    <div class="rte page__cookie-content">
+        {{ page.content }}
+    </div>
+</div>
+<script>
+    
+    $(function () {
+      let countH3     = $('.page__cookie-content h3').length;
+      let newContent  = '';
+      let iconDown    = '{% include "icon-chevron-down" %}';
+      if(countH3 > 0) {
+        let strContent = $('.page__cookie-content').html();
+        let arrTab = strContent.split('<h3>');
+        let firstContent = arrTab[0];
+        newContent += firstContent;
+        newContent += '<ul class="list_faqs">';
+          arrTab.shift();
+        for(let i = 0; i < arrTab.length ; i++) {
+          newContent += '<li>';
+          newContent += '<h3>' + iconDown + arrTab[i];
+          newContent += '</li>';
+        }
+        newContent += '</ul>';
+      }
+      
+      $('.page__cookie-content').html(newContent);
+
+      // Action click
+      $('body').on('click','.page__cookie-content h3', function() {
+        $(this).parent().toggleClass('show');
+      });
+    });
+  </script>

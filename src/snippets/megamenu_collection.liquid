@@ -1,0 +1,10 @@
+{%- assign collection = collections[collection_mega] -%}
+{%- assign grid_item_width = block.settings.collection_col_item -%}
+{%- assign limit = block.settings.collection_limit -%}
+{% if collection.all_products_count > 0%}
+    {% for product in collection.products limit: limit %}
+        <div class="grid__item col-md-{{ grid_item_width }}">
+            {% include 'product-card-grid', max_height: 250, product: product %}
+        </div>
+    {% endfor %}
+{% endif %}

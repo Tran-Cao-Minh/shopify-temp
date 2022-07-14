@@ -1,0 +1,74 @@
+<div class="container" data-page_border>
+    <div class="section-header text-center">
+        <h1>{{ 'customer.account.title_my_account' | t }}</h1>
+    </div>
+    <div class="my__account-content">
+        <div class="content-header d-flex justify-content-between">
+            <h2>{{ 'customer.account.welcome_back' | t }}{{ customer.first_name }}</h2>
+            <a class="link-readmore text-underline" href="{{ routes.account_logout_url }}" data-action="logout">{{ 'customer.account.log_out' | t }}</a>
+        </div>
+        {% if section.settings.description != blank %}
+            <div class="rte-setting">{{ section.settings.description }}</div>
+        {% endif %}
+
+        {%- if section.blocks.size > 0 -%}
+            <div class="my__account-items row">
+                {%- for block in section.blocks -%}
+                    {% if block.settings.icon != blank or block.settings.title != blank %}
+                        <div class="col-6 col-md-4">
+                            <div class="item">
+                                {% if block.settings.icon != blank %}
+                                    <div class="media">{{ block.settings.icon }}</div>
+                                {% endif %}
+                                {% if block.settings.title != blank %}
+                                    {% assign url_item = block.settings.link %}
+                                    {% if url_item == '/account/addresses' %}
+                                        {% assign url_item = routes.account_addresses_url %}
+                                    {% endif %}
+                                    <span class="title">{{ block.settings.title }}</span>
+                                    <a href="{{ url_item }}" class="full-width-link"></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {%- endfor -%}
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "My Account",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

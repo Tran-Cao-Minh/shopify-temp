@@ -1,0 +1,501 @@
+<script type="text/html" id="renew-modal-template">
+    <div class="autoship__data">
+        <div class="autoship__header text-center">
+            <ul class="smart-progress__steps progress__step">
+                <li class="progress__step-item active current" data-renew_progress_step_1>
+                    <div class="progress__step-number">
+                        <div class="icon_active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13.11" height="9.827" viewBox="0 0 13.11 9.827">
+                                <path data-name="Path 187" d="M168.133,167.766l-7.512,7.512a1.158,1.158,0,0,1-1.637,0l-3.283-3.283a1.155,1.155,0,1,1,1.633-1.633l2.462,2.462,6.7-6.7a1.161,1.161,0,0,1,1.641,1.641Z" transform="translate(-155.359 -165.788)" fill="#fff" fill-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="number">1</span>
+                    </div>
+                    <div class="progress__step-content">{{ "order.renew.autoship_information_html" | t }}</div>
+                </li>
+                <li class="progress__step-item" data-renew_progress_step_2>
+                    <div class="progress__step-number">
+                        <div class="icon_active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13.11" height="9.827" viewBox="0 0 13.11 9.827">
+                                <path data-name="Path 187" d="M168.133,167.766l-7.512,7.512a1.158,1.158,0,0,1-1.637,0l-3.283-3.283a1.155,1.155,0,1,1,1.633-1.633l2.462,2.462,6.7-6.7a1.161,1.161,0,0,1,1.641,1.641Z" transform="translate(-155.359 -165.788)" fill="#fff" fill-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="number">2</span>
+                    </div>
+                    <div class="progress__step-content">{{ "order.renew.confirm_changes_html" | t }}</div>
+                </li>
+                <li class="progress__step-item progress__step-3" data-renew_progress_step_3>
+                    <div class="progress__step-number">
+                        <div class="icon_active">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="13.11" height="9.827" viewBox="0 0 13.11 9.827">
+                                <path data-name="Path 187" d="M168.133,167.766l-7.512,7.512a1.158,1.158,0,0,1-1.637,0l-3.283-3.283a1.155,1.155,0,1,1,1.633-1.633l2.462,2.462,6.7-6.7a1.161,1.161,0,0,1,1.641,1.641Z" transform="translate(-155.359 -165.788)" fill="#fff" fill-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="number">3</span>
+                    </div>
+                    <div class="progress__step-content">{{ "order.renew.shipping_address_and_payment_information_html" | t }}</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="fieldlist step__1" data-step="1">
+            <div class="fieldlist__items">
+                <div class="fieldlist__item" data-item>
+                    <div class="item-title"><%= renewString.currentAutoshipPeriod.replace('${period}', autoship.period).replace('${order_id}', autoship.name) %></div>
+                    <div class="item-content">
+                        <h4 class="content-title">{{ "order.renew.do_you_want_to_change_your_autoship_period" | t }}</h4>
+                        <div class="group_checkboxs">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="period" id="period_2" value="0" checked>
+                                <label class="form-check-label" for="period_2" data-step1_label_radio>{{ 'order.renew.no' | t }}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="period" id="period_1" value="1">
+                                <label class="form-check-label" for="period_1" data-step1_label_radio>{{ 'order.renew.yes' | t }}</label>
+                            </div>
+                        </div>
+                        <div class="select2_wrap">
+                            <select class="autoship__periods select2_single" data-period="<%- autoship.period %>" disabled>
+                                <% for (let period of periods) { %>
+                                <option value="<%- period %>" <% if (period == autoship.period) { %> selected <% } %>><%- period %> {{ "order.renew.months" | t }}</option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="fieldlist__item" data-item>
+                    <div class="item-title"><%= renewString.currentMonthlyPayment.replace('${due_date}', autoship.payment_date) %></div>
+                    <div class="item-content">
+                        <h4 class="content-title">{{ "order.renew.do_you_want_to_change_your_payment_due_date" | t }}</h4>
+                        <div class="group_checkboxs">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="due_date" id="due_date_2" value="0" checked>
+                                <label class="form-check-label" for="due_date_2" data-step1_label_radio>{{ 'order.renew.no' | t }}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="due_date" id="due_date_1" value="1">
+                                <label class="form-check-label" for="due_date_1" data-step1_label_radio>{{ 'order.renew.yes' | t }}</label>
+                            </div>
+                        </div>
+                        <div class="select2_wrap">
+                            <select class="select2_single" data-select_payment_date>
+                                <option value="5" <% if ('5' == autoship.payment_date) { %> selected <% } %>>{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:5 }}</option>
+                                <option value="10" <% if ('10' == autoship.payment_date) { %> selected <% } %>>{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:10 }}</option>
+                                <option value="20" <% if ('20' == autoship.payment_date) { %> selected <% } %>>{{ 'general.checkout_sidebar.autoship_due_date_selected_1_html' | t: duedate:20 }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form__action group-buttons">
+                <span class="link-readmore text-underline display-dk" data-close_modal>{{ 'order.renew.cancel' | t }}</span>
+                <button class="btn next navigate btn__loading-icon" data-forward="2">
+                    {{ 'order.renew.proceed_next_step' | t }}
+                    <div class="loader"></div>
+                </button>
+                <button class="btn btn-cancel display-mb" data-close_modal>{{ 'order.renew.cancel' | t }}</button>
+            </div>
+        </div>
+
+        <div class="fieldlist fieldlist__step-2 hide" data-step="2">
+            <div class="product__list-active">
+                <div class="table_grid">
+                    <div class="table_header">
+                        <div class="th td__item-product">{{ 'order.general.product' | t }}</div>
+                        <div class="th">{{ 'order.general.price' | t }}</div>
+                        <div class="th">{{ 'order.general.cv_qv' | t }}</div>
+                        <div class="th">{{ 'order.general.quantity' | t }}</div>
+                        <div class="th th_delete">{{ 'order.general.delete' | t }}</div>
+                    </div>
+                    <div class="renew__items table_lists items__listing" data-renew="renew__items--listing"></div>
+                    <div class="summary">
+                        <div class="table_item">
+                            <div class="td td__item-product">
+                                {{ 'order.renew.estimated_total_per_month_html' | t }}
+                            </div>
+                            <div class="td td__item-price">
+                                <div id="renew-total_price" class="price"></div>
+                            </div>
+                            <div class="td td__item-cv_qv">
+                                <label class="title display-mb">{{ 'order.general.cv_qv' | t }}</label>
+                                <div id="renew-total_cv-qv"></div>
+                            </div>
+                            <div id="renew-total_qty" class="td td__item-quantity"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="change__renew--options">
+                    <div class="change__renew-note">
+                        {{ 'order.renew.note_vip_subscription_product_must_be_the_same_period_you_chose_in_the_previous_step_which_is_html' | t }}
+                    </div>
+                    <select data-renew="renew__options"></select>
+                </div>
+
+                <div class="form__action group-buttons navigate__btn form__action-step2">
+                    <a href="#" class="link-readmore text-underline back navigate" data-forward="1">
+                        {% include 'icon-chevron-left' %}{{ 'order.renew.back_to_autoship_information' | t }}
+                    </a>
+                    <button class="btn next navigate btn__loading-icon" data-forward="3">
+                        {{ 'order.renew.proceed_next_step' | t }}
+                        <div class="loader"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="renew__list-inactive product__list-inactive" data-collapse_inactive_wrap>
+                <div class="header-collapse">
+                    <h5>{{ 'reorder.inactive_list' | t }}</h5>
+                    <div class="icon_wrap display-mb" data-collapse_inactive>
+                        {% include 'icon-chevron-down' %}
+                    </div>
+                </div>
+                <div class="renew__list-inactive-wrap" data-collapse_inactive_content>
+                    <div class="table_grid">
+                        <div class="table_lists invalid__renew" data-renew="invalid__products"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fieldlist fieldlist__step-3 hide" data-step="3">
+            <div class="fieldlist__items">
+                <div class="item__address">
+                    <h4 class="title"><%= renewString.currentShippingAddress.replace('{order}', autoship.name) %></h4>
+                    <%
+                        let shipping = autoship.addresses.find((address) => { return address.type === 'shipping'});
+                    %>
+                    <div class="shipping_address"><%- shipping.full_address %></div>
+                    <div class="change__address" data-change__address>
+                        <h4 class="change__address-title">{{ 'order.renew.do_you_want_to_change_your_shipping_address' | t }}</h4>
+                        <div class="group_checkboxs">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="change__address" id="change__address_2" value="0" checked>
+                                <label class="form-check-label" for="change__address_2">{{ 'order.renew.no' | t }}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="change__address" id="change__address_1" value="1">
+                                <label class="form-check-label" for="change__address_1">{{ 'order.renew.yes' | t }}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="address__form form-vertical hide">
+                        <form method="post" id="address_form_change" novalidate="novalidate">
+                            <div class="select__address-wrap">
+                                <div class="select2_wrap">
+                                    <select id="select__address" class="select2_single">
+                                        <option>{{ 'order.renew.choose_address_from_your_address_book' | t }}</option>
+                                        {% for address in customer.addresses %}
+                                            <option value="{{ address.id }}">
+                                                {% if address.address1 != blank %}{{ address.address1 }}{% endif %}{% if address.city != blank %}, {{ address.city }}{% endif %}{% if address.province != blank %}, {{ address.province }}{% endif %}{% if address.zip != blank %}, {{ address.zip }}{% endif %}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="AddressFirstName">{{ 'customer.addresses.first_name_input' | t }}</label>
+                                    <input type="text" id="AddressFirstName" class="form-control validate-space"
+                                        name="address[first_name]" value=""
+                                        autocomplete="given-name"
+                                        required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="AddressLastName">{{ 'customer.addresses.last_name_input' | t }}</label>
+                                    <input type="text" id="AddressLastName" class="form-control validate-space"
+                                        name="address[last_name]" value=""
+                                        autocomplete="family-name"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="AddressAddress1">{{ 'customer.addresses.address_input' | t }}</label>
+                                    <input type="text" id="AddressAddress1" class="form-control validate-space"
+                                        name="address[address1]" value=""
+                                        autocomplete="street-address address-line1" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="AddressPostCode"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <div class="select2_wrap">
+                                        <div class="AddressProvinceCode"></div>
+                                    </div>
+                                    <input type="hidden" id="AddressProvince" name="address[province]" value="" />
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="select2_wrap">
+                                        <div class="AddressDistrictCode"></div>
+                                    </div>
+                                    <input type="hidden" id="AddressDistrict" name="address[city]" value="" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="AddressPhone">{{ 'customer.addresses.mobile_number_input' | t }}</label>
+                                    <input type="tel" id="AddressPhone" class="form-control validate-space"
+                                        name="address[phone]" value=""
+                                        autocomplete="phone" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="AddressCountry">{{ 'customer.addresses.country_input' | t }}</label>
+                                    <input type="tel" id="AddressCountry" class="form-control validate-space"
+                                        name="address[country]" value="Thailand" readonly>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="item__payments">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h4 class="title">{{ 'order.renew.select_payment' | t }}</h4>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="group_checkboxs" id="select-payment">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item__totals">
+                    <div class="item__totals-wrap">
+                        <div class="item__total item__total-cvpv">
+                            <div class="title">{{ 'order.renew.estimated_total_cv_qv_per_month_html' | t }}</div>
+                            <div class="value"></div>
+                        </div>
+                        <div class="item__total item__total-estimated">
+                            <div class="title">{{ 'order.renew.estimated_total_per_month_html' | t }}</div>
+                            <div class="price"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="note__otp">{{ 'order.renew.note_you_will_receive_otp_code_by_text_message_sms_to_securely_purchase_with_2c2p_html' | t }}</p>
+            <div class="form__action group-buttons navigate__btn">
+                <span class="link-readmore text-underline display-dk" data-close_modal>{{ 'order.renew.cancel' | t }}</span>
+                <button class="btn btn-secondary next btn__loading-icon" id="complete-renew" data-forward>
+                    {{ 'order.renew.continue_pay' | t }}
+                    <div class="loader"></div>
+                </button>
+                <button class="btn btn-cancel display-mb" data-close_modal>{{ 'order.renew.cancel' | t }}</button>
+            </div>
+        </div>
+
+        <div class="fieldlist fieldlist__step-opt hide" data-step="opt">
+            <div class="form-vertical">
+                <form action="#" method="POST"
+                      id="form-otp">
+                    <div class="renew__otp-wrap">
+                        <div class="renew__otp-header">
+                            <h2 class="primary_color text-center">{{ "order.renew.credit_card_confirmation" | t }}</h2>
+                            <p>{{ "order.renew.we_found_a_phone_number_attached_to_your_account_in_our_database_html" | t }} <span class="text-bold otp-phone"></span></p>
+                        </div>
+                        <div class="renew__otp-content">
+                            <p class="text-dark">{{ "order.renew.otp_code" | t }}</p>
+                            <div class="form-group form__group-otp">
+                                <input class="combine" type="number" id="digit-1" name="digit_1" data-role="otp-digit"
+                                    data-next="digit-2" autofocus required="required">
+                                <input class="combine" type="number" id="digit-2" name="digit_2" data-role="otp-digit"
+                                    data-next="digit-3" data-previous="digit-1" required="required">
+                                <input class="combine" type="number" id="digit-3" name="digit_3" data-role="otp-digit"
+                                    data-next="digit-4" data-previous="digit-2" required="required">
+                                <input class="combine" type="number" id="digit-4" name="digit_4" data-role="otp-digit"
+                                    data-next="digit-5" data-previous="digit-3" required="required">
+                                <input class="combine" type="number" id="digit-5" name="digit_5" data-role="otp-digit"
+                                    data-next="digit-6" data-previous="digit-4" required="required">
+                                <input class="combine" type="number" id="digit-6" name="digit_6" data-role="otp-digit"
+                                    data-previous="digit-5" required="required">
+                            </div>
+                            <div id="notify_message"></div>
+                            <div class="text-secondary">{{ "order.renew.please_enter_otp_within_html" | t }}</div>
+                            <div class="text-dark otp__re-send">{{ "order.renew.if_you_dont_receive_otp_please_click_re_send_otp_html" | t }}<p id="notify_resend" class="text-success"></p>
+                            </div>
+                            <input type="hidden" name="otp" value="">
+                            <input type="hidden" name="card" value="" data-role="otp-card-id">
+                            <input type="hidden" name="cart" value="" data-role="otp-cart">
+                        </div>
+                    </div>
+                    <div class="renew__otp-footer">
+                        <div class="form-actions form__actions-otp d-flex justify-content-end">
+                            <button id="otp-submit" type="submit" class="btn btn-primary btn__loading-icon" disabled data-forward>
+                                {{ "order.renew.verify_otp" | t }}
+                                <div class="loader" style="display: none;"></div>
+                            </button>
+                        </div>
+                        <div class="renew__otp-note">
+                            {% assign note_information = 'order.renew.if_your_phone_number_found_in_our_database_is_not_correct_html' | t %}
+                            {% assign contact_info = shop.metafields.data.contact_info %}
+                            {% if contact_info != blank %}
+                                {% if contact_info.contact_phone != blank %}
+                                    {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                                    {% assign note_information = note_information | replace: "${phone}", contact_info.contact_phone %}
+                                    {% assign note_information = note_information | replace: "${phone_number}", phone_number %}
+                                {% else %}
+                                    {% assign note_information = note_information | replace: "${phone}", "" %}
+                                    {% assign note_information = note_information | replace: "${phone_number}", "" %}
+                                {% endif %}
+
+                                {% if contact_info.contact_line_id != blank %}
+                                    {% assign note_information = note_information | replace: "${line_id}", contact_info.contact_line_id %}
+                                {% else %}
+                                    {% assign note_information = note_information | replace: "${line_id}", "" %}
+                                {% endif %}
+
+                                <p>{{ note_information }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+    var postalCodeShop = {{ shop.metafields.location.postal_codes }},
+      stateShop = {{ shop.metafields.location.states }},
+      cityShop  = {{ shop.metafields.location.cities }},
+      shopLocale = "{{ shop.locale }}";
+    var options = {
+        OTPLength: 6,
+        OTPGenerateUrl: "/apps/eai/api/checkout/resend-saved-card-otp",
+        OTPValidateUrl: "/apps/eai/api/checkout/verify-saved-card"
+    }
+</script>
+
+<script>
+  let allAddress = {
+        {% paginate customer.addresses by customer.addresses_count %}
+            {% for address in customer.addresses %}
+                {%- capture address_json -%}{%- include 'address-json' -%}{%- endcapture -%}
+                '{{ address.id }}' : {{ address_json }},
+            {% endfor %}
+        {% endpaginate %}
+    };
+</script>
+<script type="text/html" id="active-list-template">
+    <% for (let item of items) { %>
+    <%
+        let variant = item.variant,
+            product = item.product;
+
+        let image = variant.featured_image ?? product.featured_image;
+    %>
+    <div class="renew__item">
+        <div class="table_item">
+            <div class="td td__item-product">
+                <div class="product-wrap">
+                    <div class="media">
+                        <div class="tags__view-list renew_active-template">
+                            <div class="product__tags">
+                                <span class="tags-name autoship">{{ "products.tags.autoship_program" | t }}</span>
+                            </div>
+                        </div>
+                        <img src="<%- image %>" alt="">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product__title"><%= product.title %></h3>
+                        <span class="variant__title label"><%= variant.title %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="td td__item-price">
+                <span class="product__price price__regular price"><%= theme.Currency.formatMoney(variant.member_price, theme.moneyFormat) %></span>
+            </div>
+            <div class="td td__item-cv_qv">
+                <label class="title display-mb">CV | QV</label>
+                <%- variant.cv %> | <%- variant.qv %>
+            </div>
+            <div class="td td__item-quantity">
+                <div class="display-mb title-qty">Quantity</div>
+                <div class="qty__box">
+                    <button class="decrease-qty ">-</button>
+                    <input class="qty__input renew-qty" type="number" min="1" value="<%- variant.qty %>" data-variant_id="<%- variant.id %>">
+                    <button class="increase-qty">+</button>
+                </div>
+            </div>
+            <div class="td td__item-action">
+                <span data-action="remove-item" data-variant_id="<%- variant.id %>" class="drawer__close drawer__close-small"></span>
+            </div>
+        </div>
+        <div class="product__status">
+            <div><%= variant.message ?? '' %></div>
+        </div>
+    </div>
+    <% } %>
+</script>
+<script type="text/html" id="inactive-list-template">
+    <% for (let item of items) { %>
+    <div class="invalid__item">
+        <div class="table_item">
+            <div class="td td__item-product">
+                <div class="product-wrap">
+                    <div class="media">
+                        <div class="tags__view-list renew_inactive-template">
+                            <div class="product__tags">
+                                <span class="tags-name autoship">{{ "products.tags.autoship_program" | t }}</span>
+                            </div>
+                        </div>
+                        <img src="<%- item.product_image %>" alt="">
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product__title"><%- item.title %></h3>
+                        <span class="variant__title label"><%- item.variant_title %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="td td__item-price">
+                <span class="product__price price__regular price"><%= theme.Currency.formatMoney(item.price * 100, theme.moneyFormat) %></span>
+            </div>
+            <div class="td td__item-cv_qv"><%- item.cv %> | <%- item.qv %></div>
+            <div class="td td__item-quantity">
+                <div class="display-mb">Quantity</div>
+                <div class="qty__box">
+                    <button class="decrease-qty">-</button>
+                    <input class="qty__input" type="number" value="<%- item.qty %>" disabled="">
+                    <button class="increase-qty">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="product__error"><%= item.message ?? '' %></div>
+    </div>
+    <% } %>
+</script>
+<script type="text/html" id="renew-product-options">
+    <%
+         let productTitle = dataset.product_title,
+            variantTitle = dataset.variant_title,
+            cv = dataset.cv,
+            qv = dataset.qv,
+            price = dataset.price,
+            image = dataset.image;
+        let disabledHtml = disabled ? 'disabled' : '' ;
+    %>
+    <div class="product-item <%- disabledHtml %>">
+        <div class="media">
+            <img src="<%- image %>" class="img-flag" width="50px" />
+        </div>
+        <div class="product-info">
+            <h4 class="title"><%- productTitle %></h4>
+            <div class="info__bottom">
+               <span class="periods"><%- variantTitle %></span>
+               <div class="price"><%= theme.Currency.formatMoney(price, theme.moneyFormat) %></div>
+               <div class="cv_qv"><%- cv %> | <%- qv %></div>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="/apps/eai/js/otp/otp.js"></script>
+<style>
+    .product-item.disabled {
+        opacity: 0.5;
+    }
+</style>

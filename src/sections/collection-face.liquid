@@ -1,0 +1,37 @@
+
+{% include 'page-list-collection' %}
+{% schema %}
+{
+  "name": {
+    "en": "Collections list page",
+    "th": "หน้ารายการคอลเลกชัน"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": {
+        "en": "Collection",
+        "th": "คอลเลกชัน"
+      },
+      "settings": [
+        {
+          "label": {
+            "en": "Collection",
+            "th": "คอลเลกชัน"
+          },
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

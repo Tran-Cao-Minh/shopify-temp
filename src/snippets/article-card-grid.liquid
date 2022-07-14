@@ -1,0 +1,70 @@
+<div class="{{ class }}">
+    <div class="content">
+        {% if article.image %}
+            {% capture img_id %}ArticleImage-{{ article.image.id }}{% endcapture %}
+            {% capture img_wrapper_id %}ArticleImageWrapper-{{ article.image.id }}{% endcapture %}
+            {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <div id="{{ img_wrapper_id }}" class="article__list-image-wrapper js">
+                <a href="{{ article.url }}" style="padding-top:{{ 0.72 | times: 100 }}%;" class="article__list-image-container">
+                    <img id="{{ img_id }}"
+                         class="article__list-image lazyload"
+                         src="{{ article.image | img_url: '300x300' }}"
+                         data-src="{{ img_url }}"
+                         data-widths="[180, 360, 540, 720, 905, 1090, 1296, 1512, 1728, 2048]"
+                         data-aspectratio="{{ article.image.aspect_ratio }}"
+                         data-sizes="auto"
+                         alt="">
+                </a>
+            </div>
+
+            <noscript>
+                <p>
+                    <a href="{{ article.url }}">
+                        {{ article | img_url: '455x300', scale: 2 | img_tag: article.title }}
+                    </a>
+                </p>
+            </noscript>
+        {% endif %}
+
+        <div class="article-listing">
+            <div class="article__share--date">
+                {% if section.settings.blog_show_date %}
+                    <span class="article__date">
+                        {% assign data_th = article.published_at | time_tag: format: 'date' | strip_html %}
+                        {% assign data_th_years = data_th | slice: -6, 6 %}
+                        {% assign data_th_dm = data_th | replace: data_th_years, '' %}
+                        {% if shop.locale =='th' %}
+                            {% assign data_th_years = article.published_at | date: "%Y" | strip_html | plus: 543 %}
+                            {{ data_th_dm }} {{ data_th_years }}
+                        {% else %}
+                            {{ article.published_at | time_tag: format: 'date' }}
+                        {% endif %}
+                    </span>
+                {% endif %}
+                <div class="share__link">
+                    {% include 'blog-social-share', share_permalink: article.url %}
+                </div>
+            </div>
+            <div class="get__link--share" id="share__{{ forloop.index }}">
+                <input type="text" class="input__value--share" value="{{ shop.url }}{{ article.url }}?channel=DTC_sharelink{% if member_id != blank %}&promo_code={{ member_id }}{% endif %}">
+                <a class="btn__getLink" href="#"><span>Copy link</span> {% render 'icon-copy' %}</a>
+            </div>
+
+            <h3 class="article__list-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+
+            <div class="rte article__list-desc">
+                {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                {% else %}
+                    {{ article.content | strip_html | strip | truncate: 250 }}
+                {% endif %}
+            </div>
+
+            <div class="article__meta-buttons">
+                <a href="{{ article.url }}" class="" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
+                    {{ 'blogs.article.read_more' | t }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

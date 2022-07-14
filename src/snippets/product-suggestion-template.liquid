@@ -1,0 +1,51 @@
+<%
+    let localeUrl = locale != '' ? ('/' + locale) : '';
+%>
+
+<div class="predictive-search-title">
+    <h3 class="predictive-search-title__content">
+    {{ 'general.search.products' | t }}
+    </h3>
+    <ul class="predictive-search__list" role="listbox" aria-labelledby="predictive-search">
+    <% for(let index in products) { %>
+    <%
+        let product = products[index],
+        title = (locale == 'th' && product.th_title) ? product.th_title: product.en_title,
+        image = product.image_src || noImage,
+        price = product.min_price * 100,
+        priceMember = product.min_member_price * 100,
+        handle = product.handle;
+
+        price = theme.Currency.formatMoney(price, theme.moneyFormat);
+    %>
+        <li id="search-result-<%= index %>" class="predictive-search-item" role="option" data-search-result="">
+            <a class="predictive-search-item__link" href="<%= localeUrl %>/products/<%= handle %>">
+                <% if (image) { %>
+                <div class="item__image-product" data-image-with-placeholder-wrapper="">
+                    <img src="<%= image %>" class="predictive-search-item__image" alt="" />
+                </div>
+                <% } %>
+                <div class="item__content-product">
+                    <div class="h4 product-card__title"><%= title %></div>
+                    <div class="product-card__price">
+                        <% if (priceMember) { %>
+                            <% priceMember = theme.Currency.formatMoney(priceMember, theme.moneyFormat) %>
+                            <div class="product-card__price-member">
+                                <span class="price_note title">{{ 'layout.canvas.price_member_from' | t }}</span>
+                                <div class="price price__regular price__regular--bold"><%= priceMember %></div>
+                            </div>
+                        <% } %>
+                        <% if (!parseInt(product.is_auto_ship)) { %>
+                        <div class="product-card__price-retail">
+                            <span class="price_note title display-dk">{{ 'layout.canvas.price_from' | t }}</span>
+                            <span class="price_note title display-mb">{{ 'layout.canvas.price_from' | t }}</span>
+                            <div class="price price__regular"><%= price %></div>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+            </a>
+        </li>
+    <% } %>
+    </ul>
+</div>

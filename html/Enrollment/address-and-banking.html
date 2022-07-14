@@ -1,0 +1,204 @@
+<div class="container">
+    <div class="page__enrollment page__enrollment-step3">
+        <div class="loader" style="display: none;margin: 100px auto;"></div>
+        <div class="section-header text-center">
+            <h1>Register to become our Business Partner</h1>
+        </div>
+        <ul class="smart-progress__steps progress__step-small">
+            <li class="progress__step-item active">
+                <div class="progress__step-number">1</div>
+                <div class="progress__step-content">LINE<br />VERIFICATION</div>
+            </li>
+            <li class="progress__step-item active">
+                <div class="progress__step-number">2</div>
+                <div class="progress__step-content">Personal<br />information</div>
+            </li>
+            <li class="progress__step-item active">
+                <div class="progress__step-number">3</div>
+                <div class="progress__step-content">Address and Bank<br />information</div>
+            </li>
+            <li class="progress__step-item">
+                <div class="progress__step-number">4</div>
+                <div class="progress__step-content">APPLICATION FEE<br />AND SELECT PRODUCT</div>
+            </li>
+        </ul>
+
+        <div class="rte">
+            <div class="page__enrollment-header">
+                <h4 class="title">Address and bank information</h4>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm nibh euismod tincidunt ut
+                    laoreet dolo magna aliquam erat volutpat.</p>
+            </div>
+
+            <div class="form-vertical">
+                <form action="xxx" method="POST" id="form-address-bank">
+                    <input type="hidden" name="id" value="xxx">
+                    <input type="hidden" name="sponsor_code" value="">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="billing-address">Address*</label>
+                            <input class="form-control" id="billing-address" type="text" name="billing_address" value=""
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="billing-zip">Zip code*</label>
+                            <input class="form-control" id="billing-zip" type="text" name="billing_zip" value=""
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="billing-province">PROVINCE*</label>
+                            <div class="select2_wrap">
+                                <select class="form-control select2_single" id="billing-province"
+                                    name="billing_province" required>
+                                    <option value="775">Uthai Thani</option>
+                                    <option value="776">Ubon Ratchathani</option>
+                                    <option value="777">LAOS</option>
+                                    <option value="778">Returned Document</option>
+                                    <option value="880">KH</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="billing-district">DISTRICT*</label>
+                            <div class="select2_wrap">
+                                <select class="form-control select2_single" id="billing-district"
+                                    name="billing_district" required>
+                                    <option value="13736">Benchalak</option>
+                                    <option value="13738">Bueng Khong Long</option>
+                                    <option value="13739">Sam Sung</option>
+                                    <option value="13740">Prachak Sinlapakhom</option>
+                                    <option value="13741">Sakhrai</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="billing-phone">Mobile number*</label>
+                            <input class="form-control" id="billing-phone" type="text" name="billing_phone" value=""
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="billing-country">Country</label>
+                            <input class="form-control" id="billing-country" type="text" name="billing_country"
+                                value="TH" required readonly>
+                        </div>
+                    </div>
+
+                    <div class="row row__same-shipping">
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input form-control" id="is-same-shipping" type="checkbox"
+                                    name="is_same_shipping" checked>
+                                <label class="form-check-label" for="is-same-shipping">Shipping address is the same as Billing address</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form__field" id="shipping-field" style="display: none">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="shipping-address">Address*</label>
+                                <input class="form-control" id="shipping-address" type="text" name="shipping_address"
+                                    value="" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="shipping-zip">zip code*</label>
+                                <input class="form-control" id="shipping-zip" type="text" name="shipping_zip" value=""
+                                    required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="shipping-province">Province*</label>
+                                <div class="select2_wrap">
+                                    <select class="form-control select2_single" id="shipping-province"
+                                        name="shipping_province" required>
+                                        <option value="774">Uttaradit</option>
+                                        <option value="775">Uthai Thani</option>
+                                        <option value="776">Ubon Ratchathani</option>
+                                        <option value="777">LAOS</option>
+                                        <option value="778">Returned Document</option>
+                                        <option value="880">KH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="shipping-district">District*</label>
+                                <div class="select2_wrap">
+                                    <select class="form-control select2_singles" id="shipping-district"
+                                        name="shipping_district" required>
+                                        <option value="13736">Benchalak</option>
+                                        <option value="13738">Bueng Khong Long</option>
+                                        <option value="13739">Sam Sung</option>
+                                        <option value="13740">Prachak Sinlapakhom</option>
+                                        <option value="13741">Sakhrai</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="shipping-phone">Mobile number*</label>
+                                <input class="form-control" id="shipping-phone" type="text" name="shipping_phone"
+                                    value="" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="shipping-country">Country*</label>
+                                <input class="form-control" id="shipping-country" type="text" name="shipping_country"
+                                    value="TH" required readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr"></div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="national-id">National ID*</label>
+                            <input class="form-control" id="national-id" type="text" name="national_id" value=""
+                                required>
+                            <p>Format: x-xxxx-xxxxx-xx-x</p>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="bank-name">Bank name*</label>
+                            <div class="select2_wrap">
+                                <select class="select2_single" id="bank-name" name="bank_name" required>
+                                    <option value="Islamic Bank of Thailand">Islamic Bank of Thailand</option>
+                                    <option value="The Thai Credit Retail Bank">The Thai Credit Retail Bank</option>
+                                    <option value="Land and Houses Bank Public Company Limited">Land and Houses Bank Public
+                                        Company Limited</option>
+                                </select>
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="bank-account-number">Bank account number*</label>
+                            <input class="form-control" id="bank-account-number" type="text" name="bank_account_number"
+                                value="" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="confirm-bank-account-number">Confirm bank account number*</label>
+                            <input class="form-control" id="confirm-bank-account-number" type="text" required
+                                name="confirm_bank_account_number">
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <span class="notify" id="notify"></span>
+                    </div>
+                    
+                    <div class="form-actions group-button d-flex justify-content-between align-items-center">
+                        <a href="xxx" class="form__back-link">&#60; <span>BACK TO PERSONAL INFORMATION</span></a>
+                        <button id="form-address-bank-submit" type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

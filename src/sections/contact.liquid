@@ -1,0 +1,312 @@
+{%- assign formId = 'ContactForm' -%}
+{% form 'contact', id: formId %}
+<div class="container contact-page {%- if form.posted_successfully? -%}contact-page--success{%- endif -%}" data-page_border>
+    {%- if form.posted_successfully? -%}
+    <script>
+        $(function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+    <div class="section-contactSuccess">
+        <div class="row no-gutters">
+            <div class="col-sm-12 col-xl-5 contactSuccess__into">
+                <div class="contactSuccessRole">
+                    {% if section.settings.titlePosted != blank %}
+                        <h1 class="contactSuccess__title">{{ section.settings.titlePosted }}</h1>
+                    {% endif %}
+
+                    {% if section.settings.subPosted != blank %}
+                        <p class="contactSuccess__subtitle">{{ section.settings.subPosted }}</p>
+                    {% endif %}
+
+                    {% if section.settings.contentPosted != blank %}
+                        <div class="contactSuccess__Description">{{ section.settings.contentPosted }}</div>
+                    {% endif %}
+
+                    {% if section.settings.buttonFriend_title != blank and section.settings.urlFriend != blank %}
+                        <a class="btn fix-width btn--line" href="{{ section.settings.urlFriend }}">
+                            {% include 'icon-line' %}
+                            {{ section.settings.buttonFriend_title }}
+                        </a>
+                    {% endif %}
+
+                    {% if section.settings.button_title != blank and section.settings.url != blank %}
+                        {%- assign contact_href = section.settings.url -%}
+                        {%- if contact_href == '/' and shop.locale == 'th' -%}
+                            {%- assign contact_href = contact_href | append: 'th' -%}
+                        {%- endif -%}
+                        <a class="btn fix-width" href="{{ contact_href }}">{{ section.settings.button_title }}</a>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="col-sm-12 col-xl-7 contactSuccess__image">
+                <img src="{{ section.settings.image | img_url: 'master' }}" alt="{{ section.settings.title }}"/>
+            </div>
+        </div>
+
+    </div>
+
+        <style type="text/css">
+            .breadcrumb__wrap{visibility: hidden;}
+            .border-page #MainContent{
+                border: none;
+                padding-bottom: 0;
+                padding-top: 0;
+            }
+            .box__toolbar--mobile.hide {
+                display: block !important;
+            }
+        </style>
+        <script>
+            window.onload = function (event) {
+                var ev = {};
+                ev.eventInfo={
+                    'type':ctConstants.trackEvent,
+                    'eventAction': ctConstants.contactus,
+                    'eventLabel' : '{{ section.settings.titlePosted }}',
+                    'eventValue' :1
+                };
+                ev.category ={'primaryCategory':ctConstants.other};
+                digitalData.event.push(ev);
+            }
+        </script>
+    {%- endif -%}
+
+
+    {%- unless  form.posted_successfully? -%}
+    <div class="section-header mb-10">
+        {% if section.settings.title != blank %}
+            <h1>{{ section.settings.title }}</h1>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-lg-4 contact_info">
+            {% if shop.metafields.data.contact_info != blank %}
+            <div class="desc">
+                {% assign contact_info = shop.metafields.data.contact_info %}
+                <ul>
+                    {% if contact_info.contact_phone != blank %}
+                        {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                        <li>{{ 'contact.customer_service' | t }} <a href="tel:{{ phone_number }}">{{ contact_info.contact_phone }}</a></li>
+                    {% endif %}
+                    {% if contact_info.contact_line_id != blank %}
+                        <li>{{ 'contact.line' | t }}
+                            <a href="https://lin.ee/hovUB8v">{{ contact_info.contact_line_id }}</a>
+                        </li>
+                    {% endif %}
+                    {% if contact_info.contact_email != blank %}
+                        <li>{{ 'contact.email' | t }} <a href="mailto:{{ contact_info.contact_email }}">{{ contact_info.contact_email }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if section.settings.show_share %}
+                <ul class="social-sharing">
+                {% if settings.social_facebook_link != blank %}
+                    <li class="btn--share">
+                        <a target="_blank" href="{{ settings.social_facebook_link }}"
+                            title="{{ 'general.social.facebook' | t }}">
+                            {% include 'icon-facebook' %}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if settings.social_line_link != blank %}
+                    <li class="btn--share">
+                        <a target="_blank" href="{{ settings.social_line_link }}"
+                            title="{{ 'general.social.line' | t }}">
+                            {% include 'icon-line' %}
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% if settings.social_instagram_link != blank %}
+                    <li class="btn--share">
+                        <a target="_blank" href="{{ settings.social_instagram_link }}"
+                            title="{{ 'general.social.instagram' | t }}">
+                            {% include 'icon-instagram' %}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if settings.social_youtube_link != blank %}
+                    <li class="btn--share">
+                        <a target="_blank" href="{{ settings.social_youtube_link }}"
+                            title="{{ 'general.social.youtube' | t }}">
+                            {% include 'icon-youtube' %}
+                        </a>
+                    </li>
+                {% endif %}
+                {% if settings.social_twitter_link != blank %}
+                    <li class="btn--share">
+                        <a target="_blank" href="{{ settings.social_twitter_link }}"
+                            title="{{ 'general.social.twitter' | t }}">
+                            {% include 'icon-twitter' %}
+                        </a>
+                    </li>
+                {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="col-lg-8 contact_form">
+            {% if section.settings.form_content != blank %}
+                <div class="form_desc">
+                    {{ section.settings.form_content }}
+                </div>
+            {% endif %}
+            {% if page.content.size > 0 %}
+            <div class="rte">
+                {{ page.content }}
+            </div>
+            {% endif %}
+
+            <div class="contact-form form-vertical">
+                {% include 'form-status', form: form, form_id: formId %}
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="{{ formId }}-name">{{ 'contact.form.name' | t }}</label>
+                        <input class="form-control" type="text" id="{{ formId }}-name" name="contact[{{ 'contact.form.name' | t }}]"
+                            value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                            data-msg-required="{{ 'general.validate.required' | t }}" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+                        <input class="form-control" type="text" id="{{ formId }}-phone" name="contact[{{ 'contact.form.phone' | t }}]"
+                            pattern="[0-9\-]*"
+                            maxlength="10"
+                            minlength="10"
+                            data-msg-maxlength="{{ 'contact.form.error_phone' | t }}"
+                            data-msg-minlength="{{ 'contact.form.error_phone' | t }}"
+                            value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                            data-msg-required="{{ 'general.validate.required' | t }}" required>
+                        <p class="form-note">{{ 'contact.form.example' | t }} 0811234567</p>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="{{ formId }}-email">{{ 'contact.form.email' | t }}</label>
+                        <input class="form-control" type="email" id="{{ formId }}-email" name="contact[email]"
+                            autocorrect="off" autocapitalize="off"
+                            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                            data-rule-email="true"
+                            data-msg-email="{{ 'general.validate.email' | t }}"
+                            data-msg-required="{{ 'general.validate.required' | t }}" required>
+                        <p class="form-note">example@mail.com</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label>
+                        <textarea class="form-control" rows="5" id="{{ formId }}-message"
+                            name="contact[{{ 'contact.form.message' | t }}]"
+                            data-msg-required="{{ 'general.validate.required' | t }}" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                    </div>
+                </div>
+                <div class="text-right form__actions-sticky">
+                    <input id="btn-submit-contact" type="submit" class="btn" value="{{ 'contact.form.submit' | t }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    {%- endunless  -%}
+</div>
+{% endform %}
+<script>
+    $(document).ready(function () {
+        $('#ContactForm').validate({
+            rules: {
+                "contact[email]": {
+                    required: true,
+                    emailCustom: true
+                }
+            }
+        });
+        
+        $(document).on('click', '#btn-submit-contact', function () {
+            let checkValid = $("#ContactForm").valid();
+            if (!checkValid) {
+                $('.contact-form .form-control.error')[0].focus();
+                return false;
+            }
+        });
+        
+        // Prevent input notallowed characters in phone-number field
+        $('#{{ formId }}-phone').keypress(function(e){           
+            let key = e.keyCode || e.which;
+            key = String.fromCharCode(key);
+            if (!(/\d/.test(key))) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Contact pages",
+  "settings": [
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "How can we help?"
+    },
+    {
+        "type": "checkbox",
+        "id": "show_share",
+        "label": "Show social share",
+        "default": true
+    },
+    {
+        "type": "html",
+        "id": "form_content",
+        "label": "Form content"
+    },
+    {
+        "type": "header",
+        "content": "Contact successfully"
+    },
+    {
+        "type": "text",
+        "id": "titlePosted",
+        "label": "Title"
+    },
+    {
+        "type": "text",
+        "id": "subPosted",
+        "label": "Sub Title"
+    },
+    {
+        "type": "textarea",
+        "id": "contentPosted",
+        "label": "Content Posted"
+    },
+    {
+    "type": "image_picker",
+    "id": "image",
+    "label": "Select image"
+    },
+    {
+        "type": "text",
+        "id": "buttonFriend_title",
+        "label": "Button Add Line title"
+    },
+    {
+        "type": "url",
+        "id": "urlFriend",
+        "label": "Button Add Line url"
+    },
+    {
+        "type": "text",
+        "id": "button_title",
+        "label": "Button Back Home"
+    },
+    {
+        "type": "url",
+        "id": "url",
+        "label": "Button Back Home url"
+    }
+  ]
+}
+{% endschema %}

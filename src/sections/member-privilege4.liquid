@@ -1,0 +1,218 @@
+<div class="businessMembers--benefits">
+        <div class="row">
+            <div class="ss-businessBenefits--left col-6 col-md-6 col-lg-4 offset-lg-1">
+                {% if section.settings.title != blank %}
+                    <h2 class="h3 heading">{{ section.settings.title }}</h2>
+                {% endif %}
+                {% if section.blocks.size > 0 %}
+                    <ul class="list--member">
+                        {% for block in section.blocks limit: section.blocks.size %}
+                            {% if block.settings.title != blank %}
+                            <li data-item_name="brandItem{{ forloop.index }}">
+                                <div class="h3 heading">{{ block.settings.title }}</div>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="ss-businessBenefits--right col-6 col-md-6 col-lg-6">
+                <div class="card-deck mb-3 text-center">
+                    <div class="card">
+                        <div class="card--brand box-shadow">
+                            <div class="card-header h3">
+                                <span class="card-header--desktop">{{ section.settings.brand-heading }}</span>
+                                <span class="card-header--mobile">BF</span>
+                            </div>
+                            <div class="card-body">
+                                {% if section.blocks.size > 0 %}
+                                    <ul class="list-unstyled">
+                                        {% assign count = 0 %}
+                                        {% for block in section.blocks limit: section.blocks.size %}
+                                            {% assign count = count | plus: 1 %}
+                                            {% if block.settings.title != blank %}
+                                                <li class="brandItem{{ count }}" data-item_value="brandItem{{ forloop.index }}">
+                                                    {% if block.settings.member_show_brand != blank %}
+                                                        <div class="icon"> {% include 'icon-checkbox-member' %} </div>
+                                                    {% else %}
+                                                        <div class="icon"> {% include 'icon-close-member' %}</div>
+                                                    {% endif %}
+                                                </li>
+
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                        <a href="{{ section.settings.button1_link }}" class="btn benefits__btn display-dk" aria-label="{{ section.settings.button1_label }}">{{ section.settings.button1_label }}</a>
+                        <a href="{{ section.settings.button1_link }}" class="btn benefits__btn display-mb" aria-label="{{ section.settings.button1_mb_label }}">{{ section.settings.button1_mb_label }}</a>
+
+                    </div>
+                    <div class="card ">
+                        <div class="card--brand box-shadow">
+                            <div class="card-header h3">
+                                <span class="card-header--desktop">{{ section.settings.business-heading }}</span>
+                                <span class="card-header--mobile">BP</span>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled">
+                                    {% assign countbus = 0 %}
+                                    {% for block in section.blocks limit: section.blocks.size %}
+                                        {% assign countbus = countbus | plus: 1 %}
+                                        {% if block.settings.title != blank %}
+                                            <li class="brandItem{{ countbus }}" data-item_value="brandItem{{ forloop.index }}">
+                                                {% if block.settings.member_show_business != blank %}
+                                                    <div class="icon"> {% include 'icon-checkbox-member' %} </div>
+                                                {% else %}
+                                                    <div class="icon"> {% include 'icon-close-member' %}</div>
+                                                {% endif %}
+                                            </li>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="{{ section.settings.button2_link }}" class="btn benefits__btn display-dk" aria-label="{{ section.settings.button2_label }}">{{ section.settings.button2_label }}</a>
+                        <a href="{{ section.settings.button2_link }}" class="btn benefits__btn display-mb" aria-label="{{ section.settings.button2_mb_label }}">{{ section.settings.button2_mb_label }}</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+
+        function updateHiehgtItem() {
+            if($('.list--member li').length > 0) {
+                $('.list--member li').each(function() {
+                    const _ = $(this),
+                        dataItem = _.data('item_name'),
+                        heightItem = _.outerHeight(),
+                        itemValue = $(`[data-item_value=${dataItem}]`);
+
+                    if (heightItem && itemValue) {
+                        itemValue.height(heightItem - 1);
+                    }
+                });
+            }
+        }
+
+        updateHiehgtItem();
+
+        $(window).on('resize',function() {
+            updateHiehgtItem();
+        });
+
+    });
+</script>
+
+{% schema %}
+    {
+    "name": "Member benefits",
+    "class": "ss-businessBenefits",
+    "settings": [
+    {
+    "type": "text",
+    "id": "title",
+    "label": "Title"
+    },
+    {
+    "type": "header",
+    "content": "Brand Fan"
+    },
+    {
+    "type": "text",
+    "id": "brand-heading",
+    "label": "Heading"
+    },
+    {
+    "type": "text",
+    "id": "button1_label",
+    "label": {
+    "en": "Button label",
+    "th": "ป้ายกำกับปุ่ม"
+    }
+    },
+    {
+    "type": "text",
+    "id": "button1_mb_label",
+    "label": {
+    "en": "Button label on mobile",
+    "th": "ป้ายกำกับปุ่ม"
+    }
+    },
+    {
+    "type": "url",
+    "id": "button1_link",
+    "label": {
+    "en": "Button link",
+    "th": "ลิงก์ของปุ่ม"
+    }
+    },
+    {
+    "type": "header",
+    "content": "Business Partner"
+    },
+    {
+    "type": "text",
+    "id": "business-heading",
+    "label": "Heading"
+    },
+    {
+    "type": "text",
+    "id": "button2_label",
+    "label": {
+    "en": "Button label",
+    "th": "ป้ายกำกับปุ่ม"
+    }
+    },
+    {
+    "type": "text",
+    "id": "button2_mb_label",
+    "label": {
+    "en": "Button label on mobile",
+    "th": "ป้ายกำกับปุ่ม"
+    }
+    },
+    {
+    "type": "url",
+    "id": "button2_link",
+    "label": {
+    "en": "Button link",
+    "th": "ลิงก์ของปุ่ม"
+    }
+    }
+
+    ],
+    "blocks": [
+    {
+    "type": "text",
+    "name": "Item",
+    "settings": [
+    {
+    "type": "textarea",
+    "id": "title",
+    "label": "Title"
+    },
+    {
+    "type": "checkbox",
+    "id": "member_show_brand",
+    "label": "Brand Fan Column",
+    "default": true
+    },
+    {
+    "type": "checkbox",
+    "id": "member_show_business",
+    "label": "Business Partner Column",
+    "default": true
+    }
+    ]
+    }
+    ]
+    }
+{% endschema %}

@@ -1,0 +1,55 @@
+<div class="container smart__timeline">
+    <div class="section-header text-center">
+        <h1>{{ page.title }}</h1>
+    </div>
+    <div class="rte row">
+        <div class="col-md-6 smart__timeline-wrap">
+            {% section 'page-how-to-shop-online' %}
+        </div>
+        <div class="col-md-6 smart__timeline-right">{{ page.content }}</div>
+        {% comment %}
+        <div class="col-md-6 smart__timeline-right">
+            <h4>Payment information</h4>
+            <p class="mb-0"> Payment can be made via the following channels:</p>
+            <ol>
+                <li>Pay via credit card and debit card (Master Card/VISA)</li>
+                <li>Pay via cash-on-delivery (COD)</li>
+            </ol>
+            <p>This service is available nationwide. Payment can be made by cash or credit/debit card on delivery.</p>
+            <p>In the case of suspicious payment, the Company may request for additional documents such as original copy
+                of credit/debit card, copy of passport, driver’s license or other official documentation.</p>
+            <h4>Order processing</h4>
+            <p>Your order will be shipped according to your preferred method.<br />Orders received on the weekends and
+                public holidays will be processed on the following Monday or next working day.<br /><strong>Orders are
+                    shipped only on working days</strong><em><strong> (Monday – Friday, excluding public
+                        holidays)</strong></em></p>
+            <p>The Company will only take responsibility for orders in which the shipping information is correct, and
+                will not be responsible for orders where incorrect shipping information was provided by the
+                customer.</p>
+            <p><strong>The Company does not ship overseas.</strong> The customer must order from the website of the
+                country in which the customer wishes to ship the product.<br />Orders will not be processed until
+                payment has been approved by the bank.</p>
+            <p><strong>One order can only be delivered to one address. Order items
+                    separately, if it is necessary to deliver to many addresses.</strong></p>
+            <h4>Order cancellation</h4>
+            <p><strong>If you would like to cancel an order, please contact customer service</strong> <a
+                    href='tel:+6625542455​'>+(66)2-554-2455​</a></p>
+            <p>Orders that have been paid for will be charged with a 3% processing fee from the total amount.
+                <strong>Your order
+                    will be cancelled only if it has not been shipped. However, if the order has already been shipped,
+                    you
+                    may return and exchange the products.</strong></p>
+            <p>In the case that your order is cancelled, you will notified by our customer service. Note that shipping
+                may take 1 – 2 days, therefore the Company reserves the right in cancelling products during this period.
+                Once the order has been received, you may return the products according to the terms and conditions:</p>
+            <p>The Company will exchange products and sales aids on the following terms and conditions:</p>
+            <p>Products or sales aids damaged during shipping by the Company <br />Shipping destination or order is
+                incorrect.<br /></p>
+            <p>Products or sales aids damaged or flawed before shipping.<br />Products or sales aids
+                are not up to standard</p>
+            <h4></h4>
+        </div>
+        {% endcomment %}
+    </div>
+</div>
+{% include 'sharing-popup', share_permalink: page.url %}

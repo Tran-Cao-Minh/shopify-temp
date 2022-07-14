@@ -1,0 +1,69 @@
+{% include 'slideshow-section' %}
+{% schema %}
+{
+    "name": "Slideshow",
+    "class": "show-navigator index-section index-section--flush index-section--slideshow",
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_dk",
+                    "label": "Image desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_mb",
+                    "label": "Image mobile"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Button url"
+                }
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "video_url",
+                    "label": "Video URL mp4"
+                }
+            ]
+        },
+        {
+            "type": "custom",
+            "name": "Custom",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "content",
+                    "label": "Content"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Slideshow",
+            "category": {
+                "en": "Image",
+                "th": "รูปภาพ"
+            },
+            "blocks": [
+                {
+                "type": "image"
+                },
+                {
+                "type": "image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,236 @@
+<div class="easy-fast-start__video">
+    <div class="container">
+        {%- if section.settings.video_title -%}
+            <h2 class="text-center primary_color heading">{{ section.settings.video_title }}</h2>
+        {%- endif -%}
+        <div class="row">
+            {%- if section.settings.video_1_bg != blank or section.settings.video_1_title != blank or section.settings.video_1_desc != blank -%}
+                <div class="col-md-6 video__1">
+                    <div class="item">
+                        {%- if section.settings.video_1_bg -%}
+                            <div class="media media__video smart_modal_open" data-target="#video__modal-video1"
+                                data-iframe="{{ section.settings.video_1_iframe | escape }}">
+                                <img src="{{ section.settings.video_1_bg | img_url: 'master' }}" alt="" />
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.video_1_title or section.settings.video_1_desc != blank -%}
+                            <div class="content">
+                                {%- if section.settings.video_1_title -%}
+                                    <div class="title">{{ section.settings.video_1_title }}</div>
+                                {%- endif -%}
+                                {%- if section.settings.video_1_desc -%}
+                                    <div class="desc">{{ section.settings.video_1_desc }}</div>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.video_1_iframe != blank -%}
+                            <div class="video__modal smart_modal" id="video__modal-video1">
+                                <div class="modal-content modal-content__padding">
+                                    <span class="close drawer__close drawer__close-large drawer__close--blue" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                                    {% comment %} <div class="modal__content-iframe">{{ section.settings.video_1_iframe }}</div> {% endcomment %}
+                                    <div class="modal__content-iframe"></div>
+                                </div>
+                                <div class="modal__overlay overlay"></div>
+                            </div>
+                        {%- endif -%}
+                    </div>                    
+                </div>
+            {%- endif -%}
+            {%- if section.settings.video_2_bg != blank or section.settings.video_2_title != blank or section.settings.video_2_desc != blank -%}
+                <div class="col-md-6 video__2">
+                    <div class="item">
+                        {%- if section.settings.video_2_bg -%}
+                            <div class="media media__video smart_modal_open" data-target="#video__modal-video2"
+                                data-iframe="{{ section.settings.video_2_iframe | escape }}">
+                                <img src="{{ section.settings.video_2_bg | img_url: 'master' }}" alt="" />
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.video_2_title or section.settings.video_2_desc != blank -%}
+                            <div class="content">
+                                {%- if section.settings.video_2_title -%}
+                                    <div class="title">{{ section.settings.video_2_title }}</div>
+                                {%- endif -%}
+                                {%- if section.settings.video_2_desc -%}
+                                    <div class="desc">{{ section.settings.video_2_desc }}</div>
+                                {%- endif -%}
+                            </div>
+                        {%- endif -%}
+                        {%- if section.settings.video_2_iframe != blank -%}
+                            <div class="video__modal smart_modal" id="video__modal-video2">
+                                <div class="modal-content modal-content__padding">
+                                    <span class="close drawer__close drawer__close-large drawer__close--blue" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                                    <div class="modal__content-iframe"></div>
+                                </div>
+                                <div class="modal__overlay overlay"></div>
+                            </div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>
+<div class="easy-fast-start__bottom">
+    {%- assign img_dk = section.settings.bottom_banner_image_dk -%}
+    {%- assign img_mb = section.settings.bottom_banner_image_mb -%}
+    {%- if img_dk != blank and img_mb != blank -%}
+        {%- assign img_url_dk = img_dk | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        {%- assign img_url_mb = img_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <div class="media">
+            <img class="image__lazyload lazyload lazypreload display-dk"
+                src="{{ img_dk | img_url: '300x300' }}"
+                data-src="{{ img_url_dk }}"
+                data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                data-aspectratio="{{ img_dk.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ img_dk.alt | escape }}" />
+            <img class="image__lazyload lazyload lazypreload display-mb"
+                src="{{ img_mb | img_url: '300x300' }}"
+                data-src="{{ img_url_mb }}"
+                data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                data-aspectratio="{{ img_mb.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ img_mb.alt | escape }}" />
+        </div>
+    {%- endif -%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="content">
+                    {%- if section.settings.bottom_banner_title_dk -%}
+                        <h2 class="title primary_color">
+                            <span class="display-dk">{{ section.settings.bottom_banner_title_dk }}</span>
+                            <span class="display-mb">{{ section.settings.bottom_banner_title_mb }}</span>
+                        </h2>
+                    {%- endif -%}
+                    {%- if section.settings.bottom_banner_sub_title -%}
+                        <h2 class="sub-title primary_color">{{ section.settings.bottom_banner_sub_title }}</h2>
+                    {%- endif -%}
+                    {%- if section.settings.bottom_banner_desc -%}
+                        <div class="desc">{{ section.settings.bottom_banner_desc }}</div>
+                    {%- endif -%}
+                    {%- if section.settings.bottom_banner_button_label and section.settings.bottom_banner_button_url -%}
+                        <a href="{{ section.settings.bottom_banner_button_url }}" class="btn">{{ section.settings.bottom_banner_button_label }}</a>
+                    {%- endif -%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(document).on('click', '.media__video', function () {
+            let elItem = $(this).parents('.item'),
+                dataIframe= $(this).data('iframe'),
+                elPopupContent = elItem.find('.modal__content-iframe');
+            if (elItem && dataIframe && elPopupContent) {
+                elPopupContent.html(dataIframe);
+            }
+        });
+
+        $(document).on('click', '.video__modal .close', function () {
+            $(this).parents('.video__modal').find('.modal__content-iframe').html('');
+        });
+    });
+</script>
+{% schema %}
+{
+  "name": "Bottom",
+  "class": "index-section-top",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+        "type": "html",
+        "id": "video_title",
+        "label": "Video title"
+    },
+    {
+        "type": "image_picker",
+        "id": "video_1_bg",
+        "label": "Video 1 background"
+    },
+    {
+        "type": "text",
+        "id": "video_1_title",
+        "label": "Video 1 title"
+    },
+    {
+        "type": "textarea",
+        "id": "video_1_desc",
+        "label": "Video 1 description"
+    },
+    {
+        "type": "textarea",
+        "id": "video_1_iframe",
+        "label": "Video 1 iframe"
+    },
+    {
+        "type": "image_picker",
+        "id": "video_2_bg",
+        "label": "Video 2 background"
+    },
+    {
+        "type": "text",
+        "id": "video_2_title",
+        "label": "Video 2 title"
+    },
+    {
+        "type": "textarea",
+        "id": "video_2_desc",
+        "label": "Video 2 description"
+    },
+    {
+        "type": "textarea",
+        "id": "video_2_iframe",
+        "label": "Video 2 iframe"
+    },
+    {
+      "type": "header",
+      "content": "Banner bottom"
+    },
+    {
+        "type": "image_picker",
+        "id": "bottom_banner_image_dk",
+        "label": "Bottom banner desktop"
+    },
+    {
+        "type": "image_picker",
+        "id": "bottom_banner_image_mb",
+        "label": "Bottom banner mobile"
+    },
+    {
+        "type": "text",
+        "id": "bottom_banner_title_dk",
+        "label": "Bottom banner title (desktop)"
+    },
+    {
+        "type": "text",
+        "id": "bottom_banner_title_mb",
+        "label": "Bottom banner title (mobile)"
+    },
+    {
+        "type": "text",
+        "id": "bottom_banner_sub_title",
+        "label": "Bottom banner sub title"
+    },
+    {
+        "type": "textarea",
+        "id": "bottom_banner_desc",
+        "label": "Bottom banner description"
+    },
+    {
+        "type": "text",
+        "id": "bottom_banner_button_label",
+        "label": "Bottom banner button label"
+    },
+    {
+        "type": "url",
+        "id": "bottom_banner_button_url",
+        "label": "Bottom banner button url"
+    }
+  ]
+}
+{% endschema %}

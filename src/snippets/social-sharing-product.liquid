@@ -1,0 +1,41 @@
+{% if customer %}
+    {% assign member_id = customer.metafields.data.personal.member_id %}
+{% endif %}
+<div class="social__sharing-title">{{ 'general.social.share' | t }}</div>
+<ul class="social-sharing">
+    {% if settings.share_facebook %}
+    <li>
+        <a target="_blank"
+            href="//www.facebook.com/sharer.php?u={{ shop.url }}<%- product.url %>?variant=<%- current_variant.id %>%26channel=DTC_sharelink{% if member_id != blank %}%26promo_code={{ member_id }}{% endif %}"
+            class="btn--share share-facebook"
+            title="{{ 'general.social.facebook' | t }}"
+            data-share_product_fb>
+        {% include 'icon-facebook' %}
+        </a>
+    </li>
+    {% endif %}
+
+    {% if settings.share_line %}
+    <li>
+        <a target="_blank"
+            href="http://line.me/R/msg/text/?{{ shop.url }}<%- product.url %>?variant=<%- current_variant.id %>%26channel=DTC_sharelink{% if member_id != blank %}%26promo_code={{ member_id }}{% endif %}"
+            class="btn--share share-line"
+            title="{{ 'general.social.line' | t }}"
+            data-share_product_line>
+        {% include 'icon-line' %}
+        </a>
+    </li>
+    {% endif %}
+
+    {% if settings.share_twitter %}
+    <li>
+        <a target="_blank"
+            href="//twitter.com/share?text={{ product.title | url_param_escape }}&amp;url={{ shop.url }}<%- product.url %>?variant=<%- current_variant.id %>%26channel=DTC_sharelink{% if member_id != blank %}%26promo_code={{ member_id }}{% endif %}"
+            class="btn--share share-twitter"
+            title="{{ 'general.social.twitter' | t }}"
+            data-share_product_twitter>
+        {% include 'icon-twitter' %}
+        </a>
+    </li>
+    {% endif %}
+</ul>

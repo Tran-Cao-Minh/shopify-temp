@@ -1,0 +1,30 @@
+<% let localeUrl = locale != '' ? ('/' + locale) : ''; %>
+<div class="predictive-search-title">
+    <h3 class="predictive-search-title__content">
+    {{ 'general.search.articles' | t }}
+    </h3>
+    <ul class="predictive-search__list" role="listbox" aria-labelledby="predictive-search">
+    <% for(let index in articles) { %>
+    <%
+        let article = articles[index],
+            title = (locale == 'th' && article.th_title) ? article.th_title : article.en_title,
+            content = (locale == 'th' && article.th_content) ? article.th_content : article.en_content,
+            contentConverted = smartosc.trimString(content, 50, '...'),
+            url = article.url,
+            image = article.image_src || noImage;
+    %>
+    <li id="search-result-<%= index %>" class="predictive-search-item" role="option" data-search-result="">
+        <a class="predictive-search-item__link" href="<%= localeUrl %>/blogs/<%= url %>">
+            <div class="item__image-article" data-image-with-placeholder-wrapper="">
+                <img src="<%= image %>" class="predictive-search-item__image" alt="" />
+            </div>
+            <div class="item__content-article">
+                <h4><%= title %></h4>
+                <div class="desc"><%= contentConverted %></div>
+            </div>
+        </a>
+    </li>
+    <% } %>
+    </ul>
+</div>
+

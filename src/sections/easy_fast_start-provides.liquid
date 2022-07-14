@@ -1,0 +1,86 @@
+<div class="easy-fast-start__provides index-section">
+    <div class="container">
+        {%- if section.settings.title or section.settings.sub_title -%}
+            <div class="provides__headings">
+                {%- if section.settings.title -%}
+                    <h2 class="title primary_color">{{ section.settings.title }}</h2>
+                {% endif %}
+                {%- if section.settings.sub_title -%}
+                    <h3 class="sub-title">{{ section.settings.sub_title }}</h3>
+                {% endif %}
+            </div>
+        {%- endif -%}
+        {%- if section.blocks.size > 0 -%}
+            <div class="provides__list row">
+                {%- for block in section.blocks -%}
+                    {%- if block.settings.icon or block.settings.desc -%}
+                        <div class="item col-md-3">
+                            {%- if block.settings.icon -%}
+                                <div class="media"><img src="{{ block.settings.icon | img_url: '100x' }}" alt="" /></div>
+                            {%- endif -%}
+                            {%- if block.settings.desc -%}
+                                <div class="desc">{{ block.settings.desc }}</div>
+                            {%- endif -%}
+                        </div>
+                    {%- endif -%}
+                {%- endfor -%}
+            </div>
+        {%- endif -%}        
+        {%- if section.settings.desc_dk -%}
+            <div class="provides__bottom desc">
+               <span class="display-dk">{{ section.settings.desc_dk }}</span> 
+               <span class="display-mb">{{ section.settings.desc_mb }}</span> 
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Provides",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+    },
+    {
+        "type": "text",
+        "id": "sub_title",
+        "label": "Sub title"
+    },
+    {
+        "type": "textarea",
+        "id": "desc_dk",
+        "label": "Description Desktop"
+    },
+    {
+        "type": "textarea",
+        "id": "desc_mb",
+        "label": "Description Mobile"
+    }
+  ],
+  "blocks": [
+        {
+            "type": "item",
+            "name": "List item",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "icon",
+                    "label": "Icon"
+                },
+                {
+                    "type": "textarea",
+                    "id": "desc",
+                    "label": "Description"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

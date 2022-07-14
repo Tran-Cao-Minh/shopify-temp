@@ -1,0 +1,304 @@
+{% assign url_page = collection.url %}
+{% comment %}
+{% assign limit = 12 %}
+{% case template %}
+  {% when 'collection.by_12' %}
+    {% assign limit = 12 %}
+    {% assign url_page = collection.url | append: '?view=by_12' %}
+  {% when 'collection.by_16' %}
+    {% assign limit = 16 %}
+    {% assign url_page = collection.url | append: '?view=by_16' %}
+  {% when 'collection.by_20' %}
+    {% assign limit = 20 %}
+    {% assign url_page = collection.url | append: '?view=by_20' %}
+{% endcase %} {% endcomment %}
+
+{% case section.settings.grid %}
+  {% when 2 %}
+    {% assign class_grid = 'col-sm-6' %}
+  {% when 3 %}
+    {% assign class_grid = 'col-lg-4 col-sm-6' %}
+  {% when 4 %}
+    {% assign class_grid = 'col-lg-3 col-6' %}
+{% endcase %}
+
+{% if collection.handle == 'all' %}
+  <script>
+    document.location.href="{{ routes.root_url }}";
+  </script>
+{% else %}
+
+<div data-section-id="{{ section.id }}" data-section-type="collection-template">
+   <header class="collection-header">
+      {% if collection.image %}
+         <div class="collection-hero collection-hero--product-list">
+            <div class="collection-hero__image lazyload js"
+                  data-bgset="{% include 'bgset', image: collection.image %}"
+                  data-sizes="auto"
+                  data-parent-fit="cover"
+                  style="background-image: url('{{ collection.image | img_url: '300x300' }});">
+               <div class="container">
+                  {% if collection.description != blank %}
+                     <div class="rte collection-description">
+                        {{ collection.description }}
+                     </div>
+                  {% endif %}
+               </div>
+            </div>
+            <noscript>
+               <div class="collection-hero__image" style="background-image: url({{ collection.image | img_url: '2048x600', crop: 'top' }});"></div>
+            </noscript>
+         
+         </div>
+      {% else %}
+         <div class="container">
+            <div class="section-header text-center">
+               <h1>
+               <span role="text">
+                  <span class="visually-hidden">{{ 'collections.general.collection_label' | t }}: </span>
+                  {{ collection.title }}
+               </span>
+               </h1>
+               {% if collection.description != blank %}
+               <div class="rte">
+                  {{ collection.description }}
+               </div>
+               {% endif %}
+            </div>
+         </div>
+      {% endif %}
+   </header>
+</div>
+<div class="collection-breadcrumbs">
+   {% include 'breadcrumbs' %}
+</div>
+
+<div class="filters-toolbar-wrapper">
+   <div class="container">
+      {% comment %} {% include 'filter-active' %} {% endcomment %}
+      <div class="filters-toolbar">
+         <div class="filters-toolbar__item filters-toolbar__item--title">
+            <div class="section-header">
+               <h1>{{ collection.title }}</h1>
+            </div>
+         </div>
+         <div class="filters-toolbar__item-wrapper filters__wrapper">
+         <div class="filters-toolbar__item-child">
+            <div class="filters-toolbar__input-wrapper select-group">
+               {%- if section.blocks.size > 0 -%}
+                  <div class="select2_wrap select2_sm_wrap position_bottom" id="select2_sm_wrap_1">
+                     <select class="select2_single" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" data-parent="true" data-parent_el="#select2_sm_wrap_1">
+                        {%- for block in section.blocks -%}
+                           {%- if block.settings.collection != blank -%}
+                                 {%- assign cat = collections[block.settings.collection] -%}
+                                 {%- if collection.handle == cat.handle -%}
+                                    <option value="{{ cat.url }}" selected="selected">{{ cat.title }}</option>
+                                 {%- else -%}
+                                    <option value="{{ cat.url }}">{{ cat.title }}</option>
+                                 {%- endif -%}
+                           {%- endif -%}
+                        {%- endfor -%}
+                     </select>
+                  </div>
+               {%- else -%}
+                  <div class="select2_wrap select2_sm_wrap position_bottom" id="select2_sm_wrap_cat">
+                     <select class="select2_single" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" data-parent="true" data-parent_el="#select2_sm_wrap_cat">
+                        <option value="" selected="selected">{{ 'collections.filters.category' | t }}</option>
+                        {% for cat in collections %}
+                           {% if cat.title != blank %}
+                              <option value="{{ cat.url }}">{{ cat.title }}</option>
+                           {% endif %}
+                        {% endfor %}
+                     </select>
+                  </div>
+               {%- endif -%}
+               {% comment %} <div class="smart_custom-select">
+                  <div class="title">{{ 'collections.filters.category' | t }}</div>
+                  <ul>
+                     {%- assign collections = collections | sort: 'published_at' -%}
+                     {% for cat in collections %}
+                        {% if cat.title != blank %}
+                        <li><a href="{{ cat.url }}"{% if collection.handle == cat.handle %} class="active"{% endif %}>{{ cat.title }}</a></li>
+                        {% endif %}
+                     {% endfor %}
+                  </ul>
+               </div> {% endcomment %}
+            </div>
+         </div>
+
+         <div class="filters-toolbar__item-child">
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <div class="select2_wrap select2_sm_wrap position_bottom" id="select2_sm_wrap_sort_by">
+               <select class="select2_single" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" data-parent="true" data-parent_el="#select2_sm_wrap_sort_by">
+                  {%- for option in collection.sort_options -%}
+                     {% assign sort_by_url = '' %}
+                     {% if url_page contains '?view=' %}
+                        {% assign sort_by_url = url_page | append: '&sort_by=' | append: option.value %}
+                     {% else %}
+                        {% assign sort_by_url = url_page | append: '?sort_by=' | append: option.value %}
+                     {% endif %}
+                     <option value="{{ sort_by_url }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name }}</option>
+                  {%- endfor -%}
+               </select>
+            </div>
+            {% comment %} <div class="smart_custom-select">
+               <div class="title">{{ 'collections.sorting.title' | t }}</div>
+               <ul>
+               {%- for option in collection.sort_options -%}
+                  {% assign sort_by_url = '' %}
+                  <li>
+                     {% if url_page contains '?view=' %}
+                        {% assign sort_by_url = url_page | append: '&sort_by=' | append: option.value %}
+                     {% else %}
+                        {% assign sort_by_url = url_page | append: '?sort_by=' | append: option.value %}
+                     {% endif %}
+                     <a href="{{ sort_by_url }}"{% if option.value == sort_by %} class="active"{% endif %}>{{ option.name }}</a>
+                  </li>
+               {%- endfor -%}
+               </ul>
+            </div> {% endcomment %}
+         </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="container product_lists" >
+   <div class="loader" style="margin: 100px auto;" data-container="loader"></div>
+   <div class="row grid--uniform grid--view-items" id="product_lists"></div>
+   <div class="pagination-wrap hide">
+      <div class="pagination_show-more">
+         <label class="display-dk">{{ 'general.pagination.item_per_page' | t }}</label>
+         <label class="display-mb">{{ 'general.pagination.show' | t }}</label>
+         <div class="select2_wrap select2_border_bottom">
+            <select id="select_show_more" class="select2_single" data-class="select_show_more">
+               <option value="12" selected="selected">12</option>
+               <option value="16">16</option>
+               <option value="20">20</option>
+            </select>
+         </div>
+         <span class="per_page">{{ 'general.pagination.items_per_page' | t }}</span>
+      </div>
+      <div class="pagination pagination-container smart_pagination" data-limit="12"></div>
+   </div>
+   <div class="collection__no-matches text-center page__no-item hide">
+      <div class="media media__no-item">
+         <svg xmlns="http://www.w3.org/2000/svg" width="95.298" height="81.083" viewBox="0 0 95.298 81.083">
+            <g data-name="Group 2378" transform="translate(-472.561 61.453)">
+               <path data-name="Path 392" d="M497.524-47.74v-.606A11.857,11.857,0,0,0,485.668-60.2h0a11.857,11.857,0,0,0-11.857,11.857v.606Z" transform="translate(0)" fill="#f4f4ff" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+               <path data-name="Path 393" d="M556.154,64.5v1.818A11.857,11.857,0,0,1,544.3,78.174H588.55a11.857,11.857,0,0,0,11.857-11.857V64.5Z" transform="translate(-33.797 -59.794)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+               <path data-name="Path 394" d="M534.3,6.524V4.706h28.446V-48.346A11.857,11.857,0,0,0,550.891-60.2H498.723v.054a11.857,11.857,0,0,1,10.746,11.8V6.524A11.857,11.857,0,0,0,521.326,18.38h1.118A11.857,11.857,0,0,0,534.3,6.524Z" transform="translate(-11.945)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+               <g data-name="Group 2373" transform="translate(507.685 -32.751)">
+                  <line data-name="Line 327" x2="32.887" transform="translate(0 5.92)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                  <line data-name="Line 328" x2="32.887" transform="translate(0 11.84)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                  <line data-name="Line 329" x2="16.444" transform="translate(0 17.759)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                  <path data-name="Path 396" d="M0,0H32.887" transform="translate(0 0)" fill="none" stroke="#c1dbff" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+               </g>
+            </g>
+         </svg>
+      </div>
+      <div class="content">
+         <h3 class="title text__no-item">{{ "collections.general.no_matches" | t }}</h3>
+         {%- assign desc_no_product = 'collections.general.no_matches_view_all_prodcuts_html' | t -%}
+         {%- assign desc_no_product = desc_no_product | replace: '${collection_url}', routes.collections_url -%}
+         <div class="desc">{{ desc_no_product }}</div>
+      </div>
+   </div>
+</div>
+
+<script type="text/html" id="productListScript">
+   {% include 'product-card-template' %}
+</script>
+{% include 'customer-title' %}
+<script>
+   let collection_products = [
+      {%- paginate collection.products by collection.all_products_count -%}
+         {%- for product in collection.products -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- assign product_status = false -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+            {%- if product_status -%}
+               {{ product_json }},
+            {%- endif -%}
+         {%- endfor -%}
+      {%- endpaginate -%}
+   ];
+</script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "da": "Kollektionssider",
+    "de": "Kategorie-Seiten",
+    "en": "Collection pages",
+    "es": "Páginas de colección",
+    "fi": "Kokoelman sivut",
+    "fr": "Pages de collections",
+    "hi": "कलेक्शन पेज",
+    "it": "Pagine di collezioni",
+    "ja": "コレクションページ",
+    "ko": "컬렉션 페이지",
+    "ms": "Halaman koleksi",
+    "nb": "Samlingssider",
+    "nl": "Collectiepagina's",
+    "pt-BR": "Páginas de coleções",
+    "pt-PT": "Páginas de Coleções",
+    "sv": "Produktseriesidor",
+    "th": "หน้าคอลเลกชัน",
+    "zh-CN": "产品系列页面",
+    "zh-TW": "商品系列頁面"
+  },
+  "settings": [
+    {
+      "type": "range",
+      "id": "grid",
+      "label": {
+        "da": "Produkter pr. række (kun gitter)",
+        "de": "Produkte per Reihe (nur Raster)",
+        "en": "Products per row (grid only)",
+        "es": "Productos por fila (solo cuadrícula)",
+        "fi": "Tuotteita per rivi (vain ruudukko)",
+        "fr": "Produits par rangée (grille uniquement)",
+        "hi": "उत्पाद प्रति पंक्ति (केवल ग्रिड)",
+        "it": "Prodotti per riga (solo griglia)",
+        "ja": "行あたりの商品数（グリッドのみ）",
+        "ko": "열 별 제품 (그리드 전용)",
+        "ms": "Produk setiap baris (grid sahaja)",
+        "nb": "Produkter per rad (kun rutenett)",
+        "nl": "Producten per rij (alleen raster)",
+        "pt-BR": "Produtos por linha (somente grade)",
+        "pt-PT": "Produtos por linha (somente grelha)",
+        "sv": "Produkter per rad (endast rutnät)",
+        "th": "สินค้าต่อแถว (กริดเท่านั้น)",
+        "zh-CN": "每行产品数（仅限网格）",
+        "zh-TW": "每列產品數 (僅限網格)"
+      },
+      "default": 4,
+      "min": 2,
+      "max": 4,
+      "step": 1
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": {
+          "en": "Collection",
+          "th": "คอลเลกชัน"
+      },
+      "settings": [
+        {
+          "label": {
+            "en": "Collection",
+            "th": "คอลเลกชัน"
+          },
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

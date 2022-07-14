@@ -1,0 +1,92 @@
+<section class="section section__unilever-product">
+    <div class="container">
+        {% if section.settings.section_unilever_product_intro != blank %}
+        <div class="product__description">
+            {{ section.settings.section_unilever_product_intro }}
+        </div>
+        {% endif %}
+        <!-- Slider at mobile screen -->
+        {% if section.blocks.size > 0 %}
+        <div class="container display-mb" data-swiper_wrapper>
+            <div class="swiper-container" data-auto_height="true" data-center="false" data-dk="4" data-mb="1" data-nav="false" data-page="true" data-slide_unilever_product>
+                <div class="swiper-wrapper">
+                    {% for block in section.blocks %}
+                        <div class="swiper-slide">
+                            <div class="slide-container">
+                                <div class="product__logo">
+                                    <img alt="{{block.settings.name}}" src="{{block.settings.image|  img_url: 'master'}}"/>
+                                </div>
+                                {{block.settings.description}}
+                                <a class="link-readmore text-underline" href="{{block.settings.handle}}" target="_blank">View product</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- Show all at desktop screen -->
+        {% if section.blocks.size > 0 %}
+        <div class="row index-section display-dk">
+            {% for block in section.blocks %}
+                <div class="col col-12 col-md-4">
+                    <div class="product__logo">
+                        <img alt="{{block.settings.name}}" src="{{block.settings.image|  img_url: 'master'}}"/>
+                    </div>
+                    {{block.settings.description}}
+                    <a class="link-readmore text-underline" href="{{block.settings.handle}}" target="_blank">{{block.settings.label}}</a>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Unilever Products",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "section_unilever_product_intro",
+            "label": "Unilever products introduction",
+            "default": "<p>Unilever Life is focused on researching and developing high-performance health and beauty products</p>"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "quote",
+            "name": "Brand",
+            "settings": [
+                {
+                    "id": "image",
+                    "type": "image_picker",
+                    "label": "Brand image"
+                },
+                {
+                    "id": "name",
+                    "type": "text",
+                    "label": "Brand name"
+                },
+                {
+                    "id": "label",
+                    "type": "text",
+                    "label": "Brand link button label"
+                },
+                {
+                    "id": "description",
+                    "type": "richtext",
+                    "label": "Brand description",
+                    "default": "<p>Default description</p>"
+                },
+                {
+                    "id": "handle",
+                    "type": "url",
+                    "label": "Brand URL"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,161 @@
+{% unless customer %}
+    <script>
+    let functionInterval = setInterval(() => {
+        if (typeof smartGetCookie === 'function') {
+            clearInterval(functionInterval);
+            let source = smartGetCookie('promo_code_source');
+            if (source && source !== 'share_link') {
+                window.location.href = '/';
+            }
+        }
+    }, 100);
+</script>
+{% endunless %}
+{% include 'assign-locale-prefix' %}
+<div class="sm_request_sample">
+    <div class="box__header">
+        <div class="container">
+            <h2 class="heading text-center">{{ 'request_sample.general.page_title' | t }}</h2>
+            <p class="desc">{{ 'request_sample.general.description' | t }}</p>
+        </div>
+    </div>
+    <div class="box__content">
+        <div class="container">
+            <div class="list__items">
+                <div class="item">
+                    <span class="icon__wrap">{% render 'icon-sample-3' %}</span>
+                    <h4 class="title">{{ 'request_sample.general.content_title_3_html' | t }}</h4>
+                    <p class="content">{{ 'request_sample.general.content_description_3_html' | t }}</p>
+                </div>
+                <div class="item">
+                    {% assign check_list_sample_product = false %}
+                    {% if shop.locale == 'th' %}
+                        {% assign list_sample_product = shop.metafields.sample_product.th_sample_product %}
+                        {% if list_sample_product != blank and list_sample_product.size < 4 %}
+                            {% assign check_list_sample_product = true %}
+                        {% endif %}
+                    {% else %}
+                        {% assign list_sample_product = shop.metafields.sample_product.en_sample_product %}
+                        {% if list_sample_product != blank and list_sample_product.size < 4 %}
+                            {% assign check_list_sample_product = true %}
+                        {% endif %}
+                    {% endif %}
+                    {% if check_list_sample_product %}
+                        <span class="btn btn__not-available">{{ 'request_sample.general.not_available' | t }}</span>
+                    {% endif %}
+                    <span class="icon__wrap">{% render 'icon-sample-1' %}</span>
+                    <h4 class="title">{{ 'request_sample.general.content_title_1' | t }}</h4>
+                    <p class="content">{{ 'request_sample.general.content_description_1_html' | t }}
+                        <span>{{ 'request_sample.general.content_label_1' | t }}</span>
+                    </p>
+                </div>
+                <div class="item">
+                    {% assign check_list_sample_coupon = false %}
+                    {% if shop.locale == 'th' %}
+                        {% assign list_sample_coupon = shop.metafields.sample_coupon.th_sample_coupon %}
+                        {% if list_sample_coupon != blank and list_sample_coupon.size < 4 %}
+                            {% assign check_list_sample_coupon = true %}
+                        {% endif %}
+                    {% else %}
+                        {% assign list_sample_coupon = shop.metafields.sample_coupon.en_sample_coupon %}
+                        {% if list_sample_coupon != blank and list_sample_coupon.size < 4 %}
+                            {% assign check_list_sample_coupon = true %}
+                        {% endif %}
+                    {% endif %}
+                    {% if check_list_sample_coupon %}
+                        <span class="btn btn__not-available">{{ 'request_sample.general.not_available' | t }}</span>
+                    {% endif %}
+                    <span class="icon__wrap">{% render 'icon-sample-2' %}</span>
+                    <h4 class="title">{{ 'request_sample.general.content_title_2' | t }}</h4>
+                    <p class="content">{{ 'request_sample.general.content_description_2_html' | t }}
+                        <span>{{ 'request_sample.general.content_label_2' | t }}</span>
+                    </p>
+                </div>
+            </div>
+            <p class="text__more">{{ 'request_sample.general.note_label' | t }}</p>
+            <div class="request__button text-right">
+                <button data-href="{{ pages['product-sample-request'].url }}?page={{ shop.url }}{{ page.url }}" type="button"
+                    data-action="line-login" class="btn btn-line">{% include 'icon-line' %}
+                    <span class="display-dk">
+                        {{ 'request_sample.general.button_line_label' | t }}
+                    </span>
+                    <span class="display-mb">
+                        {{ 'request_sample.general.button_line_label_mobile' | t }}
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="already__a--member smart_modal">
+    <div class="modal-content">
+        <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+        <div class="content text-center">
+            <h3 class="title">{{ 'request_sample.general.say_hi_member' | t }} <span class="member__name"></span>, <br>
+                <span class="alert-for-member">{{ 'request_sample.general.alert_for_member' | t }}</span></h3>
+            <div class="share__box">
+                <p>{{ 'request_sample.general.share_link_label' | t }}</p>
+                <ul class="share__link--social"></ul>
+                <div class="share__link--url"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay"></div>
+</div>
+
+<script type="text/javascript">
+    (function() {
+        let url = window.location,
+            newUrl = new URL(url.href),
+            firstName = newUrl.searchParams.get('first_name'),
+            memberStatus = newUrl.searchParams.get('member'),
+            promoCode = newUrl.searchParams.get('promo_code'),
+            originUrl = url.origin,
+            pathNameUrl = url.pathname;
+
+        const buttonShareHtml = `
+            <li>
+                <a target="_blank" href="//www.facebook.com/sharer.php?u=${originUrl}${pathNameUrl}?channel=DTC_sharelink&promo_code=${promoCode}" class="btn--share">
+                    {% include 'icon-facebook' %}
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="https://social-plugins.line.me/lineit/share?url=${originUrl}${pathNameUrl}?channel=DTC_sharelink&promo_code=${promoCode}" class="btn--share">
+                    {% include 'icon-line' %}
+                </a>
+            </li>
+            <li>
+                <a target="_blank" href="//twitter.com/share?text=${originUrl}${pathNameUrl}?channel=DTC_sharelink&promo_code=${promoCode}" class="btn--share">
+                    {% include 'icon-twitter' %}
+                </a>
+            </li>
+        `;
+
+        const linkShareHtml = `
+            <input type="text" class="input__value--share" value="${originUrl}${pathNameUrl}?channel=DTC_sharelink&promo_code=${promoCode}">
+            <a class="btn__getLink" href="#"><span>${theme.strings.copy}</span> {% render 'icon-copy' %}</a>
+        `;
+
+        if (Boolean(memberStatus)) {
+            $('.share__link--social').append(buttonShareHtml);
+            $('.share__link--url').append(linkShareHtml);
+            $('.member__name').text(firstName)
+            $('.already__a--member').show();
+        }
+
+        $(document).on('click', '.btn__getLink', function(e) {
+            e.preventDefault();
+            $(this).parent().find('.input__value--share').select();
+            let spanText = $(this).find('span');
+            smartosc.copyChangeText(spanText);
+            document.execCommand('copy');
+        });
+    })();
+
+    let options = {
+        redirectUri: "{{ shop.url }}{{ shop_url }}{{ shop.metafields.route.request_sample_line_auth }}"
+    };
+</script>
+<script src="/apps/eai/js/request-sample/line.js"></script>
+
+{% include 'sharing-popup', share_permalink: page.url %}

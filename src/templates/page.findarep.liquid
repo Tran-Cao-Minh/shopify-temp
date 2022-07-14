@@ -1,0 +1,251 @@
+<div class="page__findarep">
+    <div class="page__findarep--header">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="page__title">{{ 'find_representative.page-title' | t }}</h1>
+                    <p class="page__description">{{ 'find_representative.description' | t }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+   <div class="page__findarep--content">
+       <div class="container">
+           <div class="row justify-content-center">
+               <div class="col-lg-10">
+                   <h3>{{ 'find_representative.seach-form-title' | t }}</h3>
+                   <div class="smosc__tab">
+                       <div class="smosc__tab-headers">
+                           <ul>
+                               <li><a class="smosc__tab-header active" href="#" data-id="tab1">{{ 'find_representative.tab-header-title-1' | t }}</a></li>
+                               <li><a class="smosc__tab-header" href="#" data-id="tab2">{{ 'find_representative.tab-header-title-2' | t }}</a></li>
+                           </ul>
+                       </div>
+                       <div class="smosc__tab-contents">
+                           <div  class="smosc__tab-content active" id="tab1" data-id="tab1">
+                               <form class="findarep__by--adress" action="#" data-scope="form:find-rep-by-address" method="GET">
+                                   <div class="form-group">
+                                       <div class="post_code_container"></div>
+                                       <div class="state_container"></div>
+                                       <div class="city_container"></div>
+                                   </div>
+                                   <div class="smart__accordion">
+                                       <div class="smart__accordion-card">
+                                           <div class="smart__accordion-header">
+                                               <a href="#">{{ 'find_representative.advance-search-label' | t }}</a>
+                                           </div>
+                                           <div class="smart__accordion-collapse">
+                                               <div class="form-group">
+                                                   <label for="#">{{ 'find_representative.address-label' | t }}</label>
+                                                   <input class="street_address" name="street_address" type="text"/>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="form-actions button-group findarep__action">
+                                       <input class="reset-representative-btn" type="reset" id="reset-location-form" value="{{ 'find_representative.cancel-button' | t }}">
+                                       <button class="btn search-representative-btn" type="submit"><div class="loader"></div>{{ 'find_representative.search-button' | t }}</button>
+                                   </div>
+                               </form>
+                           </div>
+                           <div  class="smosc__tab-content" id="tab2" data-id="tab2">
+                               <form class="findarep__by--name" action="#" data-scope="form:find-rep-by-name" method="GET">
+                                   <div class="form-group">
+                                       <div class="field__group">
+                                           <label for="#">{{ 'find_representative.first-name-label' | t }}</label>
+                                           <input name="first_name" class="first_name" type="text" required/>
+                                       </div>
+                                       <div class="field__group">
+                                           <label for="#">{{ 'find_representative.last-name-label' | t }}</label>
+                                           <input name="last_name" class="last_name" type="text" required/>
+                                       </div>
+                                   </div>
+                                   <div class="form-actions button-group findarep__action findarep__action-rep">
+                                       <input class="reset-representative-btn" type="reset" value="{{ 'find_representative.cancel-button' | t }}">
+                                       <button class="btn search-representative-btn" type="submit"><div class="loader"></div>{{ 'find_representative.search-button' | t }}</button>
+                                   </div>
+                               </form>
+                           </div>
+                           <div class="page_findarep-results" data-container="results"></div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<script type="text/html" id="template-no-record">
+    <div class="no__results">
+        <h5>{{ 'find_representative.no-result-text-line-1' | t }}</h5>
+        <p>{{ 'find_representative.no-result-text-line-2' | t }}</p>
+    </div>
+</script>
+
+<script type="text/html" id="template-results">
+    <div class="has__results">
+        <p class="result__count">{{ 'find_representative.found' | t }} <%= _.size(records) %> {{ 'find_representative.match' | t }}</p>
+        <div class="findarep__results-list">
+            <div class="findarep__results-header">
+                <div class="item__title">{{ 'find_representative.representative' | t }}</div>
+                <div class="item__title">{{ 'find_representative.know-more-about-me' | t }}</div>
+
+                <div class="item__title"></div>
+            </div>
+            <div class="findarep__results-item">
+                <% _.forEach(_.shuffle(records), function(record) { %>
+                <div class="item__content">
+                    <div class="findarep__results-info">
+                        <div class="findarep__results-avatar">
+                            <% if (record.avatar && record.avatar.match(/^http[^\?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gmi) != null) { %>
+                                <img src="<%= record.avatar %>" data-line-id="<%= record.line_user_id %>" alt=""/>
+                            <% } else { %>
+                                <img src="{{ 'avatar.png' | asset_img_url: '300x' }}" data-line-id="<%= record.line_user_id %>" alt=""/>
+                            <% } %>
+                        </div>
+                        <div class="findarep__results-name">
+                            <% if (record.recommend == 1) { %>
+                            <div class="results__recommend">{{ 'find_representative.recommend' | t }}</div>
+                            <% } %>
+                            <div class="result__name">
+                                <% if (record.nickname) { %>
+                                <%= record.nickname %>
+                                <% } else { %>
+                                <%= record.name %>
+                                <% } %>
+                            </div>
+                            <% if (record.line_user_id) { %>
+                            <div class="result__lineid"><a href="javascript:void(0)">@<%= record.line_user_id %></a></div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="findarep__results-about"><%= record.info %></div>
+                    <div class="findarep__results-action">
+                        <a href="#" class="btn" data-action="shop-with-me" data-value="<%= record.ax_code %>">{{ 'find_representative.choose-me' | t }}</a>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</script>
+<script src="/apps/eai/js/find-representative.js"></script>
+
+<script src="{{ 'location-form.js' | asset_url }}"></script>
+
+<script>
+    window.pageFindARep = true;
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    let source = getCookie('promo_code_source');
+    /*if (source && source === 'share_link') {
+        location.href = "/";
+    }*/
+
+    $(document).ready(function () {
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            state: {
+                parentClass: "find_rep_by_name_container",
+                data:{{ shop.metafields.location.states }},
+                class: "find_rep_by_name",
+                name: "find_rep_by_name"
+            }
+        });
+
+        $(this).locationForm({
+            locale: "{{ shop.locale }}",
+            postalCode: {
+                parentClass: "post_code_container",
+                data: {{ shop.metafields.location.postal_codes }},
+                required: false,
+            },
+            state: {
+                parentClass: "state_container",
+                data:{{ shop.metafields.location.states }}
+            },
+            city: {
+                parentClass: "city_container",
+                data: {{ shop.metafields.location.cities }}
+            }
+        });
+
+        // Validate form find by name
+        $('form.findarep__by--name').validate({
+           rules: {
+               first_name: 'required',
+               last_name: 'required'
+           },
+           messages: {
+               first_name: "{{ 'find_representative.first-name-error-message' | t }}",
+               last_name: "{{ 'find_representative.last-name-error-message' | t }}"
+           }
+        });
+
+        $.validator.addMethod('validPostalCode', function (value, element, arg){
+            if (!value) {
+                return true;
+            }
+            return {{ shop.metafields.location.postal_codes }}.some(item => item.relative_code === value);
+        }, "{{ 'validator.zipcode.invalid' | t }}");
+
+        // Vaildate form find by address
+        $('form.findarep__by--adress').validate({
+            rules: {
+                zipCode: {
+                    validPostalCode: function () {
+                        return $('[name="zipCode"]').val();
+                    }
+                },
+            },
+            messages: {
+                zipCode: {
+                    required: "{{ 'find_representative.zip-code-error-message' | t }}"
+                },
+                state: {
+                    required: "{{ 'find_representative.state-error-message' | t }}"
+                },
+                city: {
+                    required: "{{ 'find_representative.city-error-message' | t }}"
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.hasClass('select2-hidden-accessible') && element.next('.select2-container').length) {
+                    error.insertAfter(element.next('.select2-container'));
+                } else {
+                    error.insertAfter(element);
+                }
+            },
+        });
+        $(document).on("change", ".select2-hidden-accessible", function() {
+            $(this).valid();
+        });
+
+        $(document).on('click', '.smart__accordion-header', function(e) {
+            let textContent = $('.smart__accordion-header a');
+            if (textContent.text() == "{{ 'find_representative.hide-advance-search-label' | t }}") {
+                textContent.text("{{ 'find_representative.advance-search-label' | t }}");
+            } else {
+                textContent.text("{{ 'find_representative.hide-advance-search-label' | t }}");
+            }
+        })
+        $(document).on('click', '#reset-location-form', function(e) {
+            $('.post_code_container .zipCode').val('').trigger("change");
+            $('.post_code_container .zipCode').keyup();
+        })
+    });
+</script>
+{% include 'sharing-popup', share_permalink: page.url %}

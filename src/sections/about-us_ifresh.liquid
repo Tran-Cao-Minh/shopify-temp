@@ -1,0 +1,181 @@
+<section class="section section__product--ifresh">
+    {% if section.settings.bg_color != blank %}
+        <div class="product__intro" style="background-color: {{section.settings.bg_color}};">
+    {% elsif section.settings.bg_color == blank %}
+        <div class="product__intro">
+    {% endif %}
+    {% if section.settings.image_2 != blank %}
+        <div class="product__banner display-dk">
+            <img
+                alt="banner"
+                src="{{section.settings.image_2 | img_url: 'master'}}"
+            />
+        </div>
+    {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col col-12 col-md-6">
+                    <div class="product__content">
+                        {% if section.settings.logo != blank %}
+                            <div class="product__logo">
+                                <img
+                                    alt="{{section.settings.brand_title_1}}"
+                                    src="{{section.settings.logo | img_url: 'master'}}"
+                                />
+                            </div>
+                        {% endif %}
+                        {% if section.settings.brand_title_1 != blank %}
+                            <h1>{{section.settings.brand_title_1}}</h1>
+                        {% endif %}
+                        {% if section.settings.brand_subtitle != blank %}
+                        <div class="subtitle">{{section.settings.brand_subtitle}}</div>
+                        {% endif %}
+                        {% if section.settings.brand_desc != blank %}
+                            {{section.settings.brand_desc}}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container container__product--image">
+            <div class="row">
+                <div class="col col-12 col-md-6">
+                    {% if section.settings.image_1 != blank %}
+                        <div class="product__image">
+                            <img
+                            alt="ifresh product"
+                            src="{{section.settings.image_1 | img_url: 'master'}}"
+                            />
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product__feature index-section-bottom">
+        <div class="container">
+            {% if section.settings.brand_title_2 != blank %}
+                <div class="description">
+                    <h1 class="title">
+                        {{section.settings.brand_title_2}}
+                    </h1>
+                </div>
+            {% endif %}
+            {% if section.blocks.size > 0 %}
+                <div class="row">
+                    {% for block in section.blocks %}
+                    <div class="col col-12 col-md-4">
+                        <div class="feature__icon">
+                            <div class="image">
+                                <img
+                                    alt="{{block.settings.feature_title}}"
+                                    src="{{block.settings.image|  img_url: 'master'}}"
+                                />
+                            </div>
+                            <h1 class="product__feature--name">{{block.settings.feature_title}}</h1>
+                        </div>
+                        {{block.settings.feature_desc}}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if section.settings.brand_action_label != blank %}
+                <div class="product__view">
+                    <a class="link-readmore text-underline" href="{{section.settings.brand_handle}}" target="_blank"
+                    >{{section.settings.brand_action_label}}</a
+                    >
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+
+{% schema %}
+{
+    "name": "Ifresh",
+    "settings": [
+        {
+            "type": "text",
+            "id": "brand_action_label",
+            "label": "Brand link button label",
+            "default": "View Ifresh products"
+        },
+        {
+            "type": "text",
+            "id": "brand_title_1",
+            "label": "Brand title 1",
+            "default": "Ifresh"
+        },
+        {
+            "type": "text",
+            "id": "brand_title_2",
+            "label": "Brand title 2",
+            "default": "Differentiate with unique ingredients proven to be good for teeth and oral health"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_subtitle",
+            "label": "Brand subtitle",
+            "default": "<p>Oral care product</p>"
+        },
+        {
+            "type": "richtext",
+            "id": "brand_desc",
+            "label": "Brand description",
+            "default": "<p>With patented Japanese technology, Aquanized Ion, a negative ion water can effectively penetrate to clean food</p>"
+        },
+        {
+            "type": "url",
+            "id": "brand_handle",
+            "label": "Brand URL"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color",
+            "default": "#f5f5f5"
+        },
+        {
+            "type": "image_picker",
+            "id": "logo",
+            "label": "logo"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_1",
+            "label": "Image 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "image_2",
+            "label": "Image 2"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "quote",
+            "name": "Feature",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "feature_title",
+                    "label": "Feature",
+                    "default": "Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "feature_desc",
+                    "label": "Description",
+                    "default": "<p>Description</p>"
+                },
+                {
+                    "id": "image",
+                    "type": "image_picker",
+                    "label": "Brand image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,66 @@
+<%
+    tagDisplayArr = [];
+    tagCustomLabel = '';
+    tagCustomColor = '';
+    tagCustomBG = '';
+    tagsArr = [];
+%>
+<div class="product__tags">
+<% if (product.autoship) { %>
+    <span class="tags-name autoship">{{ "products.tags.autoship_program" | t }}</span>
+<% }else if (!product.available) { %>
+    <span class="tags-name sold_out" data-tags_sold_out>{{ "products.tags.sold_out" | t }}</span>
+<% }else { %>
+    <span class="tags-name sold_out hide" data-tags_sold_out>{{ "products.tags.sold_out" | t }}</span>
+<% } %>
+
+<% 
+if (product.tags && product.tags.length > 0) {
+    tagsArr = product.tags.map(tag => tag.toLowerCase());
+    tagsString = tagsArr.toString();
+    if (tagsString.includes("display_")) {
+%>
+    <%
+        for (let i = 0; i < tagsArr.length; i++) {
+            if (tagsArr[i].includes("display_")) {
+                tagDisplayString = tagsArr[i].replace('display_', '');
+                <!-- convert string to array -->
+                if (tagDisplayString != '') {
+                    tagDisplayArr = tagDisplayString.split("_");
+                    tagCustomLabel = tagDisplayArr[0];
+                    tagCustomColor = tagDisplayArr[1];
+                    tagCustomBG = tagDisplayArr[2];
+                }
+                break;
+            }
+        }
+    %>
+    <% if (tagDisplayArr.length > 0 && tagCustomLabel != '') { %>
+        <span class="tags-name tags-custom" style="background: <%- tagCustomBG %>;color: <%- tagCustomColor %>"><%- tagCustomLabel %></span>
+    <% } %>
+<%
+    }
+}
+%>
+
+<%
+tagVariantDisplayArr = [];
+tagVariantCustomLabel = '';
+tagVariantCustomColor = '';
+tagVariantCustomBG = '';
+
+if (current_variant.custom_tag) {
+    
+    tagVariantDisplayArr = current_variant.custom_tag.split("_");
+    tagVariantCustomLabel = tagVariantDisplayArr[0];
+    tagVariantCustomColor = tagVariantDisplayArr[1];
+    tagVariantCustomBG = tagVariantDisplayArr[2];
+
+} %>
+
+<% if (tagVariantDisplayArr.length > 1 && tagVariantCustomLabel != '' && (current_variant.price_member_sale || current_variant.price_sale)) { %>
+    <span class="tags-name tags-custom" style="background: <%- tagVariantCustomBG %>;color: <%- tagVariantCustomColor %>" data-tag_variant_custom><%- tagVariantCustomLabel %></span>
+<% }else { %>
+    <span class="tags-name tags-custom hide" data-tag_variant_custom></span>
+<% } %>
+</div>

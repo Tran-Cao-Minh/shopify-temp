@@ -1,0 +1,14 @@
+
+{% if current_tags %}
+<div class="filter-active-wrapper filters__wrapper">
+    <ul class="filter__active">
+        {% for tg in current_tags %}
+        <li class="checked {{ tg | handleize }}">
+            <input type="checkbox" value="{{ tg | handleize }}" checked />
+            <a data-value="{{ tg | handle }}" href="javascript:void(0)">{{ tg }}<span>x</span></a>
+        </li>
+        {% endfor %}
+        <li class="clear_all_filter">Clear All</li>
+    </ul>
+</div>
+{% endif %}

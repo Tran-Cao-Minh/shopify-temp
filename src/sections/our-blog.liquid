@@ -1,0 +1,83 @@
+<section class="our__blog">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-header d-flex align-items-center justify-content-between">
+          {% if section.settings.heading != blank %}
+            <h2 class="h1 primary_color">{{ section.settings.heading }}</h2>
+          {% endif %}
+          {% if section.settings.view_all_text != blank and section.settings.view_all_link != blank %}
+            <a class="view-more text-underline" href="{{ section.settings.view_all_link }}">{{ section.settings.view_all_text }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="our__blog-content">
+      <div class="swiper-wrapper">
+        {% for article in blogs[section.settings.blog].articles limit: 3 %}
+          {% include 'article-item'%}
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": {
+    "en": "Our Blog",
+    "th": "บล็อกของเรา"
+  },
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en": "Settings",
+        "th": "การตั้งค่า"
+      }
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": {
+        "en": "Heading",
+        "th": "หัวเรื่อง"
+      },
+      "default": {
+        "en": "Our Blog",
+        "th": "บล็อกของเรา"
+      }
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all text",
+      "default": "View all blogs"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": {
+        "en": "Select Blog",
+        "th": "เลือกบล็อก"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Our Blog",
+        "th": "บล็อกของเรา"
+      },
+      "category": "Blogs"
+    }
+  ]
+}
+{% endschema %}

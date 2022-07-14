@@ -1,0 +1,555 @@
+<div class="offcanvas--right offcanvas--right__quickview">
+    <div class="offcanvas-content offcanvas-quickview">
+        <span class="close drawer__close" title="{{ 'general.tooltip.close' | t }}"></span>
+        <div class="offcanvas-quickview__content">
+            <div class="product-item product-single" data-quickview_content data-page="quickview"></div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+</div>
+<script type="text/html" id="productQuickviewTemplate">
+    <%
+        current_variant = product.variants[0];
+    %>
+    <% if (product.media.length > 0) { %>
+    <div class="product-single__media-group">
+        <div class="feature-media">
+            <div class="swiper-container" data-quickview_gallery>
+                <div class="swiper-wrapper">
+                <%
+                    for (let i = 0; i < product.media.length; i++) {
+                        let media = product.media[i];
+                %>
+                    <div class="swiper-slide" data-id="ss-quickview-<%- media.id %>" data-index="<%- i + 1 %>">
+                        <div class="product-single__media-wrapper js">
+                            <div class="product-single__media-wrapper js"
+                              <% if (media.media_type == 'video' || media.media_type == 'external_video') { %> data-product-media-type-video data-enable-video-looping="true"<% } %>
+                              <% if (media.media_type == 'external_video') { %> data-video-id="ss-quickview-<%- media.external_id %>"<% } %>
+                              data-product-single-media-wrapper
+                              data-media-id="ss-quickview-<%- media.id %>">
+                              <%
+                                 switch(media.media_type) {
+                                 case 'image':
+                                    if (media.src) {
+                                       let zoom_media_id = 'ImageZoom-ss-quickview-' + media.id;
+                                       let media_src = theme.Images.getSizedImageUrl(media.src,'x100');
+                                       let style_padding = 1 / media.preview_image.aspect_ratio * 100;
+                                       %>
+                                          <div id="<%- zoom_media_id %>"
+                                             style="padding-top: <%- style_padding %>%"
+                                             class="product-single__media
+                                             <% if (product.media.size > 1) { %> product-single__media--has-thumbnails<% } %>
+                                             {% if enable_image_zoom %} js-zoom-enabled{% endif %}"
+                                             {% if enable_image_zoom %} data-image-zoom-wrapper data-zoom="<%- media.src %>"{% endif %}>
+                                             <img id="ss-quickview-<%- media.id %>"
+                                                class="feature-row__image lazyload"
+                                                src="<%- media_src %>"
+                                                data-src="<%- media.src %>"
+                                                data-sizes="auto"
+                                                alt="">
+                                          </div>
+                                       <%
+                                    }
+                                    break;
+
+                                 case 'external_video':
+                                    if (media.aspect_ratio && media.external_id) {
+                                       let style_padding = 1 / media.aspect_ratio * 100;
+                                    %>
+                                       <div class="product-single__media"
+                                          style="padding-top: <%- style_padding %>%">
+                                          <iframe frameborder="0"
+                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                             allowfullscreen="allowfullscreen"
+                                             src="https://www.youtube.com/embed/<%- media.external_id %>?controls=1&amp;enablejsapi=1&amp;modestbranding=1&amp;playsinline=1&amp;rel=0"></iframe>
+                                       </div>
+                                    <%
+                                    }
+                                    break;
+
+                                 case 'video':
+                                    if (media.aspect_ratio && media.sources[0].url) {
+                                       let style_padding = 1 / media.aspect_ratio * 100;
+                                    %>
+                                       <div class="product-single__media product-single__media--video product-single__media--<%- media.id %>"
+                                          style="padding-top: <%- style_padding %>%">
+                                          <video playsinline="playsinline" class="media-video" preload="metadata"
+                                             poster="<%- media.preview_image.src %>" controls>
+                                             <source src="<%- media.sources[0].url %>" type="video/mp4">
+                                             <img src="<%- media.preview_image.src %>" alt="">
+                                          </video>
+                                       </div>
+                                    <%
+                                    }
+                                    break;
+                                 }
+                              %>
+                           </div>
+                        </div>
+                    </div>
+                <%
+                    }
+                %>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next" title="{{ 'general.tooltip.next' | t }}"></div>
+                <div class="swiper-button-prev" title="{{ 'general.tooltip.previous' | t }}"></div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <% }else { %>
+        <div class="product-single__media-group">
+            <div class="feature-media">
+            <img src="{{ 'default_product.png' | asset_img_url: '400x' }}" alt="" />
+            </div>
+        </div>
+    <% } %>
+    <div class="product-single__meta">
+        <!-- Quickview Title -->
+        <h2 class="product-single__title"><%= product.title %></h2>
+
+        <!-- Quickview Collection -->
+        <% if ( product.brand != '') { %>
+            <div class="product-single__collections"><%= product.brand %></div>
+         <% } %>
+
+        <!-- Quickview Price -->
+        <div class="product-single__price-group">
+            <% if (product.autoship) { %>
+               <!-- Price autoship -->
+               <div class="product-single__price autoship-price">
+                  <div class="price_tooltip">
+                     <span class="price_note">{{ 'products.product.member_price' | t }}</span>
+                     <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code' | t }}</span></div>
+                  </div>
+                  <div class="product-single__price-member <% if (current_variant.price_member_sale) { %> price--on-sale<% } %>">
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_member_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.member_price, theme.moneyFormat) %></span>
+                  </div>
+               </div>
+               {% unless customer %}
+                  <div class="autoship-note">
+                     <div class="desc">{{ 'products.product.autoship_promocode_html' | t }}</div>
+                     <div class="smart_tooltip tooltip_right">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code_autoship_note' | t }}</span></div>
+                  </div>
+               {% endunless %}
+            <% }else { %>
+               <!-- Price member -->
+               <div class="product-single__price">
+                  <div class="price_tooltip">
+                     <span class="price_note">{{ 'products.product.member_price' | t }}</span>
+                     <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code' | t }}</span></div>
+                  </div>
+                  <div class="product-single__price-member <% if (current_variant.price_member_sale) { %> price--on-sale<% } %><% if (!current_variant.member_price) { %> hide<% } %>"
+                     data-single_price_member>
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_member_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.member_price, theme.moneyFormat) %></span>                     
+                  </div>
+               </div>
+               <!-- Price retail -->
+               <div class="product-single__price">
+                  <div class="price_tooltip"><span class="price_note">{{ 'products.product.retail_price' | t }}</span></div>
+                  <div class="product-single__price-retail <% if (current_variant.price_sale) { %> price--on-sale<% } %>"
+                     data-single_price_retail>
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_at_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.price, theme.moneyFormat) %></span>
+                  </div>
+               </div>
+            <% } %>
+        </div>
+
+        <!-- Quickview Form -->
+        <form method="post" action="/cart/add" accept-charset="UTF-8"
+            class="product-form product-form-product-template" enctype="multipart/form-data"
+            novalidate="novalidate" data-product-form="">
+            <% if ( product.variants.length > 1 ) { %>
+               <div class="product-form__selector hide">
+                  <select name="id" id="ss-quickview-product-selectors" class="product-form__variants no-js" data-product__selectors>
+                     <%
+                        for (let i = 0; i < product.variants.length; i++) {
+                           let variant = product.variants[i];
+                     %>
+                        <option value="<%- variant.id %>" data-sku="<%- variant.sku %>"
+                           <% if ( variant == current_variant ) { %> selected="selected" <% } %>
+                           <% if ( variant.inventory_management == 'shopify' ) { %>
+                              data-quantity="<%- variant.inventory_quantity %>"
+                           <% } %>
+                           data-manager="<%- variant.inventory_management %>"
+                           data-continue="<% if ( variant.inventory_management == 'shopify' ) { %><%- variant.inventory_policy %><% } else { %>continue<% } %>"
+                           data-weight_unit="<%- variant.weight_unit %>"
+                           data-weight="<%- parseFloat(variant.weight) %>"
+                        >
+                           <%= variant.title %>
+                        </option>
+
+                     <% } %>
+                  </select>
+               </div>
+
+               <div class="product-form__controls-group">
+                  <div class="product-form__swatch">
+                     <% _.forEach(product.options, function(option, key_option) { %>
+                        <div class="swatch clearfix" data-option-index="<%- key_option %>">
+                           <div class="header hide"><%- option %>:</div>
+                              <%
+                                 var values = [];
+                                 _.forEach(product.variants, function(variant) {
+                                    var value = variant.options[key_option];
+                                    if (values.indexOf(value) < 0) {
+                                    values.push(value); %>
+
+                                    <div data-value="<%- value %>"
+                                       class="swatch-element <%- value %>
+                                          <% if (variant.available) { %> available<% }else{ %> soldout<%} %>">
+                                       <input id="swatch-<%- key_option %>-ss-quickview-<%- variant.id %>" data-sku="<%- variant.sku %>"
+                                          type="radio" name="option-<%- key_option %>-ss-quickview-<%- product.id %>" value="<%- value %>">
+                                       <label for="swatch-<%- key_option %>-ss-quickview-<%- variant.id %>"><%- value %><img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" /></label>
+                                    </div>
+                                 <%
+                                    }
+                                 });
+                              %>
+                           </div>
+                     <% }); %>
+                  </div>
+               </div>
+            <% } else { %>
+               <% if (current_variant.title != '' && current_variant.title != 'Default Title') { %>
+                  <div class="product-card__variant-title"><%= current_variant.title %></div>
+               <% } %>
+               <input type="hidden" name="id" value="<%- product.variants[0].id %>" />
+               <input type="hidden" name="sku" value="<%- product.variants[0].sku %>" />
+            <% } %>
+
+            <!-- Group Qty - CV/QV -->
+            <div class="product-single__group-qty">
+               {% if customer %}
+                  <% if ( current_variant.cv ) {
+                     cashback = parseFloat((current_variant.cv * 0.05 * 40 * 100.00).toFixed(2));
+                  %>
+                     <div class="item item__cvqv product-single-cv_qv cvqv__wrap" data-cvqv__wrap>
+                        <div class="cv_qv">
+                           <span class="cvqv__title label">{{ 'products.product.cv_qv' | t }}</span>
+                           <div class="cvqv__number">
+                              <span class="cv" data-cv_number><%- current_variant.cv %> </span>
+                              <span> | </span>
+                              <% if ( current_variant.qv ) { %>
+                                 <span class="qv" data-qv_number><%- current_variant.qv %></span>
+                              <% } %>
+                           </div>
+                        </div>
+                        <span class="item__space"></span>
+                        <div class="item__cashback">
+                           <div class="cashback">
+                              <div class="cashback__tooltip">
+                                 <span class="label">{{ 'products.product.cashback_estimate' | t }}</span>
+                                 <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.cashback_estimate_tooltip' | t }}</span></div>
+                              </div>
+                              <span class="price price__regular" data-cashback_price><%= theme.Currency.formatMoney(cashback, theme.moneyFormat) %></span>
+                           </div>
+                        </div>
+                     </div>                     
+                  <% } else { %>
+                     <div class="item product-single-cv_qv cvqv__wrap hide" data-cvqv__wrap>
+                        <div class="cv_qv">
+                           <span class="cvqv__title label">{{ 'products.product.cv_qv' | t }}</span>
+                           <div class="cvqv__number">
+                              <span class="cv"></span>
+                              <span> | </span>
+                              <span class="qv"></span>
+                           </div>
+                        </div>
+                        <div class="item__cvqv item__cashback">
+                           <div class="cashback">
+                              <span class="label">{{ 'products.product.cashback_estimate' | t }}</span>
+                              <span class="price price__regular" data-cashback_price></span>
+                           </div>
+                        </div>
+                     </div>
+                  <% } %>
+               {% endif %}
+               <div class="item item__qty-wrap">
+                  <div class="product-quantity__custom">
+                     <div class="quantity_info">
+                        <label class="label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+                        <% if (!product.autoship) { %>
+                           <div class="item__inventory" data-inventory_wrap>
+                              <label class="label">{{ 'products.product.products_in_stock' | t }}</label>
+                              <span class="number" data-inventory_number><%- current_variant.inventory_quantity %></span>
+                           </div>
+                        <% } %>
+                     </div>
+                     <div class="product-quantity__controls<% if ( !current_variant.available ) { %> disabled<% } %>">
+                        <div class="product-quantity__icon-minus" disabled="disabled" data-quantity__minus>-</div>
+                        <input type="number" min="1" id="Quantity-{{ section.id }}"
+                           name="quantity" value="1"
+                           data-quantity="<%- current_variant.inventory_quantity %>"
+                           data-manager="<%- current_variant.inventory_management %>"
+                           data-continue="<%- current_variant.inventory_policy %>"
+                           class="quantity__custom--input" data-quantity__input />
+                        <div class="product-quantity__icon-plus" data-quantity__plus>+</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Add to cart -->
+            <div class="product-form__controls-group product-form__controls-group--submit group-buttons">
+               <div class="product-form__item product-form__item--submit">
+                  <div class="prd__error-message"></div>
+                  <div class="product-single__group-button available<% if ( !product.available ) { %> hide <% } %>">
+                     <a href="javascript:void(0)"
+                        class="btn-cart btn product-single__action-cart product-form__cart"
+                        data-product_tags="{{ product.tags | join: ',' | downcase }}"
+                        data-single_add_to_cart>
+                        {{ 'products.product.add_to_cart' | t }}
+                     </a>
+                     <a href="javascript:void(0)"
+                        class="btn-checkout btn btn--secondary product-single__action-cart product-form__cart" data-buynow="true"
+                        data-product_tags="{{ product.tags | join: ',' | downcase }}"
+                        data-single_add_to_cart>
+                        <% if (!product.autoship) { %>
+                           {{ 'products.product.buy_it_now' | t }}
+                        <% }else { %>
+                           {{ 'products.product.buy_auto_ship' | t }}
+                        <% }%>                     
+                     </a>
+                  </div>
+                  <div class="product-single__soldout unavailable <% if ( product.available ) { %> hide <% } %>">
+                     <a href="javascript:void(0)" class="btn btn fix-width disabled">{{ 'products.product.sold_out' | t }}</a>
+                  </div>
+               </div>
+            </div>
+            
+            <!-- Delivery fee -->
+            <div class="product-single__delivery-fee">
+               <svg xmlns="http://www.w3.org/2000/svg" width="28.53" height="19.537" viewBox="0 0 28.53 19.537">
+                  <g data-name="Group 1111" transform="translate(-1050.445 -759)">
+                     <path data-name="Path 215" d="M670,801v3.6h4.5" transform="translate(381.445 -29.76)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 216" d="M670,687.243V676h16.638v14.839H680.19" transform="translate(381.445 83.998)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <circle data-name="Ellipse 32" cx="2.6" cy="2.6" r="2.6" transform="translate(1070.431 772.336)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 217" d="M862.644,727.243h2.248V721.4l-4.946-5.4H855v11.242h2.248" transform="translate(213.082 47.596)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 218" d="M896.745,734.636H890V729.4" transform="translate(181.23 34.357)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <circle data-name="Ellipse 33" cx="2.6" cy="2.6" r="2.6" transform="translate(1056.315 772.336)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  </g>
+               </svg>
+               <div class="delivery__free-content">
+                  <% if (!product.autoship) { %>
+                    <div class="free<% if ( current_variant.freeship == 0 ) { %> hide<% }%>" data-delivery_free>{{ settings.product_delivery_messages_free }}</div>
+                    <div class="not_free<% if ( current_variant.freeship == 1) { %> hide<% }%>" data-delivery_not_free>{{ settings.product_delivery_messages_not_free }}</div>
+                 <% }else { %>
+                    <div class="free autoship" >{{ settings.product_delivery_messages_autoship }}</div>
+                 <% }%>
+               </div>
+            </div>
+        </form>
+
+        <!-- Share -->
+        <div class="product-single__share" data-share_wrap>
+            <div class="social__share-wrap social__share display-dk">
+                {% include 'social-sharing-product' %}
+                {% if member_id != blank %}
+                    <div class="product-single-getlink">
+                        <button class="btn btn-small btn--getlink" data-button_share>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="21.349" height="8.967" viewBox="0 0 21.349 8.967">
+                            <g data-name="Group 1197" transform="translate(752.652 -520.492)">
+                                <path data-name="Path 223" d="M-745.886,520.5c.774,0,1.548-.016,2.322,0a4.477,4.477,0,0,1,4.394,4.431,1.118,1.118,0,0,1-1.038,1.162,1.12,1.12,0,0,1-1.183-.916c-.034-.219-.034-.444-.077-.66a2.225,2.225,0,0,0-2.15-1.776q-2.3-.011-4.591,0a2.24,2.24,0,0,0-2.2,2.122,2.244,2.244,0,0,0,1.93,2.328,2.812,2.812,0,0,0,.359.024c.73,0,1.459,0,2.189,0a1.117,1.117,0,0,1,1.128.985,1.112,1.112,0,0,1-.9,1.229,1.484,1.484,0,0,1-.252.024c-.743,0-1.486.005-2.229,0a4.494,4.494,0,0,1-4.419-3.788,4.471,4.471,0,0,1,3.859-5.125,6.059,6.059,0,0,1,.691-.043C-747.327,520.494-746.606,520.5-745.886,520.5Z" fill="#fff"/>
+                                <path data-name="Path 224" d="M-451.585,529.62h-2.229a4.489,4.489,0,0,1-4.461-3.953,4.079,4.079,0,0,1-.029-.492,1.122,1.122,0,0,1,1.115-1.155,1.131,1.131,0,0,1,1.132,1.142,2.23,2.23,0,0,0,1.711,2.149,2.4,2.4,0,0,0,.541.065q2.242.008,4.484,0a2.246,2.246,0,0,0,2.256-2.241,2.248,2.248,0,0,0-2.262-2.235c-.738,0-1.477,0-2.215,0a1.117,1.117,0,0,1-1.13-.982,1.112,1.112,0,0,1,.9-1.232,1.459,1.459,0,0,1,.252-.025c.743,0,1.486,0,2.229,0a4.5,4.5,0,0,1,4.417,3.759,4.47,4.47,0,0,1-3.865,5.155,5.336,5.336,0,0,1-.638.042C-450.117,529.623-450.851,529.62-451.585,529.62Z" transform="translate(-286.481 -0.164)" fill="#fff"/>
+                            </g>
+                        </svg>
+                        {{ 'general.social.get_link' | t }}
+                        </button>
+                        <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'general.social.get_link_tooltip' | t }}</span></div>
+                    </div>
+                {% endif %}
+            </div>
+            {% if member_id != blank %}
+               <div class="product-single-getlink__input hide mt-15" data-input_share_wrap>
+                  <input id="product__share-<%- product.id %>" class="getlink__input" name="getlink"
+                     value="{{ shop.url }}<%- product.url %>?variant=<%- current_variant.id %>&channel=DTC_sharelink&promo_code={{ member_id }}"
+                     data-product_promo_code/>
+                  <a href="#" class="btn__copy" data-copy_input="#product__share-<%- product.id %>">{% include 'icon-copy' %}<span>{{ 'general.social.copy_link' | t }}</span></a>
+               </div>
+            {% endif %}
+        </div>
+
+        <!-- Quickview Tabs -->
+        <% if (product.description != '' || product.ingredient || product.howtouse || product.testimonial) { %>
+        <div class="smosc__tab">
+            <div class="smosc__tab-headers">
+                <ul>
+                    <% if (product.description != '') { %>
+                    <li>
+                        <a href="#" class="smosc__tab-header active" data-id="quickview-desc">
+                            <span class="tab__header-icon">
+                                <svg data-name="Group 1333" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.701" height="35.082" viewBox="0 0 48.701 35.082">
+                                    <defs>
+                                        <clipPath>
+                                        <rect data-name="Rectangle 603" width="48.701" height="35.082" fill="none" stroke="#707070" stroke-width="2"/>
+                                        </clipPath>
+                                    </defs>
+                                    <line data-name="Line 172" x2="22.337" transform="translate(6.164 7.466)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    <line data-name="Line 173" x2="15.781" transform="translate(6.164 17.224)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-width="2"/>
+                                    <line data-name="Line 174" x2="22.337" transform="translate(6.164 26.982)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    <g data-name="Group 1334">
+                                        <g data-name="Group 1333" clip-path="url(#clip-path)">
+                                        <path data-name="Path 236" d="M47.7,4.638,44.063,1,27.255,17.808l-1.589,5.227,5.227-1.588L45.168,7.171Z" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 237" d="M34.083,19.017v10.91a4.156,4.156,0,0,1-4.156,4.155H5.156A4.156,4.156,0,0,1,1,29.927V5.156A4.158,4.158,0,0,1,5.156,1H29.927a4.158,4.158,0,0,1,4.156,4.156v5.609" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="tab__header-icon tab__header-icon-active">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48.201" height="35.082" viewBox="0 0 48.201 35.082">
+                                    <defs>
+                                        <clipPath>
+                                        <rect data-name="Rectangle 599" width="48.201" height="35.082" fill="none"/>
+                                        </clipPath>
+                                    </defs>
+                                    <g data-name="Group 1325" clip-path="url(#clip-path)">
+                                        <path data-name="Path 231" d="M34.083,19.017v10.91a4.156,4.156,0,0,1-4.156,4.155H5.156A4.156,4.156,0,0,1,1,29.927V5.155A4.157,4.157,0,0,1,5.156,1H29.927a4.157,4.157,0,0,1,4.156,4.155v5.61" fill="#6445EE"/>
+                                        <path data-name="Path 232" d="M34.083,19.017v10.91a4.156,4.156,0,0,1-4.156,4.155H5.156A4.156,4.156,0,0,1,1,29.927V5.155A4.157,4.157,0,0,1,5.156,1H29.927a4.157,4.157,0,0,1,4.156,4.155v5.61" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <line data-name="Line 168" x2="22.337" transform="translate(6.164 7.466)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                        <line data-name="Line 169" x2="15.781" transform="translate(6.164 17.224)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="1"/>
+                                        <line data-name="Line 170" x2="22.337" transform="translate(6.164 26.982)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                        <path data-name="Path 233" d="M47.7,4.638,44.063,1,27.255,17.808l-1.589,5.227,5.227-1.589L45.168,7.171Z" fill="#6445EE"/>
+                                        <path data-name="Path 234" d="M47.7,4.638,44.063,1,27.255,17.808l-1.589,5.227,5.227-1.589L45.168,7.171Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="title">{{ 'products.product.description' | t }}</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    
+                    <!-- Tabs ingredient -->
+                    <% if (product.ingredient) { %>
+                    <li>
+                        <a href="#" class="smosc__tab-header"
+                        data-id="quickview-ingredient">
+                            <span class="tab__header-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="46.554" height="34.614" viewBox="0 0 46.554 34.614">
+                                    <g data-name="Group 830" transform="translate(1 1)">
+                                        <path data-name="Path 188" d="M444.551,364.87s5.894,2.211,8.1,11.788" transform="translate(-435.71 -344.243)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 189" d="M449.917,381.385c5.157-22.838,21.364-25.784,21.364-25.784" transform="translate(-432.973 -348.97)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 190" d="M450.995,369.627s-2.948-11.051,9.577-14.734c8.6-2.529,15.471-.737,16.208-3.683,1.474,3.683-1.474,29.467-20.627,23.574" transform="translate(-432.577 -351.21)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 191" d="M450.484,373.137a7.813,7.813,0,0,1-6.631-2.211c-3.683-3.683-2.209-6.631-5.157-8.84,3.684-.737,16.207-1.474,16.207,6.631" transform="translate(-438.696 -345.879)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="tab__header-icon tab__header-icon-active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48.53" height="36.627" viewBox="0 0 48.53 36.627">
+                                    <g data-name="Group 1343" transform="translate(-2150.091 -1860)">
+                                        <path data-name="Path 246" d="M165.617,27.645a8.3,8.3,0,0,1-7.046-2.35c-3.913-3.913-2.347-7.046-5.48-9.393,3.915-.783,17.221-1.566,17.221,7.046,0,0-.473,4.524-4.695,4.7" transform="translate(1998 1860)" fill="#6445EE"/>
+                                        <path data-name="Path 247" d="M165.617,27.645a8.3,8.3,0,0,1-7.046-2.35c-3.913-3.913-2.347-7.046-5.48-9.393,3.915-.783,17.221-1.566,17.221,7.046C170.312,22.948,169.839,27.472,165.617,27.645Z" transform="translate(1998 1860)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 248" d="M174.507,18.7s-2.833-10.619,9.2-14.158c8.263-2.43,14.865-.708,15.573-3.539,1.417,3.539-1.416,28.315-19.82,22.652a8.049,8.049,0,0,1-4.956-4.955" transform="translate(1998 1860)" fill="#6445EE"/>
+                                        <path data-name="Path 249" d="M174.507,18.7s-2.833-10.619,9.2-14.158c8.263-2.43,14.865-.708,15.573-3.539,1.417,3.539-1.416,28.315-19.82,22.652A8.049,8.049,0,0,1,174.507,18.7Z" transform="translate(1998 1860)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 250" d="M172.694,35.695a1.322,1.322,0,0,1-1.309-.936c-2.747-10.7-10.982-14.585-10.833-14.919.2-.438,10.362,2.333,13.454,14.377A1.21,1.21,0,0,1,173,35.665a1.564,1.564,0,0,1-.3.03" transform="translate(1998 1860)" fill="#6445EE"/>
+                                        <path data-name="Path 251" d="M172.694,35.695a1.322,1.322,0,0,1-1.309-.936c-2.747-10.7-10.982-14.585-10.833-14.919.2-.438,10.362,2.333,13.454,14.377A1.21,1.21,0,0,1,173,35.665,1.564,1.564,0,0,1,172.694,35.695Z" transform="translate(1998 1860)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+                                        <path data-name="Path 252" d="M172.662,36.127a1.378,1.378,0,0,1-.246-.021,1.226,1.226,0,0,1-1.087-1.357,40.07,40.07,0,0,1,3.07-9.025c7.582-16.93,20.572-19.64,20.846-19.03.257.576-.708.562-4.928,3.388-5.6,3.748-12.87,11.3-16.345,25.105a1.322,1.322,0,0,1-1.31.94" transform="translate(1998 1860)" fill="#6445EE"/>
+                                        <path data-name="Path 253" d="M172.662,36.127a1.378,1.378,0,0,1-.246-.021,1.226,1.226,0,0,1-1.087-1.357,40.07,40.07,0,0,1,3.07-9.025c7.582-16.93,20.572-19.64,20.846-19.03.257.576-.708.562-4.928,3.388-5.6,3.748-12.87,11.3-16.345,25.105A1.322,1.322,0,0,1,172.662,36.127Z" transform="translate(1998 1860)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="title">{{ 'products.product.ingredient' | t }}</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    
+                    <!-- Tabs howtouse -->
+                    <% if (product.howtouse) { %>
+                    <li>
+                        <a href="#" class="smosc__tab-header"
+                        data-id="quickview-howtouse">
+                            <span class="tab__header-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="33.415" height="33.415" viewBox="0 0 33.415 33.415">
+                                    <g data-name="Group 1329" transform="translate(-0.601 -0.601)">
+                                        <path data-name="Path 229" d="M4.009,8.018a4.35,4.35,0,0,1,.735-2.327A5.708,5.708,0,0,1,6.9,3.737a6.774,6.774,0,0,1,3.3-.774,7.056,7.056,0,0,1,3.1.647,5,5,0,0,1,2.068,1.761A4.284,4.284,0,0,1,16.1,7.789a3.716,3.716,0,0,1-.419,1.8,5.57,5.57,0,0,1-.991,1.337q-.574.56-2.062,1.894a7.018,7.018,0,0,0-.656.659A2.553,2.553,0,0,0,11.6,14a2.525,2.525,0,0,0-.184.47c-.048.16-.114.434-.2.831A1.344,1.344,0,0,1,9.775,16.56a1.483,1.483,0,0,1-1.06-.412,1.63,1.63,0,0,1-.425-1.222,4.284,4.284,0,0,1,1.15-3.068,17.769,17.769,0,0,1,1.4-1.334c.509-.455.882-.795,1.114-1.024a3.438,3.438,0,0,0,.581-.768,1.861,1.861,0,0,0,.235-.918,2.145,2.145,0,0,0-.72-1.635A2.621,2.621,0,0,0,10.2,5.516a2.586,2.586,0,0,0-1.963.668,5.378,5.378,0,0,0-1.06,1.981c-.274.909-.8,1.367-1.56,1.367A1.533,1.533,0,0,1,4.47,9.051a1.445,1.445,0,0,1-.461-1.033m5.9,13.257A1.928,1.928,0,0,1,8.619,20.8a1.669,1.669,0,0,1-.545-1.337,1.715,1.715,0,0,1,.53-1.28,1.777,1.777,0,0,1,1.307-.521,1.784,1.784,0,0,1,1.8,1.8,1.694,1.694,0,0,1-.548,1.331,1.831,1.831,0,0,1-1.256.485" transform="translate(7.406 5.302)" fill="#6445EE"/>
+                                        <circle data-name="Ellipse 34" cx="15.707" cy="15.707" r="15.707" transform="translate(1.601 1.601)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="tab__header-icon tab__header-icon-active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34.125" height="34.125" viewBox="0 0 34.125 34.125">
+                                    <g data-name="Group 1342" transform="translate(-2319.499 -1862.661)">
+                                        <path data-name="Path 242" d="M338.561,3.161A16.563,16.563,0,1,1,322,19.723,16.562,16.562,0,0,1,338.561,3.161" transform="translate(1998 1860)" fill="#6445EE"/>
+                                        <path data-name="Path 243" d="M338.561,3.161A16.563,16.563,0,1,1,322,19.723,16.562,16.562,0,0,1,338.561,3.161Z" transform="translate(1998 1860)" fill="none" stroke="#6445EE" stroke-miterlimit="10" stroke-width="1"/>
+                                        <path data-name="Path 244" d="M331.813,15.155a4.585,4.585,0,0,1,.775-2.454,6.011,6.011,0,0,1,2.273-2.06,7.147,7.147,0,0,1,3.48-.816,7.44,7.44,0,0,1,3.269.682,5.284,5.284,0,0,1,2.181,1.857,4.518,4.518,0,0,1,.771,2.55,3.9,3.9,0,0,1-.442,1.9,5.844,5.844,0,0,1-1.044,1.41q-.606.59-2.174,2a7.3,7.3,0,0,0-.692.695,2.692,2.692,0,0,0-.393.549,2.771,2.771,0,0,0-.193.5c-.051.169-.12.458-.211.876a1.417,1.417,0,0,1-1.5,1.329h-.019a1.562,1.562,0,0,1-1.118-.434,1.718,1.718,0,0,1-.448-1.289A4.519,4.519,0,0,1,337.54,19.2a18.615,18.615,0,0,1,1.476-1.407c.536-.48.929-.838,1.175-1.08a3.647,3.647,0,0,0,.613-.81,1.956,1.956,0,0,0,.247-.968,2.26,2.26,0,0,0-.758-1.724,2.768,2.768,0,0,0-1.951-.7,2.724,2.724,0,0,0-2.07.7,5.673,5.673,0,0,0-1.118,2.089c-.289.958-.844,1.441-1.645,1.441a1.615,1.615,0,0,1-1.209-.507,1.517,1.517,0,0,1-.486-1.089m6.221,13.979a2.036,2.036,0,0,1-1.36-.5,1.762,1.762,0,0,1-.575-1.41,1.807,1.807,0,0,1,.558-1.35,1.93,1.93,0,0,1,3.277,1.315v.034a1.789,1.789,0,0,1-.578,1.4,1.931,1.931,0,0,1-1.324.511" transform="translate(1998.534 1860.363)" fill="#fff"/>
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="title">{{ 'products.product.howtouse' | t }}</span>
+                        </a>
+                    </li>
+                    <% } %>
+                    
+                    <!-- Tabs testimonial -->
+                    <% if (product.testimonial) { %>
+                    <li>
+                        <a href="#" class="smosc__tab-header "
+                        data-id="quickview-testimonial">
+                            <span class="tab__header-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34.77" height="34.16" viewBox="0 0 34.77 34.16">
+                                    <g data-name="Group 1256" transform="translate(1 1.009)">
+                                        <g data-name="Group 826">
+                                        <path data-name="Path 185" d="M501.4,384.494a.286.286,0,0,0,.286.286,18.616,18.616,0,0,1,4.121.532,28.062,28.062,0,0,0,7.47.865h7.3A2.828,2.828,0,0,0,522.159,381a2.827,2.827,0,0,0,.965-5.04,2.828,2.828,0,0,0,1.037-5.194,2.829,2.829,0,0,0-.892-5.514h-7.53a9.882,9.882,0,0,0,.7-3.23c.243-3.44-.332-5.826-1.7-7.092a3.4,3.4,0,0,0-2.815-.875,1.094,1.094,0,0,0-.743.474,4.116,4.116,0,0,0-.246,2.8c.31,2.648-.958,4.1-2.426,5.786-.328.376-.666.763-1,1.174-.909,1.137-4.348,2.253-5.889,2.586a.285.285,0,0,0-.225.279" transform="translate(-493.327 -354.024)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <path data-name="Path 186" d="M504.583,361.335h-8.106v19.522h8.106V361.335Z" transform="translate(-496.477 -349.341)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                            </span>
+                            <span class="tab__header-icon tab__header-icon-active">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="34.877" height="34.172" viewBox="0 0 34.877 34.172">
+                                    <g data-name="Group 1341" transform="translate(-2433 -1910.147)">
+                                        <path data-name="Path 245" d="M491.072,32.631a.286.286,0,0,0,.286.286,18.581,18.581,0,0,1,4.121.532,28.076,28.076,0,0,0,7.47.865h7.3a2.828,2.828,0,0,0,1.582-5.177,2.828,2.828,0,0,0,.965-5.04,2.828,2.828,0,0,0,1.037-5.194,2.829,2.829,0,0,0-.893-5.514h-7.53a9.876,9.876,0,0,0,.7-3.23c.243-3.44-.332-5.826-1.7-7.092a3.4,3.4,0,0,0-2.815-.875,1.1,1.1,0,0,0-.743.474,4.116,4.116,0,0,0-.246,2.8c.311,2.648-.958,4.1-2.426,5.786-.328.376-.666.763-1,1.174-.909,1.137-4.347,2.253-5.888,2.586a.285.285,0,0,0-.226.279" transform="translate(1951 1909)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                        <rect data-name="Rectangle 604" width="8.105" height="19.522" transform="translate(2434 1923.155)" fill="#6445EE"/>
+                                        <rect data-name="Rectangle 605" width="8.105" height="19.522" transform="translate(2434 1923.155)" fill="none" stroke="#6445EE" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        <span class="title">{{ 'products.product.testimonial' | t }}</span>
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <div class="smosc__tab-contents rte">
+                <% if (product.description != '') { %>
+                <div  class="smosc__tab-content active" data-id="quickview-desc">
+                    <%= product.description %>
+                </div>
+                <% } %>
+                
+                <% if (product.ingredient) { %>
+                <div  class="smosc__tab-content" data-id="quickview-ingredient">
+                    <%= product.ingredient %>
+                </div>
+                <% } %>
+
+                <% if (product.howtouse) { %>
+                <div  class="smosc__tab-content" data-id="quickview-howtouse">
+                    <%= product.howtouse %>
+                </div>
+                <% } %>
+
+                <% if (product.testimonial) { %>
+                <div  class="smosc__tab-content" data-id="quickview-testimonial">
+                    <%= product.testimonial %>
+                </div>
+                <% } %>
+
+            </div>
+        </div>
+        <% } %>
+    </div>
+</script>

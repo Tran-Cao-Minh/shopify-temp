@@ -1,0 +1,652 @@
+<html>
+<head><meta charset="utf-8" /><!-- utf-8 works for most cases --><meta name="viewport" content="width=device-width" /><!-- Forcing initial-scale shouldn't be necessary --><meta http-equiv="X-UA-Compatible" content="IE=edge" /><!-- Use the latest (edge) version of IE rendering engine --><meta name="x-apple-disable-message-reformatting" /><!-- Disable auto-scale in iOS 10 Mail entirely -->
+	<title></title>
+	<!-- The title tag shows in email notifications, like Android 4.4. -->
+	<link href="https://fonts.gstatic.com" rel="preconnect" />
+	<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600&amp;family=Sarabun:wght@400;500&amp;display=swap" rel="stylesheet" />
+	<style type="text/css">html,
+		body {
+			margin: 0 auto !important;
+			padding: 0 !important;
+			height: 100% !important;
+			width: 100% !important;
+			background: #f1f1f1;
+		}
+		/* What it does: Stops email clients resizing small text. */
+		* {
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%;
+		}
+		/* What it does: Centers email on Android 4.4 */
+		div[style*="margin: 16px 0"] {
+			margin: 0 !important;
+		}
+		/* What it does: Stops Outlook from adding extra spacing to tables. */
+		table,
+		td {
+			mso-table-lspace: 0pt !important;
+			mso-table-rspace: 0pt !important;
+		}
+		/* What it does: Fixes webkit padding issue. */
+		table {
+			border-spacing: 0 !important;
+			border-collapse: collapse !important;
+			table-layout: fixed !important;
+			margin: 0 auto !important;
+		}
+		/* What it does: Uses a better rendering method when resizing images in IE. */
+		img {
+			-ms-interpolation-mode: bicubic;
+		}
+		/* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+		a {
+			text-decoration: none;
+		}
+		/* What it does: A work-around for email clients meddling in triggered links. */
+		*[x-apple-data-detectors],  /* iOS */
+		.unstyle-auto-detected-links *,
+		.aBn {
+			border-bottom: 0 !important;
+			cursor: default !important;
+			color: inherit !important;
+			text-decoration: none !important;
+			font-size: inherit !important;
+			font-family: inherit !important;
+			font-weight: inherit !important;
+			line-height: inherit !important;
+		}
+		/* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+		.a6S {
+			display: none !important;
+			opacity: 0.01 !important;
+		}
+		/* What it does: Prevents Gmail from changing the text color in conversation threads. */
+		.im {
+			color: inherit !important;
+		}
+		/* If the above doesn't work, add a .g-img class to any image in question. */
+		img.g-img + div {
+			display: none !important;
+		}
+		/* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+		/* Create one of these media queries for each additional viewport size you'd like to fix */
+		/* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+		@media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+			u ~ div .email-container {
+				min-width: 320px !important;
+			}
+		}
+		/* iPhone 6, 6S, 7, 8, and X */
+		@media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+			u ~ div .email-container {
+				min-width: 375px !important;
+			}
+		}
+		/* iPhone 6+, 7+, and 8+ */
+		@media only screen and (min-device-width: 414px) {
+			u ~ div .email-container {
+				min-width: 414px !important;
+			}
+		}
+		.primary {
+			background: #f3a333;
+		}
+		.bg_white {
+			background: #ffffff;
+		}
+		.bg_light {
+			background: #fafafa;
+		}
+		.bg_black {
+			background: #000000;
+		}
+		.bg_blue {
+			background: #1a25bc;
+		}
+		.bg_darkGray {
+			background: #333333;
+		}
+		.email-section {
+			padding: 1rem 1.4em;
+		}
+		.email-section-lr {
+			padding: 5px 1.4em;
+		}
+		/*BUTTON*/
+		.btn {
+			padding: 10px 15px;
+		}
+		.btn.btn-primary {
+			border-radius: 5px;
+			background: #2035c7;
+			color: #ffffff;
+			display: block;
+			text-align: center;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+		.btn-link{
+			font-size: 16px;
+			border:none;
+			color: #1a25bc;
+			background: none;
+			cursor: pointer;
+			text-decoration: underline;
+		}
+		.btn-link:hover{
+			text-decoration: none;
+		}
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			font-weight: 400;
+			margin-top: 0;
+		}
+		body {
+			font-family: "Sarabun", sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 1.8;
+			color: #333333;
+		}
+		.email-container a {
+			color: #1a25bc;
+			text-decoration: underline;
+		}
+		a:hover {
+			text-decoration: none;
+		}
+		/*LOGO*/
+		.logo h1 {
+			margin: 0;
+		}
+		.logo h1 a {
+			color: #000;
+			font-size: 20px;
+			font-weight: 700;
+			text-transform: uppercase;
+			font-family: "Sarabun", sans-serif;
+		}
+		.email-section--padding-b0 {
+			padding-bottom: 0;
+		}
+		/*HERO*/
+		.hero {
+			position: relative;
+		}
+		.hero .hero-textoops,
+		.hero .hero-textforgot {
+			font-size: 40px;
+			margin: 0;
+			font-weight: 400;
+			line-height: 48px;
+			text-transform: uppercase;
+		}
+		.hero .hero-textoops {
+			color: #333333;
+		}
+		.hero .hero-textforgot {
+			color: #999999;
+		}
+		/*HEADING SECTION*/
+		.heading-section {
+		}
+		.heading-section h2 {
+			color: #1a25bc;
+			font-size: 25px;
+			margin-top: 0;
+			line-height: 1.4;
+			margin: 0;
+		}
+		.heading-section-upline p{
+			font-size: 18px;
+			color: #666666;
+		}
+		.heading-section-upline p.upline-title{
+			color: #333;
+			float:left;
+			width:100%;
+		}
+		.email-container {
+			border: 10px solid #1a25bc;
+			font-size: 16px;
+			line-height: 1.8;
+			color: #333333;
+		}
+		.email-container table {
+			font-size: 16px;
+			line-height: 1.8;
+		}
+		/*ITEM-TABLE*/
+		.item-table {
+			border: 1px solid #999999;
+			border-radius: 5px;
+			display: block;
+		}
+		.itemproduct-table > tbody > tr {
+			border-bottom: 1px solid #f2f2f2;
+		}
+		.itemproduct-table > tbody > tr:last-child {
+			border-bottom: none;
+		}
+		.itemproduct-table > tbody > tr > td {
+			padding: 15px 0;
+		}
+		.btn.btn-ordernow {
+			min-width: 270px;
+			display: inline-block;
+			text-align: center;
+			text-transform: uppercase;
+		}
+		.ordernow-section {
+			margin-top: 30px;
+		}
+		.productView-title {
+			margin: 0;
+			color: #333333;
+			font-size: 16px;
+		}
+		.productView-title a {
+			color: #333333;
+			text-decoration: none;
+		}
+		.productView-ml {
+			margin: 0;
+			font-size: 12px;
+		}
+		.productView-option {
+			margin: 0;
+			text-align: right;
+		}
+		.productView-qty .text-label,
+		.productView-option .text-label {
+			color: #999999;
+			font-size: 14px;
+			padding-right: 10px;
+		}
+		.price-discount {
+			color: #fd2825;
+		}
+		.table-subtotal {
+			background: #f5f5f5;
+		}
+		.table-subtotal .text-labelsub,
+		.table-subtotal .text-valuesub{
+			padding-top: 15px;
+		}
+		.table-subtotal .text-labelcv {
+			padding: 10px;
+		}
+		.table-subtotal .text-valuecv {
+			font-size: 18px;
+			padding: 10px;
+		}
+		.table-subtotal .text-labeltotal {
+			border-top: 1px solid #999999;
+			font-size: 20px;
+			padding: 10px 10px;
+		}
+		.table-subtotal .text-valuetotal {
+			border-top: 1px solid #999999;
+			font-size: 25px;
+			padding: 10px 10px;
+		}
+		.table-subtotal td {
+			padding: 3px 10px;
+		}
+		/*FOOTER*/
+		.footer {
+			color: white;
+			padding-left: 0;
+			padding-right: 0;
+		}
+		.footer p {
+			color: #ffffff;
+			font-size: 12px;
+			margin: 0;
+		}
+		.footer ul {
+			margin: 10px 0 0;
+			padding: 0;
+		}
+		.footer ul li {
+			list-style: none;
+			padding: 0 5px;
+			display: inline-block;
+		}
+		.footer-contact {
+		}
+		.footer-contact .text-service {
+			margin-bottom: 5px;
+			color: #333;
+		}
+		.footer-contact h3 {
+			font-size: 14px;
+			text-transform: uppercase;
+			margin: 0;
+			font-weight: 600;
+		}
+		.footer-contact ul {
+			font-size: 14px;
+			margin: 0 0 10px;
+			padding: 0;
+			line-height: 1.6;
+		}
+		.footer-contact ul li {
+			list-style: none;
+			margin: 0;
+		}
+		.footer-contact .phone-text {
+			color: #1a25bc;
+		}
+		.footer ul li a {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.footer ul li a.textlink {
+			display: inline-block;
+			color: white;
+			font-size: 12px;
+			padding: 0 10px 0 0;
+			vertical-align: middle;
+			text-transform: uppercase;
+		}
+		.footer-contact .text {
+			min-width: 50px;
+			display: inline-block;
+		}
+		.footer-textsmall p {
+			margin-top: 0;
+			font-size: 14px;
+		}
+
+		/*ORDER CONFIRMATION*/
+		.vieworder-id p{
+			margin:0;
+		}
+		.vieworder-id p.date{font-size: 14px;}
+		.vieworder-link{padding-right:  20px;}
+		.vieworder-link a{text-transform: uppercase;}
+		.customer-more{color: #999999; font-size: 14px;}
+		.member-more{background: #E5EEFE; border: 1px solid #105EEF;padding: 8px 15px;font-size: 14px;}
+		.member-more h3{font-weight: bold;font-size: 20px; margin-bottom: 0;}
+		.heading-customer{font-size: 20px; border-bottom: 2px solid #999999;    padding-bottom: 5px;margin-bottom: 5px;}
+		.table-customer td{
+			border-bottom: 2px solid #CCCCCC;
+			padding: 15px 0;
+		}
+		.table-customer tr:last-child td{
+			border: none;
+		}
+		.table-customer .text-label{
+			color: #666666;
+			margin:0;
+		}
+		.table-customer p{
+			margin:0;
+		}
+
+		/*Low STOCK*/
+		.remark-text {
+			margin-top: 10px;
+			font-style: italic;
+			color: #999999;
+			font-size: 14px;
+		}
+		.table-service {
+		}
+		.table-service > tbody {
+			display: block;
+			padding: 10px 0;
+		}
+		.table-service td.table-service--td {
+			padding: 10px 20px;
+		}
+		.table-service--td h4 {
+			color: white;
+			margin: 0;
+			line-height: 20px;
+			font-weight: 500;
+		}
+		.table-service--td p {
+			color: white;
+			font-size: 12px;
+			font-weight: 500;
+		}
+		.table-copyright-mb {
+			display: none;
+		}
+		.table-copyright td {
+			padding: 0 10px;
+		}
+		.footer-subscribe {
+			font-size: 12px;
+			text-align: center;
+			color: #999999;
+		}
+
+		/*SuccessfullyEnroll-upline*/
+		.upline-success{
+			color: white;
+		}
+			.upline-success h3{
+				font-size: 30px;
+				margin:0;
+				font-weight: 600;
+				text-transform: uppercase;
+			}
+			.upline-success h3 span{
+				font-weight: normal;
+				text-transform: none;
+			}
+			.upline-success h4{
+				font-size: 25px;
+				margin:0;
+				line-height: 32px;
+			}
+			.upline-success .text-fistname{
+				font-size: 18px;
+				margin-bottom: 5px;
+			}
+			.upline-success .memberID{
+				padding: 0 30px;
+				line-height: 50px;
+				font-size: 25px;
+				border: 1px solid rgba(255,255,255,0.2);
+				display: inline-block;
+				margin: 0;
+			}
+		.upline-password{}
+		.upline-password h3{
+			margin-bottom: 5px;
+		}
+		.upline-password .text-input{
+			height: 38px;
+			width: 100%;
+			padding: 0 15px;
+			border-radius: 3px;
+			font-size: 16px;
+			border: 1px solid #666;
+			display: block;
+			box-sizing: border-box;
+			text-align:left;
+			color:#333;
+		}
+		.bock-setup{
+			border: 1px solid #5D96FF;
+			padding: 20px;
+		}
+		.bock-setup p {
+			font-size: 18px;
+			color:#666666;
+			text-align: left;
+		}
+		.bock-setup p:first-child{
+			margin-top: 0;
+		}
+		.bock-setup .btn-primary{
+			display: inline-block;
+			font-weight: 500;
+			text-transform: uppercase;
+			min-width: 200px;
+		}
+		.table-customer-service{
+			border-right: 1px solid #F2F2F2;
+		}
+		table.table-maincustomer .td-maincustomer1{
+			padding-right: 20px;
+		}
+		/*LAYOUT Mobile*/
+		@media (max-width: 767px){
+			td.email-section{padding: 10px;}
+			td.hero .hero-textoops{font-size: 35px;}
+			td.hero .hero-textforgot{font-size: 25px; line-height: 35px;}
+			div.heading-section h2{ font-size: 20px;}
+			.table-subtotal .text-labelcv,
+			.table-subtotal .text-labeltotal{text-align: left;}
+			a.btn.btn-ordernow {display: block; min-width: inherit;}
+			.table-copyright {
+				display: none;
+			}
+			.table-copyright-mb {
+				display: block;
+			}
+			.table-copyright > tbody> tr >td{display: block;}
+			.table-copyright > tbody td{text-align: left;}
+
+			.vieworder-table > tbody> tr >td{display: block;text-align: left;width: 100%; padding: 5px 0;}
+			.table-customer > tbody> tr >td{display: block;text-align: left;width: 100%;  border-bottom: none;}
+			.table-customer > tbody> tr >td{display: block;text-align: left;width: 100%; border-bottom: none;}
+			.table-customer > tbody> tr:first-child >td:last-child{
+		 		border-bottom: 2px solid #CCCCCC;
+			}
+			.table-customer > tbody> tr >td.customer-shipping{
+				padding-bottom: 0;
+			}
+			.table-customer .customer-shipping > *{
+				display: inline-block;
+
+			}
+			.table-customer .customer-shipping .text-label{
+				min-width: 150px;
+			}
+
+			.table-service td.table-service--td {
+				padding: 10px;
+			}
+			.table-service--td h4 {
+				font-size: 14px;
+			}
+			.table-service--td p {
+				display: none;
+			}
+
+			/*SuccessfullyEnroll-upline*/
+			.upline-success h3{
+				font-size: 20px;
+			}
+			.upline-success h4{
+				font-size: 18px;
+			}
+			.upline-success .text-fistname{
+				font-size: 16px;
+			}
+			.upline-success .memberID{
+				font-size: 20px;
+			}
+			table.table-maincustomer .td-maincustomer1,
+			table.table-maincustomer .td-maincustomer2{
+				display: block;
+				width: 100%;
+			}
+			table.table-maincustomer .td-maincustomer1 table{
+				border: none;
+			}
+	}
+	</style>
+</head>
+<body data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1040.0" data-new-gr-c-s-loaded="14.1012.0"><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
+<center style="width: 100%; background-color: #f1f1f1;"><div style="display: none; font-size: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div><div class="email-container" style="max-width: 650px; margin: 0 auto;"><!-- BEGIN BODY --><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: auto;" width="100%"><tbody>
+<tr><td class="bg_blue logo" style="padding: 1em 1.4em;"><h1><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/logo-white.png?v=1612238508" style="width: 90px; max-width: 100px; height: auto; display: block;" /> </a></h1></td>
+</tr>
+<!-- end tr -->
+<tr><td class="bg_blue email-section" valign="middle"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+	<tr><td align="center" class="email-section"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/hand-more.png?v=1612516098" style="width: 142px; max-width: 142px; height: auto; display: block;" /></td>
+	</tr>
+	<tr><td align="center" class="email-section upline-success"><h3>Welcome aboard <span>{{$first_name}}! </span></h3><h4>You have become our Business Partner.</h4><p class="text-fistname">Your member ID</p><p class="memberID">{{$member_id}}</p></td>
+	</tr>
+	</tbody></table></td>
+</tr>
+<!-- end tr -->
+<tr><td class="bg_white email-section"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+	<tr><td class="bg_white email-section-tb "><div class="heading-section-upline"><p class="upline-title">Thank you for registering as a Business Partner of Unilever Life. Wish you have a successful journey ahead. We will always be by your side to help you succeed!</p></div></td>
+	</tr>
+	<!-- end: tr -->
+	<tr><td align="center" class="bg_white email-section-tb upline-password"><div class="bock-setup"><p>Please press &quot;SET UP PASSWORD&quot; below to create an online account to manage your account, check your order status, and access our Toolbox, which will assist you to succeed in doing business with us.</p><a class="btn btn-primary" href="{{$setup_password_url}}">Set Up Password</a></div></td>
+	</tr>
+	<!-- end: tr --></tbody></table></td>
+</tr>
+<!-- end:tr --><!-- 1 Column Text + Button : END --></tbody></table><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: auto;" width="100%"><tbody>
+<tr><td class="bg_white footer-contact email-section-lr" valign="middle"><p class="text-service">If you have any trouble, we&rsquo;re here to help! Please contact us</p></td>
+</tr>
+<tr><td class="bg_white footer-contact email-section-lr" valign="middle"><table border="0" cellpadding="0" cellspacing="0" class="table-maincustomer" role="presentation" width="100%"><tbody>
+	<tr><td class="td-maincustomer1" valign="top" width="45%"><table border="0" cellpadding="0" cellspacing="0" class="table-customer-service" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/iconline-phone.png" style="width: 36px; max-width: 50px; height: auto; display: block;" /></td><td style="text-align: left; padding-left: 5px; padding-right: 5px;"><h3 class="heading">{{$upline_first_name}}</h3><ul><li><span class="text phone-text">{{$sponsor_phone}}</span></li><li><span class="text">LINE ID</span>: <a href="#">{{$sponsor_line_id}}</a></li></ul></td>
+		</tr>
+		</tbody></table></td><td class="td-maincustomer2" valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-phone.png" style="width: 36px; max-width: 50px; height: auto; display: block;" /></td><td style="text-align: left; padding-left: 5px; padding-right: 5px;"><h3 class="heading">OUR CUSTOMER SERVICE</h3><ul><li><span class="text">+(66)2-554-2455​</span></li><li><span class="text">LINE ID</span>: <a href="#">@unileverlife</a></li><li><span class="text">Email</span>: <a href="mailto:unileverlife.th@unilever.com">unileverlife.th@unilever.com</a></li></ul></td>
+		</tr>
+		</tbody></table></td>
+	</tr>
+	</tbody></table></td>
+</tr>
+</tbody></table></div><div class="email-containerfull" style="max-width: 670px; margin: 0 auto;"><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="margin: auto;" width="100%"><tbody>
+<tr><td class="footer service-section" valign="middle"><table border="0" cellpadding="0" cellspacing="0" class="table-service bg_darkGray" role="presentation" style="margin: auto;" width="100%"><tbody>
+	<tr><td class="table-service--td" valign="top" width="50%"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/deliver.png" style="width: 47px; max-width: 50px; display: block;" /></td><td><h4>Free Delivery for all&nbsp;order</h4><p>We deliver within 72 hours</p></td>
+		</tr>
+		</tbody></table></td><td class="table-service--td" valign="top" width="50%"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/offer.png" style="width: 47px; max-width: 50px; display: block;" /></td><td><h4>High Quality Products</h4><p>We offer only high-quality products</p></td>
+		</tr>
+		</tbody></table></td>
+	</tr>
+	<tr><td class="table-service--td" valign="top" width="50%"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/contact.png" style="width: 47px; max-width: 50px; display: block;" /></td><td><h4>We are available 9am-9pm</h4><p>Contact us by chat or phone</p></td>
+		</tr>
+		</tbody></table></td><td class="table-service--td" valign="top" width="50%"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td valign="top" width="60px"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/card.png" style="width: 47px; max-width: 50px; display: block;" /></td><td><h4>100% Secure Payment</h4><p>Visa, Mastercard, JCB</p></td>
+		</tr>
+		</tbody></table></td>
+	</tr>
+	</tbody></table></td>
+</tr>
+<!-- end: tr -->
+<tr><td class="bg_blue footer email-section" valign="middle"><table border="0" cellpadding="0" cellspacing="0" class="table-copyright" role="presentation" style="margin: auto;" width="100%"><tbody>
+	<tr><td valign="top"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td style="text-align: left; padding-right: 10px;"><p>Copyright &copy;2021 Unilever Life,<br />
+			All right reserved.</p></td>
+		</tr>
+		</tbody></table></td><td valign="top" width="65%"><table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"><tbody>
+		<tr><td align="right"><ul><li><a class="textlink" href="#">Shop LOCATION</a> <a href="#"> <img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-location.png" style="width: 25px; max-width: 50px; height: auto; display: block;" /> </a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-fb.png" style="width: 26px; max-width: 50px; height: auto; display: block;" /> </a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-line.png" style="width: 27px; max-width: 50px; height: auto; display: block;" /> </a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-instagram.png" style="width: 26px; max-width: 50px; height: auto; display: block;" /> </a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-vimeo.png" style="width: 26px; max-width: 50px; height: auto; display: block;" /> </a></li></ul></td>
+		</tr>
+		</tbody></table></td>
+	</tr>
+	</tbody></table><table border="0" cellpadding="0" cellspacing="0" class="table-copyright-mb" role="presentation" style="margin: auto;" width="100%"><tbody>
+	<tr><td valign="top"><p>Copyright &copy;2021 Unilever Life,<br />
+		All right reserved.</p><ul><li><a class="textlink" href="#">Shop LOCATION</a> <a href="#"> <img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-location.png" style="width: 25px; max-width: 50px; height: auto;display: block;" /> </a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-fb.png" style="width: 26px; max-width: 50px; height: auto;display: block;" /></a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-line.png" style="width: 27px; max-width: 50px; height: auto; display: block;" /></a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-instagram.png" style="width: 26px; max-width: 50px; height: auto; display: block;" /></a></li><li><a href="#"><img alt="" src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/icon-vimeo.png" style="width: 26px; max-width: 50px; height: auto;display: block;" /></a></li></ul></td>
+	</tr>
+	</tbody></table></td>
+</tr>
+<!-- end: tr -->
+<tr><td class="bg_white footer-subscribe email-section" valign="middle">You received this email because you are subscribed to Unilever Life. If you prefer not to receive emails from Unilever Life you may <a href="#">unsubscribe</a>.</td>
+</tr>
+</tbody></table></div></center>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><!-- CSS Reset : BEGIN --></p></body>
+</html>

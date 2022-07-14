@@ -1,0 +1,214 @@
+{% if shop.metafields.shop.free_ship_rule != blank %}
+    {% assign shipping_price = shop.metafields.shop.free_ship_rule | times: 1.00 %}
+{% else %}
+    {% assign shipping_price = 1.00 %}
+{% endif %}
+
+{% assign shipping_free = false %}
+{% assign member_total_price = 0 %}
+
+{% assign shipping_price_expect = 0 %}
+
+{% assign tag_customer = '' %}
+{% if customer %}
+   {% for tag in customer.tags %}
+      {% assign tag_downcase = tag | downcase %}
+      {% if tag_downcase contains 'bp_rank' %}
+         {% assign tag_customer = tag %}
+         {% break %}
+      {% endif %}
+   {% endfor %}
+{% endif %}
+<span class="close drawer__close" title="{{ 'general.tooltip.close' | t }}"></span>
+<div class="offcanvas-cart__header" data-cart_count="{{ cart.item_count }}">
+    <h2 class="offcanvas__header-title">{{ 'cart.minicart.title' | t }}</h2>
+</div>
+
+{% if cart.item_count > 0 %}
+    <div class="offcanvas-cart__content">
+        <div class="minicart__wrapper">
+            <ul class="minicart__list">
+            {% assign total_cv = 0 %}
+            {% assign total_qv = 0 %}
+            {% if cart.item_count > 0 %}
+                {% for item in cart.items %}
+                    {% assign product = item.product %}
+                    {% assign variant = item.variant %}
+                    {% if variant %}
+                        <li class="minicart__item cart__item"
+                            data-variant_id="{{ item.id }}" data-cart-item-index="{{ forloop.index }}" data-showcanvas="true">
+                            <div class="minicart__media">
+                            {%- assign product_tags = product.tags | downcase -%}
+                            {% if product_tags contains "autoship" %}
+                                <span class="tags-name autoship">{{ "products.tags.autoship_short" | t }}</span>
+                            {% endif %}
+                            <a href="{{item.url}}" class="minicart__image">
+                                {% if item.image %}
+                                    <img src="{{ item.image | product_img_url: '150x' }}" alt="{{item.title}}">
+                                {% else %}
+                                    <img src="{{ 'default_product.png' | asset_img_url: '150x' }}" alt="{{item.title}}">
+                                {% endif %}
+                            </a>
+                            </div>
+                            <div class="minicart__content">
+                                <div class="minicart__title h4 product-card__title">
+                                    <a href="{{item.url}}">{{ product.title }}</a>
+                                    <span class="minicart__remove cart__remove-item drawer__close drawer__close-small" title="{{ 'cart.general.remove' | t }}"></span>
+                                </div>
+                                <div class="minicart__options">
+                                    {% unless product.has_only_default_variant %}
+                                    {%- for option in item.options_with_values -%}
+                                        {{ option.value }}{%- if forloop.last == false -%}, {%- endif -%}
+                                    {%- endfor -%}
+                                    {% endunless %}
+                                </div>
+                                <div class="row minicart__info">
+                                    <div class="col-md-6">
+                                        <div class="minicart__quantity">
+                                            <div class="qty__box-title">{{ 'cart.minicart.quantity' | t }}</div>
+                                            <div class="qty__box">
+                                                {% assign qtyDisable = false %}
+                                                {% if variant.inventory_policy == 'deny' and item.quantity >= variant.inventory_quantity and variant.inventory_management %}
+                                                    {% assign qtyDisable = true %}
+                                                {% endif %}
+                                                <button class="decrease-qty"{% if item.quantity == 1 %} disabled="disabled"{% endif %}>-</button>
+                                                <input class="input___text quantityCart" type="number" min="1" value="{{item.quantity}}"
+                                                    data-inventory_policy="{{ variant.inventory_policy }}"
+                                                    data-inventory_quantity="{{ variant.inventory_quantity }}"
+                                                    data-inventory_management="{{ variant.inventory_management }}">
+                                                <button class="increase-qty"{% if qtyDisable %} disabled="disabled"{% endif %}>+</button>
+                                            </div>
+                                        </div>
+                                        <div class="cart__item-error prd__error-message hide">{{ 'cart.minicart.all_items_in_cart' | t }}</div>
+                                    </div>
+                                    <div class="col-md-6 minicart__info-price">
+                                        {% if customer %}
+                                            {% comment %} Show CV | QV {% endcomment %}
+                                            <div class="minicart__cvqv cvqv__wrap d-flex justify-content-end">
+                                                {%- assign variant_cv = variant.metafields.ulife.cv_value -%}
+                                                {%- assign variant_qv = variant.metafields.ulife.qv_value -%}
+                                                {% if variant_cv != blank %}
+                                                    {%- assign total_variant_cv = variant_cv | times: item.quantity -%}
+                                                    {% assign total_cv = total_cv | plus: total_variant_cv %}
+                                                {% endif %}
+                                                {% if variant_qv != blank %}
+                                                    {%- assign total_variant_qv = variant_qv | times: item.quantity -%}
+                                                    {% assign total_qv = total_qv | plus: total_variant_qv %}
+                                                {% endif %}
+                                                {% if variant_cv != blank %}
+                                                    <div class="minicart__cvqv-title cvqv__title">{{ 'cart.minicart.cv' | t }}<span> | </span>{{ 'cart.minicart.qv' | t }}</div>
+                                                    <div class="minicart__cvqv-number cvqv__number">{{ total_variant_cv }} <span> | </span> {{ total_variant_qv }}</div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+
+                                        {% comment %} Check tags product {% endcomment %}
+                                        {%- assign product_tags = product.tags | downcase -%}
+
+                                        {% comment %} Check tag Freeship {% endcomment %}
+                                        {% if variant.metafields.ulife.freeship == 1 or variant.metafields.ulife.freeship == '1' %}
+                                            {%- assign shipping_free = true -%}
+                                        {% endif %}
+                                        {% comment %} Check customer group {% endcomment %}
+
+                                        {%- assign sku = variant.sku | downcase -%}
+                                        {%- assign variant_tag = tag_customer | append: '_' | append: variant.sku | append: '_END_RANK' -%}
+                                        {% if product_tags contains sku %}
+                                            {% if customer %}
+                                                {% unless product.tags contains variant_tag %}
+                                                    {% assign items_remove = items_remove | append: item.id | append: ',' %}
+                                                {% endunless %}
+                                            {% else %}
+                                                {% assign items_remove = items_remove | append: item.id | append: ',' %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {% comment %} End check tags product {% endcomment %}
+
+                                        <div class="minicart__price">
+                                            {% comment %} <span class="minicart__price-compare">{{ variant.compare_at_price | money}}</span> {% endcomment %}
+                                            {% if customer %}
+                                                {% assign member_price = variant.metafields.ulife.member_price %}
+                                                {% assign member_total_price_variant = member_price | times: item.quantity %}
+                                                {% assign member_total_price = member_total_price | plus: member_total_price_variant %}
+                                                <span class="minicart__price-regular">{{ member_total_price_variant | times: 100.00 | money | remove: '.00' }}</span>
+                                            {% else %}
+                                                {% assign member_total_price_variant = item.price | times: item.quantity %}
+                                                <span class="minicart__price-regular">{{ member_total_price_variant | money | remove: '.00' }}</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            </ul>
+
+            
+        </div>
+    </div>
+    <div class="offcanvas-cart__footer">
+        <div class="minicart__total-wrap" data-items_remove="{{ items_remove }}">
+            {% if customer and total_cv > 0 %}
+                <div class="cart__total total__cvqv-wrap ">
+                    <span class="total__cvqv-title">{{ 'cart.minicart.total_cvqv' | t }}</span>
+                    <div class="total__cvqv-number">{{ total_cv }} <span>|</span> {{ total_qv }}</div>
+                </div>
+            {% endif %}
+            <div class="cart__total">
+                <span class="cart__total-title">{{ 'cart.minicart.total' | t }}</span>
+                <span class="cart__total-price">
+                    {% if customer %}
+                        {{ member_total_price | times: 100.00 | money | remove: '.00' }}
+                    {% else %}
+                        {{ cart.total_price | money | remove: '.00' }}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <div class="minicart__progress-bar">
+            {% if customer %}
+                {% assign total_cart = member_total_price %}
+            {% else %}
+                {% assign total_cart = cart.total_price | divided_by: 100 %}
+            {% endif %}
+
+            {% assign shipping_width = 0 %}
+            {% assign free_ship = "" %}
+            {% if shipping_free or total_cart >= shipping_price %}
+                <div class="cart__shipping-title">{{ 'cart.minicart.free_shipping' | t }}</div>
+                {% assign shipping_width = 100 %}
+                {% assign free_ship = "free-ship-color" %}
+            {% else %}
+                {% assign shipping_price_expect = shipping_price | minus: total_cart | times: 100.00 %}
+                {% assign shipping_money_expect = shipping_price_expect | money | remove: '.00' %}
+                <div class="cart__shipping-title">
+                    {{ 'cart.minicart.add_to_receive_free_shipping_html' | t: price_to_free: shipping_money_expect }}
+                </div>
+                {% assign shipping_width = total_cart | divided_by: shipping_price | times: 100.00 | round: 2 %}
+            {% endif %}
+            <div class="progress__bar-shipping">
+                <div class="track"></div>
+                <div class="scrollbar {{ free_ship }}" style="width: {{ shipping_width }}%"></div>
+            </div>
+        </div>
+        <div class="minicart__action">
+            <a href="{{ pages['checkout'].url }}" class="btn btn--large minicart__button-checkout">{{ 'cart.minicart.checkout' | t }}</a>
+            <a href="{{ routes.cart_url }}" class="link-readmore text-underline">{{ 'cart.minicart.view_full_bag' | t }}</a>
+        </div>
+    </div>
+{% else %}
+    <div class="offcanvas-cart__content cart__no-item">
+        <div class="icon__wrap">
+            {% include 'icon-down' %}
+            {% include 'icon-cart' %}
+        </div>
+        <p>{{ 'cart.minicart.no_item' | t }}</p>
+    </div>
+{% endif %}
+<script>
+    window.checkoutConfig = window.checkoutConfig || {};
+    window.checkoutConfig.freeship_amount = {{ shipping_price | json }};
+    window.checkoutConfig.is_freeship = {{ shipping_free | json }};
+</script>

@@ -1,0 +1,227 @@
+<div class="checkout_step" data-step="contact" style="display: none;">
+    <div class="step__sections">
+        <form id="information_form" method="GET">
+            <div class="section section__contact--information">
+                <div class="section__header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="section__title">{{ 'general.checkout_contact.contact_information_label' | t }}
+                            <div class="smart_tooltip">
+                                {% include 'icon-info' %}
+                                <span class="tooltiptext">{{ 'general.checkout_tooltip.contact_infomation' | t }}</span>
+                            </div>
+                        </h2>
+                        {% comment %}
+                        {% unless customer %}
+                        <p>
+                            <span>{{ 'general.checkout_contact.account_already' | t }}</span>
+                            <a href="/account/login">{{ 'general.checkout_contact.account_login' | t }}</a>
+                        </p>
+                        {% endunless %}
+                        {% endcomment %}
+                    </div>
+                </div>
+                <div class="section__content">
+                    {% if customer %}
+                    <div class="customer__infor">
+                        <div class="customer__infor-avatar">
+                            <img id="customer__avatar" src="{{ 'avatar.png' | asset_img_url: '300x' }}">
+                        </div>
+                        <div class="customer__name-email">
+                            <span class="name">{{ customer.first_name }}</span> <span class="email">({{ customer.email }})</span>
+                        </div>
+                        <div class="customer__infor-detail">                            
+                            <input data-scope="email" name="email" type="hidden" value="{{ customer.email }}" required>
+                            <div class="fieldset__description">
+                                <div class="checkbox__wrapper form-check d-flex align-items-center">
+                                    <input class="input__checkbox" id="checkout_buyer_accepts_marketing" hidden type="checkbox">
+                                    <label class="checkbox__label form-check-label" for="checkout_buyer_accepts_marketing">
+                                        {{ 'general.checkout_contact.check_up_to_date' | t }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="fieldset">
+                        <div class="field__input--wrapper validate-container">
+                            <label for="email">{{ 'general.checkout_form_label.email' | t }}</label>
+                            <input id="email" class="input__text validate-space" data-scope="email" placeholder="" name="email" type="text">
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% unless customer %}
+                    <div class="fieldset__description" style="margin-top: 10px;">
+                        <div class="checkbox__wrapper form-check d-flex align-items-center">
+                            <input class="input__checkbox" id="checkout_buyer_accepts_marketing" hidden type="checkbox">
+                            <label class="checkbox__label form-check-label" for="checkout_buyer_accepts_marketing">
+                                {{ 'general.checkout_contact.check_up_to_date' | t }}
+                            </label>
+                        </div>
+                    </div>
+                    {% endunless %}
+                </div>
+            </div>
+            <div class="shipping_info_form" data-form="address">
+                <div class="section section__shipping--address">
+                    <div class="section__header">
+                        <h2 class="section__title">{{ 'general.checkout_contact.shipping_address' | t }}</h2>
+                    </div>
+                    <div class="section__content">
+                        <div class="fieldset" id="shipping_address">
+                            {% if customer %}
+                            <div class="field">
+                                <p>{{ 'general.checkout_contact.choose_your_address_note' | t }}</p>
+                                <label for="customer_address">{{ 'general.checkout_contact.choose_your_address' | t }}</label>
+                                <select id="customer_address" hidden></select>
+                            </div>
+                            {% endif %}
+                            <div class="field field__half">
+                                <div class="field__input--wrapper validate-container">
+                                    <label for="first_name">{{ 'general.checkout_form_label.first_name' | t }}</label>
+                                    <input id="first_name" class="input__text first_name validate-space" name="first_name" type="text">
+                                </div>
+                                <div class="field__input--wrapper validate-container">
+                                    <label for="last_name">{{ 'general.checkout_form_label.last_name' | t }}</label>
+                                    <input id="last_name" class="input__text last_name validate-space" name="last_name" type="text">
+                                </div>
+                            </div>
+                            <div class="field field__half">
+                                <div class="field__input--wrapper validate-container">
+                                    <label for="address1">{{ 'general.checkout_form_label.address' | t }}</label>
+                                    <input class="input__text address1 validate-space" id="address1" name="address1" type="text">
+                                </div>
+                                <div class="field__select--wrapper shipping_post_code_container validate-container">
+                                </div>
+                            </div>
+                            <div class="field field__half">
+                                <div class="field__select--wrapper shipping_state_container validate-container">
+                                </div>
+                                <div class="field__select--wrapper shipping_city_container validate-container">
+                                </div>
+                            </div>
+                            <div class="field field__half">
+                                <div class="field__input--wrapper validate-container">
+                                    <label for="phone">{{ 'general.checkout_form_label.mobile_number' | t }}</label>
+                                    <input id="phone" class="input__text phone validate-space" name="phone" type="text" required maxlength="10">
+                                </div>
+                                <div class="field__input--wrapper validate-container">
+                                    <label for="country">{{ 'general.checkout_form_label.country' | t }}</label>
+                                    <input class="input__text" name="country" value="{{ 'general.checkout_form_label.country_name' | t}}" type="text" required readonly>
+                                </div>
+                            </div>
+                            {% unless customer %}
+                                <div class="fieldset">
+                                    <div class="field">
+                                        <label for="national_id" class="label-national_id">{{ 'general.checkout_contact.like_a_tax_invoice' | t }}</label>
+                                        <div class="field__input--wrapper national__id-wrapper validate-container">
+                                            <label for="national_id">{{ 'general.checkout_form_label.national_id' | t }}</label>
+                                            <input class="input__text validate-national_id" data-scope="national_id" id="national_id"
+                                                   placeholder=""
+                                                   name="national_id"
+                                                   type="text">
+                                            <span data-scope="national_id_message"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endunless %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section section__shipping--method">
+                <div class="section__header">
+                    <h2 class="section__title">{{ 'general.checkout_contact.shipping_method' | t }}</h2>
+                </div>
+                <div class="section__content">
+                    <div class="content__box validate-container" data-scope="shipping_method">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="step__footer d-flex justify-content-between align-items-center">
+        <a class="button__back-step" href="{{ routes.cart_url }}">
+            {% render 'icon-arrow-left' %}
+            <span class="display-dk">{{ 'general.checkout_step_button.return_to_shopping_bag' | t }}</span>
+            <span class="display-mb">{{ 'general.checkout_step_button.return_to_bag' | t }}</span>
+        </a>
+        <button class="btn" data-action="to:payment" data-navigate="next">{{ 'general.checkout_step_button.continue_to_payment' | t }}</button>
+    </div>
+</div>
+<script type="text/html" id="contact-otp-modal">
+    <div class="page__enrollment page__enrollment-otp" data-action="enter-otp">
+        <h3 class="modal__title">{{ 'general.checkout_popup.otp.title_modal' | t }}</h3>
+        <p class="modal__description">{{ 'general.checkout_popup.otp.description_html' | t }}<strong class="otp-phone"><%= data.masked_phone %></strong></p>
+        <div class="rte">
+            <div class="form-vertical">
+                <form action="#" method="POST"
+                      id="form-otp">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <p class="text-dark otp-code__label">{{ 'general.checkout_popup.otp.otp_code' | t }}</p>
+                            <div class="form-group form__group-otp">
+                                <input class="combine" type="number" id="digit-1" required name="digit_1" data-role="otp-digit"
+                                       data-next="digit-2" autofocus>
+                                <input class="combine" type="number" id="digit-2" required name="digit_2" data-role="otp-digit"
+                                       data-next="digit-3" data-previous="digit-1">
+                                <input class="combine" type="number" id="digit-3" required name="digit_3" data-role="otp-digit"
+                                       data-next="digit-4" data-previous="digit-2">
+                                <input class="combine" type="number" id="digit-4" required name="digit_4" data-role="otp-digit"
+                                       data-next="digit-5" data-previous="digit-3">
+                                <input class="combine" type="number" id="digit-5" required name="digit_5" data-role="otp-digit"
+                                       data-next="digit-6" data-previous="digit-4">
+                                <input class="combine" type="number" id="digit-6" required name="digit_6" data-role="otp-digit"
+                                       data-previous="digit-5">
+                            </div>
+                            <div id="notify_message"></div>
+                            <div class="text-secondary">{{ 'general.checkout_popup.otp.otp_time_html' | t }}</div>
+                            <div class="text-dark otp__re-send">{{ 'general.checkout_popup.otp.otp_resend_html' | t }}
+                                <p id="notify_resend" class="text-success"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="otp" value="">
+                    <input type="hidden" name="phone" value="" data-role="otp-phone">
+                    <input type="hidden" name="national_id" value="" data-role="national-id">
+                    <input type="hidden" name="cart" value="" data-role="otp-cart">
+                    <input type="hidden" name="customer" value="" data-role="otp-customer">
+
+                    <div class="form-actions form__actions-otp group-button">
+                        <button id="otp-submit" type="submit" class="btn btn-primary" disabled>
+                            {{ 'general.checkout_popup.otp.otp_button' | t }}
+                            <div class="loader" style="display: none;"></div>
+                        </button>
+                    </div>
+                    <div class="form-footer">
+                        <div id="notify" class="checkout-notify__modal smart_modal smart_modal-medium notify"
+                             style="display: none;">
+                            <div class="modal-center">
+                                <div class="modal-content">
+                                    <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                                    <div class="notify__modal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="138.892" height="138.892" viewBox="0 0 138.892 138.892">
+                                            <g data-name="Group 1069" transform="translate(-5422.5 1009.5)">
+                                                <circle data-name="Ellipse 25" cx="69.446" cy="69.446" r="69.446" transform="translate(5422.5 -1009.5)" fill="#fd2729"/>
+                                                <g data-name="Group 1039" transform="translate(5461.404 -971.31)">
+                                                    <line data-name="Line 16" x2="61.27" y2="61.27" transform="translate(0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="8"/>
+                                                    <line data-name="Line 17" x1="61.27" y2="61.27" transform="translate(0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="8"/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                        <h3 class="notify-title title-medium text-center"></h3>
+                                        <p class="notify-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal__overlay overlay"></div>
+                        </div>
+                    </div>
+                </form>
+                {% assign contact = shop.metafields.data.contact_info %}
+                <p class="modal__description-footer">{{ 'general.checkout_popup.otp.otp_note_1_html' | t }}<br>
+                    <a href="tel: {{ contact.contact_phone }}">{{ 'general.checkout_popup.otp.otp_note_2_html' | t: contact_phone: contact.contact_phone, contact_line: contact.contact_line_id }}</p>
+            </div>
+        </div>
+    </div>
+</script>

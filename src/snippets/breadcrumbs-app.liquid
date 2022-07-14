@@ -1,0 +1,96 @@
+<div class="breadcrumb__wrap">
+    <div class="container">
+        <nav class="breadcrumb nav--breadcrumb" role="navigation" aria-label="breadcrumbs" data-json='{"breadcrumb":[{"name":"Home","url":"/"},{"name":"Our Blog","url":"/blogs/our-blog"},{"name":"This is for the subject","url":" "}]}'>
+            <a href="{{ routes.root_url }}" title="Home">Home</a>
+            {% if template contains 'page' %}
+                <span class="dividers">&rsaquo;</span>
+                <span>{{ page.title }}</span>
+                {% elsif template contains 'product' %}
+                {% if collection.url %}
+                    <span class="dividers">&rsaquo;</span>
+                    {{ collection.title | link_to: collection.url }}
+                {% endif %}
+                <span class="dividers">&rsaquo;</span>
+                <span>{{ product.title }}</span>
+                {% elsif template contains 'collection' and collection.handle %}
+                <span class="dividers">&rsaquo;</span>
+                {% if current_tags %}
+                    {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+                    {{ collection.title | link_to: url }}
+                    <span class="dividers">&rsaquo;</span>
+                    <span>{{ current_tags | join: " + " }}</span>
+                {% else %}
+                    <span>{{ collection.title }}</span>
+                {% endif %}
+                {% elsif template == 'blog' %}
+                <span class="dividers">&rsaquo;</span>
+                {% if current_tags %}
+                    {{ blog.title | link_to: blog.url }}
+                    <span class="dividers">&rsaquo;</span>
+                    <span>{{ current_tags | join: " + " }}</span>
+                {% else %}
+                    <span>{{ blog.title }}</span>
+                {% endif %}
+                {% elsif template == 'article' %}
+                <span class="dividers">&rsaquo;</span>
+                {{ blog.title | link_to: blog.url }}
+                <span class="dividers">&rsaquo;</span>
+                <span>{{ article.title }}</span>
+            {% else %}
+                <span class="dividers">&rsaquo;</span>
+                <span>{{ page_title }}</span>
+            {% endif %}
+        </nav>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function (){
+        let mod = {};
+
+        /**
+         * Init elements
+         */
+        mod.initElements = function () {
+            mod.navBreadcrumb    = $('.nav--breadcrumb');
+        }
+        /**
+         * Initialization
+         */
+        mod.init = function (){
+            mod.initElements();
+            mod.renderBreadcrumb();
+        }
+
+        /**
+         * Render Start in Breadcrumb
+         */
+        mod.renderBreadcrumb= function (){
+            const breadcrumb = mod.navBreadcrumb;
+            const dataEvent = breadcrumb.data('json');
+
+            mod.renderDataBreadcrumb(dataEvent);
+        }
+
+        /**
+         * Render Data in Breadcrumb
+         */
+        mod.renderDataBreadcrumb= function (data){
+            let dataBread    = "";
+
+            if($.trim(data).length && data.breadcrumb.length > 0){
+                data.breadcrumb.forEach(function (breadcrumb){
+                    if($.trim(breadcrumb.url).length) {
+                        dataBread += `<a href="${breadcrumb.url}" title="${breadcrumb.name}">${breadcrumb.name}</a>`;
+                        dataBread += `<span class="dividers">›</span>`;
+                    }else{
+                        dataBread += `<span>${breadcrumb.name}</span>`;
+                    }
+
+                })
+                mod.navBreadcrumb.html(dataBread);
+            }
+        }
+        return mod.init();
+    })
+</script>

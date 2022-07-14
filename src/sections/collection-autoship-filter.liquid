@@ -1,0 +1,63 @@
+{% if section.blocks.size > 0 and section.settings.show_filter %}
+<div class="filters-toolbar-wrapper">
+    <div class="container">
+        <div class="filters-toolbar">
+            <div class="filters-toolbar__item-wrapper filters__wrapper">
+                <div class="filters-toolbar__item-child">
+                    <div class="filters-toolbar__input-wrapper select-group">
+                        <div class="select2_wrap select2_sm_wrap position_bottom">
+                            <select id="filter_preriod" class="select2_single" data-parent="true" data-parent_el=".filters-toolbar-wrapper .select2_sm_wrap">
+                                <option value="{{ collection.url }}">{{ 'collections.filters.preriod' | t }}</option>
+                                {% for block in section.blocks limit: section.blocks.size %}
+                                    {% assign tag_value = block.settings.value %}
+                                    <option
+                                        value="{{ collection.url }}/{{ tag_value }}"
+                                        {% if current_tags contains tag_value %} selected="selected"{% endif %}
+                                        >{{ block.settings.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+    "name": "Vip Subscription filter",
+    "settings": [
+        {
+            "type": "checkbox",
+            "label": "Show filter",
+            "id": "show_filter",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "tag",
+            "name": "Tag",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "value",
+                    "label": "Value"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

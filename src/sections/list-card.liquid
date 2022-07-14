@@ -1,0 +1,123 @@
+<div class="list-card__background">
+  <div class="container ss-list-card">
+    {% if section.settings.title != blank %}
+      <div class="section-header text-center">
+        <h2>{{ section.settings.title }}</h2>
+      </div>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+      <div class="row style_2">
+        {% for block in section.blocks limit: section.blocks.size %}
+          {% comment %} {%- assign img_width =  block.settings.image_width -%}
+          {% if img_width == 'custom' %}
+            {%- assign img_width =  block.settings.img_custom | append: 'x' -%}
+          {% endif %}
+          {% if img_width == '' %}
+            {%- assign img_width =  'medium' -%}
+          {% endif %} {% endcomment %}
+          <div class="col-6 col-md-3">
+            <div class="item">
+              {% if block.settings.ulr != blank and block.settings.image != blank %}
+                  {% if block.settings.image != blank %}
+                    <div class="media">
+                      <a href="{{ block.settings.ulr }}">
+                        <img src="{{ block.settings.image | img_url }}" alt="{{ block.settings.title }}" />
+                      </a>
+                    </div>
+                  {% endif %}
+              {% elsif block.settings.image != blank %}
+                <div class="media"><img src="{{ block.settings.image | img_url }}" alt="{{ block.settings.title }}" /></div>
+              {% endif %}
+
+              <div class="content">
+                {% if block.settings.ulr != blank and block.settings.title != blank %}
+                  <a href="{{ block.settings.ulr }}"><h3 class="title">{{ block.settings.title }}</h3></a>
+                {% elsif block.settings.title != blank %}
+                  <h3 class="title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.desc != blank %}
+                  <div class="desc">{{ block.settings.desc }}</div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "List card",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "ulr",
+          "label": "Url"
+        },
+        {
+          "type": "textarea",
+          "id": "desc",
+          "label": "Description"
+        },
+        {
+          "type": "header",
+          "content": "Image Setting"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "List card",
+      "category": "Advanced layout"
+    }
+  ]
+}
+{% endschema %}
+
+{% comment %} {
+  "type": "select",
+  "id": "image_width",
+  "label": "Image width",
+  "default": "medium",
+  "options": [
+    {
+      "value": "small",
+      "label": "Small"
+    },
+    {
+      "value": "medium",
+      "label": "Medium"
+    },
+    {
+      "value": "master",
+      "label": "Master"
+    },
+    {
+      "value": "custom",
+      "label": "Custom"
+    }
+  ]
+}, {% endcomment %}

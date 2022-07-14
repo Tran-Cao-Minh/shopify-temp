@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="smart_search-page">
+    <div class="smart_search-header">
+      <div class="section-header text-center">
+        <h1>
+          {{ 'general.search.title_term_html' | t }}
+        </h1>
+      </div>
+      {% if search.performed and search.results_count == 0 %}
+        <div class="rte search--no-results-found">
+          <p>{{ 'general.search.no_results' | t }}</p>
+        </div>
+      {% endif %}
+
+      {%- capture locale_primary -%}
+        {%- for locale in shop.published_locales -%}
+          {%- if locale.primary -%}{{- locale.iso_code -}}{%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {% if locale_primary != shop.locale %}
+        {% assign local = '/' | append: shop.locale %}
+      {% endif %}
+
+      <form action="{{ pages['search'].url }}" method="get" role="search" class="search-form search-page-form">
+        <div class="input-group input-group--nowrap">
+          <div class="input-group__field input-group__field--connected search-form__input-wrapper">
+            <input type="search" name="q" class="search-form__input border_bottom"
+              value=""
+              placeholder="{{ 'general.search.placeholder' | t }}"
+              role="combobox" aria-autocomplete="list" aria-owns="predictive-search-results"
+              aria-expanded="false" autocomplete="off" aria-label="{{ 'general.search.placeholder' | t }}"
+              aria-haspopup="listbox" data-page_search_input/>
+            <div class="predictive-search-wrapper" data-predictive-search-mount="default"></div>
+            <button type="submit" class="search-form__connected-submit"
+              aria-label="{{ 'general.search.submit' | t }}"
+              title="{{ 'general.tooltip.search' | t }}"
+              data-search-page-predictive-search-submit>
+              {% include 'icon-search' %}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="search_result-wrap show_loading">
+      <div class="loader"></div>
+      <div class="search_result-content">
+        <div class="products_result-wrap">
+          <h2 class="title_product h2 mb-30">{{ 'general.search.products' | t }}</h2>
+          <div class="row list_products"></div>
+        </div>
+        <div class="articles_result-wrap">
+          <h2 class="h2 mb-30">{{ 'general.search.articles' | t }}</h2>
+          <div class="row list_blogs grid--view-items"></div>
+        </div>
+        <div class="pagination-wrap">
+          <div class="pagination_result-wrap smart_pagination"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- capture locale_primary -%}
+  {%- for locale in shop.published_locales -%}
+    {%- if locale.primary -%}{{- locale.iso_code -}}{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+<input hidden data-locale_primary="{{ locale_primary }}" name="locale" value={{ shop.locale }}>
+<script src="{{ 'search.js' | asset_url }}"></script>
+
+  {% include 'customer-title' %}
+
+<script>
+  let productsList = {% include 'all-products' %};
+</script>
+{% assign section_id = 'search-page' %}
+{% assign class_grid = 'col-lg-3 col-6' %}
+<script type="text/html" id="product-template">
+  {% include 'product-card-template' %}
+</script>
+
+

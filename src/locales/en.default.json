@@ -1,0 +1,1339 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "link_messages": {
+        "new_window": "Opens in a new window.",
+        "external": "Opens external website.",
+        "new_window_and_external": "Opens external website in a new window."
+      },
+      "refresh_page": "Choosing a selection results in a full page refresh. ",
+      "selection_help": "Press the space key then arrow keys to make a selection.",
+      "unit_price_separator": "per",
+      "error": "Error"
+    },
+    "magazine": {
+      "open": "Open",
+      "download": "Download"
+    },
+    "tooltip": {
+      "close": "Close",
+      "close_popup": "Close Popup",
+      "add_to_bag": "ADD TO BAG",
+      "next": "Next",
+      "previous": "Previous",
+      "search": "Search",
+      "read_more": "READ MORE"
+    },
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "404": {
+      "title": "The page can not be found :(",
+      "subtext_html": "We are very sorry for inconvenience.<br> It looks you’re trying to access a page the either has been deleted or never been existed.",
+      "link": "Continue shopping",
+      "back": "Back to home",
+      "search_placeholder": "Find what you are looking for"
+    },
+    "login_error": {
+      "oops_an_unexpected_error_occurred_while_logging_in": "Oops! An unexpected error occurred while logging in.",
+      "please_contact_call_center": "Please contact call center",
+      "or_line": "or LINE",
+      "for_more_detail": "for more detail.",
+      "back_to_home": "Back to home"
+    },
+    "bad_connection": {
+      "title": "Connection error :(",
+      "subtext": "ULife encountered an error while trying to connect to LINE.",
+      "rte_desc_1": "Please check back in 5 minutes or contact customer service",
+      "rte_desc_2": "or LINE",
+      "rte_desc_3": "for more detail.",
+      "verify_line": "VERIFY LINE",
+      "back_home": "Back to home"
+    },
+    "pagination": {
+      "previous_html": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"7.128\" height=\"11.748\" viewBox=\"0 0 7.128 11.748\"><path data-name=\"Path 192\" d=\"M571.966,5007.27l5.679-5.169-5.679-5.167\" transform=\"translate(578.388 5007.976) rotate(180)\" fill=\"none\" stroke=\"#333\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"1\"\/><\/svg>Previous page",
+      "next_html": "Next page <svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" width=\"7.128\" height=\"11.748\" viewBox=\"0 0 7.128 11.748\"><path data-name=\"Path 207\" d=\"M571.966,5007.27l5.679-5.169-5.679-5.167\" transform=\"translate(-571.26 -4996.228)\" fill=\"none\" stroke=\"#333\" stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"1\"\/><\/svg>",
+      "next": "Next page",
+      "previous": "Previous page",
+      "current_page": "Page {{ current }} of {{ total }}",
+      "item_per_page": "Show",
+      "show": "Show",
+      "items_per_page": "Items per page"
+    },
+    "password_page": {
+      "opening_soon": "Opening Soon",
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "admin_link_html": "Are you the store owner? <a href=\"\/admin\" class=\"text-link\">Log in here<\/a>",
+      "password_link": "Enter using password",
+      "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
+    },
+    "social": {
+      "share": "Share:",
+      "get_link": "Get link",
+      "copy_link": "Copy link",
+      "copied": "Copied",
+      "get_link_tooltip": "Click here to copy the page’s URL to your clipboard. This copied URL will have your promo code.",
+      "share_on_facebook": "Share",
+      "share_on_twitter": "Tweet",
+      "share_on_pinterest": "Pin it",
+      "alt_text": {
+        "share_on_facebook": "Share on Facebook",
+        "share_on_twitter": "Tweet on Twitter",
+        "share_on_pinterest": "Pin on Pinterest"
+      },
+      "facebook": "Facebook",
+      "line": "LINE",
+      "instagram": "Instagram",
+      "youtube": "YouTube",
+      "twitter": "Twitter"
+    },
+    "share_popup": {
+      "share": "Share",
+      "copy_link": "Copy link",
+      "introduce_unilever_life_to_other": "Introduce ULife to other",
+      "shop_share_and_get_unlimited_5_bonus_html": "Shop & Share and<br class=\"display-mb\" \/> get unlimited 5% bonus",
+      "content_bottom": "You can share this content to your friends by clicking the social icons below. If you are our business partner, just share and receive 5% cash back of all orders*.",
+      "content_bottom_note": "*Purchases from consumers who are not yet members or members who use BP membership code to purchase.",
+      "would_you_like_to_share_this_page_to_your_friends": "Would you like to share this page to your friends?"
+    },
+    "search": {
+      "no_results": "Try checking your spelling or using different words.",
+      "empty_search_message": "Search field cannot be empty",
+      "results_with_count": {
+        "one": "{{ count }} result for “{{ terms }}”",
+        "other": "{{ count }} results for “{{ terms }}”"
+      },
+      "title": "Search our site",
+      "placeholder": "Type here to search",
+      "or": "or",
+      "submit": "Submit",
+      "close": "Close search",
+      "heading": {
+        "one": "Search result",
+        "other": "Search results"
+      },
+      "search_for": "Search for",
+      "products": "Products",
+      "articles": "Blogs",
+      "loading": "Loading",
+      "clear_search_term": "Clear search term",
+      "number_of_results": "{{ result_number }} of {{ results_count }}",
+      "number_of_results_found": "{{ results_count }} results found",
+      "one_result_found": "1 result found",
+      "title_term_html": "Your search for “<span class=\"text__search-term\"><\/span>” revealed the following:"
+    },
+    "slide": {
+      "next": "Next",
+      "previous": "Previous"
+    },
+    "newsletter_form": {
+      "newsletter_email": "Subscribe to our mailing list",
+      "email_placeholder": "Email address",
+      "confirmation": "Thank you for subscribing! You will be receiving the latest updates on exclusive deals and special offers.",
+      "submit": "Subscribe",
+      "get": "Get"
+    },
+    "filters": {
+      "show_more": "Show More",
+      "show_less": "Show Less"
+    },
+    "payment": {
+      "method": "Payment methods"
+    },
+    "currency": {
+      "dropdown_label": "Currency"
+    },
+    "language": {
+      "dropdown_label": "Language"
+    },
+    "form": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "location_form": {
+        "zip_code": "Zip code",
+        "province": "Province",
+        "district": "District",
+        "province_placeholder": "Select a province",
+        "district_placeholder": "Select a district"
+      }
+    },
+    "validate": {
+      "required": "This field is required.",
+      "email": "Invalid email format. Please enter a valid email.",
+      "incorrect_email_password": "Incorrect Member ID \/ National ID or Password",
+      "valid_postal_code": "Zip code {0} is not valid. Please try again",
+      "valid_phone": "Please enter  correct phone number",
+      "valid_first_name_max_length": "Exceeds maximum length limit of 50 characters",
+      "valid_last_name_max_length": "Exceeds maximum length limit of 20 characters",
+      "valid_address_max_length": "Exceeds maximum length limit of 255 characters",
+      "restrict_delimiter": "This field can not contain '₹'"
+    },
+    "pages": {
+      "how_to_shop_online_step": "Step",
+      "view_wishlist": "View wishlist",
+      "view_favorite": "View favourite",
+      "your_wishlist_is_empty": "Your wishlist is empty.",
+      "your_favourite_is_empty": "Your favourite is empty.",
+      "logged_in_to_perform_this_feature": "You need to be logged in to perform this feature",
+      "promotion_no_matches": "No item",
+      "wishlist_favorite_view_all_prodcuts_html": "View all products <a href=\"${collection_url}\">here<\/a>.",
+      "testimonial_continute": "CONTINUTE"
+    },
+    "congratulations": {
+      "title_html": "<span>Congratulations<\/span> ${USER} & ${ASSOCIATE_NAME}! <br \/>to the new ${NEWRAND}",
+      "content_html": "You’ve done a great job. You deserve ${NEWRAND} position. <br \/>Have a wonderful journey at ULife.",
+      "ready_for_the_new_journey": "I’m READY FOR THE NEW JOURNEY"
+    },
+    "welcome_back": {
+      "title": "Welcome back!",
+      "do_you_want_to_login_as_html": "Do you want to login as <strong>${first_name}?<\/strong>",
+      "yes_continue_login": "Yes, continue login",
+      "no_i_want_to_login_with_different_account": "No, I want to login with different account."
+    },
+    "cookie_notice": {
+      "content_html": "We use cookies (and similar techniques) on our site to improve the experience for you, enabling you to benefit from social sharing functionality (for Facebook, Instagram, etc.) and to tailor messages that are relevant to you (on our site, and others). They also help us understand how our site is being used. Read our <a target=\"_blank\" href=\"https:\/\/cdn.shopify.com\/s\/files\/1\/0344\/4139\/6364\/files\/4_TH_RS_Group_Cookie_consent_ulifespace_Updated_25Apr65_v1.1.pdf?v=1651391178\" style=\"color: #E0FB3F; text-decoration: underline;\">Cookie Notice<\/a> for more information. By clicking \"Accept\" you consent to our use of cookies",
+      "button": "Accept"
+    },
+    "toolbar_lists": {
+      "home": "Home",
+      "enrollment": "Enrollment",
+      "activities": "Activities",
+      "dashboard": "Dashboard",
+      "toolbox": "Toolbox",
+      "order_form": "Order Form",
+      "subscription": "VIP Subscription",
+      "special_offers": "Special Offers"
+    },
+    "checkout_progress_step": {
+      "shopping_bag_html": "Shopping bag",
+      "shipping_address_html": "Shipping address<br>information",
+      "shipping_method_html": "Shipping<br>method",
+      "payment_info_html": "Paymend<br>information"
+    },
+    "checkout_contact": {
+      "contact_information_label": "Contact Information",
+      "account_already": "Already have an account?",
+      "account_login": "Login",
+      "check_up_to_date": "Keep me up to date on news and exclusive offers",
+      "shipping_address": "Shipping Address",
+      "shipping_method": "Shipping Method",
+      "payment": "Payment",
+      "billing_address": "Billing Address",
+      "choose_your_address": "Choose your address",
+      "choose_your_address_note": "You can choose your address from this menu or create a new address down below.",
+      "like_a_tax_invoice": "If you would like a tax invoice, please provide your National ID below."
+    },
+    "checkout_form_label": {
+      "country_name": "Thailand",
+      "email": "Email*",
+      "first_name": "First name*",
+      "last_name": "Last name*",
+      "address": "Address*",
+      "zip_code": "Zip code*",
+      "province": "Province*",
+      "district": "District*",
+      "mobile_number": "Mobile number*",
+      "country": "Country",
+      "national_id": "National ID",
+      "same_shipping_address": "Same as shipping address",
+      "different_billing_address": "Use a different billing address"
+    },
+    "checkout_step_button": {
+      "return_to_shopping_bag": "Return to shopping bag",
+      "return_to_bag": "Return to bag",
+      "next_to_shipping": "continue to shipping method",
+      "next_to_shipping_mb": "Continue",
+      "return_info_html": "Return to <br class=\"display-mb\" \/>shipping address",
+      "return_shipping_method_html": "Return to <br class=\"display-mb\" \/>shipping method",
+      "continue_to_payment": "continue to payment",
+      "confirm_to_payment": "Confirm and continue to pay"
+    },
+    "checkout_review_block": {
+      "contact": "Contact",
+      "change": "Change",
+      "ship_to": "Ship to",
+      "shipping_method": "Shipping Method"
+    },
+    "checkout_note": {
+      "contact_change_billing_address_html": "<strong>Note:<\/strong> If you would like to change billing address, please contact our customer service:<br \/><a class=\"text-underline\" href='tel:+{{ contact_phone }}'>{{ contact_phone }}<\/a> - LINE: <a class=\"text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">{{ contact_line_id }}<\/a>",
+      "remind_otp_code_receiver_html": "<strong>Note:<\/strong> You will receive OTP code by text message (SMS) to securely purchase with 2C2P."
+    },
+    "checkout_condition": {
+      "condition11_html": "<p>Your personal data, including but not limited to the personal data obtained from you directly when you provide us with personal information, e.g. when you register for our contests, vouchers and\/or roadshows, use our website, buy a product or service from us, sign up to receive information, use our applications, fill out a survey, or make a comment or enquiry, and\/or any further updates provided to us by you in relation to your personal information, photos, image, audio and\/or video recording obtained by us (“Personal Data”), will be processed for any advertising, marketing, market research, publicity purpose(s) or any related purpose, your participation in our contest and\/or roadshow and\/or events, to provide you with products or services that you request from us, to provide you with advance notice of our future events, ",
+      "condition12_html": "to respond to your inquiries, to provide you information about our products, services and\/or new releases which may be of interest to you, to invite you and your subscription to our newsletters, and\/or for auditing purposes in cases where there has been a dispute (collectively, “Purpose”). We will keep your personal data for as long as we need it for the purpose it is being processed for. We also wish to inform you that your Personal Data may be disclosed to third parties, such as to our headquarters, regional offices, subsidiaries, affiliates and\/or members within the Unilever group of companies and Unilever Brands (Please visit Our Brands) and\/or our service providers, distributors and third-party suppliers, which may be located outside Thailand, for reasons relating to the Purpose.<\/p>",
+      "condition13_html": "<p>You agree and accept that the transfer of your personal data outside Thailand to jurisdictions that may not protect your Personal data to the standards under PDPA. And acknowledge that Unilever will take appropriate steps to ensure the adequate level of protection for my Personal Data in other jurisdictions outside Thailand.<\/p>",
+      "condition14_html": "<p>You are entitled at any time, to access to and\/or obtain a copy, request the transfer to other parties, object to the processing, destruction or anonymization, restriction of use, update your Personal Data, withdraw your consent or to file a complaint If any breach occurred or any violation of the PDPA, please contact: Data Privacy Officer, Unilever Thailand, Unilever House Building 161 Rama 9 Road, Huaykwang, Huaykwang, Bangkok 10310  or Thailand Customer service at Tel.<a class=\"text-underline\" href='tel:+{{ contact_phone }}'>+{{ contact_phone }}<\/a> or email to <a class=\"\" href=\"mailto:{{contact_email}}\">{{contact_email}}<\/a>.<\/p>",
+      "condition15_html": "<p>Kindly note that it will be necessary for us to process your Personal Data, without which we will not be able to carry out the Purpose. For more details on how we process your Personal Data, do visit our Privacy Notice<\/p>",
+      "condition21_html": "<p>I am 18 years old and above, have read and understood the <a class=\"text-underline\" href=\"#\">terms of the Privacy Notice<\/a> and consent to the processing of my Personal Data as described above.<\/p>",
+      "condition22_html": "",
+      "condition23_html": ""
+    },
+    "checkout_tooltip": {
+      "contact_infomation": "Please enter your e-mail to receive order confirmation and news from the company.",
+      "auto_ship": "Select the day you want the credit card to be debited to pay for the monthly VIP subscription.",
+      "representative": "Find a member to get a 25% discount code for every product."
+    },
+    "checkout_popup": {
+      "belong_memeber": {
+        "text_1_html": "If you are <span class='username'><\/span>, <br class=\"display-mb\">please",
+        "login_to_continue": "LOGIN TO CONTINUE",
+        "text_2_html": "If you are not a member, <br class=\"display-mb\">please enter another National ID <br><strong>or leave it blank to continue.<\/strong>"
+      },
+      "otp": {
+        "title_modal": "Identity confirmation",
+        "description_html": "We found a phone number attached to your National ID in our database. Please enter the code that we’ve sent to you via phone number: ",
+        "otp_code": "OTP code",
+        "otp_time_html": "Please enter OTP within <span id='otp-timer'>120<\/span> seconds",
+        "otp_resend_html": "If you don't receive OTP? please click <a class='text-underline otp-resend' href='#' style='text-transform: uppercase;' data-action='otp-resend'>Re-send OTP<\/a>",
+        "otp_button": "Verify OTP",
+        "otp_note_1_html": "If your phone number found in our database is not correct, you can contact our customer service:",
+        "otp_note_2_html": "{{ contact_phone }}<\/a> or LINE: <a href='#'>{{ contact_line }}<\/a> to change your phone number or leave the National ID blank to continue."
+      },
+      "otp_payment": {
+        "title_modal": "Credit card confirmation",
+        "description_html": "We found a phone number attached to your account in our database. Please enter the code that we’ve sent to you via phone number: ",
+        "otp_code": "OTP code",
+        "otp_time_html": "Please enter OTP within <span id='otp-timer'>120<\/span> seconds",
+        "otp_resend_html": "If you don't receive OTP?<br class=\"display-mb\" \/> please click <a class='text-underline otp-resend' href='#' style='text-transform: uppercase;' data-action='otp-resend'>Re-send OTP<\/a>",
+        "otp_button": "Verify OTP",
+        "otp_note_1_html": "If your phone number found in our database is not correct, you can contact our customer service:",
+        "otp_note_2_html": "{{ contact_phone }}<\/a> or LINE: <a href='#'>{{ contact_line }}<\/a> to change your phone number"
+      }
+    },
+    "checkout_sidebar": {
+      "order_summary": "Order summary",
+      "item_quantity": "Quantity:",
+      "item_label": "item",
+      "applied_label": "is currently applied",
+      "autoship_heading": "Select the day you want the credit card to be debited to pay for the monthly VIP subscription.",
+      "autoship_due_date": " VIP Subscription next payment due date",
+      "autoship_due_date_selected_1_html": "<span class=\"due_date-text\">{{ duedate }}<\/span><sup>th<\/sup> every month",
+      "autoship_due_date_selected_default": "Please select payment date",
+      "autoship_due_date_selecte_a_date": "- Select a date -",
+      "representative": "Shop with a representative",
+      "apply_code_button": "Apply Code",
+      "subtotal_label": "Subtotal",
+      "discount_label": "Discount",
+      "shipping_label": "Shipping",
+      "cvqv_label": "Total CV | QV",
+      "estimated_total_label": "Estimated Total",
+      "calculating_price": "Calculating price"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "my_account": "My account",
+      "address_book": "Address book"
+    },
+    "countdown": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "minutes",
+      "seconds": "seconds"
+    },
+    "popup": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "sections": {
+    "slideshow": {
+      "next_slide": "Next slide",
+      "previous_slide": "Previous slide",
+      "pause_slideshow": "Pause slideshow",
+      "rotate_slideshow": "Play slideshow",
+      "load_slide": "Load slide {{ slide_number }}",
+      "navigation_instructions": "Use left\/right arrows to navigate the slideshow or swipe left\/right if using a mobile device"
+    },
+    "featured_product": {
+      "title": "Featured product",
+      "gallery_thumbnail_alt": "Load image into Gallery viewer, {{ imageAlt }}",
+      "video_thumbnail_alt": "Load and play video in Gallery viewer, {{ imageAlt }}",
+      "model_thumbnail_alt": "Load 3D model into Gallery viewer, {{ imageAlt }}"
+    },
+    "map": {
+      "address_error": "Error looking up that address",
+      "address_no_results": "No results for that address",
+      "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.",
+      "auth_error_html": "There was a problem authenticating your Google Maps account.",
+      "section_heading": "Location"
+    },
+    "video": {
+      "play": "Play {{ video_title }} video",
+      "pause": "Pause {{ video_title }} video",
+      "resume": "Resume {{ video_title }} video",
+      "close": "Close {{ video_title }} video"
+    },
+    "calendar": {
+      "page_heading": "Activities Calendar",
+      "upcoming_activities": "Upcoming activities",
+      "activities": "Activities",
+      "onlineTag": "online",
+      "offlineTag": "offline",
+      "reserve_ticket": "Reserve A Ticket",
+      "find_out_more": "More Detail",
+      "lecturer": "Lecturer",
+      "date_time": "Date-time",
+      "the_place": "The place",
+      "number_of_exposure": "Available Ticket",
+      "people": "people",
+      "price": "Price",
+      "number": "Number",
+      "baht": "Baht",
+      "event_details": "Activity Detail",
+      "event_live": "Live stream",
+      "event_free": "Free",
+      "no_event": "There is no event on the selected date.",
+      "reserveTitle": "You are leaving the page",
+      "reserveContent_html": "Please press <strong>CONTINUE<\/strong> to go to ULife event website to reserve your seat.",
+      "reserveContinue": "Continue",
+      "reserveCancel": "Cancel",
+      "event_member": "Conducted by ULife",
+      "event_paid": "Conducted by ULife's members"
+    }
+  },
+  "blogs": {
+    "category": {
+      "title": "Blog",
+      "no_matches": "Sorry, there are no articles in this category"
+    },
+    "article": {
+      "view_all": "View all",
+      "view_all_blogs": "View all blogs",
+      "all_topics": "All topics",
+      "by_author": "by ",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "close_popup": "Close popup",
+      "read_more_title": "Read more: {{ title }}",
+      "back_to_blog": "Back to {{ title }}",
+      "tags": "Tags",
+      "related": "Related blogs",
+      "article_with_count": {
+        "zero": "0 articles",
+        "one": "1 article",
+        "other": "{{ count }} articles"
+      }
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "unapproved": "The email address provided is not approved for posting comments.",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "note": "Add a note to your order",
+      "removed_item_html": "Removed <span class=\"cart__removed-product-details\">({{ quantity }}) {{ link }}<\/span> from your cart.",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "savings": "You're saving",
+      "taxes_and_shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "taxes_and_shipping_policy_at_checkout_html": "Taxes and <a href=\"{{ link }}\">shipping<\/a> calculated at checkout",
+      "taxes_included_but_shipping_at_checkout": "Tax included and shipping calculated at checkout",
+      "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping<\/a> calculated at checkout.",
+      "update": "Update",
+      "checkout": "Check out",
+      "empty": "Your cart is currently empty.",
+      "cookies_required": "Enable cookies to use the shopping cart",
+      "continue_shopping": "Continue shopping",
+      "cart_error": "There was an error while updating your cart. Please try again."
+    },
+    "label": {
+      "discounted_total": "Discounted total",
+      "product": "Product",
+      "price": "Price",
+      "price_column": "See Price column for discount details.",
+      "product_details": "Product details",
+      "quantity": "Quantity",
+      "qty": "Qty",
+      "regular_total": "Regular total",
+      "remove": "Remove {{ product }}",
+      "total": "Total",
+      "update": "Update",
+      "unit_price_label": "Unit price",
+      "regular_price": "Regular price",
+      "delivered": "Delivered",
+      "discount": "Discount",
+      "cvqv_label": "CV | QV"
+    },
+    "minicart": {
+      "title": "Shopping bag",
+      "total": "Estimated total",
+      "checkout": "Checkout",
+      "continue_shoping_html": "continue <br>shopping",
+      "free_shipping": "YOU HAVE QUALIFIED FOR COMPLIMENTARY",
+      "add_to_receive_free_shipping_html": "Add <strong>{{ price_to_free }}<\/strong> to receive complimentary shipping",
+      "quantity": "Quantity",
+      "total_cvqv": "Total CV | QV",
+      "cv": "CV",
+      "qv": "QV",
+      "no_item": "There is no selected product, please start filling your bag.",
+      "all_items_in_cart": "All items are in your cart",
+      "view_full_bag": "View full bag"
+    },
+    "code_label": {
+      "promo_code_applied": "Promo Code \"xxxx\" is applied.",
+      "promo_code_invalid": "Promo Code \"xxxx\" is invalid. Please check it again!",
+      "unallowed_code": "Name with member ID :CODE is not allowed to buy items",
+      "unavailable_product_in_cart_label": "In order to buy as :Name, please remove all unavailable products in your cart!",
+      "different_code_warning": "You're using different promo code, your order will be recorded for :Name with :CODE, please confirm",
+      "autoship_promo_code_required": "Promo code is require for Autoship order",
+      "coupon_code_applied": "Coupon Code \"xxxx\" is applied.",
+      "coupon_code_expired": "Coupon Code \"xxxx\" is expired. Please check it again",
+      "coupon_code_used": "Coupon Code \"xxxx\" has been used. Please check it again",
+      "coupon_code_invalid": "Coupon Code \"xxxx\" is invalid. Please check it again",
+      "coupon_code_not_found": "Coupon Code \":CODE\" not found",
+      "max_coupon_code_applied": "Maximum Coupon code applied!"
+    }
+  },
+  "collections": {
+    "general": {
+      "collection": "Collections",
+      "view_all": "View all",
+      "view_all_label": "View all products in the {{ collection_name }} collection",
+      "no_matches": "Sorry, there are no products in this collection",
+      "no_matches_view_all_prodcuts_html": "Please go back to product page <a href=\"${collection_url}\">here<\/a>.",
+      "items_with_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "collection_label": "Collection",
+      "see_more_product": "See more product"
+    },
+    "catalog": {
+      "title": "Catalog"
+    },
+    "sorting": {
+      "title": "Sort by"
+    },
+    "filters": {
+      "title_tags": "Filter by",
+      "all_tags": "All products",
+      "category": "Category",
+      "preriod": "Preriod"
+    },
+    "quickview": {
+      "title": "Quick view"
+    }
+  },
+  "contact": {
+    "customer_service": "Customer service:",
+    "line": "LINE:",
+    "email": "Email:",
+    "form": {
+      "name": "Name*",
+      "email": "Email*",
+      "phone": "Mobile number*",
+      "message": "Message*",
+      "submit": "Send",
+      "example": "example",
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
+      "error_heading": "Please adjust the following:",
+      "product": "Product",
+      "error_phone": "Phone number limit is only 12 digits"
+    }
+  },
+  "faqs": {
+    "heading": "Frequently Asked Questions",
+    "if_you_need_any_support_please_contact": "If you need any support, please contact",
+    "our_customer_service": "OUR CUSTOMER SERVICE",
+    "line_id_html": "<span>LINE ID<\/span>: <a class=\"link-readmore text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">${line_id}<\/a>",
+    "email_html": "<span>Email<\/span>: <a class=\"link-readmore text-underline\" href=\"mailto:${email}\">${email}<\/a>"
+  },
+  "customer": {
+    "account": {
+      "login": "Login",
+      "password": "Password:",
+      "sign_in": "Sign in",
+      "welcome_back": "Welcome back, ",
+      "title_my_account": "My account",
+      "log_out": "Log out",
+      "title": "Personal information",
+      "change_your_password": "Change your password",
+      "edit": "Edit",
+      "speak": "What language do you speak:",
+      "contact_information": "Contact information",
+      "email": "Email:",
+      "line_id": "LINE ID:",
+      "facebook": "Facebook:",
+      "line_connected": "PRIMARY LINE CONNECTED",
+      "2nd_line_connected": "2nd LINE Connected",
+      "connect_2nd_line_account": "CONNECT SECONDARY LINE ACCOUNT",
+      "line_connected_note_html": "If you want to change your LINE account, please contact our customer service <a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone}<\/a>",
+      "personal_information": "Personal information",
+      "coapplicant_information": "COAPPLICANT Information",
+      "primary_info_tab": "PRIMARY INFO",
+      "associate_info_tab": "ASSOCIATE INFO",
+      "member_id": "Member ID:",
+      "national_id": "National ID:",
+      "full_name": "Full name:",
+      "date_of_birth": "Date of birth:",
+      "bank_account_information": "Bank account information",
+      "bank_name": "Bank name:",
+      "bank_account": "Bank account number:",
+      "billing_information": "Billing information",
+      "billing_information_address": "Address:",
+      "billing_information_phone": "Mobile number:",
+      "note_information_html": "If you want to change the above information, please contact our customer service <a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone}<\/a> or LINE: <a class=\"link-readmore text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">${line_id}<\/a>",
+      "shipping_information": "Shipping information",
+      "shipping_information_address": "Address:",
+      "shipping_information_phone": "Mobile number:",
+      "success": "Success",
+      "success_change_password_title": "Password Updated!",
+      "success_change_password_content_html": "Your password has been changed successfully.<br>Use your new password to log in.",
+      "failed_connect_line_title_html": "2<sup>nd<\/sup> LINE failed to connect",
+      "failed_connect_line_content_html": "Your LINE account has already been used to link with another account <br> Please contact customer service <a href='tel:+(66)2-002-8888'>+(66)2-002-8888<\/a>​ or LINE <a href='email:@ulifespace'>@ulifespace<\/a> for more detail.",
+      "success_connect_line_title_html": "2<sup>nd<\/sup> LINE connected",
+      "success_connect_line_content_html": "You will receive ULife’s information on your 2<sup>nd<\/sup> LINE."
+    },
+    "edit_account": {
+      "nick_name": "Nickname",
+      "nick_name_note_html": "<strong>Note:<\/strong> Your Nickname will be placed and published on “Representative” page.",
+      "introduce_yourself": "Introduce yourself message",
+      "line_id": "Line ID",
+      "facebook": "Facebook",
+      "what_languages_do_you_speak": "What languages do you speak?",
+      "you_can_select_more_than_1_option": "You can select more than 1 option.",
+      "select_language": "Select a language",
+      "invalid_file_html": "Invalid file<br\/>The file size must be less than 5MB (JPG, PNG or GIF).<br>Please reupload after making the required changes.",
+      "avatar_file_info_html": "File size not over 5 MB (JPG, PNG, GIF)",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "account_change_password": {
+      "old_password": "Old password*",
+      "new_password": "New password*",
+      "example_password": "Example: Johny#14",
+      "confirm_new_password": "Confirm new password*",
+      "confirm_password_change": "CONFIRM PASSWORD CHANGE",
+      "cancel": "Cancel"
+    },
+    "account_connect_line": {
+      "connect_to_secondary_line": "CONNECT SECONDARY LINE ACCOUNT",
+      "connect_to_line_html": "CONNECT 2<sup>ND<\/sup> LINE",
+      "cancel": "Cancel"
+    },
+    "activate_account": {
+      "title": "Activate Account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm Password",
+      "submit": "Activate Account",
+      "cancel": "Decline Invitation"
+    },
+    "addresses": {
+      "title": "Address book",
+      "default": "Default address",
+      "add_new": "Add new address",
+      "add_new_button": "+ Add New Address",
+      "first_name_input": "First name*",
+      "last_name_input": "Last name*",
+      "address_input": "Address*",
+      "mobile_number_input": "Mobile number*",
+      "country_input": "Country",
+      "set_default": "Set as default address",
+      "update": "Update",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "edit_address": "Edit Address",
+      "name": "Name:",
+      "address": "Address:",
+      "zip": "Zip code:",
+      "province": "Province:",
+      "country": "Country:",
+      "district": "District:",
+      "mobile_number": "Mobile number:",
+      "add_btn": "Add New Address",
+      "delete_confirm": "Are you sure you wish to delete this address?",
+      "delete_confirm_alert": "This address will be deleted immediately. You can’t undo this action.",
+      "back": "Back"
+    },
+    "my_wallet": {
+      "my_credit_card": "My credit card (${number})",
+      "my_credit_card_description": "These credit cards are displayed on the checkout page where you can select to purchase any products.",
+      "credit_cards_for_autoship_program_used_only": "Credit cards for VIP Subscription used only (${number})",
+      "credit_cards_for_autoship_program_description": "These credit cards can't be used for regular purchase and it will be deleted automatically when VIP Subscription end.",
+      "set_as_default_card": "Set as default card",
+      "autoship_order_id": "VIP Order ID",
+      "delete_card_confirm_html": "Are you sure you want to delete <br \/>\"${number}\" ?",
+      "this_credit_card_will_be_deleted_immediately": "This credit card will be deleted immediately. You can't undo this action.",
+      "cancel": "Cancel",
+      "confirm": "Confirm to delete",
+      "no_item": "Keep all card tokens in one place, it's easy to manage multiple card tokens online",
+      "no_item_note": "Your card wallet is empty.",
+      "note": "Note: If credit card is authorized, the record will not be deleted in the system unless you manually delete it from \"My credit card\" section."
+    }
+  },
+  "homepage": {
+    "general": {
+      "title": "Homepage",
+      "backtotop": "Back To Top"
+    },
+    "onboarding": {
+      "product_title": "Your product's name",
+      "product_description": "This area is used to describe your product’s details. Tell customers about the look, feel, and style of your product. Add details on color, materials used, sizing, and where it was made.",
+      "collection_title": "Your collection's name",
+      "blog_title": "Your post's title",
+      "blog_excerpt": "Your store hasn’t published any blog posts yet. A blog can be used to talk about new product launches, tips, or other news you want to share with your customers. You can check out Shopify’s ecommerce blog for inspiration and advice for your own store and blog.",
+      "blog_author": "Author name",
+      "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
+    }
+  },
+  "layout": {
+    "navigation": {
+      "search": "Search",
+      "expand": "expand",
+      "collapse": "collapse",
+      "menu": "Menu",
+      "close": "Close",
+      "back": "Back",
+      "toolbox": "Toolbox",
+      "dashboard": "Dashboard",
+      "my_order": "My order",
+      "log_out": "Log out",
+      "shop_location": "Shop location",
+      "favorites": "Favorites",
+      "wishlist": "Wishlist \/ Favourite",
+      "track_and_trace": "Check order status",
+      "address_book": "Address book",
+      "my_profile": "My profile",
+      "online_shopping": "Online shopping",
+      "business": "Business",
+      "my_wallet": "Card wallet",
+      "bag_tooltip": "bag",
+      "top_content_logined_html": "To enroll for other or Introduce<br> our business to them.",
+      "top_content_online_shopping_not_login_html": "Become our Business Partner to get 25% and build your second income",
+      "top_content_business_not_login_html": "Become our member and start to<br> build your second income",
+      "enroll_for_other": "Enroll for other",
+      "start_business": "Start business with us"
+    },
+    "cart": {
+      "title": "Cart",
+      "items_count": {
+        "one": "item",
+        "other": "items"
+      }
+    },
+    "customer": {
+      "account": "Account",
+      "log_out": "Log out",
+      "log_in": "Log in",
+      "is_logged_in": "is logged in",
+      "create_account": "Create account",
+      "you_are_login": "You are login as",
+      "already_account": "Already have an account?",
+      "welcome": "Hi"
+    },
+    "footer": {
+      "social_platform": "{{ name }} on {{ platform }}",
+      "shop_location": "Shop location"
+    },
+    "canvas": {
+      "login": "Login",
+      "search": "Search",
+      "member_national_id": "Member ID \/ National ID",
+      "password": "Password",
+      "forgot_password": "Forgot password?",
+      "sign_in": "Sign in",
+      "desc_top": "If you have enrolled at the shop (in paper), please activate your account to start using website and toolbox by",
+      "desc_bottom": "If you are not a member, please enroll by",
+      "here": "here",
+      "see_full_search": "See full search",
+      "price_member_from": "Member price from",
+      "price_from": "Retail price from"
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Sold out",
+      "this_variant_has_only_item_in_store": "There is only {maxQt} item left in stock.",
+      "unavailable": "Unavailable",
+      "availability": "Availability",
+      "on_sale": "Sale",
+      "sale_price": "Sale price",
+      "quantity": "Quantity",
+      "add_to_cart": "Add to bag",
+      "autoship": "VIP Subscription",
+      "vendor": "Vendor",
+      "cv_qv": "CV | QV",
+      "member_price": "Member price",
+      "retail_price": "Retail price",
+      "member_price_mobile": "Member",
+      "retail_price_mobile": "Retail",
+      "price": "Price",
+      "buy_autoship": "Buy VIP Subscription",
+      "buy_it_now": "Buy now",
+      "buy_auto_ship": "Buy VIP",
+      "products_in_stock": "In stock",
+      "purchase_at_member_price_using_promo_code": "Purchase at member price using a promo code. If you do not have a promo code, you can request one from a friend who is a member of ULife or apply for membership to receive your own promo code.",
+      "purchase_at_member_price_using_promo_code_autoship_note": "“Promo code is required to purchase VIP Subscription. If you do not have a promo code, you can request one from a friend who is a member of ULife or apply for membership to receive your own promo code.”",
+      "cashback_estimate": "Cashback estimate",
+      "cashback_estimate_tooltip": "Cash Back 5% of all products that purchases from consumers who are not yet members or members who use BP membership code",
+      "ingredient": "Ingredient",
+      "howtouse": "How to use",
+      "testimonial": "Testimonial",
+      "description": "Description",
+      "net_weight": "Net Weight: ",
+      "add_to_wishList": "Add to wishList",
+      "remove_form_wishList": "Remove from wishList",
+      "add_to_favorite": "Add to favourite",
+      "remove_form_favorite": "Remove from favourite",
+      "howitwork": "How it work",
+      "autoship_promocode_html": "<span>“Promo Code”<\/span> is required to purchase VIP Subscription",
+      "warning": "Warning:",
+      "fda_registration_no": "FDA Registration No:"
+    },
+    "tags": {
+      "new": "new",
+      "off": "Off",
+      "sold_out": "Sold out",
+      "sale": "On sale",
+      "autoship_program": "VIP",
+      "autoship_short": "VIP"
+    },
+    "recently_viewed": {
+      "title": "Recently view items"
+    },
+    "brand": {
+      "event": "Event",
+      "premium": "Premium",
+      "sale_aids": "Sale Aids",
+      "sale_kit": "Sale Kit",
+      "training": "Training",
+      "beyonde": "Health and Beauty Supplement",
+      "aviance_supplement": "Health and Beauty Supplement",
+      "aviance_bpc": "Beauty",
+      "ifresh": "Oral care",
+      "lever_home": "Home care",
+      "accessories": "Accessories"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title_html": "Here's your {{ value }} gift card for {{ shop }}!",
+      "subtext": "Your gift card",
+      "gift_card_code": "Gift card code",
+      "disabled": "Disabled",
+      "expired": "Expired on {{ expiry }}",
+      "active": "Expires on {{ expiry }}",
+      "redeem_html": "Use this code at checkout to redeem your {{ value }} gift card",
+      "shop_link": "Start shopping",
+      "print": "Print this gift card",
+      "remaining_html": "{{ balance }} left",
+      "add_to_apple_wallet": "Add to Apple Wallet",
+      "qr_image_alt": "QR code — scan to redeem gift card"
+    }
+  },
+  "order": {
+    "general": {
+      "product": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "cv_qv": "CV | QV",
+      "delete": "Delete",
+      "price_sub_total": "Price",
+      "offline_channel": "Offline",
+      "online_channel": "Online"
+    },
+    "detail": {
+      "order_details": "Order Details",
+      "return_order_details": "Return Order Details",
+      "order_number": "Order",
+      "return_order_number": "Return Order #",
+      "system_order_id": "System Order ID:",
+      "place_on": "Place on",
+      "at": "at",
+      "my_order_list": "My order list",
+      "view_order_tracking": "View order tracking",
+      "billing_address": "Billing Address",
+      "billing_and_payment_information": "Billing and payment Information",
+      "shipping_and_status_information": "Shipping and status Information",
+      "payment_method": "Payment method:",
+      "name": "Name:",
+      "address": "Address:",
+      "shipping_address": "Shipping Address",
+      "delivery_status": "Delivery status:",
+      "code_information": "Code Information",
+      "code_payment_information": "Code & Payment information",
+      "vip_subscription_next_payment_due_date_html": "VIP Subscription<br \/> next payment due date",
+      "promo_code": "Promo Code",
+      "coupon_code": "Coupon Code",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "shipping_standard": "Shipping (Standard)",
+      "total_cv_qv": "Total CV | QV:",
+      "total": "Total:",
+      "round": "Round",
+      "return_total_cv_qv": "Total CV | QV deductiion:",
+      "return_total": "Total return:",
+      "delivered": "Delivered"
+    },
+    "order_list": {
+      "heading": "My orders",
+      "autoship_order_tab": "VIP order",
+      "order_history_tab": "Regular order",
+      "order_no_html": "Order #",
+      "order_date_html": "Order date",
+      "start_date": "Start date",
+      "end_date_html": "End<br class=\"display-dk\" \/> date",
+      "channel_html": "Channel",
+      "period": "Period",
+      "payment_method_html": "Payment method",
+      "auto_renew_html": "Auto<br class=\"display-dk\" \/> Renew",
+      "status_tracking_html": "Status<br class=\"display-dk\" \/> tracking",
+      "children_status_tracking_html": "Status <span class=\"display-dk\">\/<\/span> tracking",
+      "cv_qv_html": "CV | QV",
+      "total_html": "Total",
+      "reorder_html": "Reorder",
+      "reorder_button": "Reorder",
+      "renew_html": "Renew",
+      "renew_button_html": "Renew",
+      "detail_button": "Detail",
+      "hide_button": "Hide",
+      "sub_order": "Sub Order",
+      "autoship_monthly_due_date_html": "VIP monthly due date",
+      "vip_subscription_products": "VIP subscription products",
+      "recurring_date": "Recurring date",
+      "monthly_order_html": "Monthly <br \/>order no.",
+      "round": "Round",
+      "there_are_no_order_listings": "There are no order listings.",
+      "start_purchasing_products_here_html": "Start purchasing products <a href=\"${collection_url}\">here.<\/a>"
+    },
+    "order_status": {
+      "order_placed": "Order Placed",
+      "pending": "Pending Payment",
+      "processing": "Processing",
+      "partial_prepare_to_ship": "Partial preparing to Ship",
+      "prepare_to_ship": "Preparing to Ship",
+      "partial_shipped": "Partial shipped",
+      "shipped": "Shipped",
+      "picked_at_shop": "Picked at Shop",
+      "canceled": "Canceled",
+      "return": "Return"
+    },
+    "autoship_status": {
+      "Open": "Open",
+      "Completed": "Completed",
+      "Canceled": "Canceled"
+    },
+    "renew": {
+      "renew_autoship_title": "Renew VIP Subscription",
+      "autoship_information_html": "VIP Subscription<br \/>information",
+      "confirm_changes_html": "Confirm<br \/>changes",
+      "shipping_address_and_payment_information_html": "Shipping address <br \/>and payment information",
+      "current_autoship_for_order_html": "Current VIP Subscription for order <span class=\"text-semibold primary_color\">${order_id}<\/span> is <span class=\"period\">${period} months<\/span>",
+      "do_you_want_to_change_your_autoship_period": "Do you want to change your VIP Subscription period?",
+      "current_monthly_payment_due_date_html": "Current monthly payment due date is <span class=\"due_date\">${due_date}<sup>th<\/sup><\/span>",
+      "do_you_want_to_change_your_payment_due_date": "Do you want to change your payment due date?",
+      "proceed_next_step": "Proceed next step",
+      "back_to_autoship_information": "Back to VIP Subscription information",
+      "note_vip_subscription_product_must_be_the_same_period_you_chose_in_the_previous_step_which_is_html": "<span>Note:<\/span> VIP Subscription product must be the same period you chose in the previous step which is <span class=\"period\">9 months.<\/span>",
+      "months": "months",
+      "yes": "Yes",
+      "no": "No",
+      "cancel": "Cancel",
+      "estimated_total_per_month_html": "Estimated total <span>per month<\/span>",
+      "price_change_html": "Please be aware that the price of this <strong>{product}<\/strong> VIP subscription has been changed since your last order",
+      "period_change_html": "This <strong>{product}<\/strong> VIP Subscription has been changed from {from} months to your selected period <strong>{to} months<\/strong>",
+      "unavailable_html": "<strong>{product}<\/strong> VIP Subscription for {period} months is no longer available in our system",
+      "period_not_support_html": "This <strong>{product}<\/strong> VIP subscription does not support period of {period} months",
+      "note_html": "<span>Note:<\/span> VIP Subscription product must be the same period  you chose in the previous step which is <span>{period} months.<\/span>",
+      "default_product_options": "Add new VIP Subscription",
+      "no_product_options": "No products for this period",
+      "current_shipping_address_in_your_order_html": "Current Shipping address for <span class=\"primary_color\">{order}<\/span>",
+      "do_you_want_to_change_your_shipping_address": "Do you want to change your Shipping Address?",
+      "choose_address_from_your_address_book": "Choose your address",
+      "select_payment": "Select Payment",
+      "estimated_total_cv_qv_per_month_html": "<span class=\"text-mb\">Estimated total<\/span> CV | QV <span class=\"per_month\">per month<\/span>",
+      "thank_you": "Thank you",
+      "your_vip_subscription_renewal_has_been_submitted_successfully": "Your VIP Subscription renewal has been submitted successfully.",
+      "you_will_receive_a_confirmation_in_your_email_shortly": "You will receive a confirmation in your email shortly.",
+      "view_order": "View order",
+      "credit_card_confirmation": "Credit card confirmation",
+      "we_found_a_phone_number_attached_to_your_account_in_our_database_html": "We found a phone number attached to your account in our database. Please enter the code that we’ve sent to you via phone number:",
+      "otp_code": "OTP code",
+      "please_enter_otp_within_html": "Please enter OTP within <span id=\"otp-timer\">120<\/span> seconds",
+      "if_you_dont_receive_otp_please_click_re_send_otp_html": "If you don't receive OTP?<br class=\"display-mb\" \/> please click <a class=\"text-underline otp-resend\" href=\"#\" data-action=\"otp-resend\">Re-send OTP<\/a>",
+      "verify_otp": "Verify OTP",
+      "if_your_phone_number_found_in_our_database_is_not_correct_html": "If your phone number found in our database is not correct, you can contact our customer service: <br \/><a class=\"link-readmore text-underline\" href=\"tel:${phone_number}\">${phone}<\/a> or LINE: <a class=\"link-readmore text-underline\" href=\"https:\/\/lin.ee\/hovUB8v\">${line_id}<\/a> to change your phone number.",
+      "note_you_will_receive_otp_code_by_text_message_sms_to_securely_purchase_with_2c2p_html": "<span class=\"text-bold\">Note*:<\/span> You will receive OTP code by text message (SMS) to securely purchase with 2C2P.",
+      "need_products": "Need at least ONE product",
+      "promo_not_allow_product": "Some products are not allowed to purchase, please try again!",
+      "continue_pay": "Continue to pay",
+      "payment_method_2c2p": "Pay with new card"
+    },
+    "tbc": "TBC"
+  },
+  "order_form": {
+    "cart": {
+      "reach_milestone": "You have gotten free Fast Shipping",
+      "unreach_milestone_1": "Add ",
+      "unreach_milestone_2": " to receive free Fast Shipping",
+      "discount": "Discount",
+      "process_to_checkout": "Checkout",
+      "apply": "Apply",
+      "promo": "Promo code",
+      "coupon": "Coupon code",
+      "member_check": "I'm not a member",
+      "shop_with_representative": "Shop with a representative",
+      "bag_header": "YOUR SELECTED PRODUCTS",
+      "subtotal": "Subtotal",
+      "total_cv_qv": "Total CV | QV",
+      "total": "Estimated Total",
+      "quantity": "Quantity",
+      "order_summary": "Order Summary",
+      "item": "item",
+      "items": "items",
+      "hide_order_summary_html": "Hide order summary",
+      "show_order_summary_html": "Show order summary",
+      "view_full_bag": "VIEW FULL SHOPPING BAG",
+      "no_product_1": "There is no selected product.",
+      "no_product_2": "Please start filling your bag."
+    },
+    "products": {
+      "image": "Image",
+      "name": "PRODUCT",
+      "collection": "Collection",
+      "stock": "Stock",
+      "weight": "NET WEIGHT",
+      "price": "Retail price",
+      "promo_price": "Member price",
+      "price_html": "Retail<br>Price",
+      "promo_price_html": "Member<br>Price",
+      "quantity": "Quantity",
+      "wishlist": "Wishlist",
+      "wishlist_html": "<div class=\"container__wishlist-label\"><div><p>Wish<\/p><p>list<\/p><\/div><\/div>",
+      "wishlist_tooltip": "Add to wish list where you can see your desired items without having to search again.",
+      "add_to_cart": "ADD",
+      "delete": "Delete",
+      "in_stock": "In Stock",
+      "add_to_cart_text": "Add to bag",
+      "add_to_wishlist": "Add to wishlist",
+      "added_to_wishlist": "Added to wishlist",
+      "promocode_require": "“Promo code” is required to purchase VIP products"
+    },
+    "general": {
+      "heading": "Quick Order Form",
+      "sub_heading": "An easy way to quickly add products to the shopping cart without browsing the whole product site!",
+      "description_html": "<strong> Experiencing a new shopping experience where you can shop easier and faster<\/strong>. Just search your product, then add it to your bag.",
+      "cv_qv": "CV | QV",
+      "search": "Search product by keyword",
+      "category": "Category",
+      "search_result_html": "Your search for <span>\"{{ search }}\"<\/span> revealed the following: ",
+      "not_found": "No items found",
+      "empty_bag": "There is no selected product, please start filling your bag.",
+      "login_required": "You must be logged in to make this feature available!",
+      "confirm_login": "Do you want to login?",
+      "not_found_desc": "Please try another search."
+    }
+  },
+  "otp": {
+    "resend_success": "Resend OTP successfully",
+    "invalid_html": "OTP is not valid or expired. <\/br> Please try again or click re-send OTP",
+    "wait": "Please wait {time} seconds."
+  },
+  "enrollment": {
+    "validate": {
+      "required": "This is a required field.",
+      "email": "Invalid email format. Please enter a valid email.",
+      "nationalId": "Invalid National ID. Please enter a valid National ID.",
+      "dob": "Please enter a date in the format dd.mm.yyyy",
+      "minlength": "Please enter at least {length} characters.",
+      "maxlength": "Exceeds maximum length limit of {length} characters",
+      "phone": "Please enter correct phone number.",
+      "condition_1": "Please read agreement carefully. You must agree to the terms of this agreement to register a Business Partner",
+      "condition_2": "You must be 18 years old to register a Business Partner",
+      "zipCode": "Please enter a valid zip code",
+      "bankConfirmEqual": "\"Bank Account Number\" & \"Confirm Bank Account Number\" do not match"
+    },
+    "form": {
+      "information": {
+        "promo_applied": "The Sponsor Code {sponsor_code} is currently applied"
+      }
+    },
+    "customer_exist": {
+      "message": "Your LINE account has already registered",
+      "word_please": "please ",
+      "link_login": "https:\/\/app.ulifespace.com\/multipass\/login",
+      "word_or": "or",
+      "link_go_back": "\/apps\/eai\/enroll",
+      "word_go_back": "go back",
+      "message_redirect": "and try other LINE account!",
+      "contact": "Or contact call center",
+      "link_contact": "tel:+(66)2-002-8888"
+    }
+  },
+  "setup-password": {
+    "validate": {
+      "required": "This is a required field.",
+      "nationalId": "Invalid National ID format. Please enter a valid National ID.",
+      "email": "Invalid email format. Please enter a valid email.",
+      "pwdConfirm": "The new password and confirmation password do not match"
+    }
+  },
+  "order-tracking": {
+    "content": {
+      "order_id_label": "Order number",
+      "contact_label": "Email address \/ Mobile number",
+      "hint": "To check your order status, please verify by your email address or mobile number you used to place this order.",
+      "submit": "Check status",
+      "order_id_tooltip_text": "Find Order # in the order confirmation sent to your email or on the receipt \/ tax invoice",
+      "email_mobile_tooltip_text": "The email address where you received the order confirmation or the mobile phone number specified when requesting a tax invoice"
+    },
+    "result": {
+      "order_returned": "Your order was returned successfully.",
+      "order_placed": "Your order is placed. Please check back again later for any update.",
+      "pending": "Payment is pending, the purchase is not yet complete.",
+      "processing": "Your order is progressing, please check back again.",
+      "prepare_to_ship": "Your order is preparing to ship, please check back again.",
+      "shipped": "Your package has been shipped by our logistic partner.",
+      "picked_at_shop": "Your package has been picked at shop",
+      "canceled_html": "Your order has been canceled. If you feel this is an error, please contact customer service at <br><a class=\"text-underline\" href=\"tel:${phone}\">${phone}<\/a>.",
+      "order_id": "Order #{{ order_id }}",
+      "not_found_html": "We are unable to locate your order no. Please check your order information and try again. For further assistance, you may contact customer service  or use the Track your package link in your order confirmation email.",
+      "tracking_url_html": "<a class=\"text-underline\" href=\"{{ url }}\" target=\"_blank\">CLICK HERE<\/a>",
+      "partial_prepare_to_ship": "Your order is partial preparing to ship. Please check back again later for any update.",
+      "partial_shipped": "Your order has been split into multiple deliveries since some items require additional time for completion.",
+      "tracking_url_with_name_html": "<br \/>Please click on the following numbers <a href=\"{{ url }}\" target=\"_blank\">{{ name }}<\/a>",
+      "tracking_end": " to track your package.",
+      "autoship_result_html": "Your VIP order status is \"{{ status }}\" <br> Please click on the following VIP Order # to track status: {{ children }}"
+    }
+  },
+  "validator": {
+    "national_id": {
+      "invalid": "Invalid National ID. Please enter a valid National ID."
+    },
+    "telephone": {
+      "invalid": "Invalid National ID. Please enter a valid National ID."
+    },
+    "zipcode": {
+      "invalid": "Zip code {0} is not valid. Please try again."
+    },
+    "password": {
+      "confirmation": "The new password and confirmation password do not match",
+      "incorrect_old": "Incorrect old password",
+      "requirements": "Password must:",
+      "contain_at_least_one_lower_case_letter": "Have at least one lower case letter",
+      "contain_at_least_one_capital_letter": "Have at least one capital letter",
+      "contain_at_least_one_number": "Have at least one number",
+      "contain_multiple_identical_consecutive_characters": "NOT contain multiple identical consecutive characters",
+      "not_be_the_same_as_the_account_name": "NOT be the same as the account name",
+      "not_be_a_common_password": "NOT be a common password",
+      "least_8_characters": "Be at least 8 characters",
+      "not_be_the_same_as_member_id_national_id": "Not be the same as MemberID\/NationalID"
+    }
+  },
+  "find_representative": {
+    "page-title": "ULife's representative",
+    "description": "Find a representative to receive a promo code and get a 25% discount on all products or to receive a representative's code for business partner registration. You can find a representative nearby by fill out your address or choose your preferred representative by fill out his or her name.",
+    "seach-form-title": "You can find a representative near by or your preferred representative",
+    "tab-header-title-1": "FIND REPRESENTATIVE NEAR ME",
+    "tab-header-title-2": "FIND REPRESENTATIVE",
+    "advance-search-label": "Advance search",
+    "hide-advance-search-label": "Hide advance search",
+    "address-label": "Address (Optional)",
+    "search-button": "Search",
+    "first-name-label": "First name*",
+    "last-name-label": "Last name*",
+    "no-result-text-line-1": "We’re sorry, no matches were found for your search criteria.",
+    "no-result-text-line-2": "Please check your spelling and try again. If you would like us to recommend a representative in your area. You may select FIND REPRESENTATIVE NEAR ME tab and provide Zip code and province.",
+    "representative": "representative",
+    "know-more-about-me": "Know more about me",
+    "recommend": "Recommend",
+    "choose-me": "Choose me",
+    "zip-code-error-message": "Please enter zipcode",
+    "state-error-message": "Please select a province",
+    "city-error-message": "Please select a district",
+    "found": "Found",
+    "match": "match",
+    "first-name-error-message": "Please enter first name",
+    "last-name-error-message": "Please enter last name",
+    "modal-title": "ULife's representative",
+    "modal-description": "Find a representative to receive a promo code and get a 25% discount on all products or to receive a representative's code for business partner registration. You can find a representative nearby by filling out your address or find your preferred representative by filling out his or her name.",
+    "advance-search": "Advance search",
+    "cancel-button": "CANCEL",
+    "back_to_search": "Back to search"
+  },
+  "request_sample": {
+    "general": {
+      "page_title": "Request sample products or discount coupons",
+      "description": "If you are a non-member and want to experience our products, tell us ! We'll send our sample products or discount coupon to you.",
+      "not_available": "Not available",
+      "content_title_1": "Our Sample product",
+      "content_description_1_html": "Personally experience the premium product from ULife. We deliver our exclusive product sampling to you at your doorstep!",
+      "content_label_1": "*Limited quantity",
+      "content_title_2": "Our Discount coupon",
+      "content_description_2_html": "Exclusive offers to non-members! Get discount coupon to buy the listed product.",
+      "content_label_2": "*Limited quantity",
+      "content_title_3_html": "How to request sample <br>product or coupon?",
+      "content_description_3_html": "1. You’re a non-member <br>2. Verify your identity via LINE before requesting any sample products and coupons.",
+      "note_label": "**Request sample program is only for non-member.",
+      "say_hi_member": "Hi",
+      "alert_for_member": "Request Sample Program is only for non-member.",
+      "share_link_label": "Share Request Sample Program to others ?",
+      "email_placeholder": "Enter your email address",
+      "button_line_label": "VERIFY LINE",
+      "button_line_label_mobile": "VERIFY LINE TO GET SAMPLE",
+      "expired_date": "Date expired"
+    },
+    "product": {
+      "tab_header": "product",
+      "modal_thank_you_title": "Thank you ${firstName} for your submission!",
+      "modal_thank_you_description": "We received your request and will contact you to deliver sample product.",
+      "modal_thank_you_button_text": "Online Shopping",
+      "tab_content_title": "Product",
+      "tab_content_description": "You can select any sample product that you would like to try.",
+      "review_product": "Review Product",
+      "requested_all_thank_you_title": "Thank you for your interest in ULife products!",
+      "requested_all_thank_you_description": "You have been requested all available sample product. Please share to us what do you think about our product, your comment is value to us so we can use to make better product.",
+      "subscribe_form_title": "Please leave your email",
+      "subscribe_form_description": "You will be first to know on new campaigns.",
+      "subscribe_form_button": "Notify Me",
+      "requested_product": "*This product has been requested",
+      "request_product_samples": "Request product samples",
+      "request_empty_title": "There is no sample product available at the moment.",
+      "request_empty_content_html": "If you are interested in our products, please click <a class=\"text-underline\" href=\"{{ link }}\">SHOP NOW<\/a> to start shopping and get 25% discount. The discount will be applied at the checkout page.",
+      "shop_now": "Shop now"
+    },
+    "coupon": {
+      "tab_header": "coupon",
+      "modal_thank_you_title": "The coupon has been sent to your email",
+      "modal_thank_you_description_html": "<span>Become our member to receive 25% discount <span>for all purchasing products.<\/span><\/span>",
+      "modal_thank_you_button_text": "JOIN US to get 25% discount",
+      "tab_content_title": "Coupon Code",
+      "tab_content_description_html": "You can select coupon code and redeem the coupon only on <a class=\"text-underline\" href='https:\/\/www.ulifespace.com'>https:\/\/www.ulifespace.com<\/a>",
+      "requested_coupon": "*It has been requested",
+      "requested_all_thank_you_title": "Thank you for your interest in receiving ULife coupons to purchase health and beauty products!",
+      "requested_all_thank_you_description": "You have been requested all available products. Did you purchase any products? If so, please share to us what you think about our product, your comment is value to us.",
+      "footer_thank_you_text_html": "Become our member to receive <span style='color:#2035C7;'>25% discount<\/span> for all purchasing products.",
+      "footer_thank_you_button": "JOIN US to get 25% discount",
+      "request_discount_coupon": "Request discount coupon",
+      "request_empty_title": "There is no special discount available at the moment.",
+      "request_empty_content_html": "If you are interested in our products. Please click <a class=\"text-underline\" href=\"{{ link }}\">SHOP NOW<\/a> to start shopping and get 25% discount. The discount will be applied at the checkout page.",
+      "shop_now": "Shop now"
+    },
+    "form": {
+      "fisrt_name_label": "First name*",
+      "last_name_label": "Last name*",
+      "email_label": "Email*",
+      "address_label": "Address*",
+      "mobile_phone_label": "Mobile number*",
+      "country_label": "Country",
+      "term_condition_11_html": "Your personal data, including but not limited to the personal data obtained from you directly when you provide us with personal information, e.g. when you register for our contests, vouchers and\/or roadshows, use our website, buy a product or service from us, sign up to receive information, use our applications, fill out a survey, or make a comment or enquiry, and\/or any further updates provided to us by you in relation to your personal information, photos, image, audio and\/or video recording obtained by us (“Personal Data”), will be processed for any advertising, marketing, market research, publicity purpose(s) or any related purpose, your participation in our contest and\/or roadshow and\/or events, to provide you with products or services that you request from us, to provide you with advance notice of our future events, to respond to your inquiries, to provide you information about our products, services and\/or new releases which may be of interest to you, to invite you and your ",
+      "term_condition_12_html": "subscription to our newsletters, and\/or for auditing purposes in cases where there has been a dispute (collectively, “Purpose”). We will keep your personal data for as long as we need it for the purpose it is being processed for. We also wish to inform you that your Personal Data may be disclosed to third parties, such as to our headquarters, regional offices, subsidiaries, affiliates and\/or members within the Unilever group of companies and Unilever Brands (Please visit Our Brands) and\/or our service providers, distributors and third-party suppliers, which may be located outside Thailand, for reasons relating to the Purpose.",
+      "term_condition_13_html": "<p class=\"mt-10\">You agree and accept that the transfer of your personal data outside Thailand to jurisdictions that may not protect your Personal data to the standards under PDPA. And acknowledge that Unilever will take appropriate steps to ensure the adequate level of protection for my Personal Data in other jurisdictions outside Thailand.<\/p>",
+      "term_condition_14_html": "<p class=\"mt-10\">You are entitled at any time, to access to and\/or obtain a copy, request the transfer to other parties, object to the processing, destruction or anonymization, restriction of use, update your Personal Data, withdraw your consent or to file a complaint If any breach occurred or any violation of the PDPA, please contact: Data Privacy Officer, Unilever Thailand, Unilever House Building 161 Rama 9 Road, Huaykwang, Huaykwang, Bangkok 10310  or Thailand Customer service at Tel. <a class=\"text-underline\" href=\"tel:{phone_number}\">{phone}<\/a> or email to <a href=\"mailto:{email}\">{email}<\/a>.<\/p>",
+      "term_condition_15_html": "<p class=\"mt-10\">Kindly note that it will be necessary for us to process your Personal Data, without which we will not be able to carry out the Purpose. For more details on how we process your Personal Data, do visit our Privacy Notice<\/p>",
+      "term_condition_21_html": "I am 18 years old and above, have read and understood the <a class=\"text-underline\" href=\"#\">terms of the Privacy Notice<\/a> and consent to the processing of my Personal Data as described above.",
+      "term_condition_22_html": "",
+      "term_condition_23_html": "",
+      "button_submit_product": "Request Sample",
+      "button_submit_coupon": "Request Coupon"
+    },
+    "validate": {
+      "field_required": "This is a required field.",
+      "fisrt_name_max_length": "Exceeds maximum length limit of 50 character",
+      "last_name_max_length": "Exceeds maximum length limit of 20 character",
+      "email": "Invalid email format. Please enter a valid email.",
+      "address_max_length": "Exceeds maximum length limit of 255 character",
+      "phone": "Please enter a valid phone mobile number 10 digits",
+      "phone_max_length": "Please enter no more than 10 characters.",
+      "phone_min_length": "Please enter a valid phone mobile number 10 digits.",
+      "agree_term": "Please read agreement carefully. You must agree to the terms of this agreement to access to receive sample product or coupon.",
+      "age_term": "You must be 18 years old to receive sample product or coupon.",
+      "product": "Please select a sample product that you would like to try!",
+      "coupon": "Please select a coupon to get discount when purchase ULife products."
+    }
+  },
+  "reorder": {
+    "title": "Reorder",
+    "change_price_warning_html": "Please be aware price of <span>{{ product }}<\/span> has been changed since your previous order",
+    "change_qty_warning_html": "Quantity has been adjusted due to current stock for <span>{{ product }}<\/span> is only {{ quantity }}",
+    "unavailable_warning_html": "<span>{{ product }}<\/span> is no longer available in our system, you can not order this item",
+    "outstock_warning_html": "<span>{{ product }}<\/span> is all gone and will be back soon.",
+    "not_found": "None of products are available",
+    "header": {
+      "product": "Product",
+      "price": "Price",
+      "cv_qv": "CV | QV",
+      "quantity": "Quantity",
+      "delete": "Delete"
+    },
+    "confirm_add_btn": "Confirm adding above products to your bag",
+    "cancel_btn": "Cancel",
+    "description_html": "List of available product in your order <a href=\"{{ link }}\" class=\"id-order\">{{ order }}<\/a>",
+    "in_stock": "In stock",
+    "estimated_total_html": "Estimated <br class=\"display-mb\">total",
+    "inactive_list": "Inactive list",
+    "quantity": "Quantity"
+  },
+  "checkout": {
+    "use_default_address": "Use a new address",
+    "calculate_shipping_fee": "Calculated at next step",
+    "freeship_qualified": "YOU HAVE QUALIFIED FOR COMPLIMENTARY SHIPPING",
+    "promo_code": "Promo Code",
+    "coupon_code": "Coupon Code",
+    "out_of_stock_label": "Out of stock or expired promotion",
+    "out_of_stock_description": "Some items are no longer available. Your shopping bag has been updated",
+    "set_national_id_title": "The National ID belongs to a member!",
+    "message": {
+      "email_invalid": "Email\/Phone is invalid",
+      "firtname_maxlength": "Exceeds maximum length limit of 50 characters",
+      "lastname_maxlength": "Exceeds maximum length limit of 20 characters",
+      "phone_invalid": "Please enter a valid phone mobile number 10 digits",
+      "address1_maxlength": "Exceeds maximum length limit of 255 characters",
+      "zipcode_invalid": "Please enter a valid zip code",
+      "nationalid_invalid": "Invalid National ID format. Please enter a valid National ID.",
+      "policy_required": "Please read agreement carefully. You must agree to the terms of this agreement to access to receive sample product or coupon",
+      "shipping_required": "Need to choose ONE shipping method",
+      "age_required": "You must be 18 years old to receive sample product or coupon"
+    }
+  },
+  "order_success": {
+    "note_info_html": "Your order has been splitted due to having both regular products and Autoship program or having multiple periods of Autoship program. <b>To see your order detail, please click on each order ID<\/b>",
+    "thank_you": "Thank You ",
+    "confirm_message": "Your order is confirmed",
+    "confirm_note": "You will receive an order confirmation email shortly.",
+    "page_title": "Order confirmation",
+    "order_ids": "Order #",
+    "customer_info": "Customer information",
+    "contact_info": "Contact information",
+    "payment_method": "Payment method",
+    "shipping_address": "Shipping address",
+    "billing_address": "Billing address",
+    "shipping_method": "Shipping method",
+    "need_help": "If you need any support, please contact:",
+    "customer_service": "CALL CENTER",
+    "line_id": "LINE ID",
+    "email": "Email :",
+    "continue_shop": "Continue Shopping",
+    "items": "items",
+    "save_card_title": "Do you want Unilever to save this card?",
+    "save_payment": "Save payment information for faster checkout",
+    "md_description_html": "Credit cards are saved with a secure third party <strong>2C2P.<\/strong> Cards are tied to your account, and will not be charged unless you are selected as the active payment method on <strong>ulifespace.com<\/strong>.",
+    "save_payment_checkbox": "Save payment information to my account for further purchases",
+    "term_and_condition": "Term and Condition.",
+    "term_and_condition_url": "https:\/\/www.2c2p.com\/security-measures",
+    "save_card_button": "save card",
+    "no_thank": "no thanks"
+  }
+}

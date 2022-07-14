@@ -1,0 +1,124 @@
+<div class="container page__enrollment">
+  <ul class="smart-progress__step">
+    <li class="progress__step-item current">
+      <div class="progress__step-content">Personal information</div>
+    </li>
+    <li class="progress__step-item">
+      <div class="progress__step-content">Address and Bank information</div>
+    </li>
+    <li class="progress__step-item">
+      <div class="progress__step-content">Select products</div>
+    </li>
+  </ul>
+  <div class="page__enrollment-content col-md-10 pd-0">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+    <form id="enrollment__form" action="{{ pages['enrollment-step-2'].url }}" class="enrollment__form-step1" novalidate>
+      <div class="form-vertical border-form">
+        <div class="form__header-box">step 1/3</div>
+{% comment %} 
+        <p>
+          <label for="cname">Name (required, at least 2 characters)</label>
+          <input id="cname" name="name" minlength="2" type="text" required>
+        </p>
+        <p>
+          <label for="cemail">E-Mail (required)</label>
+          <input id="cemail" type="email" name="email" required>
+        </p>
+        <p>
+          <label for="curl">URL (optional)</label>
+          <input id="curl" type="url" name="url">
+        </p>
+        <p>
+          <label for="ccomment">Your comment (required)</label>
+          <textarea id="ccomment" name="comment" required></textarea>
+        </p> {% endcomment %}
+
+        <div class="form__content">
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentFirstName">First name*</label>
+              <input type="text" class="form-control" id="enrollmentFirstName" name="enrollmentFirstName"
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="enrollmentLastName">Last name*</label>
+              <input type="text" class="form-control" id="enrollmentLastName" name="enrollmentLastName" 
+                data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="enrollmentEmail">Email*</label>
+              <input type="email" class="form-control" id="enrollmentEmail" name="enrollmentEmail"
+                data-rule-email="true" 
+                data-msg-required="{{ 'enrollment.validate.required' | t }}"
+                data-msg-email="{{ 'enrollment.validate.email' | t }}" required>
+            </div>
+            <div class="form-group form-group-datepicker col-md-6">
+              <label for="enrollmentBirthDate">Birth Date*</label>
+              <div class="form-group-icon">                
+                <input type="text" class="form-control datepicker" id="enrollmentBirthDate" autocomplete="off" name="enrollmentBirthDate"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}" required>
+                {% include 'icon-calendar' %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label>Gender</label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="enrollmentGender" id="enrollmentGender1" value="male" checked>
+                <label class="form-check-label" for="enrollmentGender1">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="enrollmentGender" id="enrollmentGender2" value="female">
+                <label class="form-check-label" for="enrollmentGender2">Female</label>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              {% comment %} Enrollment new user {% endcomment %}
+              {% comment %} <label for="enrollmentSponsor">Sponsor / Reference code</label>
+              <input type="text" class="form-control" id="enrollmentSponsor" name="enrollmentSponsor">
+              <div class="form-text text-muted text-right">If you don't have sponsor / reference code, you can find a representative near you.</div>
+              <div class="form-text text-large text-right"><a href="#">Find A Representative</a></div> {% endcomment %}
+              {% comment %} End enrollment new user {% endcomment %}
+
+              {% comment %} Enrollment New User with shared Link {% endcomment %}
+              <label for="enrollmentSponsor">Sponsor / Reference code</label>
+              <input type="text" class="form-control" id="enrollmentSponsor" value="TH001" readonly>
+              <div class="form-text text-muted">The Sponsor Code TH0001 is currently applied</div>
+              {% comment %} End enrollment New User with shared Link {% endcomment %}
+
+              {% comment %} Enrollment New User with shared Link {% endcomment %}
+              <label for="enrollmentSponsor">Sponsor / Reference code</label>
+              {% comment %} <div class="select2_wrap">
+                <select id="jungle" class="select2_single required" name="jungle" title="Please select something!" required>
+                  <option value=""></option>
+                  <option value="1">Buga</option>
+                  <option value="2">Baga</option>
+                  <option value="3">Oi</option>
+                </select>
+              </div> {% endcomment %}
+              <div class="select2_wrap">
+                <select id="enrollmentSponsor" class="form-control select2_single" name="enrollmentSponsor"
+                  data-msg-required="{{ 'enrollment.validate.required' | t }}">
+                  <option value="">Choose...</option>
+                  <option value="1">One</option>
+                  <option value="2">Two</option>
+                  <option value="3">Three</option>
+                </select>
+              </div>
+              {% comment %} End enrollment New User with shared Link {% endcomment %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="group-button d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </div>
+    </form>
+  <div>
+</div>

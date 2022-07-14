@@ -1,0 +1,2223 @@
+{%- if section.settings.countdown != blank -%}
+  <script src="{{ 'moment-with-locales.js' | asset_url }}"></script>
+  <script src="{{ 'moment-timezone.js' | asset_url }}"></script>
+  <script src="{{ 'jquery.countdown.min.js' | asset_url }}"></script>
+{%- endif -%}
+{% include 'assign-locale-prefix' %}
+<div id="header_wrap" class="canvasmenu__mobile" data-section-id="{{ section.id }}" data-section-type="header-section" data-header-section>
+  <div class="top-header">
+    <div class="container-fluid">
+      <div class="row align-items-center justify-content-between">
+        <div class="col col-left d-flex justify-content-center wrapper-announce">
+          {%- if section.settings.message_text != blank -%}
+            <span class="top-header__countdown-title hide">{{ section.settings.message_text }}</span>
+          {%- endif -%}
+          {%- if section.settings.countdown != blank -%}
+            <div class="top-header__countdown d-flex hide" data-countdown="{{ section.settings.countdown }}"></div>
+          {%- endif -%}
+        </div>
+        <div class="col col-right d-flex">
+          {%- if section.settings.shop_location != blank and section.settings.shop_location_url != blank -%}
+            <div class="col-right__menu">
+              <a href="{{ section.settings.shop_location_url }}" class="btn-header__top has_icon">{% include 'icon-map' %}{{ section.settings.shop_location }}</a>
+            </div>
+          {%- endif -%}
+          <div class="site-header__currency-selector">
+            {%- form 'localization', class: 'selectors-form' -%}
+              <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+              <div class="selectors-form__item">
+                <h2 class="visually-hidden" id="lang-heading">{{ 'general.language.dropdown_label' | t }}</h2>
+                <div class="disclosure" data-disclosure-locale>
+                  <button aria-controls="lang-list" aria-describedby="lang-heading" aria-expanded="false" class="disclosure__toggle btn-header__top has_icon" data-disclosure-toggle type="button">
+                    {%- if form.current_locale.iso_code == 'en' -%}
+                      {% include 'icon-en' %}EN
+                    {%- else -%}
+                      {% include 'icon-th' %}ไทย
+                    {%- endif -%}
+                    {% include 'icon-chevron-down' %}
+                  </button>
+                  <ul class="disclosure-list" data-disclosure-list id="lang-list">
+                    {%- for locale in form.available_locales -%}
+                      {%- if locale.iso_code != form.current_locale.iso_code -%}
+                        <li class="disclosure-list__item" data-locale_url="{{ locale.root_url }}">
+                          <a class="disclosure-list__option" href="#" lang="{{ locale.iso_code }}" data-value="{{ locale.iso_code }}" data-disclosure-option>
+                            {%- if locale.iso_code == 'en' -%}
+                              {% include 'icon-en' %}EN
+                            {%- else -%}
+                              {% include 'icon-th' %}ไทย
+                            {%- endif -%}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                  <input type="hidden" name="locale_code" id="LocaleSelector" value="{{ form.current_locale.iso_code }}" data-disclosure-input/>
+                </div>
+              </div>
+            {%- endform -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <header class="site-header {% if customer %} customer_logged{% endif %}" role="banner">
+    <div class="site-header__nav container-fluid">
+      <div class="row">
+        <div class="col header-left__col">
+          {%- if request.page_type == 'index' -%}
+            <h1 class="h2 site-header__logo">
+          {%- else -%}
+            <div class="h2 site-header__logo">
+          {%- endif -%}
+          {%- if section.settings.logo -%}
+            {%- assign img_url = section.settings.logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ routes.root_url }}" class="site-header__logo-image">
+              {% capture logo_alt %}{{ section.settings.logo.alt | default: shop.name }}{% endcapture %}
+              <img class="lazyload js{% if section.settings.mobile_logo %} small--hide{% endif %}" src="{{ section.settings.logo | img_url: '300x300' }}" data-src="{{ img_url }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ section.settings.logo.aspect_ratio }}" data-sizes="auto" alt="{{ logo_alt | escape }}">
+              {%- if section.settings.mobile_logo -%}
+                {%- assign logo_mobile = section.settings.mobile_logo | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <img class="lazyload js header__logo-mobile" src="{{ section.settings.mobile_logo | img_url: '150x' }}" data-src="{{ logo_mobile }}" data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]" data-aspectratio="{{ section.settings.mobile_logo.aspect_ratio }}" data-sizes="auto" alt="{{ logo_alt | escape }}">
+              {%- endif -%}
+              <noscript>
+                {% capture image_size %}50x
+                {% endcapture %}
+                <img src="{{ section.settings.logo | img_url: image_size }}" srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x" alt="{{ section.settings.logo.alt | default: shop.name }}">
+              </noscript>
+            </a>
+          {%- else -%}
+            <a class="site-header__logo-link" href="{{ routes.root_url }}">{{ shop.name }}</a>
+          {%- endif -%}
+          {%- if request.page_type == 'index' -%}
+            </h1>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="col header-right__col">
+          <div class="row align-items-center">
+            <div class="col-md-12 col-lg-5 header_menu-main">
+              <nav class="header_navigation-top" role="navigation">
+                {%- assign linklist = section.settings.main_linklist -%}
+                <ul class="site-nav list--inline">
+                  {% for link in linklists[linklist].links %}
+                    <li class="{% if link.active %} site-nav--active{% endif %}" data-header_nav_top_item>
+                      <a href="{{ link.url }}" class="site-nav__link site-nav__link--main{% if link.active %} site-nav__link--active{% endif %}" {% if link.current %} aria-current="page" {% endif %} data-index="{{ forloop.index }}">
+                        <span class="site-nav__label">{{ link.title | escape }}</span>
+                        {% include 'icon-menu-down' %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
+            </div>
+            <div class="col-md-12 col-lg-7 header-right__action">
+              <div class="site-header__icons{% if shop.customer_accounts_enabled %} site-header__icons--plus{% endif %}">
+                <div class="site-header__icons-wrapper">
+                  {% unless linklists[section.settings.main_linklist] == blank %}
+                    <button type="button" id="open-menu-mobile" class="btn--link site-header__icon site-header__menu mobile-nav--open" aria-expanded="false" aria-label="{{ 'layout.navigation.menu' | t }}">
+                      {% include 'icon-hamburger' %}
+                    </button>
+                  {% endunless %}
+                  <button class="btn--link site-header__icon site-header__search-toggle js-drawer-open-top" type="button" title="{{ 'general.tooltip.search' | t }}">
+                    {% include 'icon-search' %}
+                    <span class="icon__fallback-text">{{ 'layout.navigation.search' | t }}</span>
+                  </button>
+                  {% unless customer %}
+                    <span class="site-header__icons-text site-header__icon line-right">
+                      {{ section.settings.join_us_text }}
+                      <a id="register_link" class="register_link--join-now" href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}" data-enroll_url>{{ section.settings.join_us_text_button }}</a>
+                    </span>
+                  {% endunless %}
+
+                  {% if shop.customer_accounts_enabled %}
+                    {% if customer %}
+                      {%- assign hash_code = customer.id | hmac_sha256: shop.metafields.api.secret -%}
+                      <span class="site-header__icons-text site-header__icon line-right">
+                        {{ section.settings.join_us_text }}
+                        <a data-action="enroll-other" class="register_link--join-now"
+                           href="{{ shop_url }}{{ shop.metafields.route.member_enroll }}?customer={{ customer.id }}&hash={{ hash_code }}"
+                            data-enroll_url>
+                          {{ section.settings.join_us_text_button }}
+                        </a>
+                      </span>
+                      <div class="site-nav--has-dropdown">
+                        <a href="{{ routes.account_url }}" class="site-header__icon site-header__account">
+                          {% if customer %}
+                            {% assign customer_avatar = 'avatar.png' | asset_img_url: '300x' %}
+                            {% if customer.metafields.data.personal.avatar_url != blank %}
+                              {% assign customer_avatar = customer.metafields.data.personal.avatar_url %}
+                            {% endif %}
+                            <span class="header__account-avatar"><img src="{{ customer_avatar }}" alt=""></span>
+                          {% else %}
+                            {% include 'icon-login' %}
+                          {% endif %}
+                          <span class="site-header__icons-text site-header__account-name">{{ 'layout.customer.welcome' | t }},&nbsp;{{ customer.first_name }}</span>
+                        </a>
+                        <ul class="site-nav__dropdown site-nav__profile">
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{pages['my-order'].url }}">{% render 'icon', name: 'my-order' %}{{ 'layout.navigation.my_order' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ pages['order-tracking'].url }}">{% render 'icon', name: 'order-tracking' %}{{ 'layout.navigation.track_and_trace' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ pages['my-wishlist'].url }}">{% render 'icon', name: 'my-wishlist' %}{{ 'layout.navigation.wishlist' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ routes.account_addresses_url }}">{% render 'icon', name: 'addresses-box' %}{{ 'layout.navigation.address_book' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ pages['my-profile'].url }}">{% render 'icon', name: 'my-profile' %}{{ 'layout.navigation.my_profile' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ pages['my-wallet'].url }}">{% render 'icon', name: 'my-wallet' %}{{ 'layout.navigation.my_wallet' | t }}</a>
+                          </li>
+                          <li>
+                            <a class="site-nav__link site-nav__child-link" href="{{ routes.account_logout_url }}" data-action="logout">{{ 'layout.navigation.log_out' | t }}, {{ customer.first_name }}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    {% else %}
+                      {% if request.design_mode %}
+                        <a href="{{ routes.account_login_url }}" class="site-header__icon site-header__account">{% include 'icon-login' %}
+                        <span class="site-header__icons-text site-header__account-name">{{ 'layout.customer.log_in' | t }}</span></a>
+                      {% else %}
+                        <form id="offcanvas-login__form" class="form-vertical"
+                          name="login" method="GET" action="{{ shop.metafields.route.sso_login }}">
+                          {% assign redirect_url = shop.secure_url | append: request.path %}
+                          <input type="hidden" name="shop_redirect" value="{{ redirect_url }}" />
+                          <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+                          <button id="btn-login" type="submit" class="site-header__icon site-header__account open-login_canvas" data-role="btn-login" style="background: transparent;border: none;box-shadow: none;">{% include 'icon-login' %}
+                          <span class="site-header__icons-text site-header__account-name">{{ 'layout.customer.log_in' | t }}</span></button>
+                        </form>
+                      {% endif %}
+                    {% endif %}
+                  {% endif %}
+                  {% unless page.template_suffix == 'checkout' %}
+                    <div class="site-header__icon site-header__cart {% if cart.item_count == 0 %} no-item{% endif %}"
+                      data-cart_url="{{ routes.cart_url }}">
+                      <a href="{{ routes.cart_url }}" class="site-header__icon bag-header__icon" title="{{ 'layout.navigation.bag_tooltip' | t }}">
+                        {% include 'icon-cart' %}
+                        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+                        <div class="site-header__cart-count{% if cart.item_count == 0 %} hide{% endif %}" data-cart-count-bubble id="CartCount">
+                          <span data-cart-count>{{ cart.item_count }}</span>
+                        </div>
+                      </a>
+                    </div>
+                  {% endunless %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} Submenu {% endcomment %}
+          <div class="header-group__submenu">
+            <div class="submenu-top submenu__online-shopping justify-content-between{% unless customer %} active{% endunless %}"
+              data-submenu__online-shopping>
+              <nav class="header_navigation justify-content-between d-flex">
+                {% include 'site-nav', linklist: section.settings.menu_online_shop, icon_home: true %}
+                {% include 'site-nav', linklist: 'online-shopping-right' %}
+              </nav>
+            </div>
+            <div class="submenu-top submenu__business justify-content-between align-items-center{% if customer %} active{% endif %}"
+              data-submenu__business>
+              <nav class="header_navigation">
+                {% include 'site-nav', linklist: section.settings.menu_business, icon_home: true %}
+              </nav>
+              <div class="submenu__business-right">
+                <ul class="site-nav list--inline">
+                  <li>
+                    <a class="site-nav__link" href="{{ pages['toolbox'].url }}">
+                      {{ 'layout.navigation.toolbox' | t }}
+                      {% render 'icon', name: 'arrow_down_2', class_list: 'site-nav__icon' %}
+                    </a>
+                    {% for block in section.blocks %}
+                      {% if block.type == 'toolbox' %}
+                        {%- assign toolbox = block.settings -%}
+                        <div class="megamenu megamenu__toolbox">
+                          <div class="megamenu__wrapper">
+                            <div class="container">
+                              <div class="row">
+                                {% render 'megamenu-toolbox', toolbox: toolbox %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% comment %} End submenu {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="sm__menu-mobile sm__menu-online-shopping" data-sm_menu_mobile>
+  <div class="menu__mobile-wrapper">
+    <div class="menu__mobile-top">
+      <span class="close__menu-mobile">{% render 'icon-close' %}</span>
+      <div class="back__to-menu">{% render 'icon-back' %}<span>{{ 'layout.navigation.back' | t }}</span></div>
+      <div class="multiple__language-mobile"></div>
+      <div class="menu__top-content">
+        {%- assign hash_code = customer.id | hmac_sha256: shop.metafields.api.secret -%}
+        <div class="content__online-shopping">
+          {% if customer %}
+            <h3 class="top__content-label">{{ 'layout.navigation.top_content_logined_html' | t }}</h3>
+            <a href="{{ shop_url }}{{ shop.metafields.route.member_enroll }}?customer={{ customer.id }}&hash={{ hash_code }}" class="d-block btn btn-primary">{{ 'layout.navigation.enroll_for_other' | t }}</a>
+          {% else %}
+            <h3 class="top__content-label">{{ 'layout.navigation.top_content_online_shopping_not_login_html' | t }}</h3>
+            <a href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}" class="d-block btn btn-primary">{{ 'layout.navigation.start_business' | t }}</a>
+          {% endif %}
+        </div>
+        <div class="content__business">
+          {% if customer %}
+            <h3 class="top__content-label">{{ 'layout.navigation.top_content_logined_html' | t }}</h3>
+            <a href="{{ shop_url }}{{ shop.metafields.route.member_enroll }}?customer={{ customer.id }}&hash={{ hash_code }}" class="d-block btn btn-primary">{{ 'layout.navigation.enroll_for_other' | t }}</a>
+          {% else %}
+            <h3 class="top__content-label">{{ 'layout.navigation.top_content_business_not_login_html' | t }}</h3>
+            <a href="{{ shop_url }}{{ shop.metafields.route.guest_enroll }}" class="d-block btn btn-primary">{{ 'layout.navigation.start_business' | t }}</a>
+          {% endif %}
+        </div>
+        <div class="account__info">
+          {% if shop.customer_accounts_enabled %}
+            {% if customer %}
+              <span><strong>{{ customer.first_name }}</strong> {{ 'layout.customer.is_logged_in' | t }}</span>
+            {% else %}
+              <span> {{ 'layout.customer.already_account' | t }}</span>
+              <form class="form-vertical"
+                name="login" method="GET" action="{{ shop.metafields.route.sso_login }}">
+                {% assign redirect_url = shop.secure_url | append: request.path %}
+                <input type="hidden" name="shop_redirect" value="{{ redirect_url }}" />
+                <input type="hidden" name="csrf" value="{{ "now" | date: "%N" | md5 }}" />
+                <button type="submit" class="site-header__icon site-header__account open-login_canvas" data-role="btn-login" style="background: transparent;border: none;box-shadow: none;"><span class="open-login_canvas">{{ 'layout.customer.log_in' | t }}</span></button>
+              </form>
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="menu__mobile-content menu__online--shopping" data-mobile_menu_online_shopping>
+      <h3 class="parent__menu-title">
+        <span>{{ 'layout.navigation.online_shopping' | t }}</span>
+        <span class="icon__toggle">{% render 'icon', name: 'arrow_down_3' %}</span>
+      </h3>
+      <div class="menu__wrapper-content wrapper__online-shopping">
+        <ul class="site-nav-mobile">
+          {% include 'site-nav-mobile', linklist: section.settings.menu_online_shop, icon_home: true %}
+        </ul>
+        <div class="menu__online--shopping-right">
+          <ul>
+            {% for link in linklists['online-shopping-right'].links %}
+              {% if forloop.first %}
+              <li>
+                <a href="{{ link.url }}">
+                  {% render 'icon', name: 'representative' %}
+                  {{ link.title }}
+                </a>
+              </li>
+              {% else %}
+              <li>
+                <a href="{{ link.url }}">
+                  {% render 'icon', name: 'autoship' %}
+                  {{ link.title }}
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="menu__mobile-content menu__bussiness" data-mobile_menu_bussiness>
+      <h3 class="parent__menu-title">
+        <span>{{ 'layout.navigation.business' | t }}</span>
+        <span class="icon__toggle">{% render 'icon', name: 'arrow_down_3' %}</span>
+      </h3>
+      <div class="menu__wrapper-content wrapper__business">
+        <ul class="site-nav-mobile">
+          {% include 'site-nav-mobile', linklist: section.settings.menu_business, icon_home: true %}
+          <li>
+            <div class="toolbox__link-item">
+              <a href="{{ pages['toolbox'].url }}">
+                {% render 'icon', name: 'toolbox' %}
+                <span class="site-nav__label">{{ 'layout.navigation.toolbox' | t }}</span>
+              </a>
+              <span class="site-nav__icon nav__icon-toolbox">{% include 'icon-arrow-right' %}</span>
+            </div>
+            <div class="megamenu__toolbox">
+              <span class="child__title">
+                {% render 'icon', name: 'toolbox' %}
+                <span class="site-nav__label">{{ 'layout.navigation.toolbox' | t }}</span>
+              </span>
+              {% for block in section.blocks %}
+                {% if block.type == 'toolbox' %}
+                  {% render 'megamenu-toolbox', toolbox: block.settings %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const domSelectors = {
+    menu: '.sm__menu-mobile',
+    menuWrapper: '.menu__mobile-wrapper',
+    buttonOpen: '#open-menu-mobile',
+    toggleButton: '.site-nav-mobile li span.site-nav__icon',
+    slideButton: '.site-nav-mobile li.level2 a span.icon__arrow',
+    langDesktop: '.top-header .site-header__currency-selector',
+    langMobile: '.multiple__language-mobile',
+    closeButton: '.menu__mobile-top .close__menu-mobile',
+    topMenu: '.menu__mobile-top',
+    toolboxIcon: '.toolbox__link-item .nav__icon-toolbox'
+  }
+
+  window.addEventListener('load', function() {
+    const duration = 200;
+    const domNodes = {
+      menu: document.querySelector(domSelectors.menu),
+      menuWrapper: document.querySelector(domSelectors.menuWrapper),
+      buttonOpen: document.querySelector(domSelectors.buttonOpen),
+      toggleButton: document.querySelectorAll(domSelectors.toggleButton),
+      slideButton: document.querySelectorAll(domSelectors.slideButton),
+      langDesktop: document.querySelector(domSelectors.langDesktop),
+      langMobile: document.querySelector(domSelectors.langMobile),
+      closeButton: document.querySelector(domSelectors.closeButton),
+      topMenu: document.querySelector(domSelectors.topMenu),
+      toolboxIcon: document.querySelector(domSelectors.toolboxIcon)
+    }
+    
+    // Show and Hide language-choice button
+    addMobileLang();
+    window.addEventListener('resize', addMobileLang);
+    function addMobileLang() {
+      let scrWidth = window.innerWidth;
+      if (scrWidth <= 1170) {
+        domNodes.langMobile.appendChild(domNodes.langDesktop);
+      } else {
+        domNodes.langMobile.innerHTML = '';
+        if (!document.querySelector(domSelectors.langDesktop)) {
+          document.querySelector('.top-header .col-right').appendChild(domNodes.langDesktop);
+        }
+      }
+    }
+
+    domNodes.menu.style.overflow = 'hidden';
+    domNodes.menu.style.display = 'none';
+    domNodes.menu.style.background = 'rgba(0,0,0,0)';
+    domNodes.menuWrapper.style.transform = 'translateX(111%)';
+
+    Array.prototype.forEach.call(domNodes.toggleButton, function(elm) {
+      elm.addEventListener('click', function(e) {
+        let targetElm = $(this).parent().next();
+        $(targetElm).slideToggle();
+
+        let elLi = $(this).parents('li').eq(0);
+        
+        if (elLi.hasClass('active')) {
+          elLi.removeClass('active');
+        }else {
+          // Find li has class active to remove
+          let elLiActive = elLi.parent('ul').find('li.active'),
+              elUlAactive = elLiActive.find('> ul');
+          elLiActive.removeClass('active');
+
+          if(elUlAactive.length > 0) {
+            elUlAactive.hide();
+          }else {
+            elLiActive.find('> .sub__menu--wrapper').hide();
+          }
+
+          elLi.addClass('active');
+        }
+      })
+    })
+    domNodes.toolboxIcon?.addEventListener('click', function(e) {
+      e.preventDefault();
+      let targetElm = $(this).parent().next();
+      targetElm.css('display', 'block');
+      $('.menu__mobile-wrapper').animate({ scrollTop: 0 }, 200);
+      $('.menu__top-content').slideUp(200);
+      $('.close__menu-mobile').hide();
+      $('.back__to-menu').show();
+      $('.menu__mobile-wrapper').addClass('has__last-level');
+      setTimeout(function() {
+        targetElm.css('transform', 'translateX(0)');
+        targetElm.css('transitionDuration', '.2s');
+        $('.menu__mobile-content.active').css('height', 'calc(100% - 100px)');
+        $('.menu__mobile-content.active').css('overflow', 'hidden');
+      }, duration)
+      $('.back__to-menu').on('click', function() {
+        targetElm.css('transform', 'translateX(100%)');
+        $('.menu__mobile-content.active').css('height', 'auto');
+        $('.menu__mobile-content.active').css('overflow', '');
+        $('.menu__mobile-wrapper').removeClass('has__last-level');
+        $(this).hide();
+        $('.menu__top-content').slideDown(200);
+        $('.close__menu-mobile').show();
+        setTimeout(function() {
+          targetElm.css('display', 'none');
+        }, duration)
+      });
+    })
+
+    $(".menu__online--shopping .icon__toggle").click(function(){
+        $('.back__to-menu').trigger('click');
+        $(".menu__wrapper-content").not(".wrapper__online-shopping").slideUp();
+        $(".wrapper__online-shopping").slideToggle();
+        $(".menu__online--shopping").toggleClass('active');
+        $(".menu__bussiness").removeClass('active');
+        $('.menu__bussiness').css('height', '');
+        $('.menu__mobile-content').css('height', '');
+        if ($('.menu__mobile-wrapper').hasClass('has__last-level')) {
+          $('.menu__mobile-content.active').css('height', 'calc(100% - 100px)');
+          $('.menu__mobile-content.active').css('overflow', 'auto');
+        }
+    });
+
+    $("#register_link").click(function(){
+      var ev = {};
+      ev.eventInfo={
+        'type':ctConstants.trackEvent,
+        'eventAction': ctConstants.RegistrationStart,
+        'eventLabel' : window.location.href,
+        'eventValue' :1
+      };
+      ev.category ={'primaryCategory':ctConstants.other};
+      ev.subcategory = 'Lead';
+      digitalData.event.push(ev);
+    });
+
+    $(".menu__bussiness .icon__toggle").click(function(){
+        $('.back__to-menu').trigger('click');
+        $(".menu__wrapper-content").not(".wrapper__business").slideUp();
+        $(".wrapper__business").slideToggle();
+        $(".menu__bussiness").toggleClass('active');
+        $(".menu__online--shopping").removeClass('active');
+        $('.menu__online--shopping').css('height', '');
+        $('.menu__mobile-content').css('height', '');
+        if ($('.menu__mobile-wrapper').hasClass('has__last-level')) {
+          $('.menu__mobile-content.active').css('height', 'calc(100% - 100px)');
+          $('.menu__mobile-content.active').css('overflow', 'auto');
+        }
+    });
+
+    Array.prototype.forEach.call(domNodes.slideButton, function(elm) {
+      elm.addEventListener('click', function(e) {
+        e.preventDefault();
+        let targetElm = $(this).parent().next();
+        targetElm.css('display', 'block');
+        $('.menu__mobile-wrapper').animate({ scrollTop: 0 }, 200);
+        $('.menu__top-content').slideUp(200);
+        $('.close__menu-mobile').hide();
+        $('.back__to-menu').show();
+        $('.menu__mobile-wrapper').addClass('has__last-level');
+        setTimeout(function() {
+          targetElm.css('transform', 'translateX(0)');
+          targetElm.css('transitionDuration', '.2s');
+          targetElm.css('height', 'calc(100vh - 155px)');
+          targetElm.css('overflow', 'auto');
+          $('.menu__mobile-content.active').css('height', 'calc(100% - 100px)');
+          $('.menu__mobile-content.active').css('overflow', 'hidden');
+        }, duration)
+        $('.back__to-menu').on('click', function() {
+          targetElm.css('transform', 'translateX(100%)');
+          targetElm.css('height', '');
+          targetElm.css('overflow', '');
+          $('.menu__mobile-content.active').css('height', 'auto');
+          $('.menu__mobile-content.active').css('overflow', '');
+          $(this).hide();
+          $('.menu__top-content').slideDown(200);
+          $('.close__menu-mobile').show();
+          $('.menu__mobile-wrapper').removeClass('has__last-level');
+          setTimeout(function() {
+            targetElm.css('display', 'none');
+          }, duration)
+        });
+      })
+    })
+
+    domNodes.buttonOpen.addEventListener('click', function(e) {
+      openMenuMobile();
+    })
+
+    document.addEventListener('click', function(e) {
+      if (e.target === domNodes.menu) {
+        closeMenuMobile();
+      }
+    })
+
+    domNodes.closeButton.addEventListener('click', function() {
+      closeMenuMobile();
+    })
+
+    function openMenuMobile() {
+      domNodes.menu.style.overflow = '';
+      domNodes.menu.style.display = 'block';
+      domNodes.menu.style.background = 'rgba(0,0,0,0.3)';
+      document.documentElement.style.overflow = 'hidden';
+      setTimeout(function() {
+        domNodes.menuWrapper.style.transform = 'translateX(11%)'
+      }, duration)
+    }
+    function closeMenuMobile() {
+      domNodes.menuWrapper.style.transform = 'translateX(111%)'
+      setTimeout(function() {
+        domNodes.menu.style.overflow = 'hidden';
+        domNodes.menu.style.display = 'none';
+        document.documentElement.style.overflow = '';
+      }, duration)
+    }
+  });
+
+  $('#lang-list .disclosure-list__option').click(function (event) {
+    // event.preventDefault();
+    const LangSelected = $(this).text().trim();
+    //console.log(LangSelected);
+    var ev = {};
+    ev.eventInfo={
+      'type':ctConstants.trackEvent,
+      'eventAction': ctConstants.languageSelector,
+      'eventLabel' : LangSelected,
+      'eventValue' :1                                                                                                                                                                                                                                                                                                                                              };
+    ev.category ={'primaryCategory':ctConstants.custom};
+    ev.subcategory = 'Read';
+    digitalData.event.push(ev);
+
+  });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  {% if section.settings.logo %}
+    {% assign image_size = section.settings.logo.width | append:'x' %}
+    "logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},
+  {% endif %}
+  "sameAs": [
+    {{ settings.social_twitter_link | json }},
+    {{ settings.social_facebook_link | json }},
+    {{ settings.social_instagram_link | json }},
+    {{ settings.social_youtube_link | json }},
+    {{ settings.social_line_link | json }}
+  ],
+  "url": {{ shop.url | append: page.url | json }}
+}
+
+</script>
+
+{% if request.page_type == 'index' %}
+  {% assign potential_action_target = shop.url | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {{ potential_action_target | json }},
+    "query-input": "required name=search_term_string"
+  },
+  "url": {{ shop.url | append: page.url | json }}
+}
+
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "da": "Overskrift",
+    "de": "Titel",
+    "en": "Header",
+    "es": "Encabezado",
+    "fi": "Ylätunniste",
+    "fr": "En-tête",
+    "hi": "हैडर",
+    "it": "Header",
+    "ja": "ヘッダー",
+    "ko": "머리글",
+    "ms": "Pengepala",
+    "nb": "Header",
+    "nl": "Koptekst",
+    "pt-BR": "Cabeçalho",
+    "pt-PT": "Cabeçalho",
+    "sv": "Rubrik",
+    "th": "ส่วนหัว",
+    "zh-CN": "标头",
+    "zh-TW": "標頭"
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "da": "Logobillede",
+        "de": "Logo-Foto",
+        "en": "Logo image",
+        "es": "Logotipo",
+        "fi": "Logokuva",
+        "fr": "Image du logo",
+        "hi": "लोगो इमेज",
+        "it": "Immagine del logo",
+        "ja": "ロゴ画像",
+        "ko": "로고 이미지",
+        "ms": "Imej logo",
+        "nb": "Logobilde",
+        "nl": "Afbeelding van logo",
+        "pt-BR": "Imagem do logotipo",
+        "pt-PT": "Imagem do logótipo",
+        "sv": "Logobild",
+        "th": "รูปภาพโลโก้",
+        "zh-CN": "logo 图片",
+        "zh-TW": "標誌圖片"
+      }
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_logo",
+      "label": "Mobile logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_online_shop",
+      "label": "Menu online shop",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_business",
+      "label": "Menu business",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Top header"
+    },
+    {
+      "type": "text",
+      "id": "message_text",
+      "label": "Text",
+      "default": "Promotion Hurry up, Black Friday promotion will be end after"
+    },
+    {
+      "type": "text",
+      "id": "countdown",
+      "label": "Countdown date",
+      "default": "2021/03/20"
+    },
+    {
+      "type": "text",
+      "id": "shop_location",
+      "label": "Title shop locale",
+      "default": "Shop"
+    },
+    {
+      "type": "url",
+      "id": "shop_location_url",
+      "label": "Link shop locale"
+    },
+    {
+      "type": "header",
+      "content": "Join us"
+    },
+    {
+      "type": "text",
+      "id": "join_us_text",
+      "label": "Join us title",
+      "default": "JOIN US, START EARNING"
+    },
+    {
+      "type": "text",
+      "id": "join_us_text_button",
+      "label": "Join us button text",
+      "default": "JOIN NOW"
+    },
+    {
+      "type": "url",
+      "id": "join_us_url",
+      "label": "Link join us"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_type1",
+      "name": "Menu (Banner style 1)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "for_menu",
+          "label": "For menu item"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu 1"
+        },
+        {
+          "type": "text",
+          "id": "sub_menu_text_1",
+          "label": "Sub menu 1",
+          "default": "Sub menu 1"
+        },
+        {
+          "type": "url",
+          "id": "sub_menu_link_1",
+          "label": "Sub menu link 1"
+        },
+        {
+          "type": "link_list",
+          "id": "sub_menu_menu_link_1",
+          "label": "Menu for sub menu 1"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner menu 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_m_1",
+          "label": "Show banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "bn_m_1_image",
+          "label": "Select image"
+        },
+        {
+          "type": "html",
+          "id": "bn_m_1_content",
+          "label": "Content",
+          "default": "ยาสีฟันผสมฟลูออไรด์เทคโนโลยีสิทธิบัตรจากประเทศญี่ปุ่น"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_1_content_color",
+          "label": "Content color",
+          "default": "#333"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_1_bg_color",
+          "label": "Background color",
+          "default": "#E5E5E5"
+        },
+        {
+          "type": "text",
+          "id": "bn_m_1_button_text",
+          "label": "Button text",
+          "default": "Add to bag"
+        },
+        {
+          "type": "url",
+          "id": "bn_m_1_button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_1_button_type",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Custom",
+              "value": "custom"
+            },
+            {
+              "label": "Default",
+              "value": "default"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_1_button_color",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_1_button_hover_color",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },        
+        {
+          "type": "header",
+          "content": "Setup product menu 1"
+        },
+        {
+          "type": "product",
+          "id": "bn_m_1_product",
+          "label": "Select product"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_1_product_order",
+          "label": "Order product and banner",
+          "options": [
+            {
+              "label": "Product - Banner",
+              "value": "0"
+            },
+            {
+              "label": "Banner - Product",
+              "value": "1"
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu 2"
+        },
+        {
+          "type": "text",
+          "id": "sub_menu_text_2",
+          "label": "Sub menu 2",
+          "default": "Sub menu 2"
+        },
+        {
+          "type": "url",
+          "id": "sub_menu_link_2",
+          "label": "Sub menu link 2"
+        },
+        {
+          "type": "link_list",
+          "id": "sub_menu_menu_link_2",
+          "label": "Menu for sub menu 2"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner menu 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_m_2",
+          "label": "Show banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "bn_m_2_image",
+          "label": "Select image"
+        },
+        {
+          "type": "html",
+          "id": "bn_m_2_content",
+          "label": "Content",
+          "default": "ยาสีฟันผสมฟลูออไรด์เทคโนโลยีสิทธิบัตรจากประเทศญี่ปุ่น"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_2_content_color",
+          "label": "Content color",
+          "default": "#333"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_2_bg_color",
+          "label": "Background color",
+          "default": "#E5E5E5"
+        },
+        {
+          "type": "text",
+          "id": "bn_m_2_button_text",
+          "label": "Button text",
+          "default": "Add to bag"
+        },
+        {
+          "type": "url",
+          "id": "bn_m_2_button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_2_button_type",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Custom",
+              "value": "custom"
+            },
+            {
+              "label": "Default",
+              "value": "default"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_2_button_color",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_2_button_hover_color",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },        
+        {
+          "type": "header",
+          "content": "Setup product menu 2"
+        },
+        {
+          "type": "product",
+          "id": "bn_m_2_product",
+          "label": "Select product"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_2_product_order",
+          "label": "Order product and banner",
+          "options": [
+            {
+              "label": "Product - Banner",
+              "value": "0"
+            },
+            {
+              "label": "Banner - Product",
+              "value": "1"
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu 3"
+        },
+        {
+          "type": "text",
+          "id": "sub_menu_text_3",
+          "label": "Sub menu 3",
+          "default": "Sub menu 3"
+        },
+        {
+          "type": "url",
+          "id": "sub_menu_link_3",
+          "label": "Sub menu link 3"
+        },
+        {
+          "type": "link_list",
+          "id": "sub_menu_menu_link_3",
+          "label": "Menu for sub menu 3"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner menu 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_m_3",
+          "label": "Show banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "bn_m_3_image",
+          "label": "Select image"
+        },
+        {
+          "type": "html",
+          "id": "bn_m_3_content",
+          "label": "Content",
+          "default": "ยาสีฟันผสมฟลูออไรด์เทคโนโลยีสิทธิบัตรจากประเทศญี่ปุ่น"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_3_content_color",
+          "label": "Content color",
+          "default": "#333"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_3_bg_color",
+          "label": "Background color",
+          "default": "#E5E5E5"
+        },
+        {
+          "type": "text",
+          "id": "bn_m_3_button_text",
+          "label": "Button text",
+          "default": "Add to bag"
+        },
+        {
+          "type": "url",
+          "id": "bn_m_3_button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_3_button_type",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Custom",
+              "value": "custom"
+            },
+            {
+              "label": "Default",
+              "value": "default"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_3_button_color",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_3_button_hover_color",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },        
+        {
+          "type": "header",
+          "content": "Setup product menu 3"
+        },
+        {
+          "type": "product",
+          "id": "bn_m_3_product",
+          "label": "Select product"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_3_product_order",
+          "label": "Order product and banner",
+          "options": [
+            {
+              "label": "Product - Banner",
+              "value": "0"
+            },
+            {
+              "label": "Banner - Product",
+              "value": "1"
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu 4"
+        },
+        {
+          "type": "text",
+          "id": "sub_menu_text_4",
+          "label": "Sub menu 4",
+          "default": "Sub menu 4"
+        },
+        {
+          "type": "url",
+          "id": "sub_menu_link_4",
+          "label": "Sub menu link 4"
+        },
+        {
+          "type": "link_list",
+          "id": "sub_menu_menu_link_4",
+          "label": "Menu for sub menu 4"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner menu 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_m_4",
+          "label": "Show banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "bn_m_4_image",
+          "label": "Select image"
+        },
+        {
+          "type": "html",
+          "id": "bn_m_4_content",
+          "label": "Content",
+          "default": "ยาสีฟันผสมฟลูออไรด์เทคโนโลยีสิทธิบัตรจากประเทศญี่ปุ่น"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_4_content_color",
+          "label": "Content color",
+          "default": "#333"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_4_bg_color",
+          "label": "Background color",
+          "default": "#E5E5E5"
+        },
+        {
+          "type": "text",
+          "id": "bn_m_4_button_text",
+          "label": "Button text",
+          "default": "Add to bag"
+        },
+        {
+          "type": "url",
+          "id": "bn_m_4_button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_4_button_type",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Custom",
+              "value": "custom"
+            },
+            {
+              "label": "Default",
+              "value": "default"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_4_button_color",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_4_button_hover_color",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },        
+        {
+          "type": "header",
+          "content": "Setup product menu 4"
+        },
+        {
+          "type": "product",
+          "id": "bn_m_4_product",
+          "label": "Select product"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_4_product_order",
+          "label": "Order product and banner",
+          "options": [
+            {
+              "label": "Product - Banner",
+              "value": "0"
+            },
+            {
+              "label": "Banner - Product",
+              "value": "1"
+            }
+          ],
+          "default": "0"
+        },
+        {
+          "type": "header",
+          "content": "Setup menu 5"
+        },
+        {
+          "type": "text",
+          "id": "sub_menu_text_5",
+          "label": "Sub menu 5",
+          "default": "Sub menu 5"
+        },
+        {
+          "type": "url",
+          "id": "sub_menu_link_5",
+          "label": "Sub menu link 5"
+        },
+        {
+          "type": "link_list",
+          "id": "sub_menu_menu_link_5",
+          "label": "Menu for sub menu 5"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner menu 5"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_m_5",
+          "label": "Show banner",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "bn_m_5_image",
+          "label": "Select image"
+        },
+        {
+          "type": "html",
+          "id": "bn_m_5_content",
+          "label": "Content",
+          "default": "ยาสีฟันผสมฟลูออไรด์เทคโนโลยีสิทธิบัตรจากประเทศญี่ปุ่น"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_5_content_color",
+          "label": "Content color",
+          "default": "#333"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_5_bg_color",
+          "label": "Background color",
+          "default": "#E5E5E5"
+        },
+        {
+          "type": "text",
+          "id": "bn_m_5_button_text",
+          "label": "Button text",
+          "default": "Add to bag"
+        },
+        {
+          "type": "url",
+          "id": "bn_m_5_button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_5_button_type",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Custom",
+              "value": "custom"
+            },
+            {
+              "label": "Default",
+              "value": "default"
+            }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_5_button_color",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "bn_m_5_button_hover_color",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },        
+        {
+          "type": "header",
+          "content": "Setup product menu 5"
+        },
+        {
+          "type": "product",
+          "id": "bn_m_5_product",
+          "label": "Select product"
+        },
+        {
+          "type": "select",
+          "id": "bn_m_5_product_order",
+          "label": "Order product and banner",
+          "options": [
+            {
+              "label": "Product - Banner",
+              "value": "0"
+            },
+            {
+              "label": "Banner - Product",
+              "value": "1"
+            }
+          ],
+          "default": "0"
+        }
+      ]
+    },
+    {
+      "type": "banner_type2",
+      "name": "Menu (Banner style 2)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "for_menu",
+          "label": "For menu item"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Select menu"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_1",
+          "label": "Show banner 1",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_1_order",
+          "label": "Order banner 1",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title",
+          "default": "Become a member"
+        },
+        {
+          "type": "html",
+          "id": "desc_1",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non."
+        },
+        {
+          "type": "text",
+          "id": "button_text_1",
+          "label": "Button text",
+          "default": "Join us"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Button link"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_2",
+          "label": "Show banner 2",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_2_order",
+          "label": "Order banner 2",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            }
+          ],
+          "default": "2"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_2",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "id": "banner_desc_2",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+        },
+        {
+          "type": "text",
+          "id": "button_text_2",
+          "label": "Button text",
+          "default": "More details"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "button_color_2",
+          "label": "Button color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_color_2",
+          "label": "Button hover color",
+          "default": "#6445EE"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_3",
+          "label": "Show banner 3",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_3_order",
+          "label": "Order banner 3",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            }
+          ],
+          "default": "3"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image_3",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "id": "title_3",
+          "label": "Title",
+          "default": "แผนรายได้ ไลฟ์แม๊กซ์ ตอบโจทย์รายได้และไลฟ์สไตล์แบบเต็มแม๊กซ์"
+        },
+        {
+          "type": "select",
+          "id": "button_type_3",
+          "label": "Button type",
+          "options": [
+            {
+              "label": "Type 1",
+              "value": "type1"
+            },
+            {
+              "label": "Type 2",
+              "value": "type2"
+            }
+          ],
+          "default": "type1"
+        },
+        {
+          "type": "text",
+          "id": "button_text_3",
+          "label": "Button text",
+          "default": "ดาวน์โหลดที่นี่"
+        },
+        {
+          "type": "html",
+          "id": "button_icon_3",
+          "label": "Button icon",
+          "info": "Only for button type 1"
+        },
+        {
+          "type": "url",
+          "id": "link_3",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "bg_3",
+          "label": "Background color",
+          "default": "#105EEF"
+        },
+        {
+          "type": "color",
+          "id": "button_color_3",
+          "label": "Button color",
+          "default": "#fff"
+        },
+        {
+          "type": "color",
+          "id": "button_hover_color_3",
+          "label": "Button hover color",
+          "default": "#fff"
+        }
+      ]
+    },
+    {
+      "type": "banner_type3",
+      "name": "Menu (Banner style 3)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "for_menu",
+          "label": "For menu item"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_1",
+          "label": "Show banner 1",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_1_order",
+          "label": "Order banner 1",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title",
+          "default": "Banner title"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_1",
+          "label": "Banner link"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_2",
+          "label": "Show banner 2",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_2_order",
+          "label": "Order banner 2",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            }
+          ],
+          "default": "2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title",
+          "default": "Banner title"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_2",
+          "label": "Banner link"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_3",
+          "label": "Show banner 3",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_3_order",
+          "label": "Order banner 3",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            }
+          ],
+          "default": "3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title",
+          "default": "Banner title"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_3",
+          "label": "Banner link"
+        },
+        {
+          "type": "header",
+          "content": "Setup banner 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_bn_4",
+          "label": "Show banner 4",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "bn_4_order",
+          "label": "Order banner 4",
+          "options": [
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            }
+          ],
+          "default": "4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title",
+          "default": "Banner title"
+        },
+        {
+          "type": "url",
+          "id": "banner_link_4",
+          "label": "Banner link"
+        }
+      ]
+    },
+    {
+      "type": "toolbox",
+      "name": "Toolbox",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Toolbox item 1"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_1",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='44.409' height='42.469'><defs/><g data-name='Group 805'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 794'><path d='M32.492 5.898h-5.4v-5.4z' data-name='Path 175'/><path d='M5.493 11.521h21.601' data-name='Line 116'/><path d='M5.493 16.284h21.601' data-name='Line 117'/><path d='M5.493 21.046h21.601' data-name='Line 118'/><g data-name='Group 793'><path d='M40.184 12.871l3.51785624 3.51785624L27.44829976 32.6424127l-3.51785623-3.51785624z' data-name='Rectangle 460'/><path d='M40.184 12.871l3.51785624 3.51785624-2.4494179 2.44941789-3.51785623-3.51785624z' data-name='Rectangle 461'/><path d='M23.93 29.126l-1.536 5.054 5.054-1.536' data-name='Path 176'/></g><path d='M32.492 27.896v10.125a3.948 3.948 0 01-3.948 3.948h-24.1a3.948 3.948 0 01-3.948-3.948V4.448A3.948 3.948 0 014.444.5h22.709l5.335 5.4v14.665' data-name='Path 177'/></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_1",
+          "label": "Toolbox name",
+          "default": "BP Enrollment"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_1",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_1",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 2"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_2",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='42.075' height='44.833'><defs/><g data-name='Group 806'><g stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 837' transform='translate(.5 .5)'><rect width='34.217' height='40.835' fill='none' data-name='Rectangle 472' rx='2' transform='translate(0 2.997)'/><rect width='15.985' height='6.494' fill='none' data-name='Rectangle 473' rx='2' transform='translate(9.366)'/><path fill='none' d='M5.151 13.504l2.545 2.545 6.351-6.351' data-name='Path 200'/><path fill='#fff' d='M15.425 15.732h14.049' data-name='Line 133'/><path fill='none' d='M5.151 24.027l2.545 2.545 6.351-6.351' data-name='Path 201'/><path fill='#fff' d='M15.425 26.255h14.049' data-name='Line 134'/><path fill='none' d='M5.151 34.55l2.545 2.545 6.351-6.351' data-name='Path 202'/><path fill='#fff' d='M15.425 36.778h14.049' data-name='Line 135'/><g data-name='Group 837'><path fill='none' d='M41.074 20.22v20.135l-1.562 3.473-1.562-3.473V20.22z' data-name='Path 203'/><path fill='#fff' d='M37.951 23.415h3.123' data-name='Line 136'/><path fill='#fff' d='M37.951 39.19h3.123' data-name='Line 137'/></g></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_2",
+          "label": "Toolbox name",
+          "default": "Prospects"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_2",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_2",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 3"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_3",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='28.901' height='45.762'><defs/><g data-name='Group 802'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 784'><path d='M8.585 37.018h11.731' data-name='Line 89'/><path d='M8.585 41.211h11.731' data-name='Line 90'/><path d='M11.608 45.262h5.685' data-name='Line 91'/><g data-name='Group 783'><path d='M7.753 32.967s-.172-4.181-1.964-6.827S.5 20.465.5 14.834 4.6.499 14.45.499s13.951 8.7 13.951 14.335-3.5 8.661-5.29 11.306-1.962 6.827-1.962 6.827z' data-name='Path 159'/><path d='M10.994 32.967v-18.3l3.2-7.381 3.2 7.381v18.3' data-name='Path 160'/><path d='M10.995 14.665h6.399' data-name='Line 92'/><path d='M14.194 14.665v18.302' data-name='Line 93'/></g></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_3",
+          "label": "Toolbox name",
+          "default": "Life learning<br>studio"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_3",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_3",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 4"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_4",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='55.217' height='45.261'><defs/><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 836' transform='translate(.5 .5)'><g data-name='Group 836' transform='translate(23.507 24.869)'><path d='M10.236 11.162a5.118 5.118 0 0110.236 0' data-name='Path 195'/><circle cx='3.022' cy='3.022' r='3.022' data-name='Ellipse 30' transform='translate(12.332)'/><path d='M20.469 11.162a5.118 5.118 0 0110.236 0' data-name='Path 196'/><circle cx='3.022' cy='3.022' r='3.022' data-name='Ellipse 31' transform='translate(22.569)'/><path d='M0 11.162a5.118 5.118 0 0110.236 0' data-name='Path 197'/><circle cx='3.022' cy='3.022' r='3.022' data-name='Ellipse 32' transform='translate(2.096)'/></g><path d='M0 44.261a10.342 10.342 0 0120.683 0' data-name='Path 198'/><circle cx='6.107' cy='6.107' r='6.107' data-name='Ellipse 33' transform='translate(4.235 21.706)'/><path d='M35.599 18.494h-10l-6.738 4.945 1.169-4.945h-4.427a3.111 3.111 0 01-3.111-3.111V3.111A3.111 3.111 0 0115.603 0h19.991a3.111 3.111 0 013.111 3.111v12.271a3.111 3.111 0 01-3.106 3.112z' data-name='Path 199'/><path d='M16.629 4.533h17.95' data-name='Line 130'/><path d='M16.629 9.101h17.95' data-name='Line 131'/><path d='M16.629 13.669h17.95' data-name='Line 132'/></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_4",
+          "label": "Toolbox name",
+          "default": "Coaching"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_4",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_4",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 5"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_5",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='43.86' height='38.891'><defs/><g data-name='Group 808'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 834'><g data-name='Group 835' transform='translate(.5 .5)'><path d='M12.216 25.778l5.8 5.8 12.63-12.63' data-name='Path 194'/><rect width='42.86' height='33.75' data-name='Rectangle 471' rx='5.545' transform='translate(0 4.141)'/><g data-name='Group 834'><path d='M9.421 0v8.903' data-name='Line 126'/><path d='M21.43 0v8.903' data-name='Line 127'/><path d='M33.439 0v8.903' data-name='Line 128'/></g></g><path d='M.5 13.748h42.86' data-name='Line 129'/></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_5",
+          "label": "Toolbox name",
+          "default": "Event"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_5",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_5",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 6"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_6",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='29.258' height='46.522'><defs/><g data-name='Group 803'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 795'><path d='M.5 5.439h24.316' data-name='Line 94'/><path d='M.5 34.612h16.7' data-name='Line 95'/><path d='M4.204 9.288h3.627v3.627H4.204z' data-name='Rectangle 456'/><path d='M4.204 22.182h3.627v3.627H4.204z' data-name='Rectangle 457'/><path d='M17.2 9.288h3.627v3.627H17.2z' data-name='Rectangle 458'/><path d='M4.204 15.874h3.627' data-name='Line 96'/><path d='M4.204 19.19h.576' data-name='Line 97'/><path d='M7.255 19.19h.576' data-name='Line 98'/><path d='M19.527 15.874h.576' data-name='Line 99'/><path d='M20.251 22.53h.576' data-name='Line 100'/><path d='M10.798 9.288v.576' data-name='Line 101'/><path d='M14.085 24.594v.576' data-name='Line 102'/><path d='M10.798 19.682v.576' data-name='Line 103'/><path d='M12.79 21.674h-.576' data-name='Line 104'/><path d='M12.79 18.414h-.576' data-name='Line 105'/><path d='M14.085 19.682v.576' data-name='Line 106'/><path d='M14.085 9.288v6.586H17.2' data-name='Path 161'/><path d='M10.798 12.286v4.853' data-name='Line 107'/><path d='M10.798 22.739v3.071' data-name='Line 108'/><path d='M14.085 10.981h-2.012' data-name='Line 109'/><path d='M20.827 19.191H17.2v3.923' data-name='Path 162'/><path d='M24.816 26.17l3.132 3.537a3.227 3.227 0 01.81 2.139v14.175' data-name='Path 163'/><path d='M24.816 35.261l-1.708-1.528a5.454 5.454 0 01-1.817-4.064v-2.741a2.047 2.047 0 00-2.046-2.046h0a2.045 2.045 0 00-2.045 2.046v11.035a7.292 7.292 0 002.285 5.3l.3.286a2.4 2.4 0 01.751 1.742v.73' data-name='Path 164'/><path d='M17.201 39.574H4.522a4.021 4.021 0 01-4.021-4.021V4.521A4.021 4.021 0 014.522.5h16.273a4.022 4.022 0 014.022 4.021v30.737' data-name='Path 165'/></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_6",
+          "label": "Toolbox name",
+          "default": "QR Zone"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_6",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_6",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 7"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_7",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='48.154' height='32.702'><defs/><g data-name='Group 804'><g data-name='Group 786'><path fill='#333' d='M15.796 23.37a1.068 1.068 0 00-.214-.022.983.983 0 00-.987 1v6.357a1.088 1.088 0 00.243.709 1.028 1.028 0 001.268.216l1.244-.636a.237.237 0 01.094-.034c.012 0 .116.005.336.178l1.633 1.314a1.056 1.056 0 00.667.253.926.926 0 00.905-1.006V25.38a1.169 1.169 0 00-.916-1.125zm4.015 7.8l-1.04-.839a2.225 2.225 0 00-1.374-.546 1.8 1.8 0 00-.833.213l-.8.408v-5.942l4.044.841z' data-name='Path 166'/><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 828'><g data-name='Group 829'><g data-name='Group 828'><path d='M3.48 24.82a3.733 3.733 0 01.752-7.389' data-name='Path 182'/><path d='M3.657 17.31l20.234 4.1a5.231 5.231 0 003.648-.6l17.148-9.528' data-name='Path 183'/><path d='M22.012 28.606l1.879.385a5.24 5.24 0 003.648-.6l4.675-2.6' data-name='Path 184'/><path d='M3.48 24.82l9.651 1.968' data-name='Line 119'/><path d='M3.657 17.306a3.767 3.767 0 01.61-7.485l.421.023 19.614 4.054a5.669 5.669 0 003.947-.645L43.36 4.547a.428.428 0 00-.143-.793L24.031.566a4.949 4.949 0 00-3.038.464L3.328 9.941' data-name='Path 185'/></g><path d='M23.132 4.231l9.347 1.491' data-name='Line 120'/><path d='M18.459 6.647l9.347 1.491' data-name='Line 121'/></g><path d='M47.654 27.646v2.4h-11.95v-2.4' data-name='Path 186'/><g data-name='Group 830'><path d='M37.89 23.467l3.791 2.958v-8.74' data-name='Path 187'/><path d='M41.678 26.438l3.791-2.958' data-name='Line 122'/></g></g></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_7",
+          "label": "Toolbox name",
+          "default": "Library"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_7",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_7",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 8"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_8",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='45' height='49' fill='none'><defs/><g stroke='#333' stroke-linecap='round' stroke-linejoin='round' clip-path='url(#clip0)'><path d='M23.251 17.151l6.734-4.824M23.868 31.589l6.456 4.589M32.964 43.601c0-.8652.3436-1.6949.9554-2.3066.6117-.6117 1.4415-.9554 2.3066-.9554s1.6948.3437 2.3066.9554c.6117.6117.9554 1.4414.9554 2.3066'/><path d='M36.226 40.34c.9223 0 1.67-.7477 1.67-1.67 0-.9223-.7477-1.67-1.67-1.67-.9223 0-1.67.7477-1.67 1.67 0 .9223.7477 1.67 1.67 1.67z'/><path d='M36.225 48.213c4.1239 0 7.467-3.3431 7.467-7.467 0-4.1239-3.3431-7.467-7.467-7.467-4.1239 0-7.467 3.3431-7.467 7.467 0 4.1239 3.3431 7.467 7.467 7.467zM32.964 10.822c0-.86515.3436-1.69484.9554-2.30659.6117-.61174 1.4415-.95538 2.3066-.95538s1.6948.34364 2.3066.95538c.6117.61175.9554 1.44144.9554 2.30659'/><path d='M36.226 7.56101c.9223 0 1.67-.74769 1.67-1.67 0-.92232-.7477-1.67-1.67-1.67-.9223 0-1.67.74768-1.67 1.67 0 .92231.7477 1.67 1.67 1.67z'/><path d='M36.225 15.434c4.1239 0 7.467-3.3431 7.467-7.467C43.692 3.84309 40.3489.5 36.225.5c-4.1239 0-7.467 3.34309-7.467 7.467 0 4.1239 3.3431 7.467 7.467 7.467zM7.48999 29.81c0-1.4379.57116-2.8169 1.58789-3.8336 1.01672-1.0167 2.39572-1.5879 3.83362-1.5879s2.8168.5712 3.8336 1.5879c1.0167 1.0167 1.5879 2.3957 1.5879 3.8336'/><path d='M12.91 24.389c1.5326 0 2.775-1.2424 2.775-2.775s-1.2424-2.775-2.775-2.775-2.775 1.2424-2.775 2.775 1.2424 2.775 2.775 2.775z'/><path d='M12.91 37.474c6.8539 0 12.41-5.5562 12.41-12.41 0-6.8539-5.5561-12.41-12.41-12.41C6.05615 12.654.5 18.2101.5 25.064c0 6.8538 5.55615 12.41 12.41 12.41z'/></g><defs><clipPath id='clip0'><path fill='#fff' d='M0 0h44.191v48.713H0z'/></clipPath></defs></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_8",
+          "label": "Toolbox name",
+          "default": "Social hub"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_8",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_8",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 9"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_9",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='36.065' height='51.043'><defs/><g data-name='Group 807'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 787'><path d='M25.159 9.729v-2.1A7.127 7.127 0 0018.032.502h0a7.127 7.127 0 00-7.127 7.127v2.1' data-name='Path 171'/><path d='M.5 9.729h35.065v36.786a4.028 4.028 0 01-4.028 4.028H4.528A4.028 4.028 0 01.5 46.515V9.729h0z' data-name='Rectangle 459'/></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_9",
+          "label": "Toolbox name",
+          "default": "Online<br>shopping"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_9",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_9",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 10"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_10",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='49.526' height='39.614'><defs/><g data-name='Group 808'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 797'><path d='M44.153 18.551l4.873-4.172L37.554.979l-4.679 4.4z' data-name='Path 178'/><path d='M21.868 16.041L10.71 26.065a2.4 2.4 0 00-.263 3.391h0a2.4 2.4 0 003.391.263l8.4-7.181-9.137 7.822a2.4 2.4 0 00-.263 3.392h0a2.406 2.406 0 003.391.263l9.137-7.822-8.026 6.859a2.4 2.4 0 00-.263 3.391h0a2.4 2.4 0 003.391.263l8.027-6.858-5.867 5.031a2.406 2.406 0 00-.262 3.392h0a2.4 2.4 0 003.391.263l13.887-11.9a9.618 9.618 0 002.608-3.57l1.905-4.515L32.874 5.377l-6.937 2' data-name='Path 179'/><path stroke-width='.9999' d='M.69 14.364L9.304879.690102l5.42709 3.419195L6.11709 17.783195z' data-name='Rectangle 462'/><path d='M12.778 24.257l-2.062-1.269a8.4 8.4 0 01-1.857-1.555L6.12 17.786 14.735 4.11l4.875.483a9.618 9.618 0 014.183 1.435L34.76 12.94a2.406 2.406 0 01.752 3.318h0a2.4 2.4 0 01-3.317.752l-6.105-3.848h0a6.415 6.415 0 01-8.847 2.007l-1.357-.856' data-name='Path 180'/></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_10",
+          "label": "Toolbox name",
+          "default": "Business<br>information"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_10",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_10",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 11"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_11",
+          "label": "Toolbox icon svg",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='45.528' height='35.309'><defs/><g data-name='Group 809'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' data-name='Group 782'><path d='M.5.5v34.309h44.321' data-name='Path 157'/><path d='M5.432 29.881l14.763-14.814 9.126 5.069 15.5-15.215' data-name='Path 158'/><g data-name='Group 781'><path d='M37.269 4.921h7.552' data-name='Line 87'/><path d='M44.821 12.473V4.921' data-name='Line 88'/></g></g></g></svg>"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_11",
+          "label": "Toolbox name",
+          "default": "Cyber office"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_11",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_11",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 12"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_12",
+          "label": "Toolbox icon svg"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_12",
+          "label": "Toolbox name"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_12",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_12",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 13"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_13",
+          "label": "Toolbox icon svg"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_13",
+          "label": "Toolbox name"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_13",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_13",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 14"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_14",
+          "label": "Toolbox icon svg"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_14",
+          "label": "Toolbox name"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_14",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_14",
+          "label": "Toolbox class"
+        },
+        {
+          "type": "header",
+          "content": "Toolbox item 15"
+        },
+        {
+          "type": "html",
+          "id": "toolbox_icon_15",
+          "label": "Toolbox icon svg"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_name_15",
+          "label": "Toolbox name"
+        },
+        {
+          "type": "url",
+          "id": "toolbox_link_15",
+          "label": "Toolbox link"
+        },
+        {
+          "type": "text",
+          "id": "toolbox_class_15",
+          "label": "Toolbox class"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<script>
+  $(document).ready(function($) {
+    // $('.sm__megamenu-tabs').find('.tabcontent .sm__megamenu-lists > li.megamenu > a').addClass('active');
+    $(".sm__megamenu-tabs ul > li > a.tablinks").hover(function() {
+      $(this).parents('.sm__megamenu-tabs').find('.tabcontent').hide();
+      $(this).parents('.sm__megamenu-tabs').find('.tabcontent').removeClass('active');
+      $(this).parents('.sm__megamenu-tabs-header').find('li > a.tablinks').removeClass('active');
+      $(this).addClass("active");
+      let selected_tab = $(this).attr("data-tab");
+      $(selected_tab).addClass('active');
+      $(selected_tab).show();
+      return false;
+    });
+
+    // $(".sm-megamenu-submenu > li > div").first().parent().addClass('active')
+    $(".sm-megamenu-submenu > li").hover(function() {
+      $('.sm-megamenu-submenu > li').removeClass('active');
+      $(this).addClass("active");
+    });
+
+    $(document).on('click', function(e) {
+      let megamenu = $('div.megamenu');
+      if (e.target === megamenu) {
+        $('.header-group__submenu .submenu-top .site-nav > li').removeClass('active');
+      }
+    });
+
+    $(".header-group__submenu .submenu-top .site-nav > li").hover(
+      function () {
+        $(this).toggleClass('active');
+      },
+      function () {
+        $(this).toggleClass('active');
+      }
+    );
+  });
+</script>

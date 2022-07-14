@@ -1,0 +1,52 @@
+{% include 'slideshow-section' %}
+{% schema %}
+{
+    "name": "Slideshow",
+    "class": "index-section show-navigator index-section--flush index-section--slideshow",
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image_dk",
+                    "label": "Image desktop"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image_mb",
+                    "label": "Image mobile"
+                },
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Button url"
+                }
+            ]
+        },
+        {
+            "type": "video",
+            "name": "Video",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "video_url",
+                    "label": "Video URL mp4"
+                }
+            ]
+        },
+        {
+            "type": "custom",
+            "name": "Custom",
+            "settings": [
+                {
+                    "type": "html",
+                    "id": "content",
+                    "label": "Content"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

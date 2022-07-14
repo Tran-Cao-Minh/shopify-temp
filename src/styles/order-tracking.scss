@@ -1,0 +1,92 @@
+// Text colors
+$color-text: #333;
+.page_order-tracking {
+    max-width: 595px;
+    margin: 0 auto;
+    .order__tracking{
+        .order__tracking--content{
+            form.order__tracking--form{
+                .form-note{
+                    color: $color-text;
+                }
+                .form-actions{
+                    .order__tracking--result{
+                        font-size: 16px;
+                        .tracking__label{
+                            font-size: 18px;
+                            font-weight: 400;
+                        }
+                        .tracking__url{
+                            a{
+                                font-family: "Kanit", sans-serif;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .group_label {
+        display: flex;
+        align-items: center;
+    }
+    .group_label .smart_tooltip {
+        margin: -5px 0 0 5px;
+    }
+    .btn.track__order {
+        margin-right: -150px;
+        margin-left: auto;
+        min-width: 195px;
+        justify-content: center;
+    }
+    .form-actions {
+        align-items: flex-start;
+    }
+    .order__tracking--result {
+        background: #F5F5F5;
+        padding: 25px 20px;
+        font-size: 14px;
+        margin-right: 42px;
+        display: none;
+        width: 100%;
+    }
+    .order__tracking--result .container__icon{
+        padding: 8px 10px;
+    }
+    .order__tracking--result .container__status-result{
+        padding-top: 6px;
+    }
+    .tracking__label {
+        margin-bottom: 5px;
+    }
+    .message__error {
+        color: #FD2827;
+    }
+    .tracking__url a {
+        text-decoration: underline;
+    }
+    .form__actions-sticky {
+        display: block;
+        margin-left: auto;
+    }
+    @media (max-width: 768px) {
+        .btn.track__order {
+            margin-right: 0;
+        }
+    }
+    @media (max-width: 575.98px) {
+        .order__tracking--result {
+            margin-right: 0;
+            padding: 25px 10px;
+            .container__icon {
+                padding-left: 0;
+            }
+        }
+        div.form__actions-sticky .btn {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 255px;
+        }
+    }
+}

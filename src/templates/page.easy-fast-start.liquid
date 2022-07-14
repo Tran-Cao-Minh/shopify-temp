@@ -1,0 +1,8 @@
+{{ 'page-easy-fast-start.css' | asset_url | stylesheet_tag }}
+<div class="page__easy-fast-start">
+    {% section 'easy_fast_start-banner' %}
+    {% section 'easy_fast_start-provides' %}
+    {% section 'easy_fast_start-business' %}
+    {% section 'easy_fast_start-bottom' %}
+</div>
+{% include 'sharing-popup', share_permalink: page.url %}

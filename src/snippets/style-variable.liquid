@@ -1,0 +1,22 @@
+<style>
+  :root {
+    --color-white: #ffffff;
+    --color-primary: #6445EE;
+    --color-secondary: #A7A8A9;
+    --color-success: #1f873d;
+    --color-danger: #d20000;
+    --color-label: #999999;
+    --text-link-color-second: #9da9fa;
+    --bg-color-white: #ffffff;
+    --bg-hover-toolbox: #E0FB3F;
+    --bg-block: #E7E2FF;
+    --color-btn-primary: {{ settings.color_button }};
+    --color-btn-primary-rgb: {{ settings.color_button | color_to_rgb | remove: 'rgb(' | remove: 'rgba(' | remove: ')' | remove: ', 0.0' }};
+    --color-btn-primary-text: {{ settings.color_button_text }};
+    --color-btn-primary-focus: {{ settings.color_button_hover }};
+    --color-btn-secondary: {{ settings.color_button_secondary }};
+    --color-btn-secondary-text: {{ settings.color_button_secondary_text }};
+    --color-btn-secondary-focus: {{ settings.color_button_secondary_hover }};
+    --svg-select-icon: url({{ "ico-select.svg" | asset_url }});
+  }
+</style>

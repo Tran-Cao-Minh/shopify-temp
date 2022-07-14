@@ -1,0 +1,61 @@
+<div class="reorder__modal smart_modal modal-content__scoll modal_products" id="reorder__modal">
+    <div class="modal-center">
+        <div class="modal-content modal-content__padding">
+            <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="content-header">
+                <h2 class="primary_color text-bold">{{ 'reorder.title' | t }}</h2>
+                <div class="header-collapse">
+                    <div class="description reorder_description"></div>
+                    <div class="icon_wrap display-mb show_collapse" data-collapse_active>
+                        {% include 'icon-chevron-down' %}
+                    </div>
+                </div>
+            </div>
+            <div class="content__scroll">
+                <div class="reorder__list-active product__list-active">
+                    <div class="table_grid">
+                        <div class="table_header">
+                            <div class="th td__item-product">{{ 'reorder.header.product' | t }}</div>
+                            <div class="th">{{ 'reorder.header.price' | t }}</div>
+                            <div class="th">{{ 'reorder.header.cv_qv' | t }}</div>
+                            <div class="th">{{ 'reorder.header.quantity' | t }}</div>
+                            <div class="th th_delete">{{ 'reorder.header.delete' | t }}</div>
+                        </div>
+                        <div class="table_lists items__listing reorder__items"></div>
+                        <div class="summary">
+                            <div class="table_item">
+                                <div class="td td__item-product">
+                                    {{ 'reorder.estimated_total_html' | t }}
+                                </div>
+                                <div class="td reorder__item-price td__item-price">
+                                    <div id="summary-total_price" class="price"></div>
+                                </div>
+                                <div class="td reorder__item-cv_qv td__item-cv_qv"><label class="title display-mb">{{ 'reorder.header.cv_qv' | t }}</label><div id="summary-total_cv-qv"></div></div>
+                                <div id="summary-total_qty" class="td reorder__item-quantity display-dk"></div>
+                            </div>
+                        </div>
+                        <div class="action__confirm-wrap">
+                            <a href="#" class="link-readmore text-underline display-dk" data-reorder_cancel>{{ 'reorder.cancel_btn' | t }}</a>
+                            <button class="btn btn-primary add__to--cart">{{ 'reorder.confirm_add_btn' | t }}</button>
+                            <button class="btn btn-cancel display-mb" data-reorder_cancel>{{ 'reorder.cancel_btn' | t }}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="reorder__list-inactive product__list-inactive hide" data-collapse_inactive_wrap>
+                    <div class="header-collapse">
+                        <h5 class="inactive__title text-bold">{{ 'reorder.inactive_list' | t }}</h5>
+                        <div class="icon_wrap display-mb" data-collapse_inactive>
+                            {% include 'icon-chevron-down' %}
+                        </div>
+                    </div>
+                    <div class="reorder__list-inactive-wrap" data-collapse_inactive_content>
+                        <div class="table_grid">
+                            <div class="table_lists reorder__invalid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay"></div>
+</div>

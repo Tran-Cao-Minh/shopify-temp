@@ -1,0 +1,69 @@
+<div class="ss-image__marquee">
+  <div class="js-image__marquee" data-speed="1">
+    {%- if section.settings.image_top != blank -%}
+      <img class="hero-fixed-width__image lazyload lazypreload"
+        src="{{ section.settings.image_top | img_url: 'master' }}"
+        alt="{{ section.settings.image_top.alt | escape }}" />
+    {%- endif -%}
+  </div>
+  <div class="js-image__marquee" data-speed="1">
+    {%- if section.settings.image_bottom != blank -%}
+      <img class="hero-fixed-width__image lazyload lazypreload"
+        src="{{ section.settings.image_bottom | img_url: 'master' }}"
+        alt="{{ section.settings.image.alt | escape }}" />
+    {%- endif -%}
+  </div>
+  {%- if section.settings.title != blank or section.settings.text != blank -%}
+  <div class="container marquee__content-wrap">
+    <div class="row">
+      <div class="image__marquee-content">
+        {%- if section.settings.title != blank -%}
+          <h2 class="subheadings primary_color">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="desc rte-setting">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Image marquee",
+  "class": "index-section-top",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Community"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_top",
+      "label": "Image top"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_bottom",
+      "label": "Image bottom"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image marquee",
+      "category": {
+        "en": "Image",
+        "th": "รูปภาพ"
+      }
+    }
+  ]
+}
+{% endschema %}

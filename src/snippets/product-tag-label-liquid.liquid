@@ -1,0 +1,50 @@
+{%- assign product_tags = product.tags | downcase -%}
+{% if product_tags contains "autoship" %}
+  <span class="tags-name autoship">{{ "products.tags.autoship_short" | t }}</span>
+{% elsif current_variant.available == false %}
+  <span class="tags-name sold_out" data-tags_sold_out>{{ "products.tags.sold_out" | t }}</span>
+{% else %}
+  <span class="tags-name sold_out hide" data-tags_sold_out>{{ "products.tags.sold_out" | t }}</span>
+{% endif %}
+{% assign tag_display_arr = "" %}
+{% assign tag_display_label = "" %}
+{% assign tag_display_color = "" %}
+{% assign tag_display_bg = "" %}
+{% if product_tags contains "display_" %}
+  {%- for tag in product.tags -%}
+    {%- if tag contains "display_" or tag contains "Display_" -%}
+      {% assign tag_display_arr = tag | split: "_" %}
+      {%- if tag_display_arr != '' -%}
+        {% assign tag_display_label = tag_display_arr[1] %}
+        {% assign tag_display_color = tag_display_arr[2] %}
+        {% assign tag_display_bg = tag_display_arr[3] %}
+      {%- endif -%}
+      {% break %}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {% if tag_display_label != "" %}
+    <span class="tags-name tags-custom" style="background: {{ tag_display_bg }};color: {{ tag_display_color }}">{{ tag_display_label }}</span>
+  {% endif %}
+{% endif %}
+
+{%- if shop.locale == 'th' -%}
+    {%- assign variant_custom_tag = current_variant.metafields.ulife.promotion_label_th -%}
+{%- else -%}
+    {%- assign variant_custom_tag = current_variant.metafields.ulife.promotion_label_en -%}
+{%- endif -%}
+{% assign tag_variant_display_arr = variant_custom_tag | split: "_" %}
+{%- assign price                = current_variant.price -%}
+{%- assign compare_at_price     = current_variant.compare_at_price -%}
+{%- assign compare_member_price = current_variant.metafields.ulife.compare_member_price -%}
+{%- assign member_price         = current_variant.metafields.ulife.member_price -%}
+
+{%- if current_variant.available and variant_custom_tag != blank and tag_variant_display_arr.size > 2 and compare_member_price > member_price or compare_at_price > price -%}
+  {% assign tag_variant_display_label = tag_variant_display_arr[0] %}
+  {% assign tag_variant_display_color = tag_variant_display_arr[1] %}
+  {% assign tag_variant_display_bg = tag_variant_display_arr[2] %}
+  <span class="tags-name tags-custom" data-tag_variant_custom
+   style="background: {{ tag_variant_display_bg }};color: {{ tag_variant_display_color }}">{{ tag_variant_display_label }}</span>
+{%- else -%}
+  <span class="tags-name tags-custom hide" data-tag_variant_custom></span>
+{%- endif -%}

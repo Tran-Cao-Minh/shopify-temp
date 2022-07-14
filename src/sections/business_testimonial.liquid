@@ -1,0 +1,283 @@
+<div class="page__testimonial">
+  <div class="container">
+        {% if section.settings.heading != blank %}
+            <h2 class="h1 title testimonial__title primary_color">{{ section.settings.heading }}</h2>
+        {% endif %}
+      <div class="section-content">
+          {% for block in section.blocks %}
+          <div class="testimonial__item testimonial__item-business">
+            <div class="media">
+              {% if block.settings.mb_img != blank %}
+              <a
+                href="#"
+                class="open__modal-testimonial"
+                data-image="{{ block.settings.mb_img | img_url: 'master' }}"
+                data-content="{{ block.settings.content | escape }}"
+                data-video-url="{{ block.settings.video }}"
+                data-use-video="{{ block.settings.use_video }}"
+                data-title="{{ block.settings.mb_name }}"
+                data-thumb1="{{ block.settings.thumb_img_1 | img_url: 'master' }}"
+                data-thumb2="{{ block.settings.thumb_img_2 | img_url: 'master' }}"
+                data-thumb3="{{ block.settings.thumb_img_3 | img_url: 'master' }}"
+              ></a>
+                <img src="{{ block.settings.mb_img | img_url: "master" }}" alt="{{ block.settings.mb_name }}" />
+              {% else %}
+              <a
+                href="#"
+                class="open__modal-testimonial"
+                data-image="{{ block.settings.mb_img | img_url: 'master' }}"
+                data-content="{{ block.settings.content | escape }}"
+                data-video-url="{{ block.settings.video }}"
+                data-use-video="{{ block.settings.use_video }}"
+                data-title="{{ block.settings.title }}"
+                data-thumb1="{{ block.settings.thumb_img_1 | img_url: 'master' }}"
+                data-thumb2="{{ block.settings.thumb_img_2 | img_url: 'master' }}"
+                data-thumb3="{{ block.settings.thumb_img_3 | img_url: 'master' }}"
+              ></a>
+                <img src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/placeholder_avatar.png?v=1596599608" alt="" />
+              {% endif %}
+              {% if block.settings.hover_content != blank %}
+              <div class="content__hover custom__scrollbar">
+                <h3>{{ block.settings.hover_content }}</h3>
+              </div>
+              {% endif %}
+            </div>
+            <div class="content">
+              <h4 class="testimonial__name primary_color">
+                <a
+                  href="#"
+                  class="open__modal-testimonial"
+                  data-image="{{ block.settings.mb_img | img_url: 'master' }}"
+                  data-content="{{ block.settings.content | escape }}"
+                  data-video-url="{{ block.settings.video }}"
+                  data-use-video="{{ block.settings.use_video }}"
+                  data-title="{{ block.settings.title }}"
+                  data-thumb1="{{ block.settings.thumb_img_1 | img_url: 'master' }}"
+                  data-thumb2="{{ block.settings.thumb_img_2 | img_url: 'master' }}"
+                  data-thumb3="{{ block.settings.thumb_img_3 | img_url: 'master' }}"
+                >{{ block.settings.title }}</a>
+              </h4>
+              <div class="testimonial__intro">{{ block.settings.mb_intro }}</div>
+              <span
+                class="testimonial__viewmore"
+                data-image="{{ block.settings.mb_img | img_url: 'master' }}"
+                data-content="{{ block.settings.content | escape }}"
+                data-video-url="{{ block.settings.video }}"
+                data-use-video="{{ block.settings.use_video }}"
+                data-title="{{ block.settings.title }}"
+                data-thumb1="{{ block.settings.thumb_img_1 | img_url: 'master' }}"
+                data-thumb2="{{ block.settings.thumb_img_2 | img_url: 'master' }}"
+                data-thumb3="{{ block.settings.thumb_img_3 | img_url: 'master' }}"
+                title="{{ 'general.tooltip.read_more' | t }}"
+              >{% render 'icon-arrow-right2' %}</span>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+  <!-- Modal content -->
+  <div class="testimonial-modal testimonial-modal__business smart_modal">
+    <div class="modal-content">
+      <span class="close drawer__close" title="{{ 'general.tooltip.close' | t }}"></span>
+      <div class="box-content row"></div>
+    </div>
+  </div>
+  <!-- overaly -->
+  <div class="testimonial-overlay overlay hide"></div>
+</div>
+
+<script type="text/javascript">
+(function() {
+  let DOM = {
+    modal: $('.testimonial-modal'),
+    modalOverlay: $('.testimonial-overlay'),
+    modalContent: $('.testimonial-modal .box-content'),
+    modalClose: $('.testimonial-modal .close'),
+  }
+
+  let DOMStrings = {
+    modal: '.testimonial-modal',
+    modalClose: '.testimonial-modal .close',
+    modalOpen: '.open__modal-testimonial',
+    viewMore: '.testimonial__viewmore'
+  }
+
+  function showModal() {
+    DOM.modal.show();
+    DOM.modalOverlay.removeClass('hide');
+    $('body').addClass('overflow-hidden');
+  }
+
+  function hideModal() {
+    DOM.modal.hide()
+    DOM.modalOverlay.addClass('hide')
+    $('body').removeClass('overflow-hidden');
+  }
+
+  // Open modal
+  $('.open__modal-testimonial, .testimonial__viewmore').on('click', function(e) {
+    e.preventDefault();
+    let data, contentHtml = '';
+    data = {
+      image: $(this).data('image'),
+      content: $(this).data('content'),
+      videoUrl: $(this).data('video-url'),
+      useVideo: $(this).data('use-video'),
+      title: $(this).data('title'),
+      thumb1: $(this).data('thumb1'),
+      thumb2: $(this).data('thumb2'),
+      thumb3: $(this).data('thumb3'),
+    };
+
+    contentHtml = `
+      <div class="left col-sm-5">
+            <iframe src="${data.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <img id="main__image" src="${data.thumb1}" />
+      </div>
+      <div class="right right__testimonial custom__scrollbar col-sm-7">
+        <div class="content-wrap">
+          <div class="header__content custom__scrollbar">
+              <h3 class="title">${data.title}</h3>
+              <p class="content">${data.content}</p>
+          </div>
+          <div class="thumbnail__list">
+              <div class="thumbnail__list-item active" data-type="img">
+                  <img src="${data.thumb1}" alt="">
+              </div>
+              <div class="thumbnail__list-item" data-type="img">
+                  <img src="${data.thumb2}" alt="">
+              </div>
+              <div class="thumbnail__list-item" data-type="img">
+                  <img src="${data.thumb3}" alt="">
+              </div>
+              <div class="thumbnail__list-item" data-type="vid">
+                  <iframe style="pointer-events: none; height: 72px;" src="${data.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    DOM.modalContent.append(contentHtml);
+    showModal();
+    $('.left').addClass('img');
+    // Click thumb show master image
+    $('.thumbnail__list .thumbnail__list-item').each(function() {
+      $(this).on('click', function(e){
+        let src = $(this).children().attr('src');
+        let dataType = $(this).data('type');
+        $('.thumbnail__list-item').removeClass('active');
+        $(e.currentTarget).addClass('active');
+        $('.left').addClass('img');
+        if(dataType == 'img') {
+          $('.left').removeClass('vid');
+        } else if (dataType == 'vid') {
+          $('.left').addClass('vid');
+          $('.left').removeClass('img');
+        }
+        $('#main__image').attr('src', src);
+      })
+    });
+  });
+
+  // Close modal
+  $(document).on('click', `${DOMStrings.modal}, ${DOMStrings.modalClose}`, function(e) {
+    if(e.target.className.includes('testimonial-modal') || e.target.className.includes('close')) {
+      hideModal();
+      DOM.modalContent.empty();
+    }
+  });
+
+
+})()
+</script>
+
+  {% schema %}
+  {
+    "name": "Testimonial List",
+    "class": "index-section home-business_testimonial",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading Text",
+        "default": "What our members think about Unilever Life"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "member",
+        "name": "Member",
+        "settings": [
+          {
+            "type": "header",
+            "content": "General"
+          },
+          {
+            "type": "image_picker",
+            "id": "mb_img",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name",
+            "default": "Member Name"
+          },
+          {
+            "type": "richtext",
+            "id": "mb_intro",
+            "label": "Intro",
+            "default": "<p>“ Lorem ipsum dolor sit amet, consectet adi iscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit ”</p>"
+          },
+          {
+            "type": "text",
+            "id": "hover_content",
+            "label": "Title when hover",
+            "default": "Hello"
+          },
+          {
+            "type": "header",
+            "content": "Modal settings"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+          },
+          {
+            "type": "header",
+            "content": "Thumbnail settings"
+          },
+          {
+            "type": "image_picker",
+            "id": "thumb_img_1",
+            "label": "Image 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "thumb_img_2",
+            "label": "Image 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "thumb_img_3",
+            "label": "Image 3"
+          },
+          {
+            "type": "text",
+            "id": "video",
+            "label": "Video URL",
+            "default": "https://www.youtube.com/embed/LPDVrUw5unM",
+            "info": "Use youtube embed video url. Exam: https://www.youtube.com/embed/LPDVrUw5unM"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

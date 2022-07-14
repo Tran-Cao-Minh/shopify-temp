@@ -1,0 +1,42 @@
+<option selected value="">{{ 'order_form.general.category' | t }}</option>
+{% for block in section.blocks %}
+  {% if block.settings.collection != blank %}
+      {%- assign collection = collections[block.settings.collection] -%}
+      <option value="{{ collection.id }}">{{ collection.title }}</option>
+  {% endif %}
+{% endfor %}
+{% schema %}
+{
+  "name": {
+    "en": "Category List",
+    "th": "รายการหมวดหมู่"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "CategoryList",
+      "label": "Collections",
+      "default": "Collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": {
+          "en": "Collection",
+          "th": "คอลเลกชัน"
+      },
+      "settings": [
+        {
+          "label": {
+            "en": "Collection",
+            "th": "คอลเลกชัน"
+          },
+          "id": "collection",
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

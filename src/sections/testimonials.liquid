@@ -1,0 +1,144 @@
+<section class="testimonials">
+  <div class="container">
+    <div class="content__wrapper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide">
+            <div class="item text-center">
+              {% if block.settings.rank != blank %}
+                <h3 class="rank">{{ block.settings.rank }}</h3>
+              {% endif %}
+              {% if block.settings.content != blank %}
+                <p class="content">{{ block.settings.content }}</p>
+              {% endif %}
+              {% if block.settings.name %}
+                <h4 class="name">{{ block.settings.name }}</h4>
+              {% endif %}
+              <div class="d-flex justify-content-center">
+                <span class="number_of_review">{{ block.settings.number_review }}</span>
+                <div class="stars show_{{ block.settings.active_star_number }}">
+                  <div class="star__item">{% render 'icon-star' %}</div>
+                  <div class="star__item">{% render 'icon-star' %}</div>
+                  <div class="star__item">{% render 'icon-star' %}</div>
+                  <div class="star__item">{% render 'icon-star' %}</div>
+                  <div class="star__item">{% render 'icon-star' %}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+      <img class="img-top-left" src="{{ 'quotes.png' | asset_img_url: '300x' }}" alt="" />
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": {
+    "en": "Testimonials",
+    "th": "ใบรับรอง"
+  },
+  "max_blocks": 3,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": {
+        "en": "Item",
+        "th": "สิ่งของ"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "rank",
+          "label": {
+            "en": "Rank",
+            "th": "ยศ"
+          },
+          "default": {
+            "en": "Excellence!",
+            "th": "ความเป็นเลิศ"
+          }
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": {
+            "en": "content",
+            "th": "เนื้อหา"
+          },
+          "default": "Lorem ipsum dolor sit amet,consec. dipisci ng elit, sed diam nonummy nibh euismod tinc idunt ut laoree. Lorem ipsum dolor sit amet,consec. dipisci ng elit, sed diam nonummy nibh euismod.nonummy nibh euismod tinc idunt ut laoree. Lorem ipsum dolor "
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": {
+            "en": "Name",
+            "th": "ชื่อ"
+          },
+          "default": "- This Is Name Testimonial"
+        },
+        {
+          "type": "text",
+          "id": "number_review",
+          "label": "Number review",
+          "default": "4.8"
+        },
+        {
+          "type": "select",
+          "id": "active_star_number",
+          "label": "Start rate",
+          "default": "4",
+          "options": [
+            {
+              "value": "1",
+              "label": "1"
+            },
+            {
+              "value": "2",
+              "label": "2"
+            },
+            {
+              "value": "3",
+              "label": "3"
+            },
+            {
+              "value": "4",
+              "label": "4"
+            },
+            {
+              "value": "5",
+              "label": "5"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Testimonials",
+        "th": "ใบรับรอง"
+      },
+      "category": {
+        "en": "Testimonials",
+        "th": "ใบรับรอง"
+      },
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

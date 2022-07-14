@@ -1,0 +1,52 @@
+<div class="swiper-slide {{ class }}">
+    <div class="item">
+        {% if article.image %}
+            {% capture img_id %}ArticleImage-{{ article.image.id }}{% endcapture %}
+            {% capture img_wrapper_id %}ArticleImageWrapper-{{ article.image.id }}{% endcapture %}
+            {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <div id="{{ img_wrapper_id }}" class="article__list-image-wrapper js">
+                <a href="{{ article.url }}" style="padding-top:{{ 0.72 | times: 100 }}%;" class="article__list-image-container">
+                    <img id="{{ img_id }}"
+                        class="article__list-image lazyload"
+                        src="{{ article.image | img_url: '376x278' }}"
+                        data-src="{{ article.image | img_url: '376x278' }}"
+                        data-widths="[180, 360, 540, 720, 905, 1090, 1296, 1512, 1728, 2048]"
+                        data-aspectratio="{{ article.image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="">
+                </a>
+            </div>
+            <noscript>
+                <p>
+                    <a href="{{ article.url }}">
+                        {{ article | img_url: '455x300', scale: 2 | img_tag: article.title }}
+                    </a>
+                </p>
+            </noscript>
+        {% endif %}
+        <div class="content">
+            <span class="date">
+                {% if shop.locale =='th' %}
+                    {% assign data_th = article.published_at | time_tag: format: 'date' | strip_html %}
+                    {% assign data_th_years = data_th | slice: -6, 6 %}
+                    {% assign data_th_dm = data_th | replace: data_th_years, '' %}
+                    {% assign data_th_years = article.published_at | date: "%Y" | strip_html | plus: 543 %}
+                    {{ data_th_dm }} {{ data_th_years }}
+                {% else %}
+                    {{ article.published_at | time_tag: format: 'date' }}
+                {% endif %}
+            </span>
+            <h3 class="article__list-title">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+            </h3>
+            <div class="rte article__list-desc">
+                {% if article.excerpt.size > 0 %}
+                    {{ article.excerpt }}
+                {% else %}
+                    {{ article.content | strip_html | strip | truncate: 250 }}
+                {% endif %}
+            </div>
+            <a class="read__more" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1285 @@
+{% include 'page-validate-customer' %}
+{% include 'customer-title' %}
+<script src="{{ 'location-form.js' | asset_url }}"></script>
+<script src="{{ 'date.js' | asset_url }}"></script>
+<script>
+    let validProducts = {% include 'all-products' %},
+    autoshipProducts = {% include 'all-autoship-products' %},
+
+    orderStatuses = {
+        order_placed: {{ 'order.order_status.order_placed' | t | json }},
+        pending: {{ 'order.order_status.pending' | t | json }},
+        processing: {{ 'order.order_status.processing' | t | json }},
+        partial_prepare_to_ship: {{ 'order.order_status.partial_prepare_to_ship' | t | json }},
+        prepare_to_ship: {{ 'order.order_status.prepare_to_ship' | t | json }},
+        partial_shipped: {{ 'order.order_status.partial_shipped' | t | json }},
+        shipped: {{ 'order.order_status.shipped' | t | json }},
+        picked_at_shop: {{ 'order.order_status.picked_at_shop' | t | json }},
+        canceled: {{ 'order.order_status.canceled' | t | json }},
+    },
+    channelLocalisation = {
+        online: {{ 'order.general.online_channel' | t | json }},
+        offline: {{ 'order.general.offline_channel' | t | json }},
+    },
+    renewString = {
+        currentAutoshipPeriod: {{ 'order.renew.current_autoship_for_order_html' | t | json }},
+        currentMonthlyPayment: {{ 'order.renew.current_monthly_payment_due_date_html' | t | json }},
+        price_change: {{ 'order.renew.price_change_html' | t | json }},
+        period_change: {{ 'order.renew.period_change_html' | t | json }},
+        unavailable: {{ 'order.renew.unavailable_html' | t | json }},
+        period_not_support: {{ 'order.renew.period_not_support_html' | t | json }},
+        promo_not_allow_product: {{ 'order.renew.promo_not_allow_product' | t | json }},
+        note: {{ 'order.renew.note_html' | t | json }},
+        default_product_options: {{ 'order.renew.default_product_options' | t | json }},
+        no_product_options: {{ 'order.renew.no_product_options' | t | json }},
+        currentShippingAddress: {{ 'order.renew.current_shipping_address_in_your_order_html' | t | json }},
+        need_products: {{ 'order.renew.need_products' | t | json }},
+        payment2C2P: {{ 'order.renew.payment_method_2c2p' | t | json }},
+    },
+    autoshipStatus = {
+        Open: {{ 'order.autoship_status.Open' | t | json }},
+        Completed: {{ 'order.autoship_status.Completed' | t | json }},
+        Canceled: {{ 'order.autoship_status.Canceled' | t | json }},
+    }
+</script>
+{% include 'reorder-template' %}
+<div class="page__order-list">
+    <div class="container">
+        <div class="content__header">
+            <h2 class="page__heading"> {{ 'order.order_list.heading' | t }}</h2>
+            <div class="smosc__tab smosc__tab-effect">
+                <div class="smosc__tab-headers">
+                    <ul>
+                        <li><a class="smosc__tab-header active" href="#" data-id="order-history">{{ 'order.order_list.order_history_tab' | t }}</a></li>
+                        <li><a class="smosc__tab-header" href="#" data-id="order-autoship">{{ 'order.order_list.autoship_order_tab' | t }}</a></li>
+                    </ul>
+                </div>
+                <div class="smosc__tab-contents">
+                    <div  class="smosc__tab-content active show-loading" data-id="order-history">
+                        <div class="regular__order-list" data-regular_order_list>
+                            <div class="order__list-no-item">
+                                <div class="media media__no-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="95.298" height="81.083" viewBox="0 0 95.298 81.083">
+                                        <g data-name="Group 2378" transform="translate(-472.561 61.453)">
+                                            <path data-name="Path 392" d="M497.524-47.74v-.606A11.857,11.857,0,0,0,485.668-60.2h0a11.857,11.857,0,0,0-11.857,11.857v.606Z" transform="translate(0)" fill="#f4f4ff" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <path data-name="Path 393" d="M556.154,64.5v1.818A11.857,11.857,0,0,1,544.3,78.174H588.55a11.857,11.857,0,0,0,11.857-11.857V64.5Z" transform="translate(-33.797 -59.794)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <path data-name="Path 394" d="M534.3,6.524V4.706h28.446V-48.346A11.857,11.857,0,0,0,550.891-60.2H498.723v.054a11.857,11.857,0,0,1,10.746,11.8V6.524A11.857,11.857,0,0,0,521.326,18.38h1.118A11.857,11.857,0,0,0,534.3,6.524Z" transform="translate(-11.945)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <g data-name="Group 2373" transform="translate(507.685 -32.751)">
+                                                <line data-name="Line 327" x2="32.887" transform="translate(0 5.92)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <line data-name="Line 328" x2="32.887" transform="translate(0 11.84)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <line data-name="Line 329" x2="16.444" transform="translate(0 17.759)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <path data-name="Path 396" d="M0,0H32.887" transform="translate(0 0)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="content">
+                                    <h3 class="title">{{ 'order.order_list.there_are_no_order_listings' | t }}</h3>
+                                    {%- assign desc_no_order = 'order.order_list.start_purchasing_products_here_html' | t -%}
+                                    {%- assign desc_no_order = desc_no_order | replace: '${collection_url}', routes.collections_url -%}
+                                    <div class="desc">{{ desc_no_order }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-wrap">
+                            <div class="pagination_result-wrap smart_pagination" data-pagination_regular></div>
+                        </div>
+                        <div class="loader" style="margin: 100px auto;" data-regular_order_loading></div>
+                    </div>
+                    <div  class="smosc__tab-content show-loading" data-id="order-autoship">
+                        <div class="regular__order-autoship" data-autoship_order_list>
+                            <div class="order__list-no-item">
+                                <div class="media media__no-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="95.298" height="81.083" viewBox="0 0 95.298 81.083">
+                                        <g data-name="Group 2378" transform="translate(-472.561 61.453)">
+                                            <path data-name="Path 392" d="M497.524-47.74v-.606A11.857,11.857,0,0,0,485.668-60.2h0a11.857,11.857,0,0,0-11.857,11.857v.606Z" transform="translate(0)" fill="#f4f4ff" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <path data-name="Path 393" d="M556.154,64.5v1.818A11.857,11.857,0,0,1,544.3,78.174H588.55a11.857,11.857,0,0,0,11.857-11.857V64.5Z" transform="translate(-33.797 -59.794)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <path data-name="Path 394" d="M534.3,6.524V4.706h28.446V-48.346A11.857,11.857,0,0,0,550.891-60.2H498.723v.054a11.857,11.857,0,0,1,10.746,11.8V6.524A11.857,11.857,0,0,0,521.326,18.38h1.118A11.857,11.857,0,0,0,534.3,6.524Z" transform="translate(-11.945)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                                            <g data-name="Group 2373" transform="translate(507.685 -32.751)">
+                                                <line data-name="Line 327" x2="32.887" transform="translate(0 5.92)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <line data-name="Line 328" x2="32.887" transform="translate(0 11.84)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <line data-name="Line 329" x2="16.444" transform="translate(0 17.759)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                                <path data-name="Path 396" d="M0,0H32.887" transform="translate(0 0)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="content">
+                                    <h3 class="title">{{ 'order.order_list.there_are_no_order_listings' | t }}</h3>
+                                    {%- assign desc_no_order = 'order.order_list.start_purchasing_products_here_html' | t -%}
+                                    {%- assign desc_no_order = desc_no_order | replace: '${collection_url}', collections['vip-subscription'].url -%}
+                                    <div class="desc">{{ desc_no_order }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-wrap">
+                            <div class="pagination_result-wrap smart_pagination" data-pagination_autoship></div>
+                        </div>
+                        <div class="loader" style="margin: 100px auto;" data-autoship_order_loading></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content__body">
+            <div class="error__container">
+                <span class="prd__error-message"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'reorder-modal' %}
+
+<div class="renew__modal smart_modal modal-content__scoll modal_products" id="renew__modal">
+    <div class="modal-center">
+        <div class="modal-content modal-content__padding">
+            <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="content-header">
+                <h2 class="primary_color text-center text-bold">{{ 'order.renew.renew_autoship_title' | t }}</h2>
+            </div>
+            <div class="content__scroll">
+                <div class="renew__form"></div>
+            </div>
+            <div class="modal__loading hide">Loading...</div>
+        </div>
+    </div>
+    <div class="modal__overlay overlay"></div>
+</div>
+
+<script src="{{ 'my-order.js' | asset_url }}"></script>
+<script src="{{ 'reorder.js' | asset_url }}"></script>
+<script src="/apps/eai/js/renew.js"></script>
+<script type="text/html" id="autoship-template">
+    <div class="table-responsive table__order-list">
+        <div class="table_grid autoship_order-table">
+            <div class="table_header">
+                <div class="th">{{ "order.order_list.order_no_html" | t }}</div>
+                <div class="th">{{ "order.order_list.channel_html" | t }}</div>
+                <div class="th">{{ "order.order_list.start_date" | t }}</div>
+                <div class="th">{{ "order.order_list.end_date_html" | t }}</div>
+                <div class="th payment_due_date">{{ "order.order_list.autoship_monthly_due_date_html" | t }}</div>
+                <div class="th">{{ "order.order_list.status_tracking_html" | t }}</div>
+                <div class="th">{{ "order.order_list.cv_qv_html" | t }}</div>
+                <div class="th">{{ "order.order_list.total_html" | t }}</div>
+                <div class="th">{{ "order.order_list.auto_renew_html" | t }}</div>
+                <div class="th">{{ "order.order_list.renew_html" | t }}</div>
+            </div>
+            <div class="table_lists items__listing">
+                <% let index = 0; %>
+                <% for (let autoship of autoships) { %>
+                <div class="table_item table__item-parents">
+                    <div class="td order_id order_id_ax">
+                        <a href="{{ "/pages/order-details/?order_id=<%- autoship.name %>" }}"><%- autoship.name %></a>
+                    </div>
+                    <div class="td order_channel">
+                        <%- autoship.is_online_channel ? '{{ 'order.general.online_channel' | t }}' : '{{ 'order.general.offline_channel' | t }}' %>
+                    </div>
+                    <div class="td order_date order_start_date">
+                        <label>{{ "order.order_list.start_date" | t }}</label><%- window.smartUnilever.Date.localize(autoship.start_date, 'M dd, yyyy',  'dd M yyyy') %>
+                    </div>
+                    <div class="td order_date order_end_date">
+                        <label>{{ "order.order_list.end_date_html" | t }}</label><%- autoship.end_date !== 'TBC' ? window.smartUnilever.Date.localize(autoship.end_date, 'M dd, yyyy',  'dd M yyyy') :
+                        "{{ 'order.tbc' | t }}" %>
+                    </div>
+                    <div class="td payment_due_date">
+                        <label>{{ "order.order_list.autoship_monthly_due_date_html" | t }}</label>
+                        <span><%- autoship.payment_date %><sup>th</sup></span>
+                    </div>
+                    <div class="td order_status">
+                        <label>{{ "order.order_list.status_tracking_html" | t }}</label>
+                        <a href="#" class="link-readmore text-underline see__children--btn"
+                            data-application="<%- autoship.application_id %>"
+                            data-parent="<%- autoship.ax_order_id %>">
+                                <%- autoshipStatus[autoship.status] %><svg class="icon icon-chevron-down" xmlns="http://www.w3.org/2000/svg" width="14.874" height="8.502" viewBox="0 0 14.874 8.502">
+                                <g data-name="Group 2104" transform="translate(94.336 0.544) rotate(90)">
+                                    <path data-name="Path 76" d="M.419.067a.257.257,0,0,0-.347,0,.244.244,0,0,0,0,.346L6.558,6.9.072,13.385a.244.244,0,0,0,0,.347.258.258,0,0,0,.347,0L7.251,6.9Z" transform="translate(0 80)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+                                </g>
+                                </svg>
+                        </a>
+                    </div>
+                    <div class="td order_cv_qv"><label>{{ "order.order_list.cv_qv_html" | t }}</label><%- autoship.cv %> | <%- autoship.qv %></div>
+                    <div class="td order_total">
+                        <label>{{ "order.order_list.total_html" | t }}</label>
+                        <div class="price"><%= theme.Currency.formatMoney(autoship.grand_total * 100, theme.moneyFormat) %></div>
+                    </div>
+                    <div class="td order_renew">
+                        <label>{{ "order.order_list.auto_renew_html" | t }}</label>
+                        <% if(autoship.is_auto_renew != 0) { %>
+                            <p>Yes</p>
+                        <% } else { %>
+                            <p>No</p>
+                        <% } %>
+                    </div>
+                    <div class="td renew">
+                        <% if(autoship.is_renewable) { %>
+                            <button type="button" class="btn btn-primary smart_modal_open renew__btn"
+                            data-target="#renew__modal"
+                            data-index="<%- index %>"
+                            >{{ "order.order_list.renew_button_html" | t }}
+                            </button>
+                        <% } %>
+                    </div>
+
+                    <div class="children__orders hide" data-application="<%- autoship.application_id %>" data-parent="<%- autoship.ax_order_id %>">
+                        <span class="close drawer__close drawer__close-large see__children--btn"
+                            data-application="<%- autoship.application_id %>"
+                            data-parent="<%- autoship.ax_order_id %>"></span>
+                        <div class="table-responsive">
+                            <div class="autoship_order-table table_grid">
+                                <div class="table_header">
+                                    <div class="th order_id">{{ "order.order_list.monthly_order_html" | t }}</div>
+                                    <div class="th order_products">{{ "order.order_list.vip_subscription_products" | t }}</div>
+                                    <div class="th order_round">{{ "order.order_list.round" | t }}</div>
+                                    <div class="th order_recurring_date">{{ "order.order_list.recurring_date" | t }}</div>
+                                    <div class="th order__status-children">{{ "order.order_list.children_status_tracking_html" | t }}</div>
+                                </div>
+                            </div>
+                            <div class="table_lists table_grid">
+                                <% for (let order of autoship.orders) { %>
+                                    <div class="table_item">
+                                        <div class="td order_id"><a href="/pages/order-details?order_id=<%- autoship.ax_order_id %>&cycle=<%- order.round %>"><%- autoship.name %>-<%- order.round %></a></div>
+                                        <div class="td order_products">
+                                            <% for (let order_item of autoship.items) { %>
+                                                <p><%- order_item.sku %></p>
+                                            <% } %>
+                                        </div>
+                                        <div class="td order_round"><%- _.toString(parseInt(order.round) + 1).padStart(2, "0") %></div>
+                                        <div class="td order_recurring_date"><%- window.smartUnilever.Date.localize(order.recurring_date, 'M dd, yyyy',  'dd M yyyy') %></div>
+                                        <div class="td order__status-children">
+                                            <p><%- orderStatuses[order.status] %></p>
+                                            <% if (order.tracking_url) { %>
+                                            <% let urls = order.tracking_url; %>
+                                            <% for (let name in urls) { %>
+                                                <a class="link-readmore text-underline" href="<%= urls[name] %>" target="_blank"><%- name %></a>
+                                            <% } %>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <% index++; %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="regular-template">
+    <div class="table-responsive table__order-list">
+        <div class="table_grid order__regular-table">
+            <div class="table_header">
+                <div class="th">{{ "order.order_list.order_no_html" | t }}</div>
+                <div class="th">{{ "order.order_list.channel_html" | t }}</div>
+                <div class="th">{{ "order.order_list.order_date_html" | t }}</div>
+                <div class="th">{{ "order.order_list.payment_method_html" | t }}</div>
+                <div class="th">{{ "order.order_list.status_tracking_html" | t }}</div>
+                <div class="th">{{ "order.order_list.cv_qv_html" | t }}</div>
+                <div class="th">{{ "order.order_list.total_html" | t }}</div>
+                <div class="th">{{ "order.order_list.reorder_html" | t }}</div>
+            </div>
+            <div class="table_lists items__listing">
+                <% for (let order of orders) { %>
+                    <div class="table_item<% if (order.grand_total < 0) { %> return_order<% } %>">
+                        <div class="td order_id">
+                            <a href="{{ pages['order-details'].url }}?order_id=<%- order.id %>"><%- order.id %></a>
+                        </div>
+                        <div class="td order_channel"><%- order.is_online_channel ? channelLocalisation['online'] : channelLocalisation['offline'] %></div>
+                        <div class="td order_date">
+                            <label>{{ "order.order_list.order_date_html" | t }}</label><%- window.smartUnilever.Date.localize(order.formatted_created_at, 'M dd, yyyy',  'dd M yyyy') %>
+                        </div>
+                        <div class="td order_payment_method">
+                            <label>{{ "order.order_list.payment_method_html" | t }}</label>
+                            <% if (order.grand_total < 0) { %>
+                                -
+                            <% } else { %>
+                                <%- order.payment_method %>
+                            <% } %>
+                        </div>
+                        <div class="td order_status">
+                            <% if (order.grand_total < 0) { %>
+                                {{ "order.order_status.return" | t }}
+                            <% } else { %>
+                                <% if (!order.tracking_url) { %>
+                                    <%- orderStatuses[order.status] %>
+                                <% } else { %>
+                                    <a class="link-readmore text-underline" href="<%= order.tracking_url %>" target="_blank"><%- orderStatuses[order.status] %></a>
+                                <% } %>
+                            <% } %>
+                        </div>
+                        <div class="td order_cv_qv">
+                            <% if (order.grand_total < 0) { %>
+                                <label>{{ "order.order_list.cv_qv_html" | t }}</label>-<%- order.total_cv %> | -<%- order.total_qv %></div>
+                            <% } else { %>
+                                <label>{{ "order.order_list.cv_qv_html" | t }}</label><%- order.total_cv %> | <%- order.total_qv %></div>
+                            <% } %>
+                        <div class="td order_total">
+                            <label>{{ "order.order_list.total_html" | t }}</label>
+                            <div class="price"><%= theme.Currency.formatMoney(order.grand_total * 100, theme.moneyFormat) %></div>
+                        </div>
+                        <div class="td order_reorder">
+                            <% if(order.is_reorderable == true && order.grand_total >= 0) { %>
+                                <button type="button" class="btn btn-primary smart_modal_open reorder__btn"
+                                    data-order="<%- order.name %>"
+                                    data-target="#reorder__modal"
+                                    data-items="<%- JSON.stringify(order.items) %>"
+                                    data-link="{{ pages['order-details'].url }}?order_id=<%- order.id %>"
+                                    >{{ "order.order_list.reorder_button" | t }}</button>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="method-template">
+    <div class="form-check">
+        <input class="form-check-input"
+               type="radio"
+               name="payment"
+               id="payment_<%= method.id %>"
+               value="<%= method.id %>"
+            <%= method.attribute %>
+        >
+        <label class="form-check-label" for="payment_<%= method.id %>">
+            <% if (method.type == 'visa') { %>
+            {% render "icon", name: "card-visa" %}
+            <% } else if(method.type == 'master_card') { %>
+            {% render "icon", name: "card-master_card" %}
+            <% } %>
+            <%= method.title %>
+        </label>
+    </div>
+</script>
+{% include 'renew-modal-template' %}
+{% include 'renew-thankyou' %}
+
+<script defer>
+    window.x = () => {
+        let data = [
+            {
+                "name": "13224556",
+                "is_online_channel": true,
+                "ax_order_id": "THUL000281",
+                "shopify_id": "13224556",
+                "orders": [
+                    {
+                        "round": 1,
+                        "cycle_orders": [
+                            {
+                                "id": 102,
+                                "cart_id": "",
+                                "autoship_parent_id": "THUL000281",
+                                "shopify_id": "",
+                                "ax_order_id": "THUL000283",
+                                "order_id_2c2p": null,
+                                "status": "",
+                                "email": "thunt2@smartosc.com",
+                                "national_id": null,
+                                "buyer_id": "0",
+                                "buyer_code": null,
+                                "member_code": "TH0010385",
+                                "promo_code": null,
+                                "subtotal": "51000",
+                                "coupon_codes": null,
+                                "discount_amount": "13515",
+                                "mode_of_delivery": "PICKUP",
+                                "shipment_prefix": null,
+                                "shipping_amount": "0",
+                                "payment_method": "Cash",
+                                "grand_total": "37485",
+                                "total_qv": "0",
+                                "total_cv": "0",
+                                "card_id": null,
+                                "user_defined": null,
+                                "ref_channel": null,
+                                "subscribe": "0",
+                                "is_autoship": "1",
+                                "ax_created_at": "2020-12-24 14:50:02",
+                                "ax_status": "Open Order",
+                                "shipping_vendor": "",
+                                "name": "#1021",
+                                "created_at": "2020-12-24T07:50:02.000000Z",
+                                "updated_at": "2020-12-24T07:50:02.000000Z",
+                                "channel": null,
+                                "locale": "en",
+                                "sync_ax_status": "sync.success",
+                                "payment_suffix": null,
+                                "shipping_status": "processing",
+                                "items": [],
+                                "addresses": [
+                                    {
+                                        "id": 111,
+                                        "order_id": "102",
+                                        "type": "shipping",
+                                        "street": "(สำนักงานใหญ่) 1/23 หมู่ที่ 4  ถนนแจ้งวัฒนะ ตำบลคลองเกลือ",
+                                        "city": "728",
+                                        "state": "728",
+                                        "zipcode": "11120",
+                                        "first_name": "หจก. ยูนิค เบสท์ ซิสเต็มส์",
+                                        "last_name": null,
+                                        "phone": "036 614 423",
+                                        "state_title": "Nonthaburi",
+                                        "city_title": "",
+                                        "state_details": {
+                                            "id": 728,
+                                            "th_name": "นนทบุรี",
+                                            "en_name": "Nonthaburi",
+                                            "visible": true,
+                                            "code": "TH-12"
+                                        },
+                                        "city_details": null
+                                    },
+                                    {
+                                        "id": 112,
+                                        "order_id": "102",
+                                        "type": "billing",
+                                        "street": "1/23 หมู่ที่ 4  ถนนแจ้งวัฒนะ ตำบลคลองเกลือ",
+                                        "city": "11525",
+                                        "state": "728",
+                                        "zipcode": "11120",
+                                        "first_name": "หจก. ยูนิค เบสท์ ซิสเต็มส์",
+                                        "last_name": null,
+                                        "phone": "02 525 1965",
+                                        "state_title": "Nonthaburi",
+                                        "city_title": "Pak Kret",
+                                        "state_details": {
+                                            "id": 728,
+                                            "th_name": "นนทบุรี",
+                                            "en_name": "Nonthaburi",
+                                            "visible": true,
+                                            "code": "TH-12"
+                                        },
+                                        "city_details": {
+                                            "id": 11525,
+                                            "state_id": "728",
+                                            "th_name": "ปากเกร็ด",
+                                            "en_name": "Pak Kret",
+                                            "visible": true,
+                                            "postal_codes": [
+                                                {
+                                                    "id": 86,
+                                                    "city_id": "11525",
+                                                    "code": "11120",
+                                                    "visible": true,
+                                                    "relative_code": "11120"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "customer": {
+                                    "id": 315,
+                                    "shopify_id": "5033702654118",
+                                    "status": "active",
+                                    "hold_status": "No",
+                                    "ax_code": "TH0010385",
+                                    "sponsor_code": "THU0010388",
+                                    "first_name": "Phuong",
+                                    "middle_name": "Minh",
+                                    "last_name": "Nguyen",
+                                    "email": "Phuonglm@smartosc.com",
+                                    "dob": "1998-05-31",
+                                    "gender": "Female",
+                                    "bank_account": "SCB",
+                                    "bank_account_name": "Siam Commercial Bank",
+                                    "bank_account_number": "4068769359",
+                                    "national_id": "3801300141074",
+                                    "group": "BP",
+                                    "password": "$2y$10$d8wT1miqUtDj9eoKKjiwB.k6vns/togzJYSfGioVTn.lu9sFIxQja",
+                                    "line_id": null,
+                                    "created_at": "04/01/2021",
+                                    "updated_at": "2021-03-19T06:19:40.000000Z",
+                                    "associate_national_id": null,
+                                    "additional_line_id": null,
+                                    "nick_name": "jun",
+                                    "facebook": "facebook.com",
+                                    "introduction": null,
+                                    "language": null,
+                                    "avatar_path": "storage/customer/avatar/1615536858_review-bst-son-ofelia-cotton-lip-cream-moi-ra-mat-mau-nao-dep-3.jpg",
+                                    "title_code": "BP",
+                                    "placement_sponsor_code": "THU00390",
+                                    "line_user_id": "Uf03883031",
+                                    "card_default": null,
+                                    "addresses": [
+                                        {
+                                            "id": 539,
+                                            "customer_id": "315",
+                                            "type": "Shipping",
+                                            "street": "Bai Dinh",
+                                            "district": "Bich Dong",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "0667599555",
+                                            "country_code": "TH",
+                                            "fax": "0328585202",
+                                            "full_address": "Bai Dinh, Bich Dong, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        },
+                                        {
+                                            "id": 540,
+                                            "customer_id": "315",
+                                            "type": "Billing",
+                                            "street": "Quan Nho",
+                                            "district": "Ninh Binh",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "066337499666",
+                                            "country_code": "TH",
+                                            "fax": "0328585818",
+                                            "full_address": "Quan Nho, Ninh Binh, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        }
+                                    ],
+                                    "representative": {
+                                        "id": 2,
+                                        "ax_code": "TH0010385",
+                                        "recommend": "1",
+                                        "first_name": "Phuong",
+                                        "last_name": "Nguyen",
+                                        "email": "Phuonglm@smartosc.com"
+                                    }
+                                }
+                            },
+                            {
+                                "id": 103,
+                                "cart_id": "",
+                                "autoship_parent_id": "THUL000281",
+                                "shopify_id": "",
+                                "ax_order_id": "THUL000284",
+                                "order_id_2c2p": null,
+                                "status": "",
+                                "email": "",
+                                "national_id": null,
+                                "buyer_id": "0",
+                                "buyer_code": null,
+                                "member_code": "TH0010385",
+                                "promo_code": null,
+                                "subtotal": "20400",
+                                "coupon_codes": null,
+                                "discount_amount": "5406",
+                                "mode_of_delivery": "PICKUP",
+                                "shipment_prefix": null,
+                                "shipping_amount": "0",
+                                "payment_method": "Cash",
+                                "grand_total": "14994",
+                                "total_qv": "0",
+                                "total_cv": "0",
+                                "card_id": null,
+                                "user_defined": null,
+                                "ref_channel": null,
+                                "subscribe": "0",
+                                "is_autoship": "0",
+                                "ax_created_at": "2020-12-24 14:50:02",
+                                "ax_status": "Delivery",
+                                "shipping_vendor": "",
+                                "name": "#1022",
+                                "created_at": "2020-12-24T07:50:02.000000Z",
+                                "updated_at": "2020-12-24T07:50:02.000000Z",
+                                "channel": null,
+                                "locale": "en",
+                                "sync_ax_status": "sync.success",
+                                "payment_suffix": null,
+                                "shipping_status": "prepare_to_ship",
+                                "items": [],
+                                "addresses": [],
+                                "customer": {
+                                    "id": 315,
+                                    "shopify_id": "5033702654118",
+                                    "status": "active",
+                                    "hold_status": "No",
+                                    "ax_code": "TH0010385",
+                                    "sponsor_code": "THU0010388",
+                                    "first_name": "Phuong",
+                                    "middle_name": "Minh",
+                                    "last_name": "Nguyen",
+                                    "email": "Phuonglm@smartosc.com",
+                                    "dob": "1998-05-31",
+                                    "gender": "Female",
+                                    "bank_account": "SCB",
+                                    "bank_account_name": "Siam Commercial Bank",
+                                    "bank_account_number": "4068769359",
+                                    "national_id": "3801300141074",
+                                    "group": "BP",
+                                    "password": "$2y$10$d8wT1miqUtDj9eoKKjiwB.k6vns/togzJYSfGioVTn.lu9sFIxQja",
+                                    "line_id": null,
+                                    "created_at": "04/01/2021",
+                                    "updated_at": "2021-03-19T06:19:40.000000Z",
+                                    "associate_national_id": null,
+                                    "additional_line_id": null,
+                                    "nick_name": "jun",
+                                    "facebook": "facebook.com",
+                                    "introduction": null,
+                                    "language": null,
+                                    "avatar_path": "storage/customer/avatar/1615536858_review-bst-son-ofelia-cotton-lip-cream-moi-ra-mat-mau-nao-dep-3.jpg",
+                                    "title_code": "BP",
+                                    "placement_sponsor_code": "THU00390",
+                                    "line_user_id": "Uf03883031",
+                                    "card_default": null,
+                                    "addresses": [
+                                        {
+                                            "id": 539,
+                                            "customer_id": "315",
+                                            "type": "Shipping",
+                                            "street": "Bai Dinh",
+                                            "district": "Bich Dong",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "0667599555",
+                                            "country_code": "TH",
+                                            "fax": "0328585202",
+                                            "full_address": "Bai Dinh, Bich Dong, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        },
+                                        {
+                                            "id": 540,
+                                            "customer_id": "315",
+                                            "type": "Billing",
+                                            "street": "Quan Nho",
+                                            "district": "Ninh Binh",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "066337499666",
+                                            "country_code": "TH",
+                                            "fax": "0328585818",
+                                            "full_address": "Quan Nho, Ninh Binh, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        }
+                                    ],
+                                    "representative": {
+                                        "id": 2,
+                                        "ax_code": "TH0010385",
+                                        "recommend": "1",
+                                        "first_name": "Phuong",
+                                        "last_name": "Nguyen",
+                                        "email": "Phuonglm@smartosc.com"
+                                    }
+                                }
+                            }
+                        ],
+                        "recurring_date": "Dec 24, 2020",
+                        "status": "prepare_to_ship",
+                        "payment_status": "FAKE"
+                    },
+                    {
+                        "round": 2,
+                        "cycle_orders": [
+                            {
+                                "id": 105,
+                                "cart_id": "",
+                                "autoship_parent_id": "THUL000281",
+                                "shopify_id": "1231242",
+                                "ax_order_id": "THUL000285",
+                                "order_id_2c2p": null,
+                                "status": "",
+                                "email": "",
+                                "national_id": null,
+                                "buyer_id": "0",
+                                "buyer_code": null,
+                                "member_code": "TH0010385",
+                                "promo_code": null,
+                                "subtotal": "51000",
+                                "coupon_codes": null,
+                                "discount_amount": "13515",
+                                "mode_of_delivery": "PICKUP",
+                                "shipment_prefix": null,
+                                "shipping_amount": "0",
+                                "payment_method": "Cash",
+                                "grand_total": "37485",
+                                "total_qv": "0",
+                                "total_cv": "0",
+                                "card_id": null,
+                                "user_defined": null,
+                                "ref_channel": null,
+                                "subscribe": "0",
+                                "is_autoship": "0",
+                                "ax_created_at": "2021-01-24 14:50:02",
+                                "ax_status": null,
+                                "shipping_vendor": "",
+                                "name": "#1024",
+                                "created_at": "2020-12-25T06:07:37.000000Z",
+                                "updated_at": "2020-12-25T06:07:37.000000Z",
+                                "channel": null,
+                                "locale": "en",
+                                "sync_ax_status": "sync.success",
+                                "payment_suffix": null,
+                                "shipping_status": "processing",
+                                "items": [],
+                                "addresses": [],
+                                "customer": {
+                                    "id": 315,
+                                    "shopify_id": "5033702654118",
+                                    "status": "active",
+                                    "hold_status": "No",
+                                    "ax_code": "TH0010385",
+                                    "sponsor_code": "THU0010388",
+                                    "first_name": "Phuong",
+                                    "middle_name": "Minh",
+                                    "last_name": "Nguyen",
+                                    "email": "Phuonglm@smartosc.com",
+                                    "dob": "1998-05-31",
+                                    "gender": "Female",
+                                    "bank_account": "SCB",
+                                    "bank_account_name": "Siam Commercial Bank",
+                                    "bank_account_number": "4068769359",
+                                    "national_id": "3801300141074",
+                                    "group": "BP",
+                                    "password": "$2y$10$d8wT1miqUtDj9eoKKjiwB.k6vns/togzJYSfGioVTn.lu9sFIxQja",
+                                    "line_id": null,
+                                    "created_at": "04/01/2021",
+                                    "updated_at": "2021-03-19T06:19:40.000000Z",
+                                    "associate_national_id": null,
+                                    "additional_line_id": null,
+                                    "nick_name": "jun",
+                                    "facebook": "facebook.com",
+                                    "introduction": null,
+                                    "language": null,
+                                    "avatar_path": "storage/customer/avatar/1615536858_review-bst-son-ofelia-cotton-lip-cream-moi-ra-mat-mau-nao-dep-3.jpg",
+                                    "title_code": "BP",
+                                    "placement_sponsor_code": "THU00390",
+                                    "line_user_id": "Uf03883031",
+                                    "card_default": null,
+                                    "addresses": [
+                                        {
+                                            "id": 539,
+                                            "customer_id": "315",
+                                            "type": "Shipping",
+                                            "street": "Bai Dinh",
+                                            "district": "Bich Dong",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "0667599555",
+                                            "country_code": "TH",
+                                            "fax": "0328585202",
+                                            "full_address": "Bai Dinh, Bich Dong, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        },
+                                        {
+                                            "id": 540,
+                                            "customer_id": "315",
+                                            "type": "Billing",
+                                            "street": "Quan Nho",
+                                            "district": "Ninh Binh",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "066337499666",
+                                            "country_code": "TH",
+                                            "fax": "0328585818",
+                                            "full_address": "Quan Nho, Ninh Binh, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        }
+                                    ],
+                                    "representative": {
+                                        "id": 2,
+                                        "ax_code": "TH0010385",
+                                        "recommend": "1",
+                                        "first_name": "Phuong",
+                                        "last_name": "Nguyen",
+                                        "email": "Phuonglm@smartosc.com"
+                                    }
+                                }
+                            },
+                            {
+                                "id": 106,
+                                "cart_id": "",
+                                "autoship_parent_id": "THUL000281",
+                                "shopify_id": "123",
+                                "ax_order_id": "THUL000286",
+                                "order_id_2c2p": null,
+                                "status": "",
+                                "email": "",
+                                "national_id": null,
+                                "buyer_id": "0",
+                                "buyer_code": null,
+                                "member_code": "TH0010385",
+                                "promo_code": null,
+                                "subtotal": "51000",
+                                "coupon_codes": null,
+                                "discount_amount": "13515",
+                                "mode_of_delivery": "PICKUP",
+                                "shipment_prefix": null,
+                                "shipping_amount": "0",
+                                "payment_method": "Cash",
+                                "grand_total": "37485",
+                                "total_qv": "0",
+                                "total_cv": "0",
+                                "card_id": null,
+                                "user_defined": null,
+                                "ref_channel": null,
+                                "subscribe": "0",
+                                "is_autoship": "0",
+                                "ax_created_at": "2021-01-24 14:50:02",
+                                "ax_status": "Canceled",
+                                "shipping_vendor": "",
+                                "name": "#1025",
+                                "created_at": "2020-12-25T06:07:37.000000Z",
+                                "updated_at": "2020-12-25T06:07:37.000000Z",
+                                "channel": null,
+                                "locale": "en",
+                                "sync_ax_status": "sync.success",
+                                "payment_suffix": null,
+                                "shipping_status": "canceled",
+                                "items": [],
+                                "addresses": [],
+                                "customer": {
+                                    "id": 315,
+                                    "shopify_id": "5033702654118",
+                                    "status": "active",
+                                    "hold_status": "No",
+                                    "ax_code": "TH0010385",
+                                    "sponsor_code": "THU0010388",
+                                    "first_name": "Phuong",
+                                    "middle_name": "Minh",
+                                    "last_name": "Nguyen",
+                                    "email": "Phuonglm@smartosc.com",
+                                    "dob": "1998-05-31",
+                                    "gender": "Female",
+                                    "bank_account": "SCB",
+                                    "bank_account_name": "Siam Commercial Bank",
+                                    "bank_account_number": "4068769359",
+                                    "national_id": "3801300141074",
+                                    "group": "BP",
+                                    "password": "$2y$10$d8wT1miqUtDj9eoKKjiwB.k6vns/togzJYSfGioVTn.lu9sFIxQja",
+                                    "line_id": null,
+                                    "created_at": "04/01/2021",
+                                    "updated_at": "2021-03-19T06:19:40.000000Z",
+                                    "associate_national_id": null,
+                                    "additional_line_id": null,
+                                    "nick_name": "jun",
+                                    "facebook": "facebook.com",
+                                    "introduction": null,
+                                    "language": null,
+                                    "avatar_path": "storage/customer/avatar/1615536858_review-bst-son-ofelia-cotton-lip-cream-moi-ra-mat-mau-nao-dep-3.jpg",
+                                    "title_code": "BP",
+                                    "placement_sponsor_code": "THU00390",
+                                    "line_user_id": "Uf03883031",
+                                    "card_default": null,
+                                    "addresses": [
+                                        {
+                                            "id": 539,
+                                            "customer_id": "315",
+                                            "type": "Shipping",
+                                            "street": "Bai Dinh",
+                                            "district": "Bich Dong",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "0667599555",
+                                            "country_code": "TH",
+                                            "fax": "0328585202",
+                                            "full_address": "Bai Dinh, Bich Dong, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        },
+                                        {
+                                            "id": 540,
+                                            "customer_id": "315",
+                                            "type": "Billing",
+                                            "street": "Quan Nho",
+                                            "district": "Ninh Binh",
+                                            "city": "11569",
+                                            "state": "733",
+                                            "zipcode": "12000",
+                                            "telephone": "066337499666",
+                                            "country_code": "TH",
+                                            "fax": "0328585818",
+                                            "full_address": "Quan Nho, Ninh Binh, Mueang Pathum Thani, Pathum Thani, 12000",
+                                            "state_title": "Pathum Thani",
+                                            "city_title": "Mueang Pathum Thani",
+                                            "city_details": {
+                                                "id": 11569,
+                                                "state_id": "733",
+                                                "th_name": "เมืองปทุมธานี",
+                                                "en_name": "Mueang Pathum Thani",
+                                                "visible": true,
+                                                "postal_codes": [
+                                                    {
+                                                        "id": 90,
+                                                        "city_id": "11569",
+                                                        "code": "12000",
+                                                        "visible": true,
+                                                        "relative_code": "12000"
+                                                    }
+                                                ]
+                                            },
+                                            "state_details": {
+                                                "id": 733,
+                                                "th_name": "ปทุมธานี",
+                                                "en_name": "Pathum Thani",
+                                                "visible": true,
+                                                "code": "TH-13"
+                                            }
+                                        }
+                                    ],
+                                    "representative": {
+                                        "id": 2,
+                                        "ax_code": "TH0010385",
+                                        "recommend": "1",
+                                        "first_name": "Phuong",
+                                        "last_name": "Nguyen",
+                                        "email": "Phuonglm@smartosc.com"
+                                    }
+                                }
+                            }
+                        ],
+                        "recurring_date": "Jan 24, 2021",
+                        "status": "prepare_to_ship",
+                        "payment_status": "FAKE"
+                    }
+                ],
+                "payment_date": "6",
+                "start_date": "Apr 01, 2020",
+                "end_date": "Jun 04, 2020",
+                "qv": "0",
+                "cv": "0",
+                "grand_total": "37485",
+                "is_auto_renew": "0",
+                "status": "Open",
+                "items": [
+                    {
+                        "id": 11070,
+                        "order_id": "101",
+                        "sku": "A006_29999995",
+                        "title": "Product test3",
+                        "price": "0.00",
+                        "qty": "1",
+                        "discount": "0.00",
+                        "total": "0",
+                        "property": null,
+                        "qv": "0",
+                        "cv": "0",
+                        "uom": null,
+                        "variant_title": "06 months",
+                        "product_image": "",
+                        "product": {
+                            "id": 145,
+                            "enable": "1",
+                            "is_auto_ship": "1",
+                            "sku": "A006_29999995",
+                            "inventory": "496",
+                            "QV": "10",
+                            "CV": "100",
+                            "weight": "0.50",
+                            "product_id": "6609410162854",
+                            "handle": "product-test3",
+                            "variant_id": "39530183557286",
+                            "price": "880.00",
+                            "compare_price": "800.00",
+                            "member_price": "100.00",
+                            "compare_member_price": "150.00",
+                            "option1": "06 months",
+                            "option2": null,
+                            "option3": null,
+                            "free_ship": "0",
+                            "variant_type": "Period",
+                            "created_at": "2021-03-20T01:26:15.000000Z",
+                            "updated_at": "2021-03-20T03:23:34.000000Z",
+                            "period": "6",
+                            "title": "Product test3",
+                            "en_title": "Product test3",
+                            "th_title": "",
+                            "min_price": "880.00",
+                            "image_src": "",
+                            "min_member_price": "100.00",
+                            "image": null
+                        },
+                        "variant": {
+                            "id": 145,
+                            "enable": "1",
+                            "is_auto_ship": "1",
+                            "sku": "A006_29999995",
+                            "inventory": "496",
+                            "QV": "10",
+                            "CV": "100",
+                            "weight": "0.50",
+                            "product_id": "6609410162854",
+                            "handle": "product-test3",
+                            "variant_id": "39530183557286",
+                            "price": "880.00",
+                            "compare_price": "800.00",
+                            "member_price": "100.00",
+                            "compare_member_price": "150.00",
+                            "option1": "06 months",
+                            "option2": null,
+                            "option3": null,
+                            "free_ship": "0",
+                            "variant_type": "Period",
+                            "created_at": "2021-03-20T01:26:15.000000Z",
+                            "updated_at": "2021-03-20T03:23:34.000000Z",
+                            "period": "6",
+                            "image_src": "",
+                            "image": null
+                        }
+                    },
+                    {
+                        "id": 11071,
+                        "order_id": "101",
+                        "sku": "NY03_29999986",
+                        "title": "beyonde Life Sential Free Omeg @ 3 month",
+                        "price": "2650.00",
+                        "qty": "1",
+                        "discount": "0.00",
+                        "total": "2650",
+                        "property": "<span class=\"display-mb\">ระยะเวลา</span>\n                                                            <span>3 months</span>",
+                        "qv": "28",
+                        "cv": "62",
+                        "uom": null,
+                        "variant_title": "03 months",
+                        "product_image": "https://cdn.shopify.com/s/files/1/0397/0098/8070/products/son_kem_li_2_dau_lemonade_perfect_couple_lip4_93cc11d7d10c40af9904301b225837cb_grande_f0975fe7-874e-4470-9f78-dd48248649a0.jpg?v=1614",
+                        "product": {
+                            "id": 79,
+                            "enable": "1",
+                            "is_auto_ship": "1",
+                            "sku": "NY03_29999986",
+                            "inventory": "7",
+                            "QV": "28",
+                            "CV": "62",
+                            "weight": "0.01",
+                            "product_id": "6157126664358",
+                            "handle": "beyonde-life-sential-free-omeg-3-month",
+                            "variant_id": "37873242112166",
+                            "price": "2650.00",
+                            "compare_price": "2650.00",
+                            "member_price": "2650.00",
+                            "compare_member_price": "2650.00",
+                            "option1": "03 months",
+                            "option2": null,
+                            "option3": null,
+                            "free_ship": "0",
+                            "variant_type": "Period",
+                            "created_at": "2021-02-22T06:45:16.000000Z",
+                            "updated_at": "2021-03-19T10:44:03.000000Z",
+                            "period": "3",
+                            "title": "beyonde Life Sential Free Omeg @ 3 month",
+                            "en_title": "beyonde Life Sential Free Omeg @ 3 month",
+                            "th_title": "บียอนด์ ไลฟ์ เซนเชียล แถมฟรี โอเมก 3 พลัส เดือนที่ 3 และ 6",
+                            "min_price": "2650.00",
+                            "image_src": "https://cdn.shopify.com/s/files/1/0397/0098/8070/products/son_kem_li_2_dau_lemonade_perfect_couple_lip4_93cc11d7d10c40af9904301b225837cb_grande_f0975fe7-874e-4470-9f78-dd48248649a0.jpg?v=1614",
+                            "min_member_price": "2650.00",
+                            "image": {
+                                "id": 1009,
+                                "image_id": "27929771933862",
+                                "entity_id": "6157126664358",
+                                "src": "https://cdn.shopify.com/s/files/1/0397/0098/8070/products/son_kem_li_2_dau_lemonade_perfect_couple_lip4_93cc11d7d10c40af9904301b225837cb_grande_f0975fe7-874e-4470-9f78-dd48248649a0.jpg?v=1614",
+                                "imageable_type": "App\\Product",
+                                "imageable_id": "79"
+                            }
+                        },
+                        "variant": {
+                            "id": 79,
+                            "enable": "1",
+                            "is_auto_ship": "1",
+                            "sku": "NY03_29999986",
+                            "inventory": "7",
+                            "QV": "28",
+                            "CV": "62",
+                            "weight": "0.01",
+                            "product_id": "6157126664358",
+                            "handle": "beyonde-life-sential-free-omeg-3-month",
+                            "variant_id": "37873242112166",
+                            "price": "2650.00",
+                            "compare_price": "2650.00",
+                            "member_price": "2650.00",
+                            "compare_member_price": "2650.00",
+                            "option1": "03 months",
+                            "option2": null,
+                            "option3": null,
+                            "free_ship": "0",
+                            "variant_type": "Period",
+                            "created_at": "2021-02-22T06:45:16.000000Z",
+                            "updated_at": "2021-03-19T10:44:03.000000Z",
+                            "period": "3",
+                            "image_src": "https://cdn.shopify.com/s/files/1/0397/0098/8070/products/son_kem_li_2_dau_lemonade_perfect_couple_lip4_93cc11d7d10c40af9904301b225837cb_grande_f0975fe7-874e-4470-9f78-dd48248649a0.jpg?v=1614",
+                            "image": {
+                                "id": 1010,
+                                "image_id": "27929771933862",
+                                "entity_id": "37873242112166",
+                                "src": "https://cdn.shopify.com/s/files/1/0397/0098/8070/products/son_kem_li_2_dau_lemonade_perfect_couple_lip4_93cc11d7d10c40af9904301b225837cb_grande_f0975fe7-874e-4470-9f78-dd48248649a0.jpg?v=1614",
+                                "imageable_type": "App\\ProductVariant",
+                                "imageable_id": "79"
+                            }
+                        }
+                    }
+                ]
+            }
+        ];
+        let template = lodash.template($('#autoship-template').html())
+        $('[data-autoship_order_list]').html(template({autoships: data}))
+    }
+</script>

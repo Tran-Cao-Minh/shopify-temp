@@ -1,0 +1,116 @@
+<footer class="site-footer" role="conteninfo"  data-section-id="{{ section.id }}" data-section-type="footer-section">
+  <div class="container">
+    <div class="site-footer__bottom">
+      <div class="row">
+        {%- if section.settings.copyright_text != blank -%}
+          <div class="col-md-3 col-5">
+            <p class="footer__copyright">{{ section.settings.copyright_text }}</p>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.logo_1 != blank or section.settings.logo_2 != blank or section.settings.logo_3 != blank -%}
+          <div class="col-md-3 col-7">
+            <div class="footer__group-image">
+              {%- if section.settings.logo_1 != blank -%}
+                <a href="{{ section.settings.logo_link_1 | default: "#" }}"><img src="{{ section.settings.logo_1 | img_url: '300x300' }}" alt="" /></a>
+              {%- endif -%}
+              {%- if section.settings.logo_2 != blank -%}
+                <a href="{{ section.settings.logo_link_2 | default: "#" }}"><img src="{{ section.settings.logo_2 | img_url: '300x300' }}" alt="" /></a>
+              {%- endif -%}
+              {%- if section.settings.logo_3 != blank -%}
+                <a href="{{ section.settings.logo_link_3 | default: "#" }}"><img src="{{ section.settings.logo_3 | img_url: '300x300' }}" alt="" /></a>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+        <div class="col-md-6">
+          <ul class="site-footer__linklist list--inline footer__linklist--bottom text-right">
+            {% if shop.locale =='th' %}
+              {% assign menu_footer_bottom = linklists['th-footer-bottom'].links %}
+            {% else %}
+              {% assign menu_footer_bottom = linklists['en-footer-bottom'].links %}
+            {% endif %}
+            {%- for link in menu_footer_bottom -%}
+              <li class="site-footer__linklist-item">
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              </li>
+              {% if forloop.index == 3 %}
+                <li class="footer__linklist--display-br"></li>
+              {% endif %}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="back-to-top">
+  <div class="back-to-top__ctn">
+    <button class="back-to-top_btn">
+      <span class="back-to-top_icon">
+        {% render 'icon-arrow-up' %}
+      </span>
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "en": "Footer",
+    "th": "ส่วนท้าย"
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": {
+        "en": "Footer bottom",
+        "th": "สี"
+      }
+    },
+    {
+      "type": "header",
+      "content": "Copyright"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright text"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_1",
+      "label": "Select logo 1"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_1",
+      "label": "Logo links"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Select logo 2"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_2",
+      "label": "Logo links"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_3",
+      "label": "Select logo 3"
+    },
+    {
+      "type": "url",
+      "id": "logo_link_3",
+      "label": "Logo links"
+    },
+    {
+      "type": "link_list",
+      "id": "menu_bottom",
+      "label": "Menu footer bottom"
+    }
+  ]
+}
+{% endschema %}

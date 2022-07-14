@@ -1,0 +1,10 @@
+{% assign menu = block.settings.menu %}
+<ul class="">
+  {% for link in linklists[menu].links %}
+      <li class="level2">
+        <div class="sit-title__header">
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </div>
+      </li>
+  {% endfor %}
+</ul>

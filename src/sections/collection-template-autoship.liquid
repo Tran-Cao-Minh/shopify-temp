@@ -1,0 +1,65 @@
+{%- assign max_height = 530 -%}
+{% assign class_grid = 'col-sm-6' %}
+
+<div class="products_list-autoship" data-section-id="{{ section.id }}" data-section-type="collection-template">
+    <div class="container product_lists" id="Collection">
+      <div class="loader" style="margin: 100px auto;" data-container="loader"></div>
+      <div class="row grid--uniform grid--view-items" id="product_lists"></div>
+      <div class="pagination-wrap hide">
+        <div class="pagination_show-more">
+          <label>{{ 'general.pagination.show' | t }}</label>
+          <div class="select2_wrap select2_border_bottom">
+            <select id="select_show_more" class="select2_single" data-class="select_show_more">
+              <option value="6" selected="selected">6</option>
+              <option value="8">8</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <span class="per_page">{{ 'general.pagination.items_per_page' | t }}</span>
+        </div>
+        <div class="pagination pagination-container smart_pagination" data-limit="6"></div>
+      </div>
+      <div class="collection__no-matches text-center page__no-item hide">
+         <div class="media media__no-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="95.298" height="81.083" viewBox="0 0 95.298 81.083">
+               <g data-name="Group 2378" transform="translate(-472.561 61.453)">
+                  <path data-name="Path 392" d="M497.524-47.74v-.606A11.857,11.857,0,0,0,485.668-60.2h0a11.857,11.857,0,0,0-11.857,11.857v.606Z" transform="translate(0)" fill="#f4f4ff" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                  <path data-name="Path 393" d="M556.154,64.5v1.818A11.857,11.857,0,0,1,544.3,78.174H588.55a11.857,11.857,0,0,0,11.857-11.857V64.5Z" transform="translate(-33.797 -59.794)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                  <path data-name="Path 394" d="M534.3,6.524V4.706h28.446V-48.346A11.857,11.857,0,0,0,550.891-60.2H498.723v.054a11.857,11.857,0,0,1,10.746,11.8V6.524A11.857,11.857,0,0,0,521.326,18.38h1.118A11.857,11.857,0,0,0,534.3,6.524Z" transform="translate(-11.945)" fill="none" stroke="#999999" stroke-miterlimit="10" stroke-width="2.5"/>
+                  <g data-name="Group 2373" transform="translate(507.685 -32.751)">
+                     <line data-name="Line 327" x2="32.887" transform="translate(0 5.92)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                     <line data-name="Line 328" x2="32.887" transform="translate(0 11.84)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                     <line data-name="Line 329" x2="16.444" transform="translate(0 17.759)" fill="none" stroke="#999999" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                     <path data-name="Path 396" d="M0,0H32.887" transform="translate(0 0)" fill="none" stroke="#c1dbff" stroke-linecap="round" stroke-width="2" opacity="0.5"/>
+                  </g>
+               </g>
+            </svg>
+         </div>
+         <div class="content">
+            <h3 class="title text__no-item">{{ "collections.general.no_matches" | t }}</h3>
+            {%- assign desc_no_product = 'collections.general.no_matches_view_all_prodcuts_html' | t -%}
+            {%- assign desc_no_product = desc_no_product | replace: '${collection_url}', routes.collections_url -%}
+            <div class="desc">{{ desc_no_product }}</div>
+         </div>
+      </div>
+    </div>
+</div>
+
+<script type="text/html" id="productListScript">
+   {% include 'product-card-autoship' %}
+</script>
+{% include 'customer-title' %}
+<script>
+   let collection_products = [
+      {%- paginate collection.products by collection.all_products_count -%}
+         {%- for product in collection.products -%}
+            {%- assign product_tags = product.tags | downcase -%}
+            {%- assign product_status = false -%}
+            {%- capture product_json -%}{%- include 'product-json' -%}{%- endcapture -%}
+            {%- if product_status -%}
+               {{ product_json }},
+            {%- endif -%}
+         {%- endfor -%}
+      {%- endpaginate -%}
+   ];
+</script>

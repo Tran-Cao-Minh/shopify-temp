@@ -1,0 +1,277 @@
+<div class="page__testimonial testimonial__layout-2">
+  <div class="container">
+      <div class="section-header">
+          {% if section.settings.heading != blank %}
+          <h3 class="page__heading text-center">{{ section.settings.heading }}</h3>
+          {% endif %}
+          {% if section.settings.desc != blank %}
+          <p>{{ section.settings.desc }}</p>
+          {% endif %}
+      </div>
+      <div class="section-content">
+          {% for block in section.blocks %}
+          <div class="testimonial__item">
+            <div class="content">
+              <div class="icon_testimonial">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="11" viewBox="0 0 15 11">
+                  <defs>
+                    <linearGradient id="testimonial-linear-gradient" y1="1" x2="1" gradientUnits="objectBoundingBox">
+                      <stop offset="0" stop-color="#749fff"/>
+                      <stop offset="1" stop-color="#314bff"/>
+                    </linearGradient>
+                  </defs>
+                  <g data-name="Group 2341" style="isolation: isolate">
+                    <path data-name="Path 378" d="M499.318,251.2q-2.967,1.431-2.967,3.364a3.288,3.288,0,0,1,2.1,1.014,2.95,2.95,0,0,1,.012,4.069,2.69,2.69,0,0,1-2.014.835,3.028,3.028,0,0,1-2.328-1.086,3.8,3.8,0,0,1-.976-2.636q0-4.654,5.233-7.278Zm8.826,0q-2.942,1.431-2.942,3.364a3.266,3.266,0,0,1,2.074,1.014,2.966,2.966,0,0,1,.024,4.069,2.65,2.65,0,0,1-2,.835,3.061,3.061,0,0,1-2.339-1.086,3.771,3.771,0,0,1-.989-2.636q0-4.654,5.257-7.278Z" transform="translate(-493.144 -249.481)" fill="#6445EE"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="intro">{{ block.settings.mb_intro }}</div>
+              <div class="icon_testimonial_bottom">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="11" viewBox="0 0 15 11">
+                  <defs>
+                    <linearGradient id="testimonial-linear-gradient" y1="1" x2="1" gradientUnits="objectBoundingBox">
+                      <stop offset="0" stop-color="#749fff"/>
+                      <stop offset="1" stop-color="#314bff"/>
+                    </linearGradient>
+                  </defs>
+                  <g data-name="Group 2341" style="isolation: isolate">
+                    <path data-name="Path 378" d="M499.318,251.2q-2.967,1.431-2.967,3.364a3.288,3.288,0,0,1,2.1,1.014,2.95,2.95,0,0,1,.012,4.069,2.69,2.69,0,0,1-2.014.835,3.028,3.028,0,0,1-2.328-1.086,3.8,3.8,0,0,1-.976-2.636q0-4.654,5.233-7.278Zm8.826,0q-2.942,1.431-2.942,3.364a3.266,3.266,0,0,1,2.074,1.014,2.966,2.966,0,0,1,.024,4.069,2.65,2.65,0,0,1-2,.835,3.061,3.061,0,0,1-2.339-1.086,3.771,3.771,0,0,1-.989-2.636q0-4.654,5.257-7.278Z" transform="translate(-493.144 -249.481)" fill="#6445EE"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <div class="border" style="background-image: url({{ 'testimonial-br.png' | asset_url }});"></div>
+            <div class="author-info">
+              <div class="avatar">
+                {% if block.settings.mb_img != blank %}
+                  <img src="{{ block.settings.mb_img | img_url: '80x' }}" alt="{{ block.settings.mb_name }}" class="card-image"/>
+                {% else %}
+                  <img src="{{ 'avatar.png' | asset_img_url: '80x' }}" alt="" class="card-image"/>
+                {% endif %}
+              </div>
+              <h4 class="testimonial__name">{{ block.settings.title }}</h4>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+  </div>
+  {% comment %} <!-- Modal content -->
+  <div class="testimonial-modal smart_modal">
+    <div class="modal-center">
+    <div class="modal-content">
+        <div class="close drawer__close" title="{{ 'general.tooltip.close_popup' | t }}"></div>
+        <div class="box-content row"></div>
+    </div>
+    </div>
+  </div>
+  <!-- overaly -->
+  <div class="testimonial-overlay overlay hide"></div> {% endcomment %}
+</div>
+
+{% comment %} <script type="text/javascript">
+(function() {
+  let DOM = {
+    modal: $('.testimonial-modal'),
+    modalOverlay: $('.testimonial-overlay'),
+    modalContent: $('.testimonial-modal .box-content'),
+    modalClose: $('.testimonial-modal .close'),
+  }
+
+  let DOMStrings = {
+    modal: '.testimonial-modal',
+    modalClose: '.testimonial-modal .close',
+    modalOpen: '.open__modal-testimonial'
+  }
+
+  function showModal() {
+    DOM.modal.show();
+    DOM.modalOverlay.removeClass('hide');
+    $('body').addClass('overflow-hidden');
+  }
+
+  function hideModal() {
+    DOM.modal.hide()
+    DOM.modalOverlay.addClass('hide')
+    $('body').removeClass('overflow-hidden');
+  }
+
+  // Open modal
+  $('.open__modal-testimonial, [data-testimonial-viewmore]').on('click', function(e) {
+    e.preventDefault();
+    let data, contentHtml = '';
+    data = {
+      image: $(this).data('image'),
+      content: $(this).data('content'),
+      videoUrl: $(this).data('video-url'),
+      useVideo: $(this).data('use-video'),
+      title: $(this).data('title'),
+      thumb1: $(this).data('thumb1'),
+      thumb2: $(this).data('thumb2'),
+      thumb3: $(this).data('thumb3'),
+    };
+
+    const thumbImg1 =`
+     <div class="thumbnail__list-item active" data-type="img">
+        <div class="card-img-container">
+            <img src="${data.thumb1}" alt="" class="card-image">
+        </div>
+     </div>`;
+
+    contentHtml = `
+      <div class="left col-sm-5">
+            <iframe src="${data.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <img id="main__image" src="${data.thumb1}" />
+      </div>
+      <div class="right right__testimonial custom__scrollbar col-sm-7">
+        <div class="header__content custom__scrollbar">
+            <h3 class="title">${data.title}</h3>
+            <div class="content">${data.content}</div>
+        </div>
+        <div class="thumbnail__list">
+            <div class="thumbnail__list-item active" data-type="img">
+              <div class="card-img-container">
+                  <img src="${data.thumb1}" alt="" class="card-image">
+              </div>
+           </div>
+
+            <div class="thumbnail__list-item" data-type="img">
+                <div class="card-img-container">
+                    <img src="${data.thumb2}" alt="" class="card-image">
+                </div>
+            </div>
+
+            <div class="thumbnail__list-item" data-type="img">
+                <div class="card-img-container">
+                    <img src="${data.thumb3}" alt="" class="card-image">
+                </div>
+            </div>
+
+            <div class="thumbnail__list-item" data-type="vid">
+                <iframe style="pointer-events: none; height: 98px;" src="${data.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+      </div>
+    `;
+
+    DOM.modalContent.append(contentHtml);
+    showModal();
+    $('.left').addClass('img');
+    // Click thumb show master image
+    $('.thumbnail__list .thumbnail__list-item').each(function() {
+
+      $(this).on('click', function(){
+        $(this).addClass('active');
+        $(this).siblings().removeClass('active');
+        let src = $(this).find('img').attr('src');
+        let dataType = $(this).data('type');
+        $('.left').addClass('img');
+        if(dataType == 'img') {
+          $('.left').removeClass('vid');
+        } else if (dataType == 'vid') {
+          $('.left').addClass('vid');
+          $('.left').removeClass('img');
+        }
+        $('#main__image').attr('src', src);
+      })
+    });
+  });
+
+  // Close modal
+  $(document).on('click', `${DOMStrings.modal}, ${DOMStrings.modalClose}`, function(e) {
+    if(e.target.className.includes('testimonial-modal') || e.target.className.includes('close')) {
+      hideModal();
+      DOM.modalContent.empty();
+    }
+  });
+
+
+})()
+</script> {% endcomment %}
+
+  {% schema %}
+  {
+    "name": "Testimonial List",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading Text",
+        "default": "What our members think about Unilever Life"
+      },
+      {
+        "type": "textarea",
+        "id": "desc",
+        "label": "Description",
+        "default": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm nibh euismod  tincidunt ut laoreet dolo magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm nibh Lorem ipsum dolor sit amet."
+      }
+    ],
+    "blocks": [
+      {
+        "type": "member",
+        "name": "Member",
+        "settings": [
+          {
+            "type": "header",
+            "content": "General"
+          },
+          {
+            "type": "image_picker",
+            "id": "mb_img",
+            "label": "Image ",
+             "info": "Standard Image Sizes (300x300)"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name",
+            "default": "Member Name"
+          },
+          {
+            "type": "richtext",
+            "id": "mb_intro",
+            "label": "Intro",
+            "default": "<p>“ Lorem ipsum dolor sit amet, consectet adi iscing elit, sed diam nonummy nibh. Lorem ipsum dolor sit ”</p>"
+          },
+          {
+            "type": "header",
+            "content": "Modal settings"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content",
+            "default": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+          },
+          {
+            "type": "header",
+            "content": "Thumbnail settings"
+          },
+
+          {
+            "type": "image_picker",
+            "id": "thumb_img_2",
+            "label": "Image 2",
+            "info": "Standard Image Sizes (800x800)"
+          },
+          {
+            "type": "image_picker",
+            "id": "thumb_img_3",
+            "label": "Image 3",
+            "info": "Standard Image Sizes (800x800)"
+          },
+          {
+            "type": "text",
+            "id": "video",
+            "label": "Video URL",
+            "default": "https://www.youtube.com/embed/LPDVrUw5unM",
+            "info": "Use youtube embed video url. Exam: https://www.youtube.com/embed/LPDVrUw5unM"
+          }
+        ]
+      }
+    ]
+  }
+  {% endschema %}

@@ -1,0 +1,29 @@
+{%- assign page_suffix = 'how-to-earn,member_privilege,findarep,business,why-unilever-life,business_model,support-tools,life-member,easy-fast-start,how-to-earn,autoship,about-us,how-to-shop-online,contact,order-tracking,faq,search' -%}
+{%- assign array_tpl = page_suffix | split: ',' -%}
+{%- if array_tpl contains template.suffix or template.name == '404' -%}
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml            : true,
+                version          : 'v10.0'
+            });
+        };
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/th_TH/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- Your Chat Plugin code -->
+    <div class="fb-customerchat"
+        attribution="setup_tool"
+        page_id="280325195896"
+        theme_color="#6445EE"
+        logged_in_greeting="ยินดีต้อนรับสู่ ยูนิลิเวอร์ไลฟ์ เว็บไฃต์"
+        logged_out_greeting="ท่านสามารถติดตามความเคลื่อนไหวผ่านทาง Line unileverlife ขอบคุณค่ะ">
+    </div>
+{%- endif -%}

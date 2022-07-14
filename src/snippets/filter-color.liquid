@@ -1,0 +1,29 @@
+{%- assign enable_color_bg = false -%}
+{%- if section.settings.filter_enable_color_bg -%}
+    {%- assign enable_color_bg = true -%}
+{%- endif -%}
+<div class="filters-toolbar__input-wrapper select-group">
+    <div class="filters__select-label">
+        <span class="filters__title">{{ section.settings.filter_color_title }}</span>{% include 'icon-chevron-down' %}
+    </div>
+    <ul class="filters__list {% if enable_color_bg %}filters__color-bg{% endif %}">
+        {% assign tags = section.settings.filter_color_lists | split: ',' %}
+        {% for tag in tags %}
+            {% if collection.tags contains tag %}
+                {% assign tag_andleize = tag | handleize %}
+                <li class="{{ tag_andleize }} {% if current_tags contains tag %}checked{% endif %}">
+                    <input type="checkbox" value="{{ tag_andleize }}" {% if current_tags contains tag %}checked{% endif %}/>
+                    {%- assign bg = tag_andleize | append: '.png' -%}
+                    {% if enable_color_bg %}
+                        <span class="bg-color checkbox" style="background-image: url({{ bg | asset_img_url: '100x' }})">
+                            {% include 'icon-checkbox' %}
+                        </span>
+                    {% endif %}
+                    <a href="javascript:void(0)" {% if current_tags contains tag %} class="active" {% endif %} title="{{tag}}">
+                        {{ tag }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

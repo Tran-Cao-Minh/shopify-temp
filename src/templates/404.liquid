@@ -1,0 +1,153 @@
+{{ 'pages-support.scss.css' | asset_url | stylesheet_tag }}
+<style>
+    .page__not--found {
+
+    }
+    .page__not--found h1 {
+        font-size: 30px;
+        color: #6445ee;
+        letter-spacing: .25px;
+        font-family: 'Prompt', sans-serif;
+    }
+    .page__not--found p {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+        letter-spacing: .25px;
+        margin-bottom: 30px;
+        line-height: 26px;
+        font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+    }
+
+    .page__not--found .search-form__input-wrapper{
+        border: 1px solid #333;
+        border-radius: 5px;
+        height: 50px;
+        padding: 5px 15px;
+    }
+    .page__not--found .search-form__connected-submit{
+        padding: 0;
+        width: 58px;
+        height: 38px;
+        border-left: 1px solid #333;
+
+    }
+    .page__not--found .search-form__connected-submit svg{
+        width:18px;
+        height: 17px;
+        margin-top: 5px;
+    }
+    .page__not--found .search-form__input-wrapper input {
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 0;
+        font-family: 'Prompt', sans-serif;
+    }
+    .search-form__input-wrapper input::placeholder {
+        color: #CCCCCC;
+    }
+    .btn--404{
+        line-height: 24px;
+        border-radius: 0;
+    }
+    .search-form__textor{
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        justify-content: center;
+    }
+    .breadcrumb__wrap{
+        display: none;
+    }
+
+    @media(min-width: 576px) {
+        .page__not--searchbar{
+            padding: 0 80px;
+        }
+
+        .btn--404{
+            min-width: 230px;
+        }
+    }
+    @media(max-width: 576px) {
+        .page-width {
+            padding: 0 0 20px;
+        }
+        .page__not--found h1 {
+            font-size: 20px;
+        }
+
+        .search-form__textor{
+            padding: 10px 0;
+        }
+        .btn--404 {
+            min-width: 70%;
+        }
+    }
+</style>
+<div class="page-width">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-9 col-md-12">
+            <div class="page__not--found text-center">
+                <div class=" img__notfound">
+                    <img src="{{ 'notfound-404.png' | asset_url }}" alt="">
+                </div>
+                <h1>{{ 'general.404.title' | t }}</h1>
+                <p>{{ 'general.404.subtext_html' | t }}</p>
+                <div class="row no-gutters page__not--searchbar">
+                    <div class="col-12 col-md-7">
+                        <form id="canvas__form-search" class="search-form" action="{{ pages['search'].url }}"
+                                method="get" role="search">
+                            <div class="search-form__input-wrapper" data-locale_primary="{{ locale_primary }}" data-locale="{{ shop.locale }}"
+                                    data-search-drawer-top>
+                                <input
+                                        type="text"
+                                        name="q"
+                                        placeholder="{{ 'general.404.search_placeholder' | t }}"
+                                        role="combobox"
+                                        aria-autocomplete="list"
+                                        aria-owns="predictive-search-results"
+                                        aria-expanded="false"
+                                        aria-label="{{ 'general.search.placeholder' | t }}"
+                                        aria-haspopup="listbox"
+                                        autocomplete=off
+                                        class="search-form__input search-bar__input border_bottom"
+                                        data-predictive-search-drawer-input
+                                />
+                                <button class="search-form__connected-submit"
+                                        type="submit"
+                                        title="{{ 'general.tooltip.search' | t }}"
+                                        data-search-form-submit>
+                                    {% include 'icon-search' %}
+                                    <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-md-1 search-form__textor">
+                        <div class="search-form__text">
+                            {{ 'general.search.or' | t }}
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <a class="btn btn--404" href="{{ routes.root_url }}">
+                            {{ 'general.404.back' | t }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function(){
+        digitalData.page.attributes.contentType= "{{ 'general.404.title' | t }}"
+    }
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        if (window.location.toString().includes("/th/") && !window.location.toString().includes("/th/404")) {
+            window.location.href = '/th/404'
+        }
+    });
+</script>

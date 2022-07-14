@@ -1,0 +1,350 @@
+{% include 'page-validate-customer' %}
+{% assign contact_info = shop.metafields.data.contact_info %}
+{% if customer %}
+    {% include 'assign-locale-prefix' %}
+<div class="page_account" data-page_border>
+    {% assign customer_info = customer.metafields.data.personal %}
+    {% assign coapplicant_info = customer.metafields.data.associate %}
+
+    <div class="container">
+        <div class="section-header text-center">
+            <h1>{{ 'customer.account.title' | t }}</h1>
+        </div>
+        <div id="accountTemplate" class="myaccount__account-details">
+            <div class="account__detail-box account__detail-top">
+                <a class="link-readmore text-underline change-pass display-dk" href="{{ pages.change-password.url }}">{{ 'customer.account.change_your_password' | t }}</a>
+                {% if customer_info.avatar_url != blank %}
+                    <img class="account__detail-avatar" src="{{ customer_info.avatar_url }}" alt="" />
+                {% else %}
+                    <img class="account__detail-avatar" src="{{ 'avatar_personal.png' | asset_img_url: '300x' }}" alt="" />
+                {% endif %}
+                <div class="nickname-edit">
+                    <h3>{{ customer_info.nick_name }}</h3>
+                    <a class="group_edit display-dk" href="{{ pages.edit-personal-info.url }}">
+                        {% include 'icon-edit' %} <span class="link-readmore text-underline">{{ 'customer.account.edit' | t }}</span></a>
+                </div>
+                
+                <div class="introduction mt-10">&#8243; {{ customer_info.introduction }} &#8243;</div>
+                <div class="speak mt-10"><strong class="bold_600">{{ 'customer.account.speak' | t }}</strong> {{ customer_info.language }}</div>
+
+                <div class="introduction__mobile-edit display-mb">
+                    <a class="link-readmore text-underline change-pass" href="{{ pages.change-password.url }}">{{ 'customer.account.change_your_password' | t }}</a>
+                    <a class="group_edit" href="{{ pages.edit-personal-info.url }}">
+                        {% include 'icon-edit' %} <span class="link-readmore text-underline">{{ 'customer.account.edit' | t }}</span></a>
+                </div>
+
+                <hr />
+
+                <h3>{{ 'customer.account.contact_information' | t }}</h3>
+
+                <ul class="account__detail-list">
+                    <li>
+                        <div class="label">{{ 'customer.account.email' | t }}</div>
+                        <div class="text-secondary label-value">{{ customer.email }}</div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.line_id' | t }}</div>
+                        {% if customer_info.line_user_id %}
+                            <a class="text-underline label-value" href="https://lin.ee/{{ customer_info.line_user_id }}" target="_blank">{{ customer_info.line_user_id }}</a>                            
+                        {% endif %}
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.facebook' | t }}</div>
+                        {% if customer_info.facebook %}
+                            <a class="text-underline label-value" href="{{ customer_info.facebook }}" target="_blank">{{ customer_info.facebook }}</a>
+                        {% endif %}
+                    </li>
+                </ul>
+
+                <div class="group__connect-line">
+                    <a class="btn btn-secondary disabled" type="button" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18.226" height="12.947" viewBox="0 0 18.226 12.947">
+                            <path data-name="Path 136" d="M-1279.2,571.758l4.865,4.865,10.533-10.533" transform="translate(1280.614 -564.675)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </svg>
+                        <span>{{ 'customer.account.line_connected' | t }}</span>
+                    </a>
+                    {% if customer_info.additional_line_id %}
+                        <a class="btn btn-secondary disabled" type="button" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18.226" height="12.947" viewBox="0 0 18.226 12.947">
+                            <path data-name="Path 136" d="M-1279.2,571.758l4.865,4.865,10.533-10.533" transform="translate(1280.614 -564.675)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            </svg>
+                            <span>{{ 'customer.account.2nd_line_connected' | t }}</span>
+                        </a>
+                    {% else %}
+                        <a class="btn btn- line line_connected-plus" type="button" data-action="add-additional-line" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19">
+                            <g data-name="Group 974" transform="translate(-151.824 -532.069)">
+                                <line data-name="Line 141" x2="17" transform="translate(152.824 541.569)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                <line data-name="Line 142" y2="17" transform="translate(161.324 533.069)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            </g>
+                            </svg>
+                            <span>{{ 'customer.account.connect_2nd_line_account' | t }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+                <p class="text-small mt-15 txt--emphasis">
+                    {% assign line_connected_note = 'customer.account.line_connected_note_html' | t %}
+                    {% if contact_info != blank %}
+                        {% if contact_info.contact_phone != blank %}
+                            {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                            {% assign line_connected_note = line_connected_note | replace: "${phone}", contact_info.contact_phone %}
+                            {% assign line_connected_note = line_connected_note | replace: "${phone_number}", phone_number %}
+                        {% else %}
+                            {% assign line_connected_note = line_connected_note | replace: "${phone}", "" %}
+                            {% assign line_connected_note = line_connected_note | replace: "${phone_number}", "" %}
+                        {% endif %}
+                    {% endif %}
+                    {{ line_connected_note }}
+                </p>
+            </div>
+
+            {% comment %} Personal Information {% endcomment %}
+            {% capture personal_information %}
+                <div class="group-item">
+                    <h3 class="border-bottom">{{ 'customer.account.personal_information' | t }}</h3>
+                    <ul class="account__detail-list">
+                        <li>
+                            <div class="label">{{ 'customer.account.member_id' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer_info.member_id }}</div>
+                        </li>
+                        <li>
+                            <div class="label">{{ 'customer.account.national_id' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer_info.national_id }}</div>
+                        </li>
+                        <li>
+                            <div class="label">{{ 'customer.account.full_name' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer.name }}</div>
+                        </li>
+                        <li>
+                            <div class="label">{{ 'customer.account.date_of_birth' | t }}</div>
+                            <div class="text-secondary label-value" id="customer_dob"></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group-item">
+                    <h3 class="border-bottom">{{ 'customer.account.bank_account_information' | t }}</h3>
+                    <ul class="account__detail-list">
+                        <li>
+                            <div class="label">{{ 'customer.account.bank_name' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer_info.bank_name }}</div>
+                        </li>
+                        <li>
+                            <div class="label">{{ 'customer.account.bank_account' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer_info.bank_account_number }}</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="group-item">
+                    <h3 class="border-bottom">{{ 'customer.account.billing_information' | t }}</h3>
+                    <ul class="account__detail-list">
+                        <li>
+                            <div class="label">{{ 'customer.account.billing_information_address' | t }}</div>
+                            <div class="text-secondary label-value">
+                                {% if shop.locale == 'th' %}
+                                    {{ customer_info.billing_address_th }}
+                                {% else %}
+                                    {{ customer_info.billing_address }}
+                                {% endif %}
+                            </div>
+                        </li>
+                        <li>
+                            <div class="label">{{ 'customer.account.billing_information_phone' | t }}</div>
+                            <div class="text-secondary label-value">{{ customer_info.billing_phone }}</div>
+                        </li>
+                    </ul>
+                </div>
+            {% endcapture %}
+
+            {% comment %} Coapplicant Info {% endcomment %}
+            {% capture coapplicant_information %}
+            <div class="group-item">
+                <h3 class="border-bottom">{{ 'customer.account.coapplicant_information' | t }}</h3>
+                <ul class="account__detail-list">
+                    <li>
+                        <div class="label">{{ 'customer.account.national_id' | t }}</div>
+                        <div class="text-secondary label-value">{{ coapplicant_info.national_id }}</div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.full_name' | t }}</div>
+                        <div class="text-secondary label-value">{{ coapplicant_info.first_name }} {{ coapplicant_info.last_name }}</div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.date_of_birth' | t }}</div>
+                        <div class="text-secondary label-value" id="coapplicant_dob"></div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.email' | t }}</div>
+                        <div class="text-secondary label-value">{{ coapplicant_info.email }}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="group-item">
+                <h3 class="border-bottom">{{ 'customer.account.billing_information' | t }}</h3>
+                <ul class="account__detail-list">
+                    <li>
+                        <div class="label">{{ 'customer.account.billing_information_address' | t }}</div>
+                        <div class="text-secondary label-value">{{ coapplicant_info.billing_address }}</div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.billing_information_phone' | t }}</div>
+                        <div class="text-secondary label-value">{{ coapplicant_info.billing_phone }}</div>
+                    </li>
+                </ul>
+            </div>
+            {% endcapture %}
+
+            {% if coapplicant_info != blank %}
+            <div class="smosc__tab smosc__tab-effect mb-15">
+                <div class="smosc__tab-headers">
+                    <ul>
+                        <li><a class="smosc__tab-header active" href="#"
+                               data-id="personal_information">{{ 'customer.account.primary_info_tab' | t }}</a></li>
+                        <li><a class="smosc__tab-header" href="#"
+                               data-id="coapplicant_information">{{ 'customer.account.associate_info_tab' | t }}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="smosc__tab-contents account__detail-box account__detail-personal-infor">
+                    <div class="smosc__tab-content active" data-id="personal_information">
+                        {{ personal_information }}
+                    </div>
+                    <div class="smosc__tab-content" data-id="coapplicant_information">
+                        {{ coapplicant_information }}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="account__detail-box account__detail-personal-infor mb-15">{{ personal_information }}</div>
+            {% endif %}
+
+
+            <div class="note__information-contact text-secondary text-small txt--emphasis">
+                {% assign note_information = 'customer.account.note_information_html' | t %}
+                {% if contact_info != blank %}
+                    {% if contact_info.contact_phone != blank %}
+                        {% assign phone_number = contact_info.contact_phone | replace: " ", "" | replace: "-", "" | replace: "(", "" | replace: ")", "" %}
+                        {% assign note_information = note_information | replace: "${phone}", contact_info.contact_phone %}
+                        {% assign note_information = note_information | replace: "${phone_number}", phone_number %}
+                    {% else %}
+                        {% assign note_information = note_information | replace: "${phone}", "" %}
+                        {% assign note_information = note_information | replace: "${phone_number}", "" %}
+                    {% endif %}
+
+                    {% if contact_info.contact_line_id != blank %}
+                        {% assign note_information = note_information | replace: "${line_id}", contact_info.contact_line_id %}
+                    {% else %}
+                        {% assign note_information = note_information | replace: "${line_id}", "" %}
+                    {% endif %}
+                    {{ note_information }}
+                {% endif %}
+            </div>
+
+            <div class="account__detail-box account__detail-personal-infor">
+                <div class="shipping_title">
+                    <h3 class="border-bottom">
+                        <span>{{ 'customer.account.shipping_information' | t }}</span>
+                        <a class="group_edit" href="{{ routes.account_addresses_url }}">
+                            {% include 'icon-edit' %} <span
+                                    class="link-readmore text-underline">{{ 'customer.account.edit' | t }}</span></a>
+                    </h3>
+                </div>
+
+                <ul class="account__detail-list">
+                    <li>
+                        <div class="label">{{ 'customer.account.shipping_information_address' | t }}</div>
+                        <div class="text-secondary format_address label-value">
+                            {{ customer.default_address.address1 }}, <span class="address__city" id="{{customer.default_address.address2}}" style="opacity: 0;">{{ customer.default_address.city }}</span>,
+                            {{ customer.default_address.province }}, {{ customer.default_address.country }}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="label">{{ 'customer.account.shipping_information_phone' | t }}</div>
+                        <div class="text-secondary label-value">{{ customer.default_address.phone }}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="hide" data-popup_password_success>
+        <h2>{{ 'customer.account.success_change_password_title' | t }}</h2>
+        <div class="rte">{{ 'customer.account.success_change_password_content_html' | t }}</div>
+    </div>
+    <div class="hide" data-popup_line_success>
+        <h2>{{ 'customer.account.success_connect_line_title_html' | t }}</h2>
+        <div class="rte">{{ 'customer.account.success_connect_line_content_html' | t }}</div>
+    </div>
+    <div class="hide" data-popup_line_failed>
+        <h2>{{ 'customer.account.failed_connect_line_title_html' | t }}</h2>
+        <div class="rte">{{ 'customer.account.failed_connect_line_content_html' | t }}</div>
+    </div>
+
+    {% include 'popup-success' %}
+    {% include 'popup-failed' %}
+
+    <script type="text/javascript">
+
+        {%- assign additional_line_url = shop.metafields.route.customer_add_additional_line -%}
+        {%- assign back_url = shop.url | append: pages['my-profile'].url -%}
+        const cityShop = {{ shop.metafields.location.cities }};
+        const shopLocale = "{{ shop.locale }}";
+        const cityName = document.querySelector('.account__detail-personal-infor .format_address .address__city');
+        const city = cityShop.find(item=>item.id==cityName.id);
+        if(city){
+            if(shopLocale==='en'){
+                cityName.textContent = city.en_name;
+            } else {
+                cityName.textContent = city.th_name;
+            }
+        }
+        cityName.style.opacity = '1';
+
+        $(function () {
+
+            // Update link additional-line
+            $('[data-action="add-additional-line"]').attr('href', "{{ pages.customer-connect-line.url }}?action={{ shop.url }}{{ shop_url }}{{ additional_line_url }}/" + window.eai_customer.id + "/" + window.eai_customer.hash + "?back={{ back_url }}");
+
+            // Show popup change password success
+            if (sessionStorage.getItem('change_password')) {
+                let content = $('[data-popup_password_success]').html();
+                $('.success__modal-content').html(content);
+                $('.success__modal').show();
+                sessionStorage.removeItem('change_password');
+            }
+
+            // check connect line false
+            if (window.location.search == '?exception=true&action=add-line') {
+                let content = $('[data-popup_line_failed]').html();
+                $('.failed__modal-content').html(content);
+                $('.failed__modal').show();
+                window.history.pushState({}, document.title, window.location.pathname);
+            }
+
+            // check connect line success
+            if (window.location.search == '?exception=false&action=add-line') {
+                let content = $('[data-popup_line_success]').html();
+                $('.success__modal-content').html(content);
+                $('.success__modal').show();
+                window.history.pushState({}, document.title, window.location.pathname);
+            }
+
+        });
+    </script>
+<script src="{{ 'date.js' | asset_url }}"></script>
+<script>
+    let customerDob = "{{ customer_info.dob }}",
+        coapplicantDob = "{{ coapplicant_info.dob }}"
+    $(() => {
+        if (customerDob) {
+            $('#customer_dob').html(window.smartUnilever.Date.parse(customerDob, 'dd, MM, yyyy'));
+        }
+        if (coapplicantDob) {
+            $('#coapplicant_dob').html(window.smartUnilever.Date.parse(coapplicantDob, 'dd, MM, yyyy'));
+        }
+    })
+</script>
+{% endif %}

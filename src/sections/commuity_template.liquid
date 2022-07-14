@@ -1,0 +1,646 @@
+
+<div class="page_promotiondemo">
+    {% if section.blocks.size > 0 %}
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+                {%- when 'hero' -%}
+                    {%- if block.settings.hero_layout == 'full_width' and block.settings.hero_size == 'adapt' -%}
+                        {%- if block.settings.image.aspect_ratio == blank -%}
+                            {%- assign min_aspect_ratio = 2.0 -%}
+                        {%- else -%}
+                            {%- assign min_aspect_ratio = block.settings.image.aspect_ratio -%}
+                        {%- endif -%}
+                        {%- assign wrapper_height = 100 | divided_by: min_aspect_ratio -%}
+                        {%- style -%}
+                            .hero-{{ block.id }} {
+                            height: {{- wrapper_height -}}vw !important;
+                            }
+                        {%- endstyle -%}
+                    {%- endif -%}
+                    <div class="shopify-section index-section">
+                        <div data-section-id="{{ block.id }}" data-section-type="hero-section">
+                            {%- if block.settings.hero_layout == 'fixed_width' -%}
+                            <div class="container">
+                                {%- endif -%}
+                                {%- if block.settings.hero_layout == 'fixed_width' and block.settings.hero_size ==  'adapt' -%}
+                                    {%- assign slide_width = 1090 -%}
+                                    {%- assign min_aspect_ratio = block.settings.image.aspect_ratio | default: 2.0 -%}
+                                    <div class="hero-fixed-width hero--adapt"
+                                         id="Hero-{{ block.id }}"
+                                         data-layout="{{ block.settings.hero_layout }}">
+                                        {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                        {%- if block.settings.image.width < max_width -%}
+                                            {%- assign slide_width = block.settings.image.width -%}
+                                        {%- endif -%}
+                                        <div class="hero-fixed-width__content">
+                                            <div class="container">
+                                                <div class="hero__content">
+                                                    {%- if block.settings.title != blank -%}
+                                                        <h2 class="headings primary_color">{{ block.settings.title | escape }}</h2>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.text != blank -%}
+                                                        <div class="rte-setting">{{ block.settings.text }}</div>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                                                        <a href="{{ block.settings.button_link }}"
+                                                           class="btn hero__btn fix-width">
+                                                            {{ block.settings.button_label | escape }}
+                                                        </a>
+                                                    {%- endif -%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {%- if block.settings.image != blank -%}
+                                            <img class="hero-fixed-width__image lazyload lazypreload"
+                                                 src="{{ block.settings.image | img_url: '300x300' }}"
+                                                 data-src="{{ img_url }}"
+                                                 data-widths="[180, 360, 470, 600, 770, 970, 1060, 1280, 1512, 1728, 2048]"
+                                                 data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                                 data-sizes="auto"
+                                                 style="{%- if slide_width <= max_width -%}
+                                          {%- assign min_width = slide_width | times: 100 | divided_by: max_width -%}
+                                                         min-width: {{ min_width }}%;
+                                                 {%- endif -%}
+                                                         object-position: {{ block.settings.alignment }};"
+                                                 alt="{{ block.settings.image.alt | escape }}">
+                                        {%- else -%}
+                                            <span>
+                              {% capture current %}{% cycle 1, 2 %}{% endcapture %}
+                                                {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            </span>
+                                        {%- endif -%}
+                                        <noscript>
+                                            <div class="hero-fixed-width__image"{% if block.settings.image %}{% unless block.settings.image.alt == blank %} role="img" aria-label="{{ block.settings.image.alt | escape }}"{% endunless %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}'); background-position: center {{ block.settings.alignment }};"{% endif %}></div>
+                                        </noscript>
+                                    </div>
+                                {%- else -%}
+                                    <div class="hero community_bg-top hero--{{ block.settings.hero_size }} hero-{{ block.settings.class_suffix }} {% if block.settings.title != blank or block.settings.text != blank or block.settings.button_label != blank %} hero__overlaydis{% endif %}  ratio-container lazyload js"
+                                         id="Hero-{{ block.id }}"
+                                         data-layout="{{ block.settings.hero_layout }}"
+                                            {%- if block.settings.image -%}
+                                        {% unless block.settings.image.alt == blank %}
+                                            role="img"
+                                            aria-label="{{ block.settings.image.alt | escape }}"
+                                            data-alt="{{ block.settings.image.alt | escape }}"
+                                        {% endunless %}
+                                        data-bg="{{ block.settings.image | img_url: '300x300' }}"
+                                        data-bgset="{% include 'bgset', image: block.settings.image %}"
+                                        data-sizes="auto"
+                                        data-parent-fit="cover"
+                                        style="background-position: {{ block.settings.alignment }}; background-image: url('{{ block.settings.image | img_url: '300x300' }});"
+                                            {%- endif -%}>
+                                        {%- if block.settings.image == blank -%}
+                                            <div class="placeholder-background">
+                                                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                            </div>
+                                        {%- endif -%}
+                                        <div class="hero__inner">
+                                            <div class="container">
+                                                <div class="hero__content">
+                                                    {%- if block.settings.title != blank -%}
+                                                        <h2 class="headings primary_color">{{ block.settings.title | escape }}</h2>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.text != blank -%}
+                                                        <div class="rte-setting">{{ block.settings.text }}</div>
+                                                    {%- endif -%}
+                                                    {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                                                        {%- capture ariaLabel -%}
+                                                            {{- block.settings.button_label -}}
+                                                            {%- if block.settings.button_link.type == 'frontpage_link' -%}
+                                                                : {{ 'homepage.general.title' | t -}}
+                                                                {%- elsif block.settings.button_link.type == 'catalog_link' -%}
+                                                                : {{ 'collections.catalog.title' | t -}}
+                                                                {%- elsif block.settings.button_link.object.title -%}
+                                                                : {{ block.settings.button_link.object.title -}}
+                                                            {%- endif -%}
+                                                        {%- endcapture -%}
+
+                                                        <a href="{{ block.settings.button_link }}"
+                                                           class="btn hero__btn fix-width"
+                                                           aria-label="{{ ariaLabel }}">
+                                                            {{- block.settings.button_label | escape -}}
+                                                        </a>
+                                                    {%- endif -%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <noscript>
+                                        <div class="hero community_bg-bottom hero--{{ block.settings.hero_size }}{% if block.settings.title != blank or block.settings.text != blank or block.settings.button_label != blank %} hero__overlaydis {% endif %}"{% if block.settings.image %}{% unless block.settings.image.alt == blank %} role="img" aria-label="{{ block.settings.image.alt | escape }}"{% endunless %} style="background-image: url('{{ block.settings.image | img_url: '2048x' }}'); background-position: center {{ block.settings.alignment }};"{% endif %}></div>
+                                    </noscript>
+                                {%- endif -%}
+                                {%- if block.settings.hero_layout == 'fixed_width' -%}
+                            </div>
+                            {%- endif -%}
+                        </div>
+                    </div>
+                {%- when 'feature' -%}
+                    {% capture image_layout %}
+                        <div class="feature-row__item feature-row__image">
+                            {% if block.settings.image != blank %}
+                                {% capture img_id %}FeatureRowImage-{{ block.id }}{% endcapture %}
+                                {% capture wrapper_id %}FeatureRowImageWrapper-{{ block.id }}{% endcapture %}
+                                {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                                {% include 'image-style', image: block.settings.image, height: 545, wrapper_id: wrapper_id, img_id: img_id %}
+                                <div id="{{ wrapper_id }}" class="feature-row__image-wrapper js">
+                                    <div style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100}}%;">
+                                        <img id="{{ img_id }}"
+                                             class="feature-row__image lazyload"
+                                             src="{{ block.settings.image | img_url: '200x200' }}"
+                                             data-src="{{ img_url }}"
+                                             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                             data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                                             data-sizes="auto"
+                                             alt="{{ block.settings.image.alt | escape }}">
+                                    </div>
+                                </div>
+
+                                <noscript>
+                                    {{ block.settings.image | img_url: '600x600', scale: 2 | img_tag: block.settings.image.alt, 'feature-row__image' }}
+                                </noscript>
+                            {% else %}
+                                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {% endif %}
+                        </div>
+                    {% endcapture %}
+
+                    <div class="shopify-section index-section">
+                        <div class="container">
+                        <div class="feature-row-community {{ block.id }}">
+                            {% if block.settings.layout == 'left' %}
+                                {{ image_layout }}
+                            {% endif %}
+
+                            <div class="feature-row__item feature-row__text feature-row__text--{{ block.settings.layout }}">
+                                {% if block.settings.title != blank %}
+                                    <h2 class="headings">{{ block.settings.title | escape }}</h2>
+                                {% endif %}
+                                {% if block.settings.text != blank %}
+                                    <div class="rte rte-setting featured-row__subtext">{{ block.settings.text }}</div>
+                                {% endif %}
+                                {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                                    {%- capture ariaLabel -%}
+                                        {{- block.settings.button_label -}}
+                                        {%- if block.settings.button_link.type == 'frontpage_link' -%}
+                                            : {{ 'homepage.general.title' | t -}}
+                                            {%- elsif block.settings.button_link.type == 'catalog_link' -%}
+                                            : {{ 'collections.catalog.title' | t -}}
+                                            {%- elsif block.settings.button_link.object.title -%}
+                                            : {{ block.settings.button_link.object.title -}}
+                                        {%- endif -%}
+                                    {%- endcapture -%}
+
+                                    <a href="{{ block.settings.button_link }}"
+                                       class="btn"
+                                       aria-label="{{ ariaLabel }}">
+                                        {{- block.settings.button_label | escape -}}
+                                    </a>
+                                {% endif %}
+                            </div>
+
+                            {% if block.settings.layout == 'right' %}
+                                {{ image_layout }}
+                            {% endif %}
+                        </div>
+                        </div>
+                    </div>
+            {%- endcase -%}
+        {%- endfor -%}
+    {% else %}
+        <div class="promotion__no-matches text-center">{{ 'general.pages.promotion_no_matches' | t }}</div>
+    {% endif %}
+</div>
+
+{% schema %}
+
+{
+    "name": {
+        "en": "Community"
+    },
+    "class": "ss-community",
+    "blocks": [
+        {
+            "type": "hero",
+            "name": "Hero",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "class_suffix",
+                    "label": {
+                        "en": "Class suffix",
+                        "th": "Class suffix"
+                    }
+                },
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": {
+                        "en": "Image",
+                        "th": "รูปภาพ"
+                    }
+                },
+                {
+                    "type": "select",
+                    "id": "alignment",
+                    "label": {
+                        "en": "Image alignment",
+                        "th": "การจัดวางรูปภาพ"
+                    },
+                    "default": "center",
+                    "options": [
+                        {
+                            "value": "top",
+                            "label": {
+                                "en": "Top",
+                                "th": "ด้านบน"
+                            }
+                        },
+                        {
+                            "value": "center",
+                            "label": {
+                                "en": "Middle",
+                                "th": "ตรงกลาง"
+                            }
+                        },
+                        {
+                            "value": "bottom",
+                            "label": {
+                                "en": "Bottom",
+                                "th": "ด้านล่าง"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "hero_layout",
+                    "label": {
+                        "en": "Layout",
+                        "th": "เลย์เอาต์"
+                    },
+                    "default": "full_width",
+                    "options": [
+                        {
+                            "label": {
+                                "en": "Full width",
+                                "th": "เต็มความกว้าง"
+                            },
+                            "value": "full_width"
+                        },
+                        {
+                            "label": {
+                                "en": "Fixed width",
+                                "th": "ความกว้างตายตัว"
+                            },
+                            "value": "fixed_width"
+                        }
+                    ]
+                },
+                {
+                    "type": "select",
+                    "id": "hero_size",
+                    "label": {
+                        "en": "Section height",
+                        "th": "ความสูงของส่วน"
+                    },
+                    "default": "medium",
+                    "options": [
+                        {
+                            "label": {
+                                "en": "Adapt to image",
+                                "th": "ปรับตามรูปภาพ"
+                            },
+                            "value": "adapt"
+                        },
+                        {
+                            "label": {
+                                "en": "Extra Small",
+                                "th": "ขนาดเล็กพิเศษ"
+                            },
+                            "value": "x-small"
+                        },
+                        {
+                            "label": {
+                                "en": "Small",
+                                "th": "เล็ก"
+                            },
+                            "value": "small"
+                        },
+                        {
+                            "label": {
+                                "en": "Medium",
+                                "th": "ปานกลาง"
+                            },
+                            "value": "medium"
+                        },
+                        {
+                            "label": {
+                                "en": "Large",
+                                "th": "ใหญ่"
+                            },
+                            "value": "large"
+                        },
+                        {
+                            "label": {
+                                "en": "Extra Large",
+                                "th": "ขนาดใหญ่พิเศษ"
+                            },
+                            "value": "x-large"
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": {
+                        "en": "Heading",
+                        "th": "ส่วนหัว"
+                    },
+                    "default": {
+                        "en": "Image with text overlay",
+                        "th": "การวางซ้อนรูปภาพพร้อมข้อความ"
+                    }
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": {
+                        "en": "Text",
+                        "th": "ข้อความ"
+                    },
+                    "default": {
+                        "en": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>",
+                        "th": "<p>ใช้ข้อความซ้อนทับเพื่อให้ลูกค้าของคุณทราบถึงรายละเอียดเกี่ยวกับแบรนด์ เลือกรูปภาพและข้อความที่มีความเกี่ยวข้องกับสไตล์กับเรื่องราวของคุณ</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "id": "button_label",
+                    "label": {
+                        "en": "Button label",
+                        "th": "ป้ายกำกับปุ่ม"
+                    }
+                },
+                {
+                    "type": "url",
+                    "id": "button_link",
+                    "label": {
+                        "en": "Button link",
+                        "th": "ลิงก์ของปุ่ม"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "feature",
+            "name": "Feature",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": {
+                        "da": "Billede",
+                        "de": "Foto",
+                        "en": "Image",
+                        "es": "Imagen",
+                        "fi": "Kuva",
+                        "fr": "Image",
+                        "hi": "इमेज",
+                        "it": "Immagine",
+                        "ja": "画像",
+                        "ko": "이미지",
+                        "ms": "Imej",
+                        "nb": "Bilde",
+                        "nl": "Afbeelding",
+                        "pt-BR": "Imagem",
+                        "pt-PT": "Imagem",
+                        "sv": "Bild",
+                        "th": "รูปภาพ",
+                        "zh-CN": "图片",
+                        "zh-TW": "圖片"
+                    }
+                },
+                {
+                    "type": "select",
+                    "id": "layout",
+                    "label": {
+                        "da": "Justering af billede",
+                        "de": "Fotoausrichtung",
+                        "en": "Image alignment",
+                        "es": "Alineación de imagen",
+                        "fi": "Kuvan tasaus",
+                        "fr": "Alignement de l'image",
+                        "hi": "इमेज पंक्तिबद्ध करना",
+                        "it": "Allineamento immagine",
+                        "ja": "画像アラインメント",
+                        "ko": "이미지 정렬",
+                        "ms": "Penjajaran imej",
+                        "nb": "Bildejustering",
+                        "nl": "Afbeelding uitlijnen",
+                        "pt-BR": "Alinhamento da imagem",
+                        "pt-PT": "Alinhamento da imagem",
+                        "sv": "Bildjustering",
+                        "th": "การจัดวางรูปภาพ",
+                        "zh-CN": "图片对齐方式",
+                        "zh-TW": "圖片對齊"
+                    },
+                    "default": "left",
+                    "options": [
+                        {
+                            "value": "left",
+                            "label": {
+                                "da": "Venstre",
+                                "de": "Links",
+                                "en": "Left",
+                                "es": "Izquierda",
+                                "fi": "Vasen",
+                                "fr": "Gauche",
+                                "hi": "बाएँ",
+                                "it": "Sinistra",
+                                "ja": "左",
+                                "ko": "왼쪽",
+                                "ms": "Kiri",
+                                "nb": "Venstre",
+                                "nl": "Links",
+                                "pt-BR": "Esquerda",
+                                "pt-PT": "Esquerda",
+                                "sv": "Vänster",
+                                "th": "ด้านซ้าย",
+                                "zh-CN": "左侧",
+                                "zh-TW": "左方"
+                            }
+                        },
+                        {
+                            "value": "right",
+                            "label": {
+                                "da": "Højre",
+                                "de": "Rechts",
+                                "en": "Right",
+                                "es": "Derecha",
+                                "fi": "Oikea",
+                                "fr": "Droite",
+                                "hi": "दाएँ",
+                                "it": "Destra",
+                                "ja": "右",
+                                "ko": "오른쪽",
+                                "ms": "Kanan",
+                                "nb": "Høyre",
+                                "nl": "Rechts",
+                                "pt-BR": "Direita",
+                                "pt-PT": "Direita",
+                                "sv": "Höger",
+                                "th": "ด้านขวา",
+                                "zh-CN": "右侧",
+                                "zh-TW": "右方"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": {
+                        "da": "Overskrift",
+                        "de": "Titel",
+                        "en": "Heading",
+                        "es": "Título",
+                        "fi": "Otsake",
+                        "fr": "En-tête",
+                        "hi": "शीर्षक",
+                        "it": "Heading",
+                        "ja": "見出し",
+                        "ko": "제목",
+                        "ms": "Tajuk",
+                        "nb": "Overskrift",
+                        "nl": "Kop",
+                        "pt-BR": "Título",
+                        "pt-PT": "Título",
+                        "sv": "Rubrik",
+                        "th": "ส่วนหัว",
+                        "zh-CN": "标题",
+                        "zh-TW": "標題"
+                    },
+                    "default": {
+                        "da": "Billede med tekst",
+                        "de": "Foto mit Text",
+                        "en": "Image with text",
+                        "es": "Imagen con texto",
+                        "fi": "Kuva tekstillä",
+                        "fr": "Image avec du texte",
+                        "hi": "टेक्स्ट वाली इमेज",
+                        "it": "Immagine con testo",
+                        "ja": "テキスト付き画像",
+                        "ko": "텍스트 포함 이미지",
+                        "ms": "Imej dengan teks",
+                        "nb": "Bilde med tekst",
+                        "nl": "Afbeelding met tekst",
+                        "pt-BR": "Imagem com texto",
+                        "pt-PT": "Imagem com texto",
+                        "sv": "Bild med text",
+                        "th": "รูปภาพพร้อมข้อความ",
+                        "zh-CN": "带文本的图片",
+                        "zh-TW": "附文字的圖片"
+                    }
+                },
+                {
+                    "type": "richtext",
+                    "id": "text",
+                    "label": {
+                        "da": "Tekst",
+                        "de": "Text",
+                        "en": "Text",
+                        "es": "Texto",
+                        "fi": "Teksti",
+                        "fr": "Texte",
+                        "hi": "टेक्स्ट",
+                        "it": "Testo",
+                        "ja": "テキスト",
+                        "ko": "텍스트",
+                        "ms": "Teks",
+                        "nb": "Tekst",
+                        "nl": "Tekst",
+                        "pt-BR": "Texto",
+                        "pt-PT": "Texto",
+                        "sv": "Text",
+                        "th": "ข้อความ",
+                        "zh-CN": "文本",
+                        "zh-TW": "文字"
+                    },
+                    "default": {
+                        "da": "<p>Kombiner stor tekst med et billede for at give dit valgte produkt, din valgte kollektion eller dit valgte blogopslag fokus. Tilføj oplysninger om tilgængelighed, stil og eventuelt også en anmeldelse.</p>",
+                        "de": "<p>Kombinieren Sie große Schrift mit einem Foto, um einen Fokus auf Ihr ausgewähltes Produkt, die Kategorie oder einen Blogpost zu legen. Dazu Details zur Verfügbarkeit, Stil oder ein Review.</p>",
+                        "en": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+                        "es": "<p>Vincula un texto largo con una imagen para dar visibilidad a tu producto, colección o artículo de blog seleccionados. Agrega detalles sobre disponibilidad, estilo, o incluso ofrece una reseña.</p>",
+                        "fi": "<p>Korosta valitsemaasi tuotetta, kokoelmaa tai blogijulkaisua lisäämällä kuvaan suuri teksti. Lisää saatavuustiedot, määritä tyyli tai näytä vaikkapa arvostelu.</p>",
+                        "fr": "<p>Ajoutez une image à un long texte pour mettre l'accent sur un produit de votre choix, une collection, ou un article de blog. Ajoutez des détails sur la disponibilité, le style, ou mettez un commentaire client en avant.</p>",
+                        "hi": "<p>अपने चुने हुए उत्पाद, कलेक्शन या ब्लॉग पोस्ट पर ध्यान देने के लिए छवि के साथ बड़े पाठ को पेयर करें. उपलब्धता, स्टाइल या यहां तक कि समीक्षा प्रदान करने पर विवरण जोड़ें.</p>",
+                        "it": "<p>Associa un testo di grandi dimensioni a un'immagine per dare importanza al prodotto, alla collezione o all'articolo del blog di tua scelta. Aggiungi dettagli sulla disponibilità, sullo stile o fornisci una recensione.</p>",
+                        "ja": "<p>あなたが選んだ商品、コレクション、またはブログ記事に注目を集めるため、大きなテキストと画像を組み合わせます。可用性、スタイル、またはレビュー提供についての詳細を追加します。</p>",
+                        "ko": "<p>이미지와 큰 텍스트를 짝지어 선택한 제품, 컬렉션, 블로그 게시판을 강조합니다. 사용 가능성, 스타일에 대한 자세한 정보를 추가하거나 리뷰를 제공합니다.</p>",
+                        "ms": "<p>Pasangkan teks besar dengan imej untuk memberikan tumpuan kepada produk, koleksi atau siaran blog pilihan anda. Tambah butiran tentang ketersediaan, gaya atau juga memberikan ulasan.</p>",
+                        "nb": "<p>Koble stor tekst med et bilde for å drive fokus mot det valgte produktet, samlingen eller blogginnlegget. Legg til detaljer om tilgjengelighet, stil eller vis frem en vurdering.</p>",
+                        "nl": "<p>Plaats een afbeelding bij grote stukken tekst om de aandacht op uw gekozen product, collectie of blogpost te richten. Voeg details over beschikbaarheid en stijl toe of plaats een productrecensie.</p>",
+                        "pt-BR": "<p>Emparelhe textos grandes com uma imagem para destacar o produto, a coleção ou o post do blog escolhido. Adicione informações sobre disponibilidade, estilo ou até mesmo uma avaliação.</p>",
+                        "pt-PT": "<p>Associe um texto grande a uma imagem para dar ênfase ao produto, coleção ou publicação no blogue que escolheu. Adicione detalhes sobre disponibilidade, estilo ou uma avaliação.</p>",
+                        "sv": "<p>Para ihop stor text med en bild för att ge fokus åt din valda produkt, kollektion eller blogginlägg. Lägg till information om tillgänglighet, stil eller tillhandahåll till och med en recension.</p>",
+                        "th": "<p>จับคู่ข้อความขนาดใหญ่กับรูปภาพเพื่อให้ความสำคัญกับสินค้า คอลเลกชัน หรือโพสต์บล็อกที่คุณเลือก เพิ่มรายละเอียดเกี่ยวกับความพร้อม สไตล์ หรือแม้กระทั่งเขียนรีวิว</p>",
+                        "zh-CN": "<p>将大文本与图片配对，以便将焦点置于您选择的产品、产品系列或博客文章。添加有关可用性和样式的详细信息，甚至是提供评论。</p>",
+                        "zh-TW": "<p>大型文字搭配圖片，以便強調特定產品、商品系列或部落格貼文。您可以加上各種有關可用性、樣式的資料，甚至可以提供使用心得。</p>"
+                    }
+                },
+                {
+                    "type": "text",
+                    "id": "button_label",
+                    "label": {
+                        "da": "Knapetiket",
+                        "de": "Button-Etikett",
+                        "en": "Button label",
+                        "es": "Etiqueta de botón",
+                        "fi": "Painikkeen merkintä",
+                        "fr": "Texte du bouton",
+                        "hi": "बटन लेबल",
+                        "it": "Etichetta pulsante",
+                        "ja": "ボタンラベル",
+                        "ko": "버튼 레이블",
+                        "ms": "Label butang",
+                        "nb": "Knappetikett",
+                        "nl": "Knoplabel",
+                        "pt-BR": "Etiqueta do botão",
+                        "pt-PT": "Etiqueta do botão",
+                        "sv": "Knappetikett",
+                        "th": "ป้ายกำกับปุ่ม",
+                        "zh-CN": "按钮标签",
+                        "zh-TW": "按鈕標籤"
+                    }
+                },
+                {
+                    "type": "url",
+                    "id": "button_link",
+                    "label": {
+                        "da": "Knaplink",
+                        "de": "Button-Link",
+                        "en": "Button link",
+                        "es": "Enlace de botón",
+                        "fi": "Painikkeen linkki",
+                        "fr": "Lien du bouton",
+                        "hi": "बटन लिंक",
+                        "it": "Link pulsante",
+                        "ja": "ボタンリンク",
+                        "ko": "버튼 링크",
+                        "ms": "Pautan butang",
+                        "nb": "Kobling for knapp",
+                        "nl": "Knoplink",
+                        "pt-BR": "Link do botão",
+                        "pt-PT": "Ligação do botão",
+                        "sv": "Knapplänk",
+                        "th": "ลิงก์ของปุ่ม",
+                        "zh-CN": "按钮链接",
+                        "zh-TW": "按鈕連結"
+                    }
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+<div class="megamenu__toolbox-list">
+  {%- for i in (1..15) -%}
+    {% capture toolbox_name %}toolbox_name_{{ i }}{% endcapture %}
+    {% capture toolbox_icon %}toolbox_icon_{{ i }}{% endcapture %}
+    {% capture toolbox_link %}toolbox_link_{{ i }}{% endcapture %}
+    {% capture toolbox_class %}toolbox_class_{{ i }}{% endcapture %}
+    {% if toolbox[toolbox_name] != blank %}
+      <a href="{{ toolbox[toolbox_link] | default: "#" }}" class="megamenu__toolbox-item {{ toolbox[toolbox_class] }}">
+        <span>{{ toolbox[toolbox_icon] }}</span>
+        <h3>{{ toolbox[toolbox_name] }}</h3>
+      </a>  
+    {% endif %}    
+  {%- endfor -%}
+</div>

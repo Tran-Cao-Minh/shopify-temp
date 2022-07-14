@@ -1,0 +1,739 @@
+{{ ' qr-zone-list-product-category.scss.css'| asset_url | stylesheet_tag }}
+
+<div class="product-category">
+  <div class="container">
+    <div class="product-category__toolbar">
+      <div class="product-category__toolbar__seach">
+        <input class="product-category__toolbar__seach__input" id="order_form-input-search" data-action="search" placeholder="{{ 'qr-code_form.general.search' | t }}" type="text">
+        <span class="product-category__toolbar__seach__icon" title="{{ 'general.tooltip.search' | t }}">{% render 'icon-search' %}</span>
+        <span class="product-category__toolbar__seach__result"></span>
+      </div>
+      <div class="product-category__toolbar__filter">
+        <select class="select2_single select__field order_form-select-cat">
+          <option selected value="">{{ 'order_form.general.category' | t }}</option>
+          {% for block in section.blocks %}
+            {% if block.settings.collection != blank %}
+              {% assign collection = collections[block.settings.collection] %}
+              <option value="{{ collection.id }}">{{ collection.title }}</option>
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="product-category__toolbar__sort">
+        <img src="{{ 'icon-arrange.png' | asset_img_url: 'master' }}" alt="">
+      </div>
+      <div class="product-category__toolbar__display">
+        <div class="product-category__toolbar__display--grid">
+          <img class="icon-grid" src="{{ 'icon-grid.png' | asset_img_url: 'master' }}" alt="">
+          <img class="icon-grid-click" src="{{ 'icon-grid-click.png' | asset_img_url: 'master' }}" alt="">
+        </div>
+        <div class="product-category__toolbar__display--listing">
+          <img class="icon-list" src="{{ 'icon-list.png' | asset_img_url: 'master' }}" alt="">
+          <img class="icon-list-click" src="{{ 'icon-list-click.png' | asset_img_url: 'master' }}" alt="">
+        </div>
+      </div>
+    </div>
+
+    <div class="product-category__list-product">
+      {% if section.settings.collection_one != blank %}
+        <div class="product-category__list-product__grid-listing">
+          <div class="product-category__list-product__grid-listing__title">
+            {% if section.settings.collection_one != blank %}
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--left"></div>
+              <h3 class="product-category__list-product__grid-listing__title__center">{{ section.settings.collection_one.title }}</h3>
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--right"></div>
+              <a href="" class="product-category__list-product__grid-listing__view-all product-category__list-product__grid-listing__view-all--one">view all</a>
+            {% endif %}
+          </div>
+          
+          <!-- grid -->
+          <div class="product-category__list-product__grid__body">
+            <div class="row">
+              {% for product in collections[section.settings.collection_one].products limit: collections[section.settings.collection_one].all_products_count %}
+                {% if section.settings.product != blank %}
+                {% assign product = all_products[section.settings.product] %}    
+                {% else %}
+                  {% assign product = all_products[section.settings.product_select] %}
+                {% endif %}
+                {% if product %}
+                  {% assign product_status = false %}
+                  {% assign product_tags = product.tags | downcase %}
+                  {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                  {% if product_status %}
+                    {% assign compare_at_price = current_variant.compare_at_price %}
+                    {% assign price                = current_variant.price %}
+                    {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                    {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                    <!-- add class hidden item > 4-->
+                    {% assign card_hidden_class         = "" %}
+                    {% if forloop.index > 4 %}
+                      {% assign card_hidden_class = "hidden" %}
+                    {% endif %}
+                    
+                    <div class="col-md-3 col-sm-6 product-item-card--p2 product-item-card--one {{card_hidden_class}}" >
+                      <div class="product-category__item ">
+                        <div class="product-category__item__img">
+                          {% if product.featured_image %}
+                            <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% else %}
+                            <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% endif %}
+                        </div>
+                        <div class="product-category__item__content">
+                          <h4 class="product-category__item__content__title">{{ product.title }}</h4>
+                          <div class="product-category__item__content__description">
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--price">{{ 'products.product.member_price' | t }}</p>
+                          <div class="product-category__item__content__price-member">
+                            {% if compare_member_price != blank %}
+                              <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                            <span class="save">save 25%</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--gray">{{ 'products.product.retail_price' | t }}</p>
+                          <div class="product-category__item__content__retail-price">
+                            {% if compare_at_price != blank %}
+                              <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="product-category__qr-code" href="{{ section.settings.link-qr}}">
+                        <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                        <h5 class="product-category__qr-code__title">Create qr code</h5>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- listing -->
+          <div class="product-category__list-product__listing__body">
+            <div class="product-category__header">
+              <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--member-price">Member price</spam>
+                </div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--retail-price">Retail price</spam>
+                </div>
+                <div class="col-md-1">
+                  <div class="product-category__header__title product-category__header__title--amount">
+                    <span class="amount-cv">cv</span>
+                    <span class="amount-qv">qv</span>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+            </div>
+            {% for product in collections[section.settings.collection_one].products limit: collections[section.settings.collection_one].all_products_count %}
+              {% if section.settings.product != blank %}
+              {% assign product = all_products[section.settings.product] %}    
+              {% else %}
+                {% assign product = all_products[section.settings.product_select] %}
+              {% endif %}
+              {% if product %}
+                {% assign product_status = false %}
+                {% assign product_tags = product.tags | downcase %}
+                {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                {% if product_status %}
+                  {% assign compare_at_price = current_variant.compare_at_price %}
+                  {% assign price                = current_variant.price %}
+                  {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                  {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                  <!-- add class hidden item > 4-->
+                  {% assign list_hidden_class         = "" %}
+                  {% if forloop.index > 4 %}
+                    {% assign list_hidden_class = "hidden" %}
+                  {% endif %}
+
+                  <div class="product-category__item product-item-list--one {{list_hidden_class}}">
+                    <div class="row">
+                      <div class="col-md-6 display-center">
+                        <div class="product-category__item__content">
+                          <div class="product-category__item__content__img">
+                            {% if block.settings.img-product %}
+                              <img src="{{ block.settings.img-product | img_url: 'master' }}" alt="">
+                            {% else %}
+                              {% if product.featured_image %}
+                                <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% else %}
+                                <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                          <div class="product-category__item__content__information">
+                            <h4 class="product-category__item__content__information__title">{{ product.title }}</h4>
+                            <div class="product-category__item__content__information__description">
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__member-price">
+                          <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__retail-price">
+                          <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__amount">
+                          <span class="amount-cv">100</span>
+                          <span class="amount-qv">116</span>
+                        </div>
+                      </div>
+                      <div class="col-md-3 display-center">
+                        <a class="product-category__item__qr-code" href="{{ section.settings.link-qr}}">
+                          <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                          <h5 class="special-offers__item__qr-code__title">Create qr code</h5>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else section.settings.collection_one = blank %}
+        <div class="no-collection">Sorry, you haven't selected a collection yet</div>
+      {% endif %}
+
+      {% if section.settings.collection_one != blank %}
+        <div class="product-category__list-product__grid-listing">
+          <div class="product-category__list-product__grid-listing__title">
+            {% if section.settings.collection_two != blank %}
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--left"></div>
+              <h3 class="product-category__list-product__grid-listing__title__center">{{ section.settings.collection_two.title }}</h3>
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--right"></div>
+              <a href="" class="product-category__list-product__grid-listing__view-all product-category__list-product__grid-listing__view-all--two">view all</a>
+            {% endif %}
+          </div>
+          
+          <!-- grid -->
+          <div class="product-category__list-product__grid__body">
+            <div class="row">
+              {% assign count_product = 0 %}
+              {% for product in collections[section.settings.collection_two].products limit: collections[section.settings.collection_two].all_products_count %}
+                {% if section.settings.product != blank %}
+                {% assign product = all_products[section.settings.product] %}    
+                {% else %}
+                  {% assign product = all_products[section.settings.product_select] %}
+                {% endif %}
+                {% if product %}
+                  {% assign product_status = false %}
+                  {% assign product_tags = product.tags | downcase %}
+                  {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                  {% if product_status %}
+                    {% assign compare_at_price = current_variant.compare_at_price %}
+                    {% assign price                = current_variant.price %}
+                    {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                    {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                    <!-- add class hidden item > 4-->
+                    {% assign card_hidden_class         = "" %}
+                    {% if forloop.index > 4 %}
+                      {% assign card_hidden_class = "hidden" %}
+                    {% endif %}
+
+                    <div class="col-md-3 col-sm-6 product-item-card--p2 product-item-card--two {{card_hidden_class}}">
+                      <div class="product-category__item product-item-list">
+                        <div class="product-category__item__img">
+                          {% if product.featured_image %}
+                            <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% else %}
+                            <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% endif %}
+                        </div>
+                        <div class="product-category__item__content">
+                          <h4 class="product-category__item__content__title">{{ product.title }}</h4>
+                          <div class="product-category__item__content__description">
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--price">{{ 'products.product.member_price' | t }}</p>
+                          <div class="product-category__item__content__price-member">
+                            {% if compare_member_price != blank %}
+                              <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                            <span class="save">save 25%</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--gray">{{ 'products.product.retail_price' | t }}</p>
+                          <div class="product-category__item__content__retail-price">
+                            {% if compare_at_price != blank %}
+                              <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="product-category__qr-code" href="{{ section.settings.link-qr}}">
+                        <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                        <h5 class="product-category__qr-code__title">Create qr code</h5>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- listing -->
+          <div class="product-category__list-product__listing__body">
+            <div class="product-category__header">
+              <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--member-price">Member price</spam>
+                </div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--retail-price">Retail price</spam>
+                </div>
+                <div class="col-md-1">
+                  <div class="product-category__header__title product-category__header__title--amount">
+                    <span class="amount-cv">cv</span>
+                    <span class="amount-qv">qv</span>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+            </div>
+            {% for product in collections[section.settings.collection_one].products limit: collections[section.settings.collection_one].all_products_count %}
+              {% if section.settings.product != blank %}
+              {% assign product = all_products[section.settings.product] %}    
+              {% else %}
+                {% assign product = all_products[section.settings.product_select] %}
+              {% endif %}
+              {% if product %}
+                {% assign product_status = false %}
+                {% assign product_tags = product.tags | downcase %}
+                {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                {% if product_status %}
+                  {% assign compare_at_price = current_variant.compare_at_price %}
+                  {% assign price                = current_variant.price %}
+                  {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                  {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                  <!-- add class hidden item > 4-->
+                  {% assign list_hidden_class         = "" %}
+                  {% if forloop.index > 4 %}
+                    {% assign list_hidden_class = "hidden" %}
+                  {% endif %}
+
+                  <div class="product-category__item product-item-list--two {{list_hidden_class}}">
+                    <div class="row">
+                      <div class="col-md-6 display-center">
+                        <div class="product-category__item__content">
+                          <div class="product-category__item__content__img">
+                            {% if block.settings.img-product %}
+                              <img src="{{ block.settings.img-product | img_url: 'master' }}" alt="">
+                            {% else %}
+                              {% if product.featured_image %}
+                                <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% else %}
+                                <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                          <div class="product-category__item__content__information">
+                            <h4 class="product-category__item__content__information__title">{{ product.title }}</h4>
+                            <div class="product-category__item__content__information__description">
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__member-price">
+                          <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__retail-price">
+                          <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__amount">
+                          <span class="amount-cv">100</span>
+                          <span class="amount-qv">116</span>
+                        </div>
+                      </div>
+                      <div class="col-md-3 display-center">
+                        <a class="product-category__item__qr-code" href="{{ section.settings.link-qr}}">
+                          <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                          <h5 class="special-offers__item__qr-code__title">Create qr code</h5>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else section.settings.collection_one = blank %}
+        <div class="no-collection">Sorry, you haven't selected a collection yet</div>
+      {% endif %}
+
+      {% if section.settings.collection_one != blank %}
+        <div class="product-category__list-product__grid-listing">
+          <div class="product-category__list-product__grid-listing__title">
+            {% if section.settings.collection_three != blank %}
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--left"></div>
+              <h3 class="product-category__list-product__grid-listing__title__center product-category__list-product__grid-listing__title__center--bold">{{ section.settings.collection_three.title }}</h3>
+              <div class="product-category__list-product__grid-listing__title__horizontal product-category__list-product__grid-listing__title__horizontal--right"></div>
+              <a href="" class="product-category__list-product__grid-listing__view-all product-category__list-product__grid-listing__view-all--three">view all</a>
+            {% endif %}
+          </div>
+
+          <!-- grid -->
+          <div class="product-category__list-product__grid__body">
+            <div class="row">
+              {% for product in collections[section.settings.collection_three].products limit: collections[section.settings.collection_three].all_products_count %}
+                {% if section.settings.product != blank %}
+                {% assign product = all_products[section.settings.product] %}    
+                {% else %}
+                  {% assign product = all_products[section.settings.product_select] %}
+                {% endif %}
+                {% if product %}
+                  {% assign product_status = false %}
+                  {% assign product_tags = product.tags | downcase %}
+                  {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                  {% if product_status %}
+                    {% assign compare_at_price = current_variant.compare_at_price %}
+                    {% assign price                = current_variant.price %}
+                    {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                    {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                    <!-- add class hidden item > 4-->
+                    {% assign is_hidden         = "" %}
+                    {% if forloop.index > 4 %}
+                      {% assign is_hidden = "hidden" %}
+                    {% endif %}
+
+                    <div class="col-md-3 col-sm-6 product-item-card--three {{ is_hidden }}">
+                      <div class="product-category__item ">
+                        <div class="product-category__item__img">
+                          {% if product.featured_image %}
+                            <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% else %}
+                            <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                          {% endif %}
+                        </div>
+                        <div class="product-category__item__content">
+                          <h4 class="product-category__item__content__title">{{ product.title }}</h4>
+                          <div class="product-category__item__content__description">
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                            <span class="product-category__item__content__description--short">20g</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--price">{{ 'products.product.member_price' | t }}</p>
+                          <div class="product-category__item__content__price-member">
+                            {% if compare_member_price != blank %}
+                              <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                            <span class="save">save 25%</span>
+                          </div>
+                          <p class="product-category__item__content__note product-category__item__content__note--gray">{{ 'products.product.retail_price' | t }}</p>
+                          <div class="product-category__item__content__retail-price">
+                            {% if compare_at_price != blank %}
+                              <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                            {% endif %}
+                            <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <a class="product-category__qr-code" href="{{ section.settings.link-qr}}">
+                        <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                        <h5 class="product-category__qr-code__title">Create qr code</h5>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- listing -->
+          <div class="product-category__list-product__listing__body">
+            <div class="product-category__header">
+              <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--member-price">Member price</spam>
+                </div>
+                <div class="col-md-1">
+                  <spam class="product-category__header__title product-category__header__title--retail-price">Retail price</spam>
+                </div>
+                <div class="col-md-1">
+                  <div class="product-category__header__title product-category__header__title--amount">
+                    <span class="amount-cv">cv</span>
+                    <span class="amount-qv">qv</span>
+                  </div>
+                </div>
+                <div class="col-md-3"></div>
+              </div>
+            </div>
+            {% for product in collections[section.settings.collection_three].products limit: collections[section.settings.collection_three].all_products_count %}
+              {% if section.settings.product != blank %}
+              {% assign product = all_products[section.settings.product] %}    
+              {% else %}
+                {% assign product = all_products[section.settings.product_select] %}
+              {% endif %}
+              {% if product %}
+                {% assign product_status = false %}
+                {% assign product_tags = product.tags | downcase %}
+                {% capture product_json %}{% include 'product-json' %}{% endcapture %}
+                {% if product_status %}
+                  {% assign compare_at_price = current_variant.compare_at_price %}
+                  {% assign price                = current_variant.price %}
+                  {% assign compare_member_price = current_variant.metafields.ulife.compare_member_price %}
+                  {% assign member_price         = current_variant.metafields.ulife.member_price %}
+
+                  <!-- add class hidden item > 4-->
+                  {% assign list_hidden_class         = "" %}
+                  {% if forloop.index > 4 %}
+                    {% assign list_hidden_class = "hidden" %}
+                  {% endif %}
+
+                  <div class="product-category__item product-item-list--three {{list_hidden_class}}">
+                    <div class="row">
+                      <div class="col-md-6 display-center">
+                        <div class="product-category__item__content">
+                          <div class="product-category__item__content__img">
+                            {% if block.settings.img-product %}
+                              <img src="{{ block.settings.img-product | img_url: 'master' }}" alt="">
+                            {% else %}
+                              {% if product.featured_image %}
+                                <img src="{{ product.featured_image | img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% else %}
+                                <img src="{{ 'default_product.png' | asset_img_url: 'master' }}" alt="" data-promotion_image/>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                          <div class="product-category__item__content__information">
+                            <h4 class="product-category__item__content__information__title">{{ product.title }}</h4>
+                            <div class="product-category__item__content__information__description">
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                              <span class="product-category__item__content__information__description--short">20g</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__member-price">
+                          <span class="price-sale">{{ compare_member_price | times: 100 | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ member_price | times: 100 | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__retail-price">
+                          <span class="price-sale">{{ compare_at_price | money | remove: '.00' }}</span>
+                          <span class="price-regular">{{ price | money | remove: '.00' }}</span>
+                        </div>
+                      </div>
+                      <div class="col-md-1 display-center">
+                        <div class="product-category__item__amount">
+                          <span class="amount-cv">100</span>
+                          <span class="amount-qv">116</span>
+                        </div>
+                      </div>
+                      <div class="col-md-3 display-center">
+                        <a class="product-category__item__qr-code" href="{{ section.settings.link-qr}}">
+                          <img src="{{ 'icon-qr-code.png' | asset_img_url: 'master' }}" alt="">
+                          <h5 class="special-offers__item__qr-code__title">Create qr code</h5>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else section.settings.collection_one = blank %}
+        <div class="no-collection">Sorry, you haven't selected a collection yet</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // click grid and listing
+  $(document).ready(function () {
+    $('.product-category__list-product__listing__body').hide();
+    $('.product-category__list-product__grid__body').show();
+    $('.icon-grid').hide();
+    $('.icon-grid-click').show();
+    $('.icon-list').show();
+    $('.icon-list-click').hide();
+    
+    $('.product-category__toolbar__display--grid img').click(function () {
+      $('.product-category__list-product__listing__body').hide();
+      $('.product-category__list-product__grid__body').show();
+      $('.icon-grid').hide();
+      $('.icon-grid-click').show();
+      $('.icon-list').show();
+      $('.icon-list-click').hide();
+    });
+
+    $('.product-category__toolbar__display--listing img').click(function () {
+      $('.product-category__list-product__listing__body').show();
+      $('.product-category__list-product__grid__body').hide();
+      $('.icon-grid').show();
+      $('.icon-grid-click').hide();
+      $('.icon-list').hide();
+      $('.icon-list-click').show();
+    });
+  });
+
+  // click view-all
+  $('.product-category__list-product__grid-listing__view-all--one').click(function(e) {
+    e.preventDefault();
+    function toggleHidden (index, product){
+      if(index > 3 ){
+        if($(product).hasClass('hidden')){
+          $(product).removeClass('hidden');
+        }else{
+          $(product).addClass('hidden');
+        }
+      }
+    }
+    let productList = $('.product-item-list--one');
+    let productCards = $('.product-item-card--one');
+    $.each(productList, toggleHidden );
+    $.each(productCards, toggleHidden );
+  });
+
+  $('.product-category__list-product__grid-listing__view-all--two').click(function(e) {
+    e.preventDefault();
+    function toggleHidden (index, product){
+      if(index > 3 ){
+        if($(product).hasClass('hidden')){
+          $(product).removeClass('hidden');
+        }else{
+          $(product).addClass('hidden');
+        }
+      }
+    }
+    let productList = $('.product-item-list--two');
+    let productCards = $('.product-item-card--two');
+    $.each(productList, toggleHidden );
+    $.each(productCards, toggleHidden );
+  });
+
+  $('.product-category__list-product__grid-listing__view-all--three').click(function(e) {
+    e.preventDefault();
+    function toggleHidden (index, product){
+      if(index > 3 ){
+        if($(product).hasClass('hidden')){
+          $(product).removeClass('hidden');
+        }else{
+          $(product).addClass('hidden');
+        }
+      }
+    }
+    let productList = $('.product-item-list--three');
+    let productCards = $('.product-item-card--three');
+    $.each(productList, toggleHidden );
+    $.each(productCards, toggleHidden );
+  });
+
+  // hidden placeholder
+  if ($(window).width() < 900){  
+    $(':input').removeAttr('placeholder');
+  }   
+</script>
+
+{% schema %}
+  {
+    "name": "List Product",
+    "settings": [
+                  {
+                    "type": "header",
+                    "content": "Settings"
+                  },                 
+                  {
+                    "type": "collection",
+                    "id": "collection_one",
+                    "label": {
+                      "en": "Choose Collection",
+                      "th": "เลือกคอลเล็กชัน"
+                    }
+                  },
+                  {
+                    "type": "collection",
+                    "id": "collection_two",
+                    "label": {
+                      "en": "Choose Collection",
+                      "th": "เลือกคอลเล็กชัน"
+                    }
+                  },
+                  {
+                    "type": "collection",
+                    "id": "collection_three",
+                    "label": {
+                      "en": "Choose Collection",
+                      "th": "เลือกคอลเล็กชัน"
+                    }
+                  },
+                  {
+                    "type": "url",
+                    "id": "link-qr",
+                    "label": "Link QR Code"
+                  }  
+                ],
+    "blocks": [
+                {
+                  "type": "collection",
+                  "name": {
+                      "en": "Collection",
+                      "th": "คอลเลกชัน"
+                  },
+                  "settings": [
+                                {
+                                  "label": {
+                                    "en": "Collection",
+                                    "th": "คอลเลกชัน"
+                                  },
+                                  "id": "collection",
+                                  "type": "collection"
+                                }
+                              ]
+                }
+              ]
+  }
+{% endschema %}

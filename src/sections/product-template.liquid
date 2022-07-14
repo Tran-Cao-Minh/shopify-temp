@@ -1,0 +1,595 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign current_variant_id = current_variant.id | plus: 0 -%}
+{% assign product_tags = product.tags | downcase %}
+{% assign variant_list = '' %}
+{%- assign enable_image_zoom = section.settings.enable_image_zoom -%}
+{% assign product_status = false %}
+{% assign tag_customer = '' %}
+{% if customer %}
+   {% assign member_id = customer.metafields.data.personal.member_id %}
+   {% for tag in customer.tags %}
+      {% assign tag_downcase = tag | downcase %}
+      {% if tag_downcase contains 'bp_rank' %}
+         {% assign tag_customer = tag %}
+         {% break %}
+      {% endif %}
+   {% endfor %}
+{% endif %}
+
+{%- capture product_json_detail -%}{%- include 'product-json' -%}{%- endcapture -%}
+
+<div class="product-template__container container"
+   id="ProductSection-{{ section.id }}"
+   data-section-id="{{ section.id }}"
+   data-section-type="product"
+   data-enable-history-state="true"
+>
+   <div class="row product-item product-single" id="product-single"
+      data-id_product="{{ product.id }}"
+      data-page="product"></div>
+</div>
+<script type="text/html" id="productDetailTemplate">
+   <%
+      current_variant = product.variants[0];
+      for (let i = 0; i < product.variants.length; i++) {
+         let variant = product.variants[i];
+         if (variant.id == product.currentVariantID) {
+            current_variant = variant;
+         }
+      }
+   %>
+
+   <div class="col-md-6 product__sticky-media">
+      <% if (product.media.length > 0) { %>
+         <div class="product-single__media-group">
+            <div class="feature-media">
+               <!-- Product tags -->
+               {% include 'product-tag-label' %}
+               <!-- End product tags -->
+
+               <!-- Slide Main -->
+               <div class="swiper-container" data-product-gallery-main>
+                  <div class="swiper-wrapper">
+                     <%
+                        for (let i = 0; i < product.media.length; i++) {
+                           let media = product.media[i];
+                     %>
+                        <div class="swiper-slide" data-id="<%- media.id %>">
+                           <div class="product-single__media-wrapper js"
+                              <% if (media.media_type == 'video' || media.media_type == 'external_video') { %> data-product-media-type-video data-enable-video-looping="true"<% } %>
+                              <% if (media.media_type == 'external_video') { %> data-video-id="<%- media.external_id %>"<% } %>
+                              data-product-single-media-wrapper
+                              data-media-id="{{ section.id }}-<%- media.id %>">
+                              <%
+                                 switch(media.media_type) {
+                                 case 'image':
+                                    if (media.src) {
+                                       let zoom_media_id = 'ImageZoom-{{ section.id }}-' + media.id;
+                                       let media_src = theme.Images.getSizedImageUrl(media.src,'x100');
+                                       let data_src = theme.Images.getSizedImageUrl(media.src,'x1000');
+                                       let style_padding = 1 / media.preview_image.aspect_ratio * 100;
+                                       %>
+                                          <div id="<%- zoom_media_id %>"
+                                             style="padding-top: <%- style_padding %>%"
+                                             class="product-single__media
+                                             <% if (product.media.size > 1) { %> product-single__media--has-thumbnails<% } %>
+                                             {% if enable_image_zoom %} js-zoom-enabled{% endif %}"
+                                             {% if enable_image_zoom %} data-image-zoom-wrapper data-zoom="<%- media.src %>"{% endif %}>
+                                             <img id="<%- media.id %>"
+                                                class="feature-row__image lazyload"
+                                                src="<%- media_src %>"
+                                                data-src="<%- data_src %>"
+                                                data-sizes="auto"
+                                                alt="">
+                                          </div>
+                                       <%
+                                    }
+                                    break;
+
+                                 case 'external_video':
+                                    if (media.aspect_ratio && media.external_id) {
+                                       let style_padding = 1 / media.aspect_ratio * 100;
+                                    %>
+                                       <div class="product-single__media"
+                                          style="padding-top: <%- style_padding %>%">
+                                          <iframe frameborder="0"
+                                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                             allowfullscreen="allowfullscreen"
+                                             src="https://www.youtube.com/embed/<%- media.external_id %>?controls=1&amp;enablejsapi=1&amp;modestbranding=1&amp;playsinline=1&amp;rel=0"></iframe>
+                                       </div>
+                                    <%
+                                    }
+                                    break;
+
+                                 case 'video':
+                                    if (media.aspect_ratio && media.sources[0].url) {
+                                       let style_padding = 1 / media.aspect_ratio * 100;
+                                    %>
+                                       <div class="product-single__media product-single__media--video product-single__media--<%- media.id %>"
+                                          style="padding-top: <%- style_padding %>%">
+                                          <video playsinline="playsinline" class="media-video" preload="metadata"
+                                             poster="<%- media.preview_image.src %>" controls>
+                                             <source src="<%- media.sources[0].url %>" type="video/mp4">
+                                             <img src="<%- media.preview_image.src %>" alt="">
+                                          </video>
+                                       </div>
+                                    <%
+                                    }
+                                    break;
+                                 }
+                              %>
+                           </div>
+                        </div>
+                     <%
+                        }
+                     %>
+                  </div>
+                  <!-- Add Pagination -->
+                  <div class="swiper-pagination"></div>
+               </div>
+               <!-- End Slide Main -->
+            </div>
+
+            <!-- Slide Thumb -->
+            <div class="product__thumbnails-wrap">
+               <div class="swiper-container" data-product-gallery-thumbnail>
+                  <div class="swiper-wrapper">
+                     <%
+                        for (let i = 0; i < product.media.length; i++) {
+                           let media = product.media[i];
+                           if(media.preview_image.src) {
+                              let preview_image = theme.Images.getSizedImageUrl(media.preview_image.src,'x100');
+                     %>
+                        <div class="swiper-slide product__thumbnails-item" data-index="<%- i + 1 %>"
+                           data-id="<%- media.id %>">
+                           <div class="product__thumbnails-img-wrapper">
+                              <img class="product__thumbnails-img lazyload"
+                                 data-src="<%- preview_image %>"
+                                 alt="">
+                           </div>
+                        </div>
+                     <%
+                           }
+                        }
+                     %>
+                  </div>
+               </div>
+               <!-- Add Arrows -->
+               <div class="swiper-button-next"></div>
+               <div class="swiper-button-prev"></div>
+            </div>
+            <!-- End Slide Thumb -->
+         </div>
+         <div class="product-single__net_weight<% if ( !current_variant.weight || parseFloat(current_variant.weight) <= 0 ) { %> hide<% } %>">
+            {{ "products.product.net_weight" | t }} <span><%- current_variant.weight_unit %></span>
+         </div>
+      <% }else { %>
+         <div class="product-single__media-group">
+            <div class="feature-media">
+               {% include 'product-tag-label' %}
+               <img src="{{ 'default_product.png' | asset_img_url: '500x' }}" alt="" />
+            </div>
+         </div>
+      <% } %>
+   </div>
+   <div class="col-md-6">
+      <div class="product-single__meta">
+         <!-- Title -->
+         <h1 class="product-single__title"><%= product.title %></h1>
+
+         <!-- Collection -->
+         <% if ( product.brand != '') { %>
+            <div class="product-single__collections"><%= product.brand %></div>
+         <% } %>
+
+         <!-- Vote -->
+         <div class="product-single__vote">
+            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+         </div>
+
+         <!-- Promotion period -->
+         <div class="product-single__period product_period
+            <% if ( !current_variant.price_sale && !current_variant.price_member_sale || current_variant.promo_period_text == '') { %> hide<% }%>"
+            data-promotion_period>
+            {% include 'icon-period' %}<span class="period__title">{{ settings.product_promotion_period }}</span>
+            <span class="period__value" data-promotion_period_text><%= current_variant.promo_period_text %></span>
+         </div>
+
+         <!-- Price -->
+         <div class="product-single__price-group">
+            <% if (product.autoship) { %>               
+               <!-- Price autoship -->
+               <div class="product-single__price autoship-price">
+                  <div class="price_tooltip">
+                     <span class="price_note">{{ 'products.product.member_price' | t }}</span>
+                     <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code' | t }}</span></div>
+                  </div>
+                  <div class="product-single__price-member <% if (current_variant.price_member_sale) { %> price--on-sale<% } %>"
+                     data-single_price_member>
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_member_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.member_price, theme.moneyFormat) %></span>
+                  </div>
+               </div>
+               {% unless customer %}
+                  <div class="autoship-note">
+                     <div class="desc">{{ 'products.product.autoship_promocode_html' | t }}</div>
+                     <div class="smart_tooltip tooltip_right">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code_autoship_note' | t }}</span></div>
+                  </div>
+               {% endunless %}
+            <% }else { %>
+               <!-- Price member -->
+               <div class="product-single__price">
+                  <div class="price_tooltip">
+                     <span class="price_note">{{ 'products.product.member_price' | t }}</span>
+                     <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.purchase_at_member_price_using_promo_code' | t }}</span></div>
+                  </div>
+                  <div class="product-single__price-member <% if (current_variant.price_member_sale) { %> price--on-sale<% } %><% if (!current_variant.member_price) { %> hide<% } %>"
+                     data-single_price_member>
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_member_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.member_price, theme.moneyFormat) %></span>                     
+                  </div>
+               </div>
+               <!-- Price retail -->
+               <div class="product-single__price">
+                  <div class="price_tooltip"><span class="price_note">{{ 'products.product.retail_price' | t }}</span></div>
+                  <div class="product-single__price-retail <% if (current_variant.price_sale) { %> price--on-sale<% } %>"
+                     data-single_price_retail>
+                     <span class="price price__sale"
+                        data-price_sale><%= theme.Currency.formatMoney(current_variant.compare_at_price, theme.moneyFormat) %></span>
+                     <span class="price price__regular"
+                        data-price_regular><%= theme.Currency.formatMoney(current_variant.price, theme.moneyFormat) %></span>
+                  </div>
+               </div>
+            <% } %>
+         </div>
+
+         <form method="post" action="/cart/add" accept-charset="UTF-8"
+            class="product-form product-form-product-template" enctype="multipart/form-data"
+            novalidate="novalidate" data-product-form="">
+            <% if ( product.variants.length > 1 ) { %>
+               <div class="product-form__selector hide">
+                  <select name="id" id="product-selectors" class="product-form__variants no-js" data-product__selectors>
+                     <%
+                        for (let i = 0; i < product.variants.length; i++) {
+                           let variant = product.variants[i];
+                     %>
+                        <option value="<%- variant.id %>" data-sku="<%- variant.sku %>"
+                           <% if ( variant == current_variant ) { %> selected="selected" <% } %>
+                           <% if ( variant.inventory_management == 'shopify' ) { %>
+                              data-quantity="<%- variant.inventory_quantity %>"
+                           <% } %>
+                           data-manager="<%- variant.inventory_management %>"
+                           data-continue="<% if ( variant.inventory_management == 'shopify' ) { %><%- variant.inventory_policy %><% } else { %>continue<% } %>"
+                           data-weight_unit="<%- variant.weight_unit %>"
+                           data-weight="<%- parseFloat(variant.weight) %>"
+                        >
+                           <%= variant.title %>
+                        </option>
+
+                     <% } %>
+                  </select>
+               </div>
+
+               <div class="product-form__controls-group">
+                  <div class="product-form__swatch">
+                     <% _.forEach(product.options, function(option, key_option) { %>
+                        <div class="swatch clearfix" data-option-index="<%- key_option %>">
+                           <div class="header hide"><%- option %>:</div>
+                              <%
+                                 var values = [];
+                                 _.forEach(product.variants, function(variant) {
+                                    var value = variant.options[key_option];
+                                    if (values.indexOf(value) < 0) {
+                                    values.push(value); %>
+
+                                    <div data-value="<%- value %>"
+                                       class="swatch-element <%- value %>
+                                          <% if (variant.available) { %> available<% }else{ %> soldout<%} %>">
+                                       <input id="swatch-<%- key_option %>-{{ section.id }}-<%- variant.id %>" data-sku="<%- variant.sku %>"
+                                          type="radio" name="option-<%- key_option %>-{{ section.id }}-<%- product.id %>" value="<%- value %>">
+                                       <label for="swatch-<%- key_option %>-{{ section.id }}-<%- variant.id %>"><%- value %><img class="soldout-img" src="{{ 'soldout.png' | asset_url }}" alt="" /></label>
+                                    </div>
+                                 <%
+                                    }
+                                 });
+                              %>
+                           </div>
+                     <% }); %>
+                  </div>
+               </div>
+               <div id="ProductJson-{{ section.id }}" class="product-single__json" data-json="<%- JSON.stringify(product) %>"></div>
+
+            <% } else { %>
+               <% if (current_variant.title != '' && current_variant.title != 'Default Title') { %>
+                  <div class="product-card__variant-title"><%= current_variant.title %></div>
+               <% } %>
+               <input type="hidden" name="id" value="<%- product.variants[0].id %>" />
+               <input type="hidden" name="sku" value="<%- product.variants[0].sku %>" />
+            <% } %>
+
+            <!-- Group Qty - CV/QV -->
+            <div class="product-single__group-qty">
+               {% if customer %}
+                  <% if ( current_variant.cv ) {
+                     cashback = parseFloat((current_variant.cv * 0.05 * 40 * 100.00).toFixed(2));
+                  %>
+                     <div class="item item__cvqv product-single-cv_qv cvqv__wrap" data-cvqv__wrap>
+                        <div class="cv_qv">
+                           <span class="cvqv__title label">{{ 'products.product.cv_qv' | t }}</span>
+                           <div class="cvqv__number">
+                              <span class="cv" data-cv_number><%- current_variant.cv %> </span>
+                              <span> | </span>
+                              <% if ( current_variant.qv ) { %>
+                                 <span class="qv" data-qv_number><%- current_variant.qv %></span>
+                              <% } %>
+                           </div>
+                        </div>
+                        <span class="item__space"></span>
+                        <div class="item__cashback">
+                           <div class="cashback">
+                              <div class="cashback__tooltip">
+                                 <span class="label">{{ 'products.product.cashback_estimate' | t }}</span>
+                                 <div class="smart_tooltip">{% include 'icon-info' %}<span class="tooltiptext">{{ 'products.product.cashback_estimate_tooltip' | t }}</span></div>
+                              </div>
+                              <span class="price price__regular" data-cashback_price><%= theme.Currency.formatMoney(cashback, theme.moneyFormat) %></span>
+                           </div>
+                        </div>
+                     </div>                     
+                  <% } else { %>
+                     <div class="item product-single-cv_qv cvqv__wrap hide" data-cvqv__wrap>
+                        <div class="cv_qv">
+                           <span class="cvqv__title label">{{ 'products.product.cv_qv' | t }}</span>
+                           <div class="cvqv__number">
+                              <span class="cv"></span>
+                              <span> | </span>
+                              <span class="qv"></span>
+                           </div>
+                        </div>
+                        <div class="item__cvqv item__cashback">
+                           <div class="cashback">
+                              <span class="label">{{ 'products.product.cashback_estimate' | t }}</span>
+                              <span class="price price__regular" data-cashback_price></span>
+                           </div>
+                        </div>
+                     </div>
+                  <% } %>
+               {% endif %}
+               <div class="item item__qty-wrap">
+                  <div class="product-quantity__custom">
+                     <div class="quantity_info">
+                        <label class="label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+                        <% if (!product.autoship) { %>
+                           <div class="item__inventory" data-inventory_wrap>
+                              <label class="label">{{ 'products.product.products_in_stock' | t }}</label>
+                              <span class="number" data-inventory_number><%- current_variant.inventory_quantity %></span>
+                           </div>
+                        <% } %>
+                     </div>
+                     <div class="product-quantity__controls<% if ( !current_variant.available ) { %> disabled<% } %>">
+                        <div class="product-quantity__icon-minus" disabled="disabled" data-quantity__minus>-</div>
+                        <input type="number" min="1" id="Quantity-{{ section.id }}"
+                           name="quantity" value="1"
+                           data-quantity="<%- current_variant.inventory_quantity %>"
+                           data-manager="<%- current_variant.inventory_management %>"
+                           data-continue="<%- current_variant.inventory_policy %>"
+                           class="quantity__custom--input" data-quantity__input />
+                        <div class="product-quantity__icon-plus" data-quantity__plus>+</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- Wishlist - Favorite -->
+            {% if customer %}
+               <div class="product-single__wishlist-favorite d-flex">
+                  <!-- Wishlist -->
+                  <div class="product-single__wishlist" data-scope="wishlist" data-id="{{ product.id }}" data-title="{{ product.title }}">
+                     <span class="loader"></span>
+                     <div class="content content_add" data-action="add">
+                        <span class="icon-wishlist">{% include 'icon-wishlist' %}</span>
+                        <span class="title link-readmore text-underline">{{ 'products.product.add_to_wishList' | t }}</span>
+                     </div>
+                     <div class="content content_remove"data-action="remove">
+                        <span class="icon-wishlist">{% include 'icon-wishlist-active' %}</span>
+                        <span class="title link-readmore text-underline">{{ 'products.product.remove_form_wishList' | t }}</span>
+                     </div>
+                  </div>
+                  <!-- Favorite -->
+                  <div class="product-single__favorite" data-scope="favorite" data-id="{{ product.id }}" data-title="{{ product.title }}">
+                     <span class="loader"></span>
+                     <div class="content content_add" data-action="add">
+                        <span class="icon-favorite">{% include 'icon-favorite' %}</span>
+                        <span class="title link-readmore text-underline">{{ 'products.product.add_to_favorite' | t }}</span>
+                     </div>
+                     <div class="content content_remove" data-action="remove">
+                        <span class="icon-favorite">{% include 'icon-favorite-active' %}</span>
+                        <span class="title link-readmore text-underline">{{ 'products.product.remove_form_favorite' | t }}</span>
+                     </div>
+                  </div>
+               </div>
+            {% endif %}
+
+            <!-- Add to cart -->
+            <div class="product-form__controls-group product-form__controls-group--submit group-buttons form__actions-sticky">
+               <div class="product-form__item product-form__item--submit">
+                  <div class="prd__error-message"></div>
+                  <div class="product-single__group-button available<% if ( !product.available ) { %> hide <% } %>">
+                     <a href="javascript:void(0)"
+                        class="btn-cart btn product-single__action-cart product-form__cart"
+                        data-product_tags="{{ product.tags | join: ',' | downcase }}"
+                        data-single_add_to_cart>
+                        {{ 'products.product.add_to_cart' | t }}
+                     </a>
+                     <a href="javascript:void(0)"
+                        class="btn-checkout btn btn--secondary product-single__action-cart product-form__cart" data-buynow="true"
+                        data-product_tags="{{ product.tags | join: ',' | downcase }}"
+                        data-single_add_to_cart>
+                        <% if (!product.autoship) { %>
+                           {{ 'products.product.buy_it_now' | t }}
+                        <% }else { %>
+                           {{ 'products.product.buy_auto_ship' | t }}
+                        <% }%>                     
+                     </a>
+                  </div>
+                  <div class="product-single__soldout unavailable <% if ( product.available ) { %> hide <% } %>">
+                     <a href="javascript:void(0)" class="btn btn fix-width disabled">{{ 'products.product.sold_out' | t }}</a>
+                  </div>
+               </div>
+            </div>
+            
+            <!-- Delivery fee -->
+            <div class="product-single__delivery-fee">               
+               <svg class="display-dk" xmlns="http://www.w3.org/2000/svg" width="28.53" height="19.537" viewBox="0 0 28.53 19.537">
+                  <g data-name="Group 1111" transform="translate(-1050.445 -759)">
+                     <path data-name="Path 215" d="M670,801v3.6h4.5" transform="translate(381.445 -29.76)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 216" d="M670,687.243V676h16.638v14.839H680.19" transform="translate(381.445 83.998)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <circle data-name="Ellipse 32" cx="2.6" cy="2.6" r="2.6" transform="translate(1070.431 772.336)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 217" d="M862.644,727.243h2.248V721.4l-4.946-5.4H855v11.242h2.248" transform="translate(213.082 47.596)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <path data-name="Path 218" d="M896.745,734.636H890V729.4" transform="translate(181.23 34.357)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     <circle data-name="Ellipse 33" cx="2.6" cy="2.6" r="2.6" transform="translate(1056.315 772.336)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                  </g>
+               </svg>
+               <svg class="display-mb" xmlns="http://www.w3.org/2000/svg" width="48.105" height="48" viewBox="0 0 48.105 48">
+                  <g data-name="Group 2039" transform="translate(-10.923 -1219)">
+                     <rect data-name="Rectangle 1169" width="48" height="48" transform="translate(11 1219)" fill="#5d96ff" opacity="0"/>
+                     <g data-name="Group 1391" transform="translate(11.923 1229.154)">
+                        <path data-name="Path 215" d="M670,801v6.252h7.814" transform="translate(-670 -781.466)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        <path data-name="Path 216" d="M670,695.537V676h28.913v25.787h-11.2" transform="translate(-670 -676.002)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        <circle data-name="Ellipse 32" cx="4.519" cy="4.519" r="4.519" transform="translate(32.995 21.438)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        <path data-name="Path 217" d="M868.284,735.538h3.907V725.379L863.6,716H855v19.536h3.907" transform="translate(-826.087 -709.75)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        <path data-name="Path 218" d="M901.721,738.5H890V729.4" transform="translate(-855.617 -722.873)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        <circle data-name="Ellipse 33" cx="4.519" cy="4.519" r="4.519" transform="translate(8.464 21.438)" fill="none" stroke="#333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                     </g>
+                  </g>
+               </svg>
+               <div class="delivery__free-content">
+                  <% if (!product.autoship) { %>
+                     <div class="free<% if ( current_variant.freeship == 0 ) { %> hide<% }%>" data-delivery_free>{{ settings.product_delivery_messages_free }}</div>
+                     <div class="not_free<% if ( current_variant.freeship == 1) { %> hide<% }%>" data-delivery_not_free>{{ settings.product_delivery_messages_not_free }}</div>
+                  <% }else { %>
+                     <div class="free autoship" >{{ settings.product_delivery_messages_autoship }}</div>
+                  <% }%>
+               </div>
+            </div>
+         </form>
+
+         {% include 'product-content-tab' %}
+
+         {% if product.metafields.ulife.warning != blank or product.metafields.ulife.fda_value != blank %}
+            <div class="product-single-tags-warning">
+               {% if product.metafields.ulife.warning != blank %}
+                  <strong>{{ 'products.product.warning' | t }}</strong>&nbsp;{{ product.metafields.ulife.warning }}
+               {% endif %}
+               {% if product.metafields.ulife.warning != blank and product.metafields.ulife.fda_value != blank %}
+                  <hr />
+               {% endif %}
+               {% if product.metafields.ulife.fda_value != blank %}
+                  <strong>{{ 'products.product.fda_registration_no' | t }}</strong>&nbsp;{{ product.metafields.ulife.fda_value }}
+               {% endif %}
+            </div>
+         {% endif %}
+
+         <p class="visually-hidden" data-product-status
+            aria-live="polite"
+            role="status"
+         ></p>
+      </div>
+      {% include 'sharing-popup-product' %}
+   </div>
+</script>
+
+<script>
+{% if product_status %}
+   let product_detail_json = {{ product_json_detail }};
+   let currentVariantID = {{ current_variant_id }};
+   product_detail_json["currentVariantID"] = currentVariantID;
+{% else %}
+   // Home page
+   document.location.href="{{ routes.root_url }}";
+{% endif %}
+</script>
+
+{% schema %}
+{
+ "name": {
+   "da": "Produktsider",
+   "de": "Produktseiten",
+   "en": "Product pages",
+   "es": "Páginas de productos",
+   "fi": "Tuotesivut",
+   "fr": "Pages de produits",
+   "hi": "उत्पाद पेज",
+   "it": "Pagine di prodotto",
+   "ja": "商品ページ",
+   "ko": "제품 페이지",
+   "ms": "Halaman produk",
+   "nb": "Produktsider",
+   "nl": "Productpagina's",
+   "pt-BR": "Páginas de produtos",
+   "pt-PT": "Páginas de produtos",
+   "sv": "Produktsidor",
+   "th": "หน้าสินค้า",
+   "zh-CN": "产品页面",
+   "zh-TW": "產品頁面"
+ },
+ "class": "ss-product-detail",
+ "settings": [
+   {
+     "type": "checkbox",
+     "id": "show_share_buttons",
+     "label": {
+       "da": "Vis knapper til deling på sociale medier",
+       "de": "Buttons für Social Media anzeigen",
+       "en": "Show social sharing buttons",
+       "es": "Mostrar botones para compartir en redes sociales",
+       "fi": "Näytä sosiaalisen median jakamispainikkeet",
+       "fr": "Affichez les boutons de partage sur les médias sociaux",
+       "hi": "सोशल शेयरिंग बटन दिखाएं",
+       "it": "Mostra i pulsanti per la condivisione sui social",
+       "ja": "ソーシャル共有ボタンを表示する",
+       "ko": "소셜 공유 버튼 표시",
+       "ms": "Tunjukkan butang perkongsian sosial",
+       "nb": "Vis knapper for deling på sosiale medier",
+       "nl": "Knoppen voor sociaal delen weergeven",
+       "pt-BR": "Exibir botões de compartilhamento em redes sociais",
+       "pt-PT": "Mostrar botões de partilha nas redes sociais",
+       "sv": "Visa knappar för delning i sociala medier",
+       "th": "แสดงปุ่มสำหรับแชร์ลงโซเชียล",
+       "zh-CN": "显示社交分享按钮",
+       "zh-TW": "顯示社群分享按鈕"
+     },
+     "default": true
+   },
+   {
+     "type": "checkbox",
+     "id": "enable_image_zoom",
+     "label": {
+       "da": "Aktivér billedzoom",
+       "de": "Foto-Zoom zulassen",
+       "en": "Enable image zoom",
+       "es": "Habilitar zoom de imagen",
+       "fi": "Ota kuvan zoomaus käyttöön",
+       "fr": "Activer le zoom d'image",
+       "hi": "इमेज ज़ूम सक्षम करें",
+       "it": "Abilita lo zoom dell'immagine",
+       "ja": "画像ズームを有効にする",
+       "ko": "이미지 확대 사용",
+       "ms": "Dayakan zum imej",
+       "nb": "Aktiver bildezoom",
+       "nl": "Inzoomen op afbeelding inschakelen",
+       "pt-BR": "Habilitar o zoom da imagem",
+       "pt-PT": "Ativar o zoom da imagem",
+       "sv": "Aktivera bildzoom",
+       "th": "เปิดใช้การซูมภาพ",
+       "zh-CN": "启用图片缩放",
+       "zh-TW": "啟用圖片縮放"
+     },
+     "default": true
+   }
+ ]
+}
+{% endschema %}

@@ -1,0 +1,8 @@
+{{ 'pages-support.scss.css' | asset_url | stylesheet_tag }}
+<div class="section-content d-none">
+    <div class="container">
+        {{ page.content }}
+    </div>
+</div>
+{% section 'commuity_template' %}
+{% include 'sharing-popup', share_permalink: page.url %}

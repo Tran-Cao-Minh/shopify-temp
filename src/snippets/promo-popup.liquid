@@ -1,0 +1,17 @@
+{%- if settings.enable_promo_popup -%}
+    {%- if template.name == 'index' or template.suffix == 'business' -%}
+        {%- if settings.promo_popup != blank -%}
+            <div class="promo-popup__modal smart_modal" style="display: none;">
+                <div class="modal__overlay overlay"></div>
+                <div class="modal-content text-center">
+                    <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+                    {{ settings.promo_popup }}
+                </div>
+            </div>
+            <script>
+                window.promo_popup_success = "{{ 'general.newsletter_form.confirmation' | t }}";
+                window.promo_popup_fail = "{{ 'general.accessibility.error' | t }}";
+            </script>
+        {%- endif -%}
+    {%- endif -%}
+{%- endif -%}

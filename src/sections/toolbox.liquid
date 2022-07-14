@@ -1,0 +1,299 @@
+<style>
+  .page__toolbox .row {
+    margin-left: -45px;
+    margin-right: -45px;
+  }
+  .page__toolbox .row > [class*="col-"] {
+    padding-left: 45px;
+    padding-right: 45px;
+    margin-bottom: 50px;
+  }
+  .toolbox__name {
+    margin: 10px 0px 0;
+    text-transform: uppercase;
+    color: #333333;
+    letter-spacing: 0.25px;
+    line-height: 1.5;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .toolbox__item {
+    position: relative;
+    text-align: center;
+    background: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    height: 100%;
+    transition: all 0.3s;
+  }
+  .toolbox__item:hover .toolbox__name {
+    color: #fff;
+  }
+  .toolbox__item:hover .media svg > g {
+    stroke: #fff;
+  }
+  .toolbox__item:hover .media svg > path {
+    fill: #fff;
+  }
+  .toolbox__item .media {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toolbox__item img {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+  }
+  .section-header h3 {
+    font-size: 30px;
+    margin-bottom: 25px;
+    letter-spacing: 0.25px;
+  }
+  .section-header p {
+    font-size: 16px;
+    letter-spacing: 0.25px;
+    color: #333333;
+    text-align: left;
+    margin-bottom: 60px;
+    font-family: "IBM Plex Sans Thai Looped", sans-serif;
+    font-weight: 400;
+  }
+  @media(min-width: 768px) and (max-width: 1199px) {
+    .page__toolbox .row {
+      margin-left: -25px; 
+      margin-right: -25px;
+    }
+    .page__toolbox .row > [class*="col-"] {
+      padding-left: 25px;
+      padding-right: 25px;
+      margin-bottom: 30px;
+    }
+    .toolbox__name {
+      font-size: 16px;
+    }
+  }
+  @media(max-width: 767px) {
+    .page__toolbox .row {
+      margin-left: -5px;
+      margin-right: -5px;
+    }
+    .page__toolbox .row > [class*="col-"] {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 10px;
+    }
+    .toolbox__name {
+      font-size: 13px;
+      margin: 0;
+      font-weight: normal;
+    }
+    .toolbox__item {
+      padding: 5px;
+    }
+    .toolbox__item .media{
+      height: 75px;
+    }
+    .toolbox__item .media svg{
+      transform: scale(0.6);
+    }
+    .section-header p {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 20px;
+    }
+    .section-header h3 {
+      font-size: 25px;
+      line-height: 38px;
+      margin-bottom: 3px;
+    }
+  }
+</style>
+
+<div class="page__toolbox">
+  <div class="container">
+      <div class="section-header text-center">
+        {% if section.settings.heading != blank %}
+          <h3>{{ section.settings.heading }}</h3>
+        {% endif %}
+        {% if section.settings.description != blank %}
+        <div class="description">{{ section.settings.description }}</div>
+        {% endif %}
+      </div>
+      <div class="row">
+        {% for block in section.blocks %}
+        <div class="col-4 col-md-4 col-lg-3">
+            <div class="toolbox__item toolbox__item--{{ forloop.index }}">
+                <a class="full-width-link" href="{{ block.settings.link_toolbox }}" target="_blank"></a>
+                <div class="media">
+                  {{ block.settings.icon }}
+                </div>
+                <h4 class="toolbox__name">{{ block.settings.title }}</h4>
+            </div>
+        </div>
+        <style>
+          .toolbox__item--{{ forloop.index }}:hover {
+            background: {{ block.settings.bg_hover }};
+          }
+          .toolbox__item--{{ forloop.index }}:hover .toolbox__name {
+            color: {{ block.settings.text_hover }};
+          }
+        </style>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Toolbox",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "Toolbox"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm nibh euismod  tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enimd minim veniam, quis nostrud exerci ation ullamcorper suscipit ortis nisl utaliquip ex eacom odo consequat. Duis autem vel eum iriure dolor.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Toolbox Item",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' width='82.96' height='79.315'><g stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M60.647 11.065H50.583V1.001z' fill='rgba(0,0,0,0)'/><path fill='none' d='M10.31 21.548h40.273M10.31 30.428h40.273M10.31 39.307h40.273'/><g fill='rgba(0,0,0,0)'><path d='M74.987 24.064l6.56 6.56-30.305 30.303-6.559-6.56z'/><path d='M74.987 24.064l6.56 6.56-4.567 4.566-6.56-6.56zM44.683 54.369l-2.864 9.423 9.423-2.864'/></g><path d='M60.646 52.08v18.877a7.361 7.361 0 01-7.361 7.361H8.361A7.361 7.361 0 011 70.957V8.361A7.361 7.361 0 018.361 1H50.7l9.946 10.064v27.341' fill='rgba(0,0,0,0)'/></g></svg>"
+        },
+        {
+          "type": "color",
+          "id": "bg_hover",
+          "label": "Background hover",
+          "default": "#0F58F2"
+        },
+        {
+          "type": "color",
+          "id": "text_hover",
+          "label": "Text hover",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Toolbox Name",
+          "default": "Toolbox Name"
+        },
+        {
+          "type": "url",
+          "id": "link_toolbox",
+          "label": "Toolbox Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Toolbox",
+      "category": "Toolbox",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='82.96' height='79.315'><g stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M60.647 11.065H50.583V1.001z' fill='rgba(0,0,0,0)'/><path fill='none' d='M10.31 21.548h40.273M10.31 30.428h40.273M10.31 39.307h40.273'/><g fill='rgba(0,0,0,0)'><path d='M74.987 24.064l6.56 6.56-30.305 30.303-6.559-6.56z'/><path d='M74.987 24.064l6.56 6.56-4.567 4.566-6.56-6.56zM44.683 54.369l-2.864 9.423 9.423-2.864'/></g><path d='M60.646 52.08v18.877a7.361 7.361 0 01-7.361 7.361H8.361A7.361 7.361 0 011 70.957V8.361A7.361 7.361 0 018.361 1H50.7l9.946 10.064v27.341' fill='rgba(0,0,0,0)'/></g></svg>",
+            "title": "BP enrolment"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='78.58' height='83.722'><g transform='translate(-701.212 -89.023)' fill='#fff' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><rect width='63.794' height='76.134' rx='2' transform='translate(702.212 95.611)'/><rect width='29.802' height='12.107' rx='2' transform='translate(719.674 90.023)'/><path d='M711.815 115.2l4.744 4.744 11.842-11.842M730.97 119.353h26.194M711.815 134.819l4.744 4.744 11.842-11.842M730.97 138.972h26.194M711.815 154.439l4.744 4.744 11.842-11.842M730.97 158.592h26.194M778.791 127.722v37.547l-2.912 6.476-2.912-6.476v-37.547zM772.968 133.678h5.823M772.968 163.09h5.823'/></g></svg>",
+            "title": "Prospectes"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='54.018' height='85.454'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M16.073 69.085h21.872M16.073 76.901h21.872M21.709 84.454h10.6M14.522 61.533s-.32-7.8-3.661-12.728S1 38.225 1 27.726 8.635 1 27.008 1s26.01 16.227 26.01 26.726-6.523 16.147-9.863 21.079-3.659 12.728-3.659 12.728z'/><path d='M20.566 61.532V27.409l5.966-13.761 5.966 13.761v34.123M20.566 27.409h11.931M26.532 27.409v34.123'/></g></svg>",
+            "title": "Life learning studio"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='103.082' height='84.52'><g transform='translate(-1120.034 -91.396)' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><g transform='translate(1164.861 138.763)' fill='rgba(0,0,0,0)'><path d='M19.085 20.811a9.543 9.543 0 0119.085 0'/><circle cx='5.635' cy='5.635' r='5.635' transform='translate(22.993)'/><path d='M38.166 20.811a9.542 9.542 0 0119.084 0'/><circle cx='5.635' cy='5.635' r='5.635' transform='translate(42.077)'/><path d='M0 20.811a9.543 9.543 0 0119.085 0'/><circle cx='5.635' cy='5.635' r='5.635' transform='translate(3.908)'/></g><path d='M1121.034 174.917a19.281 19.281 0 0138.562 0' fill='rgba(0,0,0,0)'/><circle cx='11.385' cy='11.385' r='11.385' transform='translate(1128.93 132.865)' fill='rgba(0,0,0,0)'/><path d='M1187.406 126.876h-18.636l-12.561 9.22 2.18-9.22h-8.254a5.8 5.8 0 01-5.8-5.8V98.2a5.8 5.8 0 015.8-5.8h37.272a5.8 5.8 0 015.8 5.8v22.879a5.8 5.8 0 01-5.801 5.797z' fill='rgba(0,0,0,0)'/><path fill='none' d='M1152.036 100.847h33.466M1152.036 109.363h33.466M1152.036 117.88h33.466'/></g></svg>",
+            "title": "Coaching"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='81.909' height='72.644'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><g transform='translate(1 1)'><path d='M22.776 48.061L33.585 58.87l23.548-23.551'/><rect width='79.909' height='62.923' rx='5.545' transform='translate(0 7.721)'/><path d='M17.565 0v16.599M39.955 0v16.599M62.345 0v16.599'/></g><path d='M1 25.7h79.909'/></g></svg>",
+            "title": "Event"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='54.685' height='86.871'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M1 10.207h45.335M1 64.598h31.136M7.906 17.384h6.763v6.763H7.906zM7.906 41.423h6.763v6.763H7.906zM32.136 17.384h6.763v6.763h-6.763zM7.906 29.663h6.763M7.906 35.846H8.98M13.595 35.846h1.074M36.473 29.663h1.074M37.825 42.072h1.074M20.199 17.384v1.074M26.327 45.92v1.074M20.199 36.762v1.074M23.914 40.477H22.84M23.914 34.398H22.84M26.327 36.762v1.074M26.327 17.384v12.279h5.808M20.199 22.973v9.047M20.199 42.461v5.725M26.327 20.541h-3.751M38.894 35.846h-6.763v7.307M46.335 48.86l5.839 6.594a6.016 6.016 0 011.51 3.988v26.429M46.335 65.808l-3.184-2.848a10.168 10.168 0 01-3.387-7.577v-5.112a3.816 3.816 0 00-3.815-3.815h0a3.814 3.814 0 00-3.813 3.815v20.574a13.6 13.6 0 004.259 9.882l.566.534a4.471 4.471 0 011.4 3.249v1.361'/><path d='M32.136 73.85H8.498a7.5 7.5 0 01-7.5-7.5V8.497a7.5 7.5 0 017.5-7.5h30.339a7.5 7.5 0 017.5 7.5v57.311'/></g></svg>",
+            "title": "Qr zone"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='89.914' height='61.037'><path d='M29.522 43.634a2 2 0 00-.4-.041 1.832 1.832 0 00-1.841 1.863v11.852a2.029 2.029 0 00.453 1.322 1.916 1.916 0 002.365.4l2.318-1.186a.441.441 0 01.175-.063c.022 0 .217.01.626.331l3.044 2.45a1.967 1.967 0 001.244.472 1.726 1.726 0 001.688-1.875V47.387a2.179 2.179 0 00-1.707-2.1zm7.486 14.534l-1.938-1.563a4.148 4.148 0 00-2.562-1.018 3.35 3.35 0 00-1.554.4l-1.486.76V45.665l7.54 1.568z' fill='#333'/><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M6.556 46.342a6.96 6.96 0 011.4-13.776M6.886 32.341l37.725 7.637a9.754 9.754 0 006.8-1.111l31.972-17.764M41.108 53.402l3.5.718a9.769 9.769 0 006.8-1.113l8.717-4.843M6.556 46.341L24.55 50.01'/><path d='M6.886 32.342a7.024 7.024 0 011.137-13.955l.785.043 36.569 7.558a10.569 10.569 0 007.358-1.2L80.907 8.556a.8.8 0 00-.267-1.479L44.869 1.133a9.227 9.227 0 00-5.664.865L6.269 18.61M43.196 7.955l17.427 2.78M34.482 12.46l17.427 2.78M88.914 51.614v4.462h-22.28v-4.462'/><g><path d='M70.708 43.821l7.069 5.516V33.042M77.774 49.361l7.069-5.516'/></g></g></svg>",
+            "title": "Library"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='82.526' height='90.956'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M43.416 32.043l12.556-8.993M44.568 58.962l12.037 8.556'/><g transform='translate(53.684 62.114)'><g transform='translate(7.841 6.938)'><path d='M0 12.307a6.082 6.082 0 0112.163 0'/><circle cx='3.113' cy='3.113' r='3.113' transform='translate(2.967)'/></g><circle cx='13.921' cy='13.921' r='13.921'/></g><g transform='translate(53.684 1)'><g transform='translate(7.841 6.938)'><path d='M0 12.307a6.082 6.082 0 0112.163 0'/><circle cx='3.113' cy='3.113' r='3.113' transform='translate(2.967)'/></g><circle cx='13.921' cy='13.921' r='13.921'/></g><g transform='translate(1 23.661)'><g transform='translate(13.032 11.532)'><path d='M0 20.455a10.108 10.108 0 0120.215 0'/><circle cx='5.174' cy='5.174' r='5.174' transform='translate(4.932)'/></g><circle cx='23.138' cy='23.138' r='23.138'/></g></g></svg>",
+            "title": "Unet social hub"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='67.375' height='95.3'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M46.975 18.207v-3.92A13.287 13.287 0 0033.688 1h0a13.287 13.287 0 00-13.287 13.287v3.92M1 18.208h65.375v72.065a4.028 4.028 0 01-4.028 4.028H5.028A4.028 4.028 0 011 90.273V18.208h0z'/></g></svg>",
+            "title": "Online Shopping"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='92.497' height='74.017'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M82.411 34.679l9.085-7.778L70.107 1.916l-8.724 8.2z'/><path d='M40.856 29.998l-20.8 18.689a4.481 4.481 0 00-.49 6.322h0a4.481 4.481 0 006.322.49L41.547 42.11 24.509 56.698a4.484 4.484 0 00-.49 6.325h0a4.485 4.485 0 006.322.49L47.376 48.93 32.413 61.718a4.483 4.483 0 00-.49 6.322h0a4.481 4.481 0 006.322.49l14.966-12.785-10.939 9.38a4.486 4.486 0 00-.488 6.325h0a4.483 4.483 0 006.322.49l25.891-22.184A17.933 17.933 0 0078.86 43.1l3.553-8.417-21.025-24.565-12.933 3.735'/><path d='M1.379 26.873L17.44 1.38 27.56 7.754 11.497 33.248z' stroke-width='1.9998'/><path d='M23.915 45.316l-3.845-2.367a15.663 15.663 0 01-3.463-2.9l-5.107-6.8 16.062-25.5 9.09.9a17.933 17.933 0 017.8 2.675L64.9 24.211a4.486 4.486 0 011.4 6.187h0a4.482 4.482 0 01-6.184 1.4l-11.379-7.166h0a11.959 11.959 0 01-16.494 3.741l-2.53-1.6'/></g></svg>",
+            "title": "Business Information"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='85.047' height='65.965'><g fill='none' stroke='#333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><path d='M1 1v63.965h82.631'/><path d='M10.195 55.776L37.72 28.158l17.014 9.451 28.9-28.367M69.553 9.243h14.08M83.633 23.323V9.243'/></g></svg>",
+            "title": "Cyber office"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

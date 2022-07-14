@@ -1,0 +1,776 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.css">
+{{ 'activities-calendar.scss.css' | asset_url | stylesheet_tag }}
+
+<div class=" page__calendar">
+    <div class="section-content section-content--calendar">
+        {% include 'breadcrumbs' %}
+        <div class="container container--calendar">
+            <div class="content__header">
+                <h1 class="page__heading">{{- 'sections.calendar.page_heading' | t -}}</h1>
+            </div>
+
+            <div class="scheduler calendar-table" data-role="calendar-scheduler">
+
+            </div>
+            <div class="calendar-table--event">
+                <div class="fc-daygrid-event fc-daygrid-dot-event " ><div class="fc-daygrid-event-dot" style="border-color: #6446f0"></div><div class="fc-event-title">{{- 'sections.calendar.event_member' | t -}}</div></div>
+                <div class="fc-daygrid-event fc-daygrid-dot-event "><div class="fc-daygrid-event-dot"  style="border-color: #ff6d68"></div><div class="fc-event-title">{{- 'sections.calendar.event_paid' | t -}}</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-content section-content--activities">
+        <div class="container">
+            <div class="slider-calendar">
+                <div class="content__header">
+                    <div class="page__heading" data-role="date-filter">{{- 'sections.calendar.upcoming_activities' | t -}}</div>
+                    <a class="page__heading--activities " href="#" data-filter="all-activities" >{{- 'sections.calendar.upcoming_activities' | t -}}</a>
+                </div>
+                <div class="slider-content--activities swiper-container">
+                    <div class="swiper-wrapper" data-role="listing-events">
+
+                    </div>
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next swiper-button-disabled"></div>
+                <div class="swiper-button-prev swiper-button-disabled"></div>
+
+
+            </div>
+        </div>
+    </div>
+
+    {% if customer %}
+    <div class="section-content section-content--meeting">
+        <div class="container">
+            {% section 'calendar_meeting' %}
+            {% section 'calendar_upcoming' %}
+
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<div class="smart_modal smart_modal--event" id="quote__modal" style="display: none;">
+    <div class="modal-center">
+        <div class="modal-content">
+            <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="event__modal">
+                <div class="modal__loading text-center">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__overlay overlay"></div>
+</div>
+
+<div class="smart_modal smart_modal--reserve smart_modal-small" id="reserve__modal" style="display: none;">
+    <div class="modal-center">
+        <div class="modal-content">
+            <span class="close drawer__close drawer__close-large" title="{{ 'general.tooltip.close_popup' | t }}"></span>
+            <div class="event__modal-content">
+                <h3 class="h2 title">{{- 'sections.calendar.reserveTitle' | t -}}</h3>
+                <p>{{- 'sections.calendar.reserveContent_html' | t -}}</p>
+                <div class="action">
+                    <a href="#" class="btn btn-primary btn-reserve">
+                        {{- 'sections.calendar.reserveContinue' | t -}}
+                    </a>
+                    <a href="#" class="btn close btn-cancel" >
+                        {{- 'sections.calendar.reserveCancel' | t -}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal__overlay overlay"></div>
+</div>
+
+<script src="{{ 'activities-calendar.js' | asset_url }}"></script>
+<script src="{{ 'activities-calendar-locales-th.js' | asset_url }}"></script>
+<script type="text/javascript">
+    $(function () {
+        let mod = {};
+
+        /**
+         * Initialization
+         */
+        mod.init = function () {
+            mod.initElements();
+            mod.initEventsListener();
+
+            mod.initCalendar();
+            mod.initUpcomingActivities();
+        }
+
+
+        /**
+         * Init elements
+         */
+        mod.initElements = function () {
+            mod.locale          = "{{ shop.locale }}";
+            mod.sliderHeader    = $('[data-role="date-filter"]');
+            mod.sliderContentActivities    = $('.slider-content--activities');
+            mod.listingEvents   = $('[data-role="listing-events"]');
+            mod.allActivities   = $('[data-filter="all-activities"]');
+            mod.calendarEvents  = [];
+            mod.fetchedMonth    = [];
+            mod.eventModal = $('.event__modal');
+            mod.toolbarActivities = $('[data-toolbar-activities]');
+            mod.hrefValue = '';
+        }
+
+        /**
+         * Binding event listener
+         */
+        mod.initEventsListener = function () {
+            mod.allActivities.click(function (e) {
+                e.preventDefault();
+
+                $(this).removeClass('isOpen');
+                $(this).closest('.slider-calendar').find('.swiper-wrapper').removeAttr("style");
+                mod.sliderHeader.html(' {{- "sections.calendar.upcoming_activities" | t -}}');
+
+                let currentDate = new Date(),
+                    lastDateCurrentMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+                mod.renderSliderEvents(mod.formatDate(currentDate), mod.formatDate(lastDateCurrentMonth) , true);
+            })
+
+            $(document).on('click', '[data-action="show-event-detail"]', function (e) {
+                e.preventDefault();
+                // TODO:
+            });
+
+            $(document).on('click', '.fc-prev-button', function() {
+                mod.initUpcomingActivities();
+            });
+
+            $(document).on('click', '.fc-next-button', function() {
+                mod.initUpcomingActivities();
+            });
+        }
+
+        /**
+         * Init Calendar
+         */
+        mod.initCalendar = function () {
+            $('.box__toolbar--mobile li').removeClass('active');
+            mod.toolbarActivities.addClass('active');
+            mod.calendar = new FullCalendar.Calendar($('[data-role="calendar-scheduler"]')[0], {
+                locale: mod.locale,
+                // eventOrder: 'custom_long_day',
+                initialView: 'dayGridMonth',
+                editable: false,
+                selectable: false,
+                showNonCurrentDates: false,
+                headerToolbar: {
+                    start: '',
+                    center: '',
+                    end: 'prev,title,next',
+                },
+                contentHeight: 'auto',
+                eventBackgroundColor: '#337ef3',
+                dayMaxEvents: true,
+                views: {
+                    dayGridMonth: {
+                        dayMaxEvents: 2
+                    }
+                },
+                dayHeaderContent: (args) => {
+                    if(mod.locale == 'th'){
+                        let days = ["JAN", "FEB", "MAR","APR", "เสาร์", "อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์"];
+                        let event_datetime = args.date;
+                        ///console.log('getMonth',args.date.getDate());
+                        return days[event_datetime.getDate()];
+                    }
+                },
+                dateClick: function(element) {
+                    const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                    let current_datetime = new Date(element.dateStr);
+                    let formatted_date =  "<span>" + months[current_datetime.getMonth()]  + " " + current_datetime.getDate() + ", " + current_datetime.getFullYear()+ "</span>";
+
+                    mod.renderSliderEvents(element.dateStr, element.dateStr);
+
+                    const days = document.querySelectorAll(".selectedDate");
+                    days.forEach(function(day) {
+                        day.classList.remove("selectedDate");
+                    });
+                    element.dayEl.classList.add("selectedDate");
+
+                    mod.sliderHeader.html('{{- "sections.calendar.activities" | t -}}: ' + formatted_date);
+                    mod.allActivities.addClass('isOpen');
+
+                    /*const sliderCalendar   = $('.section-content--activities').offset().top - 100;
+                    $('body,html').animate({scrollTop:sliderCalendar}, 500);*/
+                },
+                eventDidMount: function(info) {
+                    const dayFrameEvents = info.el.closest('.fc-daygrid-day-frame');
+                    if(dayFrameEvents != null) dayFrameEvents.classList.add('fc-daygrid-day-main-event');
+                }
+            });
+            mod.calendar.render();
+
+        }
+
+        /**
+         * Init renderQuickview
+         */
+        mod.renderQuickview = function (event) {
+
+            let months = [];
+            if(mod.locale == 'en')  months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            else  months = ["ม.ค.", "ก.พ.", "มี.ค.","เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+
+            let event_datetime = new Date(event.start.replace(' ', 'T'));
+            let event_datetime_start = new Date(event.start);
+            let event_datetime_end = new Date(event.end);
+            let event_datetimeNew = '';
+            if(event_datetime_start.getDate() != event_datetime_end.getDate()) event_datetimeNew = event_datetime_start.getDate() + "-" +event_datetime_end.getDate();
+            else event_datetimeNew = event_datetime_start.getDate();
+
+            let eventauthor    = "";
+            if(event.lecturer.length > 0){
+                event.lecturer.forEach(function (author) {
+                    eventauthor =
+                        "           <div class='eventDetails-author--items'>\n" +
+                        "               <div class='eventDetails-author--avatar'>\n" +
+                        "                   <img src='" + author.image + "' alt='" + author.name + "'/>\n" +
+                        "                </div>\n" +
+                        "                <p class='eventDetails-author--lecturer'> {{- 'sections.calendar.lecturer' | t -}} </p>\n" +
+                        "                <p class='eventDetails-author--name'>" + author.name + "</p>\n" +
+                        "       </div>\n"  ;
+                })
+            }
+
+            let eventLocation = "";
+            if(event.event_type=='online'){
+                eventLocation = "<span class='event-location'>  {{- 'sections.calendar.event_live' | t -}} </span>" ;
+            }else if( event.event_type=='both'){
+                eventLocation = `
+                <span class='event-location'>  {{- 'sections.calendar.event_live' | t -}} </span><br>
+                <span class='event-location'>${event.location_detail}, ${event.location} </span>` ;
+            }else{
+                eventLocation = "<span class='event-location'>" + event.location_detail + ", " + event.location + "</span>" ;
+            }
+
+            let event_amount = "";
+            if(event.event_amount=== "" && event.event_amount.length === 0) {
+                event_amount = "<h2>{{- 'sections.calendar.event_free' | t -}}</h2>" ;
+            }else{
+                event_amount = `<div class="price__box">
+                    <label class="price-label">{{- 'sections.calendar.price' | t -}}</label>
+                    ${event.event_amount}
+                    <div class="price-amount">{{- 'sections.calendar.baht' | t -}}</div>
+                </div>` ;
+            }
+
+            let linkEventDetail = event.link + '?channel=DTC_sharelink';
+            {% if customer %}
+                {% assign member_id = customer.metafields.data.personal.member_id %}
+                linkEventDetail += '&promo_code={{ member_id }}';
+            {% endif %}
+
+            let increments =
+                "       <div class='eventDetails-increments'>\n" +
+                "        <div class='form-field form-amount'>"
+                            + event_amount +
+                "        </div>\n" +
+                "        <div class='form-field form-action'>" +
+                "            <a href='" + linkEventDetail + "' data-target='#reserve__modal' class='btn btn-primary smart_modal_reserve smart_modal_open close'>" + "{{- 'sections.calendar.reserve_ticket' | t -}}" + "</a>\n" +
+                "        </div>\n" +
+                "     </div>\n" ;
+
+
+
+            //Modal media image
+            let eventMedia =
+                "   <div class='event__modal-media'>\n" +
+                "       <div class='event-date'>\n" +
+                "           <div class='event-date--date'>" +event_datetimeNew + "</div>\n" +
+                "           <div class='event-date--month'>" + months[event_datetime_end.getMonth()] + "</div>\n" +
+                "       </div>\n" +
+                "       <div class='event-image'>\n" +
+                "           <img src='" + event.image + "' alt='" + event.title + "'/>\n" +
+                "       </div>\n" +
+                "    </div>\n" +
+                "   <div class='event__modal-content '>\n" +
+                "       <div class='eventDetails-heading'>\n" + event.tags +
+                "           <div class='fc-daygrid-event fc-daygrid-dot-event'>\n" +
+                "               <div class='event-type public fc-daygrid-event-dot'></div>" +
+                "               <a href='" + event.category_link + "' class='event-category'>" + event.category + "</a>\n" +
+                "           </div>\n" +
+                "           <div class='event-title'>" + event.title + "</div>\n" +
+                "       </div>\n" +
+                "       <div class='eventDetails-author'>\n" +eventauthor +
+
+                "       </div>\n" +
+                "       <div class='eventDetails-info'>\n" +
+                "        <div class='event-clock'>" +
+                "            <svg id=\"Group_1204\" data-name=\"Group 1204\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\" viewBox=\"0 0 14.109 14.109\"><g id=\"Group_803\" data-name=\"Group 803\" transform=\"translate(0 0)\"><path id=\"Path_122\" data-name=\"Path 122\" d=\"M425.055,432.109a7.034,7.034,0,1,1,2.746-.555A7.012,7.012,0,0,1,425.055,432.109Zm0-13.139a6.065,6.065,0,1,0,2.368.478A6.046,6.046,0,0,0,425.055,418.97Z\" transform=\"translate(-418 -418)\" fill=\"#333\"/></g><g id=\"Group_804\" data-name=\"Group 804\" transform=\"translate(6.57 2.278)\"><path id=\"Path_123\" data-name=\"Path 123\" d=\"M960.485,611.213a.485.485,0,0,1-.485-.485v-4.291a.485.485,0,0,1,.97,0v4.291A.485.485,0,0,1,960.485,611.213Z\" transform=\"translate(-960 -605.952)\" fill=\"#333\"/></g><g id=\"Group_805\" data-name=\"Group 805\" transform=\"translate(6.57 6.57)\"><path id=\"Path_124\" data-name=\"Path 124\" d=\"M963.4,960.97h-2.914a.485.485,0,0,1,0-.97H963.4a.485.485,0,0,1,0,.97Z\" transform=\"translate(-960 -960)\" fill=\"#333\"/></g></svg>\n" +
+                "            <p class='eventDetails-info--title'> {{- 'sections.calendar.date_time' | t -}} </p>\n" +
+                "            <p class='event-time'>"  + mod.formatDateEvent(event.start) + ' <br>' + mod.formatDateEvent(event.end) + "</p>\n" +
+                "        </div>\n" +
+                "        <div class='event-location'>" +
+                "            <svg class=\"icon icon-map\" data-name=\"Group 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"39.586\" height=\"51.959\" viewBox=\"0 0 39.586 51.959\"><path data-name=\"Path 1\" d=\"M1609.4,28.918a19.368,19.368,0,0,0-12.558-12.663,19.909,19.909,0,0,0-26.065,18.929,19.628,19.628,0,0,0,3.951,11.868l15.844,20.21L1606.4,47.075l.02-.025A20.013,20.013,0,0,0,1609.4,28.918Zm-5.41,16.294-13.419,17.115-13.416-17.115a16.614,16.614,0,0,1-3.333-10.029,16.865,16.865,0,0,1,22.119-16.019,16.278,16.278,0,0,1,10.549,10.652A17.005,17.005,0,0,1,1603.99,45.211Z\" transform=\"translate(-1570.777 -15.301)\" fill=\"#333\"/><path data-name=\"Path 2\" d=\"M1585.086,18.988a10.658,10.658,0,1,0,10.659,10.657A10.67,10.67,0,0,0,1585.086,18.988Zm0,18.271a7.613,7.613,0,1,1,7.614-7.614A7.622,7.622,0,0,1,1585.086,37.259Z\" transform=\"translate(-1565.291 -9.763)\" /></svg>" +
+                "            <p class='eventDetails-info--title'> {{- 'sections.calendar.the_place' | t -}} </p>\n" + eventLocation +
+                "        </div>\n" +
+                "        <div class='event-people'>" +
+                "            <svg id=\"Group_1117\" data-name=\"Group 1117\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22.082\" height=\"23.212\" viewBox=\"0 0 22.082 23.212\"><g id=\"Group_22\" data-name=\"Group 22\" transform=\"translate(4.496)\"> <path id=\"Path_17\" data-name=\"Path 17\" d=\"M1634.106,84.392a6.545,6.545,0,1,1,6.546-6.545A6.552,6.552,0,0,1,1634.106,84.392Zm0-11.252a4.707,4.707,0,1,0,4.708,4.707A4.712,4.712,0,0,0,1634.106,73.14Z\" transform=\"translate(-1627.561 -71.303)\" fill=\"#333\"/></g><g id=\"Group_23\" data-name=\"Group 23\" transform=\"translate(0 11.252)\"><path id=\"Path_18\" data-name=\"Path 18\" d=\"M1643.83,95.511a.919.919,0,0,1-.919-.919,9.2,9.2,0,1,0-18.407,0,.919.919,0,1,1-1.837,0,11.041,11.041,0,0,1,22.082,0A.919.919,0,0,1,1643.83,95.511Z\" transform=\"translate(-1622.667 -83.551)\" fill=\"#333\"/></g></svg>" +
+                "            <p class='eventDetails-info--title'> {{- 'sections.calendar.number_of_exposure' | t -}} </p>\n" +
+                "            <span class='event-location'>" + event.people_register + " / " + event.people_limit + "  {{ 'sections.calendar.people' | t }} </span>\n" +
+                "        </div>\n" +
+                "       </div>\n" +
+                "       <div class='eventDetails-desc'>\n" +
+                "           <h3 class='eventDetails-desc--title'>{{- 'sections.calendar.event_details' | t -}}</h3>\n" +
+                "           <div class='eventDetails-desc--content'>" + "<p>\n" +
+                event.full_detail +
+                "           </div>\n" +
+                "       </div>\n" +
+                "    </div>\n"+
+                increments ;
+
+
+            mod.eventModal.html(eventMedia);
+        }
+
+        /**
+         * Init Upcoming activities, count from today to end of month
+         */
+        mod.initUpcomingActivities = function () {
+            let [startMonth, endMonth, currentMonth] = mod.getUpcomingDates();
+
+            if (mod.isCurrentMonthFetched(currentMonth)) {
+                mod.renderSliderEvents(startMonth, endMonth);
+                return;
+            }
+
+            mod.fetchCalendarEvents(startMonth, endMonth, function (data) {
+                data.forEach(function (event) {
+                    if (mod.eventExists(event) === false) {
+                        mod.calendarEvents.push(mod.convertEventData(event));
+                    }
+                })
+                mod.calendar.removeAllEventSources();
+                mod.calendar.addEventSource(mod.calendarEvents);
+
+                mod.fetchedMonth.push(currentMonth);
+                mod.renderSliderEvents(startMonth, endMonth);
+            });
+        }
+
+        /**
+         * Check if current month has been fetched or not
+         */
+        mod.isCurrentMonthFetched = function (currentMonth) {
+            let result = false;
+            mod.fetchedMonth.forEach(function (month) {
+                if (month == currentMonth) {
+                    result = true;
+                }
+            })
+
+            return result;
+        }
+
+        /**
+         * Render events in slider field
+         * @param start
+         * @param end
+         */
+        mod.renderSliderEvents = function (start, end, resetSwiper = false) {
+            mod.listingEvents.empty();
+            let eventCnt = 0;
+
+            const eventToday = new Date();
+            let eventPast ="" ;
+            if(start < mod.formatDate(eventToday)) eventPast= "event-past";
+
+            $('.empty-event').remove();
+            mod.listingEvents.parents('.slider-calendar').removeClass('slider-content--empty');
+            mod.calendarEvents.forEach(function (event) {
+                if (start <= event.end.split(" ")[0] && event.start.split(" ")[0] <= end) {
+                    eventCnt++;
+
+                    let months = [];
+                    if(mod.locale == 'en')  months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+                    else  months = ["ม.ค.", "ก.พ.", "มี.ค.","เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+
+                    let event_datetime = new Date(event.start);
+                    let event_datetime_start = new Date(event.start);
+                    let event_datetime_end = new Date(event.end);
+                    let event_datetimeNew = '';
+
+                    if(event_datetime_start.getDate() != event_datetime_end.getDate()) event_datetimeNew = event_datetime_start.getDate() + "-" +event_datetime_end.getDate();
+                    else event_datetimeNew = event_datetime_start.getDate();
+
+                    // let event_datestart =   event_datetime.getDate() + "\n" + months[event_datetime.getMonth()]  ;
+
+                    let eventLocation = "";
+                    if(event.event_type=='online'){
+                        eventLocation = "<span class='event-location--into'>  {{- 'sections.calendar.event_live' | t -}} </span>" ;
+                    }else if( event.event_type=='both'){
+                        eventLocation = `<span class='event-location--into'>  {{- 'sections.calendar.event_live' | t -}} </span>
+                            <span class='event-location--into'>${event.location_detail}, ${event.location} </span>` ;
+                    }else{
+                        eventLocation = "<span class='event-location--into'>" + event.location_detail + ", " + event.location + "</span>" ;
+                    }
+
+                    let linkEventDetail = event.link + '?channel=DTC_sharelink';
+                    {% if customer %}
+                        {% assign member_id = customer.metafields.data.personal.member_id %}
+                        linkEventDetail += '&promo_code={{ member_id }}';
+                    {% endif %}
+
+                    let eventCard =
+                        `<div class='swiper-slide event-item ${eventPast}'>\n` +
+                        "    <div class='event-image'>\n" + event.tags +
+                        "        <img src='" + event.image + "' alt='" + event.title + "'/>\n" +
+                        "    </div>\n" +
+                        "    <div class='event-detail'>\n" +
+                        "        <div class='event-date'>\n" +
+                        "        <div class='event-date--date'>" +event_datetimeNew+ "</div>\n" +
+                        "        <div class='event-date--month'>" + months[event_datetime_end.getMonth()] + "</div>\n" +
+                        "         </div>\n" +
+                        "        <div class='event-detail--header'>" +
+                        "           <div class='fc-daygrid-event fc-daygrid-dot-event'>\n" +
+                        "               <div class='event-type public fc-daygrid-event-dot'></div>" +
+                        "               <a href='" + event.category_link + "' class='event-category'>" + event.category + "</a>\n" +
+                        "           </div>\n" +
+                        "        <div class='event-title smart_modal_open smart_modal_eventDetail' data-action='show-event-detail' data-target='#quote__modal'>" + event.title + "</div>\n" +
+                        "        </div>\n" +
+                        "        <div class='event-detail--bottom'>" +
+                        "        <div class='event-clock'>" +
+                        "            <svg id=\"Group_1204\" data-name=\"Group 1204\" xmlns=\"http://www.w3.org/2000/svg\" width=\"14.109\" height=\"14.109\" viewBox=\"0 0 14.109 14.109\"><g id=\"Group_803\" data-name=\"Group 803\" transform=\"translate(0 0)\"><path id=\"Path_122\" data-name=\"Path 122\" d=\"M425.055,432.109a7.034,7.034,0,1,1,2.746-.555A7.012,7.012,0,0,1,425.055,432.109Zm0-13.139a6.065,6.065,0,1,0,2.368.478A6.046,6.046,0,0,0,425.055,418.97Z\" transform=\"translate(-418 -418)\" fill=\"#333\"/></g><g id=\"Group_804\" data-name=\"Group 804\" transform=\"translate(6.57 2.278)\"><path id=\"Path_123\" data-name=\"Path 123\" d=\"M960.485,611.213a.485.485,0,0,1-.485-.485v-4.291a.485.485,0,0,1,.97,0v4.291A.485.485,0,0,1,960.485,611.213Z\" transform=\"translate(-960 -605.952)\" fill=\"#333\"/></g><g id=\"Group_805\" data-name=\"Group 805\" transform=\"translate(6.57 6.57)\"><path id=\"Path_124\" data-name=\"Path 124\" d=\"M963.4,960.97h-2.914a.485.485,0,0,1,0-.97H963.4a.485.485,0,0,1,0,.97Z\" transform=\"translate(-960 -960)\" fill=\"#333\"/></g></svg><span class='event-time'>" +
+                        mod.formatDateEvent(event.start) + ' <br> ' + mod.formatDateEvent(event.end) + "</span>\n" +
+                        "        </div>\n" +
+                        "        <div class='event-location'>" +
+
+                        "            <svg class=\"icon icon-map\" data-name=\"Group 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"39.586\" height=\"51.959\" viewBox=\"0 0 39.586 51.959\"><path data-name=\"Path 1\" d=\"M1609.4,28.918a19.368,19.368,0,0,0-12.558-12.663,19.909,19.909,0,0,0-26.065,18.929,19.628,19.628,0,0,0,3.951,11.868l15.844,20.21L1606.4,47.075l.02-.025A20.013,20.013,0,0,0,1609.4,28.918Zm-5.41,16.294-13.419,17.115-13.416-17.115a16.614,16.614,0,0,1-3.333-10.029,16.865,16.865,0,0,1,22.119-16.019,16.278,16.278,0,0,1,10.549,10.652A17.005,17.005,0,0,1,1603.99,45.211Z\" transform=\"translate(-1570.777 -15.301)\" fill=\"#333\"/><path data-name=\"Path 2\" d=\"M1585.086,18.988a10.658,10.658,0,1,0,10.659,10.657A10.67,10.67,0,0,0,1585.086,18.988Zm0,18.271a7.613,7.613,0,1,1,7.614-7.614A7.622,7.622,0,0,1,1585.086,37.259Z\" transform=\"translate(-1565.291 -9.763)\" /></svg>" +
+                        "            <div class='event-location--blockRight'>" + eventLocation + "</div>\n" +
+                        "        </div>\n" +
+                        "        <div class='action'>\n" +
+                        "            <a href='" + linkEventDetail + "' class='btn btn-primary smart_modal_open smart_modal_reserve' data-action='reserve-your-seat' data-target='#reserve__modal'> {{- 'sections.calendar.reserve_ticket' | t -}} </button>\n" +
+                        "            <a href='#' class='btn-more smart_modal_open smart_modal_eventDetail' data-action='show-event-detail' data-target='#quote__modal'> {{- 'sections.calendar.find_out_more' | t -}} <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21.086\" height=\"37.517\" viewBox=\"0 0 21.086 37.517\"><g data-name=\"Group 289\" transform=\"translate(1.097 1.084)\"><path fill=\"currentColor\" data-name=\"Path 76\" d=\"M987.932,5117.24a.658.658,0,0,0-.888,0,.625.625,0,0,0,0,.887l16.615,16.615-16.615,16.615a.625.625,0,0,0,0,.887.658.658,0,0,0,.888,0l17.5-17.5Z\" transform=\"translate(-986.86 -5117.068)\" fill=\"#333\"  stroke-linecap=\"round\" stroke-miterlimit=\"10\" stroke-width=\"2\"></path></g></svg></a>\n" +
+                        "            <div style='display: none' data-json='" + mod.convertEventToString(event) + "'></div>\n" +
+                        "        </div>\n" +
+                        "        </div>\n" +
+                        "    </div>\n" +
+                        "</div>";
+
+                    mod.listingEvents.append(eventCard);
+                }
+            })
+
+            let galleryThumbsQV = new Swiper('.slider-content--activities', {
+                spaceBetween: 15,
+                slidesPerView: 4,
+                keyboard: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    // when window width is >= 320px
+                    320: {
+                        slidesPerView:  'auto',
+                        spaceBetween: 5,
+                        loop: true,
+                    },
+                    // when window width is >= 480px
+                    480: {
+                        slidesPerView: 2,
+                    },
+                    // when window width is >= 780px
+                    780: {
+                        slidesPerView: 3,
+                        spaceBetween: 15,
+                    },
+                    // when window width is >= 1200px
+                    1200: {
+                        slidesPerView: 4,
+                        spaceBetween: 15,
+                    },
+                },
+
+            });
+
+            //Modal Popup Event
+            $(document).on('click', '.smart_modal_reserve', function (e) {
+                e.preventDefault();
+                mod.hrefValue = $(this).attr("href");
+                $('.btn-reserve').attr('href', mod.hrefValue);
+            });
+
+            $(document).on('click', '.smart_modal_eventDetail', function (e) {
+                e.preventDefault();
+                // Get json Modal Popup Event
+                let dataEvent = $(this).closest('.event-detail').find('[data-json]').data('json');
+                // dataEvent.tags = decodeURIComponent(dataEvent.tags);
+                dataEvent.full_detail   = decodeURIComponent(dataEvent.full_detail);
+                mod.renderQuickview(dataEvent);
+            });
+
+            if (!eventCnt) {
+                //mod.listingEvents.parent().removeClass('swiper-container');
+                const emtpyEvent = `
+                    <div class='container empty-event'>
+                        <svg id="Group_1329" data-name="Group 1329" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138.681" height="122.995" viewBox="0 0 138.681 122.995">
+                            <defs>
+                                <clipPath id="clip-path-empty-event">
+                                <rect id="Rectangle_899" data-name="Rectangle 899" width="138.681" height="122.995" fill="none" stroke="#ccc" stroke-width="3"/>
+                                </clipPath>
+                            </defs>
+                            <g id="Group_1478" data-name="Group 1478" clip-path="url(#clip-path-empty-event)">
+                                <rect id="Rectangle_893" data-name="Rectangle 893" width="19.206" height="19.209" rx="1" transform="translate(59.739 55.578)" fill="none" stroke="#ccc" stroke-miterlimit="10" stroke-width="2"/>
+                                <rect id="Rectangle_894" data-name="Rectangle 894" width="19.203" height="19.209" rx="1" transform="translate(97.65 55.578)" fill="none" stroke="#ccc" stroke-miterlimit="10" stroke-width="2"/>
+                                <rect id="Rectangle_895" data-name="Rectangle 895" width="19.203" height="19.209" rx="1" transform="translate(21.828 89.817)" fill="none" stroke="#ccc" stroke-miterlimit="10" stroke-width="2"/>
+                                <rect id="Rectangle_896" data-name="Rectangle 896" width="19.206" height="19.209" rx="1" transform="translate(59.739 89.817)" fill="none" stroke="#ccc" stroke-miterlimit="10" stroke-width="2"/>
+                                <rect id="Rectangle_897" data-name="Rectangle 897" width="19.203" height="19.209" rx="1" transform="translate(97.65 89.817)" fill="none" stroke="#ccc" stroke-miterlimit="10" stroke-width="2"/>
+                                <path id="Path_222" data-name="Path 222" d="M3.6,0H131.712a3.594,3.594,0,0,1,3.594,3.594v99.359a3.593,3.593,0,0,1-3.593,3.593H3.594A3.594,3.594,0,0,1,0,102.952V3.6A3.6,3.6,0,0,1,3.6,0Z" transform="translate(1.687 14.76)" fill="none" stroke="#ccc" stroke-linecap="round" stroke-width="5"/>
+                                <line id="Line_208" data-name="Line 208" y2="28.105" transform="translate(31.429 1.686)" fill="none" stroke="#ccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                <line id="Line_209" data-name="Line 209" y2="28.105" transform="translate(69.343 1.686)" fill="none" stroke="#ccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                <line id="Line_210" data-name="Line 210" y2="28.105" transform="translate(107.253 1.686)" fill="none" stroke="#ccc" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                <path id="Path_223" data-name="Path 223" d="M0,0H135.306" transform="translate(1.688 43.509)" fill="none" stroke="#ccc" stroke-linecap="round" stroke-width="5"/>
+                            </g>
+                            </svg>
+
+                        <h3 class='h3'>{{- 'sections.calendar.no_event' | t -}}</h3>
+                    </div>
+                `;
+                mod.listingEvents.empty();
+                mod.listingEvents.after(emtpyEvent);
+                mod.listingEvents.parents('.slider-calendar').addClass('slider-content--empty');
+
+                $('.swiper-button-next').addClass('swiper-button-disabled');
+                $('.swiper-button-prev').addClass('swiper-button-disabled');
+            }
+        }
+
+        /**
+         * Get first and last day of current calendar month
+         * @return [firstDay, lastDay, currentMonth]
+         */
+        mod.getUpcomingDates = function () {
+            let date = mod.calendar.getDate(),
+                firstDay = new Date(date.getFullYear(), date.getMonth(), 1),
+                lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0),
+                currentMonth = date.getMonth() + '/' + date.getFullYear();
+
+            return [mod.formatDate(firstDay), mod.formatDate(lastDay), currentMonth];
+        }
+
+        /**
+         * Format Date to yyyy-mm-dd
+         */
+        mod.formatDate = function (date) {
+            let d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        /**
+         * Format Date to yyyy-mm-dd
+         */
+        mod.formatDateEvent = function (date) {
+            //console.log('locale',mod.locale);
+            let months = [];
+            if(mod.locale == 'en')  months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+            else  months = ["ม.ค.", "ก.พ.", "มี.ค.","เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+
+            const t = date.split(/[- :]/);
+            // Apply each element to the Date function
+            const eleDate = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+
+
+            let d = new Date(eleDate),
+                month = '' + months[(d.getMonth())],
+                day = '' + d.getDate(),
+                year = d.getFullYear() + 543;
+            let hours   = "" +  d.getHours();
+                hours   += ((d.getMinutes() < 10) ? ":0" : ":") + d.getMinutes();
+
+            let uth = '';
+            if(mod.locale == 'th')  uth = ' u.';
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [day, month, year, hours, uth].join(' ');
+        }
+
+        /**
+         * Convert received data from API to event object to render
+         * @param data
+         * @returns {[]}
+         */
+        mod.convertEventData = function (data) {
+            let event = {};
+
+            event.start             = data.event_schedule[0].start_date;
+            event.end               = data.event_schedule[0].end_date;
+            event.id                = data.event_id;
+            event.groupId           = data.event_id;
+            event.image             = data.cover_image;
+            event.people_register   = data.people_register;
+            event.people_limit      = data.people_limit;
+            event.lecturer          = [];
+            event.tags              = "";
+
+            switch (mod.locale) {
+                case ("th"):
+                    event.title             = data.title_th;
+                    event.location_detail   = data.event_location_detail_th;
+                    event.location          = data.event_location_th;
+                    event.full_detail       = decodeURIComponent(data.full_detail_th);
+                    event.link              = data.event_link_th;
+                    event.category          = data.event_category_th;
+                    event.category_link     = data.event_category_link_th;
+                    event.event_type        = data.event_type;
+                    event.event_amount     = data.amount;
+                    data.lecturer.forEach(function (lecturer) {
+                        event.lecturer.push({
+                            name    : lecturer.name_th,
+                            image   : lecturer.image
+                        });
+                    });
+                    break;
+                default:
+                    event.title             = data.title_en;
+                    event.location_detail   = data.event_location_detail_en;
+                    event.location          = data.event_location_en;
+                    event.full_detail       = decodeURIComponent(data.full_detail_en);
+                    event.link              = data.event_link_en;
+                    event.category          = data.event_category_en;
+                    event.category_link     = data.event_category_link_en;
+                    event.event_type        = data.event_type;
+                    event.event_amount      = data.amount;
+                    data.lecturer.forEach(function (lecturer) {
+                        event.lecturer.push({
+                            name    : lecturer.name_en,
+                            image   : lecturer.image
+                        });
+                    });
+            }
+
+            if (data.event_type == "online") event.tags += '<span class="online-tag">{{- "sections.calendar.onlineTag" | t -}}</span>\n';
+            if (data.event_type == "offline") event.tags += '<span class="offline-tag">{{- "sections.calendar.offlineTag" | t -}}</span>\n';
+            if (data.event_type == "both") event.tags += '<span class="offline-tag">{{- "sections.calendar.offlineTag" | t -}}</span>\n <span class="online-tag">{{- "sections.calendar.onlineTag" | t -}}</span>\n';
+
+            if (data.event_member_type == "member") event.backgroundColor = '#ff6d68';
+
+            {% comment %} let start = new Date(event.start).setHours(0, 0, 0, 0),
+                end = new Date(event.end).setHours(0, 0, 0, 0);
+            event.custom_long_day = start < end ? 0 : 1; {% endcomment %}
+
+            return event;
+        }
+
+        mod.eventExists = function (event) {
+            let exists = false;
+            mod.calendarEvents.forEach(function (item) {
+                if (item.id == event.event_id) {
+                    exists = true;
+                }
+            })
+
+            return exists;
+        }
+
+        /**
+         * Encode Event pass to element
+         * @returns string
+         */
+        mod.convertEventToString = function (event) {
+            //event.tags          = encodeURIComponent(event.tags);
+            event.full_detail   = encodeURIComponent(event.full_detail);
+            return JSON.stringify(event);
+        }
+
+        /**
+         * Fetch list events from API in date range
+         * @param start
+         * @param end
+         * @param callback
+         */
+        mod.fetchCalendarEvents = function (start = null, end = null, callback = function () {}) {
+            let url = "{{ shop.url }}{{ shop.metafields.route.get_list_calendar_events }}",
+                data = {};
+
+            if (start !== null) {
+                data.start_date = start;
+            }
+
+            if (end !== null) {
+                data.end_date = end;
+            }
+
+            mod.showLoading();
+            $.ajax({
+                url      : url,
+                type     : "post",
+                dataType : "json",
+                data     : data,
+                complete : function () {
+                    mod.hideLoading();
+                },
+                success  : function (response) {
+                    if (response.status === "000") {
+                        callback(response.data);
+                        return response.data;
+                    } else {
+                        window.alert(typeof response.message != "undefined" ? response.message : "System error!");
+                    }
+                },
+                error    : function () {
+                    return [];
+                }
+            })
+        }
+
+        /**
+         * Show Loading
+         * @param elementLoading
+         */
+        mod.showLoading = function (elementLoading = null) {
+            if (elementLoading) {
+                $(elementLoading).show();
+            } else {
+                $('.smart-loading').show();
+            }
+        }
+
+        /**
+         * Hide Loading
+         * @param elementLoading
+         */
+        mod.hideLoading = function (elementLoading = null) {
+            if (elementLoading) {
+                $(elementLoading).hide();
+            } else {
+                $('.smart-loading').hide();
+            }
+        }
+
+        $(document).on('click', '.btn-reserve', function(e) {
+            window.open(mod.hrefValue);
+            const modalLeadving =  $('.smart_modal--reserve');
+            modalLeadving.hide();
+        });
+
+        return mod.init();
+    });
+</script>
+
+{% include 'sharing-popup', share_permalink: page.url %}

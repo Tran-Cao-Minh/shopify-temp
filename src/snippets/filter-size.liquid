@@ -1,0 +1,20 @@
+<div class="filters-toolbar__input-wrapper select-group">
+    <div class="filters__select-label">
+        <span class="filters__title">{{ section.settings.filter_size_title}}</span>{% include 'icon-chevron-down' %}
+    </div>
+    <ul class="filters__list">
+        {% assign tags = section.settings.filter_size_lists | split: ',' %}
+        {% for tag in tags %}
+            {% if collection.tags contains tag %}
+                {% assign tag_andleize = tag | handleize %}
+                <li class="{{ tag_andleize }} {% if current_tags contains tag %}checked{% endif %}">
+                    <input type="checkbox" value="{{ tag_andleize }}" {% if current_tags contains tag %}checked{% endif %}/>
+                    <span class="checkbox">{% include 'icon-checkbox' %}</span>
+                    <a href="javascript:void(0)"  {% if current_tags contains tag %} class="active" {% endif %} title="{{tag}}">
+                        {{ tag }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>

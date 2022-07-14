@@ -1,0 +1,45 @@
+<div class="checkout_step" data-step="shipping" style="display: none;">
+    <form id="shipping_method_form">
+        <div class="step__sections">
+            <div class="section">
+                <div class="content__box">
+                    <div class="review__block">
+                        <div class="review__block--inner">
+                            <div class="review__block--label">{{ 'general.checkout_review_block.contact' | t }}</div>
+                            <div class="review__block--content contact__email">
+                            </div>
+                        </div>
+                        <div class="review__block--link">
+                            <a href="#" data-action="to:contact">{{ 'general.checkout_review_block.change' | t }}</a>
+                        </div>
+                    </div>
+                    <div class="review__block">
+                        <div class="review__block--inner">
+                            <div class="review__block--label">{{ 'general.checkout_review_block.ship_to' | t }}</div>
+                            <div class="review__block--content ship__to">
+                            </div>
+                        </div>
+                        <div class="review__block--link">
+                            <a href="#" data-action="to:contact">{{ 'general.checkout_review_block.change' | t }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section section__shipping--method">
+                <div class="section__header">
+                    <h2 class="section__title">{{ 'general.checkout_contact.shipping_method' | t }}</h2>
+                </div>
+                <div class="section__content">
+                    <div class="content__box" data-scope="shipping_method">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="step__footer d-flex justify-content-between align-items-center">
+            <a class="button__back-step" href="#" data-action="to:contact" data-navigate="prev">{% render 'icon-arrow-left' %} 
+                <span>{{ 'general.checkout_step_button.return_info_html' | t }}</span></a>
+            <button class="btn" data-action="to:payment" data-navigate="next">{{ 'general.checkout_step_button.continue_to_payment' | t }}</button>
+        </div>
+    </form>
+</div>
+

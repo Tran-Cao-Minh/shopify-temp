@@ -1,0 +1,209 @@
+<script>
+    let themeSettings = {
+        change_price_warning: {{ 'reorder.change_price_warning_html' | t | json }},
+        change_qty_warning: {{ 'reorder.change_qty_warning_html' | t | json }},
+        unavailable: {{ 'reorder.unavailable_warning_html' | t | json }},
+        out_stock: {{ 'reorder.outstock_warning_html' | t | json }},
+        description: {{ 'reorder.description_html' | t | json }},
+        not_found: {{ 'reorder.not_found' | t | json }}
+    };
+</script>
+<script type="text/html" id="reorder-template">
+    <%
+
+        // current_variant
+        let current_variant = product.variants[0];
+
+        //Title
+        let productTitle = product.title,
+            variantTitle = shopifyVariant.title != 'Default Title' ? shopifyVariant.title : '';
+
+        //Image
+        let productImage = shopifyVariant.featured_image ?? product.featured_image;
+            productImage = productImage || noImage;
+
+        //CV | QV
+        let cv = shopifyVariant.cv,
+            qv = shopifyVariant.qv;
+
+        //Price
+        let productPrice, productComparePrice, priceSale;
+
+        if (shopifyVariant.member_price) {
+                productPrice = shopifyVariant.member_price,
+                productComparePrice = shopifyVariant.compare_member_price,
+                priceSale = shopifyVariant.price_member_sale;
+        } else {
+                productPrice = shopifyVariant.price,
+                productComparePrice = shopifyVariant.compare_at_price,
+                priceSale = shopifyVariant.price_sale;
+        }
+
+        let isPriceChange = (productPrice != item.price*100),
+            priceConverted = theme.Currency.formatMoney(productPrice, theme.moneyFormat),
+            comparePriceConverted = theme.Currency.formatMoney(productComparePrice, theme.moneyFormat);
+
+        //Quantity
+        let productQty = item.qty,
+            inventory = shopifyVariant.inventory_quantity,
+            isQtyChange = false,
+            disabledIncrease = '',
+            disabledDecrease = '';
+
+        if (item.track_qty) {
+            if (productQty > inventory) {
+                isQtyChange = true;
+            }
+            disabledIncrease = 'disabled';
+            productQty = inventory;
+        }
+
+        if(productQty == 1) {
+            disabledDecrease = 'disabled';
+        }
+    %>
+    <div class="reorder__item" data-cv="<%- cv %>" data-qv="<%- qv %>" data-price="<%- productPrice %>">
+        <div class="table_item">
+            <div class="td td__item-product">
+                <div class="product-wrap">
+                    <div class="media">
+                        <div class="tags__view-list tags-view_reorder">
+                            {% include 'product-tag-label' %}
+                        </div>
+                        <img src="<%- productImage %>" alt="" />
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product__title"><%- productTitle %></h3>
+                        <span class="variant__title label"><%- variantTitle %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="td td__item-price<% if (priceSale) { %> price--on-sale<% } %>">
+                <% if (priceSale) { %>
+                <span class="product__price price price__sale"><%= comparePriceConverted %></span><br>
+                <% } %>
+                <span class="product__price price__regular price"><%= priceConverted %></span>
+            </div>
+            <div class="td td__item-cv_qv">
+                <label class="title display-mb">{{ 'reorder.header.cv_qv' | t }}</label>
+                <%= cv %> | <%= qv %>
+            </div>
+            <div class="td td__item-quantity">
+                <div class="display-mb title-qty">{{ 'reorder.quantity' | t }}</div>
+                <div class="qty__box">
+                    <button class="decrease-qty <%- disabledDecrease %>">-</button>
+                    <input class="qty__input" type="number" min="1" value="<%- productQty %>"
+                        data-inventory_quantity="<%- shopifyVariant.inventory_quantity %>"
+                        data-inventory_management="<%- shopifyVariant.inventory_management %>"
+                        data-inventory_policy="<%- shopifyVariant.inventory_policy %>"
+                        data-variant_id="<%- shopifyVariant.id %>">
+                    <button class="increase-qty <%- disabledIncrease %>">+</button>
+                </div>
+                <div class="inventory label display-dk">
+                    <span>In stock</span>
+                    <span class="number"><%= inventory %></span>
+                </div>
+            </div>
+            <div class="td td__item-action">
+                <span data-action="remove__item" class="drawer__close drawer__close-small"></span>
+            </div>
+        </div>
+        <div class="product__status">
+        <% if (isPriceChange) { %>
+            <div><%= themeSettings['change_price_warning'].replace("\{\{ product \}\}", productTitle) %></div>
+        <% } %>
+        <% if (isQtyChange) { %>
+            <div><%= themeSettings['change_qty_warning'].replace("\{\{ product \}\}", productTitle).replace("\{\{ quantity \}\}", productQty) %></div>
+        <% } %>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="invalid-item-template">
+    <%
+        let locale = 'th';
+
+        let item = invalidItem.item,
+            product = item.product,
+            cause = invalidItem.cause;
+
+        //Image
+        let imageItem = product.image_src || noImage;
+
+        //Title
+        let productTitle = item.title,
+            variantTitle = item.variant_title;
+
+        //Price
+        let productPrice, compareProductPrice, isSale;
+        if (product) {
+            if (product.member_price) {
+                productPrice = product.member_price;
+                compareProductPrice = product.compare_member_price;
+                isSale = product.compare_member_price;
+            } else {
+                productPrice = product.price;
+                compareProductPrice = product.compare_price;
+                isSale = product.compare_price;
+            }
+        } else {
+            productPrice = item.price;
+            compareProductPrice = 0;
+        }
+        priceConverted = theme.Currency.formatMoney(productPrice*100, theme.moneyFormat);
+        comparePriceConverted = theme.Currency.formatMoney(compareProductPrice*100, theme.moneyFormat);
+
+        //Cv qv
+        let cv = item.cv,
+            qv = item.qv;
+
+        //Inventory
+        let inventory = product.inventory;
+    %>
+    <div class="invalid__item">
+        <div class="table_item">
+            <div class="td td__item-product">
+                <div class="product-wrap">
+                    <div class="media">
+                        <% if (cause == 'out_stock') { %>
+                            <div class="tags__view-list tag_view-list-soldout">
+                                <span class="tags-name sold_out">{{ "products.tags.sold_out" | t }}</span>
+                            </div>
+                        <% } %>
+                        <img src="<%- imageItem %>" alt="" />
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product__title"><%- productTitle %></h3>
+                        <span class="variant__title label"><%- variantTitle %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="td td__item-price<% if (isSale) { %> price--on-sale<% } %>">
+                <% if (isSale) { %>
+                <span class="product__price price price__sale"><%= comparePriceConverted %></span><br>
+                <% } %>
+                <span class="product__price price__regular price"><%= priceConverted %></span>
+            </div>
+            <div class="td td__item-cv_qv">
+                <label class="title display-mb">{{ 'reorder.header.cv_qv' | t }}</label>
+                <%= cv %> | <%= qv %>
+            </div>
+            <div class="td td__item-quantity">
+                <div class="display-mb">{{ 'reorder.quantity' | t }}</div>
+                <div class="qty__box">
+                    <button class="decrease-qty">-</button>
+                    <input class="qty__input" type="number" value="0" disabled>
+                    <button class="increase-qty">+</button>
+                </div>
+                <div class="inventory label display-dk">
+                    <span>In stock</span>
+                    <span class="number"><%= inventory %></span>
+                </div>
+            </div>
+            <div class="td td__item-action">
+                <span data-action="remove__item" class="drawer__close drawer__close-small"></span>
+            </div>
+        </div>
+
+        <div class="product__error"><%= themeSettings[cause].replace('\{\{ product \}\}', productTitle) %></div>
+    </div>
+</script>

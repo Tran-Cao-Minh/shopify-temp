@@ -1,0 +1,124 @@
+<div class="container">
+    <div class="page__enrollment page__enrollment-step2">
+        <div class="loader" style="display: none;margin: 100px auto;"></div>
+        <div class="section-header text-center">
+            <h1>Register to become our Business Partner</h1>
+        </div>
+        <ul class="smart-progress__steps progress__step-small">
+            <li class="progress__step-item active">
+                <div class="progress__step-number">1</div>
+                <div class="progress__step-content">LINE<br />VERIFICATION</div>
+            </li>
+            <li class="progress__step-item active">
+                <div class="progress__step-number">2</div>
+                <div class="progress__step-content">Personal<br />information</div>
+            </li>
+            <li class="progress__step-item">
+                <div class="progress__step-number">3</div>
+                <div class="progress__step-content">Address and Bank<br />information</div>
+            </li>
+            <li class="progress__step-item">
+                <div class="progress__step-number">4</div>
+                <div class="progress__step-content">APPLICATION FEE<br />AND SELECT PRODUCT</div>
+            </li>
+        </ul>
+
+        <div class="rte">
+            <div class="page__enrollment-header">
+                <h4 class="title">Personal information</h4>
+                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm nibh euismod  tincidunt ut laoreet dolo magna aliquam erat volutpat.</p>
+            </div>
+
+            <div class="form-vertical">
+                <form
+                    action="https://unileverlife-speed.myshopify.com/apps/eai/enroll/form/personal-information"
+                    method="POST" id="form-personal">
+                    <input type="hidden" name="id" value="xxxxxxxxx">
+                    <input type="hidden" name="sponsor_code" value="">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="first-name">First name*</label>
+                            <input class="form-control" id="first-name" type="text" name="first_name"
+                                required value="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="last-name">Last name*</label>
+                            <input class="form-control" id="last-name" type="text" name="last_name" required
+                                value="">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email*</label>
+                            <input class="form-control" id="email" type="email" name="email" required
+                                value="">
+                        </div>
+                        <div class="form-group col-md-6 form-group-datepicker">
+                            <label for="dob">Birth date*</label>
+                            <div class="form-group-icon">
+                                <input class="form-control datepicker" id="dob" type="text" name="dob" required value="" autocomplete="off">                                
+                                <svg xmlns="http://www.w3.org/2000/svg" width="23.314" height="20.727" viewBox="0 0 23.314 20.727">
+                                    <g data-name="Group 835" transform="translate(-3342.5 -595.151)">
+                                    <rect data-name="Rectangle 471" width="22.314" height="17.571" rx="2" transform="translate(3343 597.807)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                    <g data-name="Group 834" transform="translate(3347.905 595.651)">
+                                        <line data-name="Line 126" y2="4.635" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                        <line data-name="Line 127" y2="4.635" transform="translate(6.252)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                        <line data-name="Line 128" y2="4.635" transform="translate(12.504)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                    </g>
+                                    <line data-name="Line 129" x2="22.314" transform="translate(3343 602.548)" fill="none" stroke="#2035c7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+                                    </g>
+                                </svg>
+                            </div>                            
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Gender</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="male"
+                                    value="male">
+                                <label class="form-check-label" for="male">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="female"
+                                    value="female">
+                                <label class="form-check-label" for="female">Female</label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="form-group-label d-flex justify-content-between">
+                                <label for="sponsor-id">Sponsor / Reference code*</label>
+                                <a href="#" class="link-representative smart_modal_open"
+                                    data-target="#find-a-representative-modal">Find A Representative</a>
+                            </div>
+                            <input class="form-control" id="sponsor-id" name="sponsor_id" required>
+                            <p class="form_note">If you don't have sponsor / reference code, you can find a representative
+                                near you.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <span class="notify" id="notify"></span>
+                    </div>
+
+                    <div class="form-actions group-button d-flex justify-content-end">
+                        <button id="form-personal-submit" type="submit"
+                            class="btn btn-primary">Continue</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="findarep__modal smart_modal" id="find-a-representative-modal">
+    <div class="modal-center">
+        <div class="modal-content">
+            <span class="close drawer__close"></span>            
+            <iframe src="https://unileverlife-speed.myshopify.com/pages/find-representative" title=""></iframe>
+        </div>
+      </div>
+    <div class="modal__overlay overlay"></div>
+</div>

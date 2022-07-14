@@ -1,0 +1,343 @@
+.page__how-to-earn {
+  p {
+    font-family: "IBM Plex Sans Thai Looped", sans-serif;
+    font-weight: normal;
+  }
+
+  .how-to-earn__section-1 {
+    .section-1__head-text {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+
+      .head-text__title {
+        margin-bottom: 13px;
+        font-size: 40px;
+        line-height: 50px;
+
+        @media (max-width: 575.98px) {
+          margin-bottom: 30px;
+          margin-top: 0;
+          font-size: 25px;
+          line-height: 31px;
+        }
+      }
+    }
+
+    .section-1__head-image {
+      max-width: 400px;
+      margin: auto;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .link-pdf {
+      padding: 0 10px;
+
+      .btn-icon {
+        margin-left: 5px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .head-text__description {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .how-to-earn__section-2 {
+    .section-2__head-text {
+      .head-text__title {
+        color: #333;
+      }
+
+      .head-text__description-1 {
+        a {
+          text-decoration: underline;
+        }
+      }
+
+      .head-text__description-2 {
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 35px;
+
+        @media (max-width: 575.98px) {
+          font-size: 18px;
+          font-weight: 400;
+          margin-bottom: 0;
+          line-height: 28px;
+        }
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      &.index-section {
+        padding-bottom: 15px;
+      }
+
+      .head-text__title,
+      .head-text__description-1 {
+        display: none;
+      }
+    }
+  }
+
+  .how-to-earn__section-3 {
+    .section-3__cash-bonus {
+      .cash-bonus__text {
+        color: #333;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .cash-bonus__image {
+        display: flex;
+        justify-content: center;
+      }
+
+      @media (max-width: 575.98px) {
+        .col-sm-12:nth-child(2) {
+          order: -1;
+          margin-bottom: 20px;
+        }
+
+        .cash-bonus__text {
+          flex-basis: auto;
+          margin-bottom: 25px;
+        }
+      }
+    }
+
+    .section-3__pool-of-fund {
+      .pool-of-fund__text {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .pool-of-fund__pool-items {
+        margin: 0 100px 45px 100px;
+
+        .pool-items__item {
+          .item__title {
+            color: #666666;
+            font-weight: 400;
+            font-size: 20px;
+
+            @media(max-width: 575.98px) {
+              color: #333;
+              margin-bottom: 5px;
+              font-size: 16px;
+            }
+          }
+
+          .item__desc-list {
+            margin-left: 20px;
+
+            li {
+              list-style: disc;
+            }
+          }
+
+          @media(max-width: 575.98px) {
+            &.country-pool:first-child {
+              margin-bottom: 20px;
+            }
+          }
+        }
+
+        @media(max-width: 575.98px) {
+          font-size: 16px;
+        }
+      }
+
+      .pool-of-fund__link {
+        margin-bottom: 15px;
+        font-size: 25px;
+        font-weight: 400;
+        font-family: "Kanit", sans-serif;
+
+        p {
+          color: var(--color-primary);
+        }
+
+        a {
+          font-weight: 400;
+        }
+      }
+
+      .pool-of-fund__link-mobile {
+        display: none;
+      }
+
+      .pool-of-fund__video {
+        margin: 0 100px 10px 100px;
+
+        .plan-video__video {
+          video {
+            width: 100%;
+            height: 250px;
+            object-fit: fill;
+          }
+        }
+
+        .download-video {
+          .ctn-image {
+            width: 100%;
+            height: 250px;
+            border: 2px solid #eee;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: contain;
+            }
+          }
+        }
+
+        .plan-video__video,
+        .download-video {
+          max-width: 377px;
+
+          p.title {
+            text-align: center;
+            margin-top: 5px;
+          }
+
+          p.video-title {
+            position: relative;
+            top: -7px;
+          }
+        }
+
+        .btn-icon {
+          margin-left: 5px;
+        }
+      }
+
+      @media(max-width: 575.98px) {
+        .pool-of-fund__text {
+          margin-bottom: 25px;
+        }
+
+        .pool-of-fund__pool-items {
+          margin: 0 0 25px;
+
+          .item__title {
+            span:first-child {
+              display: none;
+            }
+          }
+        }
+
+        .pool-of-fund__video {
+          margin: 0 0 30px;
+
+          .col-video {
+            margin-bottom: 35px;
+          }
+
+          .plan-video__video,
+          .download-video {
+            max-width: 100%;
+            margin: auto;
+
+            .ctn-image,
+            video {
+              width: 100%;
+              height: 234px;
+            }
+
+            p.title {
+              text-align: left;
+              font-size: 18px;
+              margin-top: 10px;
+            }
+          }
+        }
+
+        .pool-of-fund__link {
+          display: none;
+        }
+
+        .pool-of-fund__link-mobile {
+          display: block;
+          margin-bottom: 15px;
+
+          p {
+            font-size: 25px;
+          }
+        }
+      }
+    }
+
+    .cash-bonus__text,
+    .pool-of-fund__text {
+      >h3 {
+        margin-bottom: 5px;
+        font-size: 30px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .how-to-earn__footer {
+    .footer_btn-group {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      div {
+        margin-bottom: 20px;
+      }
+
+      .btn-back-to-top {
+        margin-top: 20px;
+
+        a {
+          text-decoration: underline;
+          font-size: 16px;
+          display: block;
+        }
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      margin-bottom: 15px;
+
+      .footer_btn-group {
+        a {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .index-section {
+    padding-top: 0px;
+  }
+
+  @media (max-width: 575.98px) {
+    .swiper-wrapper {
+      display: unset;
+    }
+
+    br {
+      display: none;
+    }
+
+    .how-to-earn__section-3 {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.smart_modal-video .drawer__close::after,
+.smart_modal-video .drawer__close::before {
+  background: #FFF;
+}

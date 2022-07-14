@@ -1,0 +1,298 @@
+<div class="container page__enrollment">
+  <ul class="smart-progress__step">
+    <li class="progress__step-item active">
+      <div class="progress__step-content">Personal information</div>
+    </li>
+    <li class="progress__step-item active">
+      <div class="progress__step-content">Address and Bank information</div>
+    </li>
+    <li class="progress__step-item current">
+      <div class="progress__step-content">Select products</div>
+    </li>
+  </ul>
+  <div class="page__enrollment-content pd-0">
+    <div class="rte">
+      {{ page.content }}
+    </div>
+    <form action="{{ pages['enrollment-thank-you'].url }}">
+      <div class="form-vertical border-form">
+        <div class="form__header-box">step 3/3 Selection Options to become member</div>
+        <div class="form__content">
+          <div class="card-box d-flex justify-content-between">
+            <h4 class="mr-0">Business Partner Membership</h4>
+            <div class="card-price">600 baht</div>
+          </div>
+
+          <div class="smart__accordion">
+            <div class="smart__accordion-card smart__accordion-open">
+              <div class="smart__accordion-header">
+                <h4 class="mr-0">Please choose the right Welcome Pack for you</h4>
+                <div class="smart__accordion-toggle">{% include 'icon-chevron-down' %}</div>
+              </div>
+              <div class="smart__accordion-collapse">
+                <div class="smart__accordion-body">
+                  <div class="table-responsive">
+                    <div class="enrollmentWelcomePack-table table_grid">
+                      <div class="table_header">
+                        <div class="th">PAcks</div>
+                        <div class="th">CV | QV</div>
+                        <div class="th">Price</div>
+                      </div>
+                      <div class="table_lists">
+                        <div class="table_item">
+                          <div class="td">
+                            <div class="d-flex">
+                              <div class="product-image">
+                                <img src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/placeholder_image.png?v=1597827172" alt="" />
+                              </div>
+                              <div class="product-title">
+                                <h3>Product Name #1</h3>
+                                <div class="product-desc">Risus ac nisl. Lacinia ultrices est ut, sit arcu elit.</div>
+                                <a href="javascript:void(0)" class="quickview_button product-more"
+                                  data-quickview-id="5629165371558"
+                                  data-product_handle="aviance-one-lifting-drops"
+                                  data-modelview="[]" data-hide_cart="true">more details...</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">200 | 100</div>
+                          <div class="td">
+                            <div class="price price--listing price--on-sale">
+                              <div class="price__sale">
+                                <div class="price__compare">
+                                  <s class="price-item price-item--regular">1,300.00 ฿</s>
+                                </div>
+                                <span class="price-item price-item--sale">1,265.00 ฿</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">
+                            <div class="form-check">
+                              <input class="form-check-input mr-0" type="checkbox" name="???" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="table_item">
+                          <div class="td">
+                            <div class="d-flex">
+                              <div class="product-image">
+                                <img src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/placeholder_image.png?v=1597827172" alt="" />
+                              </div>
+                              <div class="product-title">
+                                <h3>Product Name #1</h3>
+                                <div class="product-desc">Risus ac nisl. Lacinia ultrices est ut, sit arcu elit.</div>
+                                <a href="javascript:void(0)" class="quickview_button product-more"
+                                  data-quickview-id="5629164978342"
+                                  data-product_handle="beyonde-roxburghii-plus-1-bottle"
+                                  data-modelview="[]" data-hide_cart="true">more details...</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">200 | 100</div>
+                          <div class="td">
+                            <div class="price price--listing">
+                              <div class="price__regular">
+                                <span class="price-item price-item--regular">1,265.00 ฿</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">
+                            <div class="form-check">
+                              <input class="form-check-input mr-0" type="checkbox" name="???" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="table_item">
+                          <div class="td">
+                            <div class="d-flex">
+                              <div class="product-image">
+                                <img src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/placeholder_image.png?v=1597827172" alt="" />
+                              </div>
+                              <div class="product-title">
+                                <h3>Product Name #1</h3>
+                                <div class="product-desc">Risus ac nisl. Lacinia ultrices est ut, sit arcu elit.</div>
+                                <a href="javascript:void(0)" class="quickview_button product-more"
+                                  data-quickview-id="5629165469862"
+                                  data-product_handle="i-fresh-multicare-mouthwash"
+                                  data-modelview="[]" data-hide_cart="true">more details...</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">200 | 100</div>
+                          <div class="td">
+                            <div class="price price--listing price--on-sale">
+                              <div class="price__sale">
+                                <div class="price__compare">
+                                  <s class="price-item price-item--regular">1,300.00 ฿</s>
+                                </div>
+                                <span class="price-item price-item--sale">1,265.00 ฿</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">
+                            <div class="form-check">
+                              <input class="form-check-input mr-0" type="checkbox" name="???" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="smart__accordion">
+            <div class="smart__accordion-card smart__accordion-open">
+              <div class="smart__accordion-header">
+                <h4 class="mr-0">Autoship Program</h4>
+                <div class="smart__accordion-toggle">{% include 'icon-chevron-down' %}</div>
+              </div>
+              <div class="smart__accordion-collapse">
+                <div class="smart__accordion-body">
+                  <div class="table-responsive">
+                    <div class="enrollmentAutoshipProgram-table table_grid">
+                      <div class="table_header">
+                        <div class="th">Program</div>
+                        <div class="th">Length</div>
+                        <div class="th">CV | QV</div>
+                        <div class="th">Price / Month</div>
+                      </div>
+                      <div class="table_lists">
+                        <div class="table_item">
+                          <div class="td">
+                            <div class="d-flex">
+                              <div class="product-image">
+                                <img src="https://cdn.shopify.com/s/files/1/0397/0098/8070/files/placeholder_image.png?v=1597827172" alt="" />
+                              </div>
+                              <div class="product-title">
+                                <h3>Product Name #1</h3>
+                                <div class="product-desc">Risus ac nisl. Lacinia ultrices est ut, sit arcu elit.</div>
+                                <a href="#" class="product-more">more details...</a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">6 months</div>
+                          <div class="td">200 | 100</div>
+                          <div class="td">
+                            <div class="price price--listing price--on-sale">
+                              <div class="price__sale">
+                                <div class="price__compare">
+                                  <s class="price-item price-item--regular">1,300.00 ฿</s>
+                                </div>
+                                <span class="price-item price-item--sale">1,265.00 ฿</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="td">
+                            <div class="form-check">
+                              <input class="form-check-input mr-0" type="checkbox" name="???" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end align-items-center autoship-payment">
+            <div class="autoship-note">Autoship next payment due date:
+              <div class="smart_tooltip"><sup class="smart_tooltip-icon">i</sup>
+                <span class="tooltiptext">Purchase at member price using a promo code. If you do not have a promo code, you can request one from a friend who is a member of aviance or apply for membership to receive your own promo code</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="select2_wrap">
+                <select id="enrollmentAutoshipDueDate" class="form-control select2_single">
+                  <option selected>Select a date</option>
+                  <option>...</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enrollment__summary">
+          <h3>Summary (2 items)</h3>
+          <ul class="enrollment__summary-list">
+            <li class="enrollment__summary-item">
+              <div class="enrollment__summary-title">Membership Fee</div>
+              <div class="enrollment__summary-price">600 Baht</div>
+            </li>
+            <li class="enrollment__summary-item">
+              <ul class="enrollment__summary-products">
+                <li><div class="enrollment__summary-title">Welcome Pack</div></li>
+                <li class="enrollment__summary-item">
+                  <div class="enrollment__summary-title">Product name</div>
+                  <div class="enrollment__summary-price">4000 Baht</div>
+                </li>
+                <li class="enrollment__summary-item">
+                  <div class="enrollment__summary-title">Product name</div>
+                  <div class="enrollment__summary-price">4000 Baht</div>
+                </li>
+                <li class="enrollment__summary-item">
+                  <div class="enrollment__summary-title">Product name</div>
+                  <div class="enrollment__summary-price">4000 Baht</div>
+                </li>
+              </ul>
+            </li>
+            <li class="enrollment__summary-item">
+              <ul class="enrollment__summary-products">
+                <li><div class="enrollment__summary-title">Autoship Program</div></li>
+                <li class="enrollment__summary-item">
+                  <div class="enrollment__summary-title">Product name</div>
+                  <div class="enrollment__summary-price">2000 Baht</div>
+                </li>
+                <li class="enrollment__summary-item">
+                  <div class="enrollment__summary-title">Product name</div>
+                  <div class="enrollment__summary-price">1000 Baht</div>
+                </li>
+              </ul>
+            </li>
+            <li class="enrollment__summary-item">
+              <div class="enrollment__summary-title">
+                Discount
+                <div class="discount-note">- Free membership fee</div>
+              </div>
+              <div class="enrollment__summary-price">-600 Baht</div>
+            </li>
+            <li class="enrollment__summary-item">
+              <div class="enrollment__summary-title">Total CV/QV</div>
+              <div class="enrollment__summary-price">200 | 100</div>
+            </li>
+            <li class="enrollment__summary-item enrollment__summary-item-total">
+              <div class="enrollment__summary-title">Total</div>
+              <div class="enrollment__summary-price-total">7000 Baht</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="enrollment__form-bottom">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="enrollmentPersonalData" checked>
+          <label class="form-check-label" for="enrollmentPersonalData">
+            Your personal data, including but not limited to the personal data  obtained from you directly when you provide us with personal  information, e.g. when you use our applications, fill out a survey, or  make a comment or inquiry, and/or any further updates provided to us by  you in relation to your personal information obtained by us (“Personal  Data”), will be processed for any marketing or any related purpose, to  provide you with products or services that you request from us, to  provide you with advance notice to our future events, to respond to your  inquiries, to provide you information about our products, services  and/or new release which may be of interest to you, to invite you and  your subscription to our newsletter, and/or for auditing purposes in  cases where there has been a dispute (collectively, “Purpose”).  We also wish to inform you that your Personal Data may be disclosed to  third parties, such as to our headquarters, regional offices,  subsidiaries, affiliates and/or members within the Unilever group of  companies, and/or our service providers, which may be located outside  Thailand, for reasons relating to the Purpose.*
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="enrollmentPolicy" checked>
+          <label class="form-check-label" for="enrollmentPolicy">
+            If you wish to access, correct, limit or update your Personal Data, or to make any inquiries or complaints about the processing of such information, please contact: Tel: 02-554-2455 or E-mail: unileverlife.th@unilever.com Kindly note that it will be necessary for us to process your Personal Data, without which we will not be able to carry out the Purpose. For more details on how we process your Personal Data, do visit our Privacy Policy at: 
+            <a href="https://www.unileverprivacypolicy.com/en_gb/policy.aspx">https://www.unileverprivacypolicy.com/en_gb/policy.aspx *</a>
+          </label>
+        </div>
+      </div>
+      
+
+      <div class="group-button d-flex justify-content-end align-items-center">
+        <a class="form__back-link" href="{{ pages['enrollment-step-1'].url }}">&#60; Back</a>
+        <button type="submit" class="btn btn-primary">Continue</button>
+      </div>
+      
+    </form>
+  <div>
+</div>

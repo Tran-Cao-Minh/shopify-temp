@@ -1,0 +1,155 @@
+<!-- /snippets/social-meta-tags.liquid -->
+{%- assign og_title = page_title -%}
+{%- assign og_url = canonical_url -%}
+{%- assign og_type = 'website' -%}
+{%- assign og_description = page_description | default: shop.description | default: shop.name -%}
+{% if settings.share_image %}
+  {%- capture og_image_tags -%}<meta property="og:image" content="http:{{ settings.share_image | img_url: '1200x1200' }}">{%- endcapture -%}
+  {%- capture og_image_secure_url_tags -%}<meta property="og:image:secure_url" content="https:{{ settings.share_image | img_url: '1200x1200' }}">{%- endcapture -%}
+{% endif %}
+
+{% comment %} Template specific overides {% endcomment %}
+{%- assign metafields_og_default = 'Please update content here' -%}
+
+{% case request.page_type %}
+  {% when "product" %}
+    {% comment %} Get metafield product {% endcomment %}
+    {%- assign og_fb_product_en = product.metafields.ulife.og_en -%}
+    {%- assign og_fb_product_th = product.metafields.ulife.og_th -%}
+
+    {%- assign og_title = product.title | strip_html -%}
+    {%- assign og_type = 'product' -%}
+    {% if product.media.size > 0 %}
+      {%- capture og_image_tags -%}{% for media in product.media limit:3 -%}<meta property="og:image" content="http:{{ media | img_url: '1200x1200' }}">{% endfor -%}{% endcapture -%}
+      {%- capture og_image_secure_url_tags -%}{% for media in product.media limit:3 -%}<meta property="og:image:secure_url" content="https:{{ media | img_url: '1200x1200' }}">{% endfor -%}{% endcapture -%}
+    {% endif %}
+  {% when "article" %}
+    {%- assign og_fb_article_en = article.metafields.ulife.og_en -%}
+    {%- assign og_fb_article_th = article.metafields.ulife.og_th -%}
+
+    {%- assign og_title = article.title | strip_html -%}
+    {%- assign og_type = 'article' -%}
+    {%- assign og_description = article.excerpt_or_content | strip_html -%}
+    {% if article.image %}
+      {%- capture og_image_tags -%}<meta property="og:image" content="http:{{ article.image | img_url: '1200x1200' }}">{%- endcapture -%}
+      {%- capture og_image_secure_url_tags -%}<meta property="og:image:secure_url" content="https:{{ article.image | img_url: '1200x1200' }}">{%- endcapture -%}
+    {% endif %}
+  {% when "collection" %}
+    {%- assign og_fb_collection_en = collection.metafields.ulife.og_en -%}
+    {%- assign og_fb_collection_th = collection.metafields.ulife.og_th -%}
+    {%- assign og_title = collection.title | strip_html -%}
+    {%- assign og_type = 'product.group' -%}
+
+    {% if collection.image %}
+      {%- capture og_image_tags -%}<meta property="og:image" content="http:{{ collection.image | img_url: '1200x1200' }}">{%- endcapture -%}
+      {%- capture og_image_secure_url_tags -%}<meta property="og:image:secure_url" content="https:{{ collection.image | img_url: '1200x1200' }}">{%- endcapture -%}
+    {% endif %}
+  {% when "blog" %}
+    {%- assign og_fb_blog_en = blog.metafields.ulife.og_en -%}
+    {%- assign og_fb_blog_th = blog.metafields.ulife.og_th -%}
+  {% when "page" %}
+    {%- assign og_fb_page_en = page.metafields.ulife.og_en -%}
+    {%- assign og_fb_page_th = page.metafields.ulife.og_th -%}
+  {% when "password" %}
+    {%- assign og_title = shop.name -%}
+    {%- assign og_url = shop.url -%}
+    {%- assign og_description = shop.description | default: shop.name -%}
+{% endcase %}
+
+{% comment %} Capture og tag for title - desc - image {% endcomment %}
+{% capture meta_og_tag_tdi %}
+  <meta property="og:title" content="{{ og_title }}">
+  <meta property="og:description" content="{{ og_description }}">
+  {{ og_image_tags }}
+  {{ og_image_secure_url_tags }}
+{% endcapture %}
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:type" content="{{ og_type }}">
+
+{%- if request.page_type != 'product' and request.page_type != 'article' and request.page_type != 'collection' and request.page_type != 'blog' -%}
+  {{ meta_og_tag_tdi }}
+{%- endif -%}
+
+{% case request.page_type %}
+  {% when "product" %}
+    {% comment %} OG tag for product detail {% endcomment %}
+    {% if shop.locale == 'th' %}
+      {% if og_fb_product_th != blank and og_fb_product_th != metafields_og_default %}
+        {{ og_fb_product_th }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% else %}
+      {% if og_fb_product_en != blank and og_fb_product_en != metafields_og_default %}
+        {{ og_fb_product_en }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% endif %}
+    <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | remove: '.00' }}">
+    <meta property="og:price:currency" content="{{ cart.currency.iso_code }}">
+  {% when "article" %}
+    {% comment %} OG tag for article {% endcomment %}
+    {% if shop.locale == 'th' %}
+      {% if og_fb_article_th != blank and og_fb_article_th != metafields_og_default %}
+        {{ og_fb_article_th }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% else %}
+      {% if og_fb_article_en != blank and og_fb_article_en != metafields_og_default %}
+        {{ og_fb_article_en }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% endif %}
+  {% when "collection" %}
+    {% comment %} OG tag for collection {% endcomment %}
+    {% if shop.locale == 'th' %}
+      {% if og_fb_collection_th != blank and og_fb_collection_th != metafields_og_default %}
+        {{ og_fb_collection_th }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% else %}
+      {% if og_fb_collection_en != blank and og_fb_collection_en != metafields_og_default %}
+        {{ og_fb_collection_en }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% endif %}
+  {% when "blog" %}
+    {% comment %} OG tag for blog {% endcomment %}
+    {% if shop.locale == 'th' %}
+      {% if og_fb_blog_th != blank and og_fb_blog_th != metafields_og_default %}
+        {{ og_fb_blog_th }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% else %}
+      {% if og_fb_blog_en != blank and og_fb_blog_en != metafields_og_default %}
+        {{ og_fb_blog_en }}
+      {% else %}
+        {{ meta_og_tag_tdi }}
+      {% endif %}
+    {% endif %}
+  {% when "page" %}
+    {% comment %} OG tag for page {% endcomment %}
+    {% if shop.locale == 'th' %}
+      {% if og_fb_page_th != blank and og_fb_page_th != metafields_og_default %}
+        {{ og_fb_page_th }}
+      {% endif %}
+    {% else %}
+      {% if og_fb_page_en != blank and og_fb_page_en != metafields_og_default %}
+        {{ og_fb_page_en }}
+      {% endif %}
+    {% endif %}
+{% endcase %}
+
+{% unless settings.social_twitter_link == blank %}
+  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
+{% endunless %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title }}">
+<meta name="twitter:description" content="{{ og_description }}">

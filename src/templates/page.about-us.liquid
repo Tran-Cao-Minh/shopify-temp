@@ -1,0 +1,15 @@
+{{ 'page-about-us.css' | asset_url | stylesheet_tag }}
+<div class="page__about-us">
+    {% section 'about-us_unilever' %}
+    {% section 'about-us_unilever-products' %}
+    {% section 'about-us_beyonde' %}
+    {% section 'about-us_aviance' %}
+    {% section 'about-us_ifresh' %}
+</div>
+{% include 'sharing-popup', share_permalink: page.url %}
+<script type="text/javascript">
+    function addSlider() {
+        smartosc.ssSlider("[data-slide_unilever_product]");
+    }
+    $(document).ready(addSlider);
+</script>  

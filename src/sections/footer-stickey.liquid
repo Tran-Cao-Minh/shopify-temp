@@ -1,0 +1,234 @@
+{%- assign shop_locale = '' -%}
+{% if shop.locale == 'th' %}
+  {%- assign shop_locale = 'th' -%}
+{% endif %}
+
+<div class="box__toolbar--mobile" data-toolbar_mobile>
+  <ul class="toolbar__lists toolbar__shopping {% unless customer %}toolbar__shopping__login {% endunless %}">
+    <li>
+      <a href="{{ section.settings.shoppinglink_home }}{{ shop_locale }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_home_toolbar' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_home_toolbar_active' %}</span>
+        </span>
+        <span class="toolbar__list--label">{{ section.settings.shoppingmenu_home }}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ section.settings.shoppinglink_special }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_home_special' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_home_special_active' %}</span>
+        </span>
+        <span class="toolbar__list--label">{{ section.settings.shoppingmenu_special }}</span>
+      </a>
+    </li>
+    {% if customer %}
+      <li class="order-form">
+        <a href="{{ section.settings.shoppinglink_orderform }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_home_orderform' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_home_orderform_active' %}</span>
+        </span>
+          <span class="toolbar__list--label">{{ section.settings.shoppingmenu_orderform }}</span>
+        </a>
+      </li>
+    {% endif %}
+    <li>
+      <a href="{{ section.settings.shoppinglink_autoship }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_home_autoship' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_home_autoship_active' %}</span>
+        </span>
+        <span class="toolbar__list--label">{{ section.settings.shoppingmenu_autoship }}</span>
+      </a>
+    </li>
+
+  </ul>
+
+  <ul class="toolbar__lists toolbar__business {% if customer %} customer__logged{% endif %}">
+    <li>
+      <a href="{{ section.settings.businesslink_home }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_home_toolbar' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_home_toolbar_active' %}</span>
+        </span>
+        <span class="toolbar__list--label">{{ section.settings.businessmenu_home }}</span>
+      </a>
+    </li>
+    <li>
+      {% if shop.locale == 'th' %}
+        <a href="{{ section.settings.businesslink_enroll_th }}">
+      {% else %}
+        <a href="{{ section.settings.businesslink_enroll }}">
+      {% endif %}
+          <span class="toolbar__list--icon">
+            <span class="toolbar__icon">{% render 'icon_enroll_toolbar' %}</span>
+            <span class="toolbar__icon-active">{% render 'icon_enroll_toolbar_active' %}</span>
+          </span>
+          <span class="toolbar__list--label">{{ section.settings.businessmenu_enroll }}</span>
+        </a>
+    </li>
+    <li data-toolbar-activities>
+      <a href="{{ section.settings.businesslink_activities }}">
+        <span class="toolbar__list--icon">
+          <span class="toolbar__icon">{% render 'icon_activities_toolbar' %}</span>
+          <span class="toolbar__icon-active">{% render 'icon_activites_toolbar_active' %}</span>
+        </span>
+        <span class="toolbar__list--label">{{ section.settings.businessmenu_activities }}</span>
+      </a>
+    </li>
+    {% comment %} <li>
+      <a href="#">
+      <span class="toolbar__list--icon">
+        <span class="toolbar__icon">{% render 'icon_dash_toolbar' %}</span>
+        <span class="toolbar__icon-active">{% render 'icon_dash_toolbar_active' %}</span>
+      </span>
+        <span class="toolbar__list--label">{{ section.settings.businessmenu_dashboard }}</span>
+      </a>
+    </li> {% endcomment %}
+    <li>
+      <a href="{{ section.settings.businesslink_toolbox }}">
+      <span class="toolbar__list--icon">
+        <span class="toolbar__icon">{% render 'icon_toolbox_toolbar' %}</span>
+        <span class="toolbar__icon-active">{% render 'icon_toolbox_toolbar_active' %}</span>
+      </span>
+        <span class="toolbar__list--label">{{ section.settings.businessmenu_toolbox }}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+<script>
+  (function() {
+    $('.toolbar__lists li a').each(function(index, link) {
+      const linkSSO = link.href + '?origin=sso';
+      if(link.href == window.location.href || linkSSO == window.location.href) $(this).parent().addClass('active');
+    })
+  })()
+</script>
+{% schema %}
+{
+  "name": {
+    "en": "Footer Stickey",
+    "th": "ปักหมุดท้ายกระดาษ"
+  },
+  "class": "index-section--flush",
+  "settings": [
+    {
+    "type": "header",
+    "content": "Toolbar Shopping"
+    },
+    {
+    "type": "text",
+    "id": "shoppingmenu_home",
+    "label": "Menu home"
+    },
+    {
+    "type": "url",
+    "id": "shoppinglink_home",
+    "label": "Link - Menu home"
+    },
+    {
+    "type": "text",
+    "id": "shoppingmenu_special",
+    "label": "Menu special offers"
+    },
+    {
+    "type": "url",
+    "id": "shoppinglink_special",
+    "label": "Link - Menu special"
+    },
+  {
+  "type": "text",
+  "id": "shoppingmenu_orderform",
+  "label": "Menu order form"
+  },
+  {
+  "type": "url",
+  "id": "shoppinglink_orderform",
+  "label": "Link - Menu order form"
+  },
+  {
+  "type": "text",
+  "id": "shoppingmenu_autoship",
+  "label": "Menu VIP Subscription"
+  },
+  {
+  "type": "url",
+  "id": "shoppinglink_autoship",
+  "label": "Link - Menu autoship"
+  },
+    {
+    "type": "header",
+    "content": "Toolbar Business"
+    },
+  {
+  "type": "text",
+  "id": "businessmenu_home",
+  "label": "Menu home"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_home",
+  "label": "Link - Menu home"
+  },
+  {
+  "type": "text",
+  "id": "businessmenu_enroll",
+  "label": "Menu enrollment"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_enroll",
+  "label": "Link - Menu enrollment (EN)"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_enroll_th",
+  "label": "Link - Menu enrollment(TH)"
+  },
+  {
+  "type": "text",
+  "id": "businessmenu_activities",
+  "label": "Menu activities"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_activities",
+  "label": "Link - Menu activities"
+  },
+  {
+  "type": "text",
+  "id": "businessmenu_dashboard",
+  "label": "Menu dashboard"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_dashboard",
+  "label": "Link - Menu dashboard"
+  },
+  {
+  "type": "text",
+  "id": "businessmenu_toolbox",
+  "label": "Menu toolbox"
+  },
+  {
+  "type": "url",
+  "id": "businesslink_toolbox",
+  "label": "Link - Menu toolbox"
+  }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Newsletter",
+        "th": "จดหมายข่าว"
+      },
+      "category": {
+        "en": "Promotional",
+        "th": "ส่งเสริมการขาย"
+      }
+    }
+  ]
+}
+{% endschema %}

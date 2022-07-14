@@ -1,0 +1,77 @@
+<div class="canvas__menu-action">
+  <div class="canvas__menu-close">
+    <span class="close">{% include 'icon-close' %}</span>
+    {{ 'layout.navigation.close' | t }}</div>
+  <div class="canvas__menu-back">
+    <span class="back">{% include 'icon-back' %}</span>
+    {{ 'layout.navigation.back' | t }}</div>
+</div>
+<ul class="site-nav list--inline">
+  {%- for link in linklists[linklist].links -%}
+    {% assign check_mega = false %}
+    {%- for block in section.blocks -%}
+      {% assign for_menu = block.settings.for_menu | downcase %}
+      {% assign link_title = link.title | downcase %}
+      {%- if for_menu == link_title -%}
+        {%- if check_mega == false -%}
+          <li>
+            <a href="{{ link.url }}" class="site-nav__link site-nav__link--main site-nav__link--button{% if link.child_active %} site-nav__link--active{% endif %}">
+              <span class="site-nav__label">{{ link.title | escape }}</span>
+              {% include 'icon', name: 'arrow_down_2', class_list: 'site-nav__icon' %}
+            </a>
+            {%- assign check_mega = true -%}
+            {%- case block.type -%}
+              {% when 'banner_type1' %}
+                <div class="megamenu megamenu-{{ block.type }}">
+                  <div class="megamenu__wrapper">
+                    <div class="container">
+                      {% include 'megamenu-banner-type1', block: block %}
+                    </div>
+                  </div>
+                </div>
+              {% when 'banner_type2' %}
+                <div class="megamenu megamenu-{{ block.type }}">
+                  <div class="megamenu__wrapper">
+                    <div class="container">
+                      <div class="megamenu__type2-row">
+                        {% render 'megamenu-banner-type2', block: block %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% when 'banner_type3' %}
+                <div class="megamenu megamenu-{{ block.type }}">
+                  <div class="megamenu__wrapper">
+                    <div class="container">
+                      <div class="row">
+                        {% render 'megamenu-banner-type3', block: block %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% else %}
+            {%- endcase -%}
+          {%- if forloop.last == true -%}
+          </li>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {% if check_mega == false %}
+      {% if customer %}
+        <li {% if link.active %} class="site-nav--active group_submenu-active" {% endif %}>
+            <a href="{{ link.url }}" class="site-nav__link site-nav__link--main{% if link.active %} site-nav__link--active{% endif %}" {% if link.current %} aria-current="page" {% endif %}>
+              <span class="site-nav__label">{{ link.title }}</span>
+            </a>
+      </li>
+      {% else %}
+        {%- assign link_url_last = link.url | split: '/' | last -%}
+          <li {% if link.active %} class="site-nav--active group_submenu-active" {% else %} class="{{ link_url_last }}" {% endif %}>
+              <a href="{{ link.url }}" class="site-nav__link site-nav__link--main{% if link.active %} site-nav__link--active{% endif %}" {% if link.current %} aria-current="page" {% endif %}>
+                  <span class="site-nav__label">{{ link.title }}</span>
+              </a>
+          </li>
+      {% endif %}
+    {% endif %}
+  {%- endfor -%}
+</ul>

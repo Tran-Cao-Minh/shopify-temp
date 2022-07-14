@@ -1,0 +1,80 @@
+
+{% if section.settings.url_mp4 != blank %}
+<div class="ss-video-webm">
+    <div class="video-wrap">
+      <video class="tag__video" loop="" muted="" playsinline="">
+        <source src="{{ section.settings.url_mp4 }}#t=0.001" type="video/mp4">
+        {% comment %} <source src="{{ section.settings.url_webm }}#t=0.001" type="video/webm"> {% endcomment %}
+        Your browser does not support the video tag.
+      </video>
+      <svg class="icon_play" xmlns="http://www.w3.org/2000/svg" width="66.677" height="66.677" viewBox="0 0 66.677 66.677">
+        <path data-name="Path 257" d="M1986.838,965.472a33.338,33.338,0,1,0,33.338,33.338A33.338,33.338,0,0,0,1986.838,965.472Zm12.564,35.168-8.821,5.094-8.822,5.093a2.113,2.113,0,0,1-3.17-1.83V988.624a2.113,2.113,0,0,1,3.17-1.83l8.822,5.093,8.821,5.094A2.112,2.112,0,0,1,1999.4,1000.64Z" transform="translate(-1953.5 -965.472)" fill="#f2f2f2" opacity="0.586"/>
+      </svg>
+    </div>    
+    <div class="ss-video__content">
+        <div class="container">
+            <div class="video__content">
+                {% if section.settings.title != blank %}
+                    <h2 class="title">{{ section.settings.title | escape }}</h2>
+                {% endif %}
+                {% if section.settings.text != blank or section.settings.button_title != blank %}
+                    <div class="desc rte-setting">
+                      {{ section.settings.text }}
+                      {% if section.settings.button_title != blank and section.settings.button_url != blank %}
+                        <a class="btn fix-width" href="{{ section.settings.button_url }}">{{ section.settings.button_title }}</a>
+                      {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<script type="text/javascript">
+    $(function () {
+        let home_bs_video = $('.ss-video-webm video');
+        if ($(window).width() < 576) {
+            $(document).on('click', '.video-wrap .icon_play', function () {
+                home_bs_video[0].play();
+                $('.video-wrap .icon_play').hide();
+            });
+        }else {
+            home_bs_video[0].play();
+        }        
+    });
+</script>
+{% schema %}
+{
+  "name": "Video",
+  "class": "index-section-bottom",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Unilever Life Product"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "button_title",
+      "label": "Button title",
+      "default": "More detail"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Link"
+    },
+    {
+      "type": "textarea",
+      "id": "url_mp4",
+      "label": "Link video mp4"
+    }
+  ]
+}
+{% endschema %}
